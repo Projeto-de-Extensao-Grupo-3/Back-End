@@ -41,4 +41,12 @@ public class LoteItemEstoqueService {
         }
         throw new LoteNaoEncontradoException("O lote do estoque não foi encontrado");
     }
+
+    public void removerPorId(Integer id){
+
+        if (repository.existsById(id)){
+            repository.deleteById(id);
+        }
+        throw new LoteItemEstoqueNaoEncontradoException("O lote do item não existe");
+    }
 }

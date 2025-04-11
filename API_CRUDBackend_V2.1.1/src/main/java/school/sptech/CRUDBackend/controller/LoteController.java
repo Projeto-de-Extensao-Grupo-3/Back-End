@@ -5,7 +5,11 @@ import org.springframework.web.bind.annotation.*;
 import school.sptech.CRUDBackend.dto.Lote.LoteMapper;
 import school.sptech.CRUDBackend.dto.Lote.LoteRequestDto;
 import school.sptech.CRUDBackend.dto.Lote.LoteResponseDto;
+import school.sptech.CRUDBackend.dto.LoteItemEstoque.LoteItemEstoqueMapper;
+import school.sptech.CRUDBackend.dto.LoteItemEstoque.LoteItemEstoqueRequestDto;
+import school.sptech.CRUDBackend.dto.LoteItemEstoque.LoteItemEstoqueResponseDto;
 import school.sptech.CRUDBackend.entity.Lote;
+import school.sptech.CRUDBackend.entity.LoteItemEstoque;
 import school.sptech.CRUDBackend.service.LoteService;
 
 import java.util.List;
@@ -36,7 +40,7 @@ public class LoteController {
             return ResponseEntity.status(204).build();
         }
 
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(200).body(todosOsLotes);
     }
 
     @GetMapping("/{id}")
@@ -46,7 +50,17 @@ public class LoteController {
         return ResponseEntity.status(200).body(loteEncontrado);
     }
 
-    @DeleteMapping("{id}")
+    @PutMapping("/{id}")
+    public ResponseEntity<LoteResponseDto> atualizarPorId(@PathVariable
+                                                                     Integer id, @RequestBody
+                                                                     LoteRequestDto loteAtualizar){
+        Lote loteParaAtualizar = LoteMapper.toEntity(loteAtualizar);
+        LoteResponseDto loteAtualizado = LoteMapper.toResponseDto(service.atualizarLotePorId(id, loteParaAtualizar));
+
+        return ResponseEntity.status(200).body(loteAtualizado);
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerPorId(@PathVariable Integer id){
 
         service.buscarLotePorId(id);
