@@ -1,0 +1,49 @@
+package school.sptech.CRUDBackend.service;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import school.sptech.CRUDBackend.entity.ItemEstoque;
+import school.sptech.CRUDBackend.exception.itensEstoque.ItemEstoqueConflitoException;
+import school.sptech.CRUDBackend.exception.itensEstoque.ItemEstoqueNaoEncontradoException;
+import school.sptech.CRUDBackend.repository.ItemEstoqueRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class ItemEstoqueService {
+    private final ItemEstoqueRepository itemEstoqueRepository;
+
+    public ItemEstoque cadastrarItemEstoque(ItemEstoque itemCadastrar) {
+        if(itemEstoqueRepository.existsByDescricao(itemCadastrar.getDescricao())) {
+            throw new ItemEstoqueConflitoException("Este item já existe no sistema.");
+        }
+        return itemEstoqueRepository.save(itemCadastrar);
+    }
+
+    public List<ItemEstoque> verificarTodosItemEstoque() {
+        return itemEstoqueRepository.findAll();
+    }
+
+    public ItemEstoque buscarItemEstoquePorId(Integer id) {
+        return itemEstoqueRepository.findById(id)
+                .orElseThrow(() -> new ItemEstoqueNaoEncontradoException("O item procurado não existe"));
+    }
+
+    public ItemEstoque atualizarItemEstoquePorId(Integer id, ItemEstoque itemAtualizar) {
+        if (itemEstoqueRepository.existsById(id)) {
+            itemAtualizar.setId(id);
+            return itemEstoqueRepository.save(itemAtualizar);
+        }
+        throw new ItemEstoqueNaoEncontradoException("O item para atualizar não existe");
+    }
+
+    public void removerPorId(Integer id) {
+        if (itemEstoqueRepository.existsById(id)) {
+            itemEstoqueRepository.deleteById(id);
+        } else {
+            throw new ItemEstoqueNaoEncontradoException("O item para atualizar não existe");
+        }
+    }
+}
