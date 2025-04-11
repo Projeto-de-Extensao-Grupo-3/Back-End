@@ -1,0 +1,11 @@
+package school.sptech.CRUDBackend.exception.corteTecido;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.CONFLICT)
+public class CorteTecidoConflitoException extends RuntimeException {
+    public CorteTecidoConflitoException(String message) {
+        super(message);
+    }
+}
