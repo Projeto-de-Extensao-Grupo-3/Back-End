@@ -3,15 +3,9 @@ package school.sptech.CRUDBackend.controller;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import school.sptech.CRUDBackend.dto.LoteItemEstoque.LoteItemEstoqueMapper;
-import school.sptech.CRUDBackend.dto.LoteItemEstoque.LoteItemEstoqueResponseDto;
 import school.sptech.CRUDBackend.dto.SaidaEstoque.SaidaEstoqueMapper;
 import school.sptech.CRUDBackend.dto.SaidaEstoque.SaidaEstoqueRequestDto;
 import school.sptech.CRUDBackend.dto.SaidaEstoque.SaidaEstoqueResponseDto;
-import school.sptech.CRUDBackend.dto.permissao.PermissaoMapper;
-import school.sptech.CRUDBackend.dto.permissao.PermissaoRequestDto;
-import school.sptech.CRUDBackend.dto.permissao.PermissaoResponseDto;
-import school.sptech.CRUDBackend.entity.Permissao;
 import school.sptech.CRUDBackend.entity.SaidaEstoque;
 import school.sptech.CRUDBackend.service.SaidaEstoqueService;
 
@@ -52,7 +46,7 @@ public class SaidaEstoqueController {
         return ResponseEntity.status(200).body(saidaEncontrada);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{motivo}")
     public ResponseEntity<List<SaidaEstoqueResponseDto>> buscarPorMotivo(@PathVariable String motivo){
         List<SaidaEstoqueResponseDto> saidasEncontradas = SaidaEstoqueMapper.toResponseDtos(service.buscarPorMotivo(motivo));
 
