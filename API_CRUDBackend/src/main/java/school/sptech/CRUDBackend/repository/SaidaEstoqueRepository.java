@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SaidaEstoqueRepository extends JpaRepository<SaidaEstoque, Integer> {
 
-    List<SaidaEstoque> findBymotivo(String motivo);
+    List<SaidaEstoque> findByMotivoSaida(String motivo);
 }

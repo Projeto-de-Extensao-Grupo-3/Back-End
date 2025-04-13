@@ -32,7 +32,7 @@ public class SaidaEstoqueService {
     }
 
     public List<SaidaEstoque> buscarPorMotivo(String motivo){
-        List<SaidaEstoque> saidaPorMotivo = repository.findBymotivo(motivo);
+        List<SaidaEstoque> saidaPorMotivo = repository.findByMotivoSaida(motivo);
 
         if (saidaPorMotivo.isEmpty()){
             throw new SaidaEstoqueNaoEncontradoException("Nenhuma saída com este motivo foi encontrada");

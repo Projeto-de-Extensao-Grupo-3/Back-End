@@ -15,7 +15,7 @@ public class ServicoTerceiroService {
     private final ServicoTerceiroRepository servicoTerceiroRepository;
 
     public ServicoTerceiro cadastrarServicoTerceiro(ServicoTerceiro servicoTerceiro) {
-        if (servicoTerceiroRepository.existsByEmailOrIdentificacaoOrEnderecoIgnoreCaseAll(
+        if (servicoTerceiroRepository.existsByEmailOrIdentificacaoOrEnderecoAllIgnoreCase(
                 servicoTerceiro.getEmail(), servicoTerceiro.getIdentificacao(), servicoTerceiro.getEndereco())
         ) {
             throw new ServicoTerceiroConflitoException("Já existe um serviço de terceiro cadastrado.");
