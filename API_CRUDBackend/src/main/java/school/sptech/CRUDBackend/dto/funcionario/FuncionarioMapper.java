@@ -1,9 +1,11 @@
 package school.sptech.CRUDBackend.dto.funcionario;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import school.sptech.CRUDBackend.entity.Funcionario;
 
 import java.util.List;
 
+@Schema(description = "Classe de mapeamento de DTOs Funcionario.")
 public class FuncionarioMapper {
     public static Funcionario toEntity(FuncionarioRequestDto requestDto) {
         return new Funcionario(
