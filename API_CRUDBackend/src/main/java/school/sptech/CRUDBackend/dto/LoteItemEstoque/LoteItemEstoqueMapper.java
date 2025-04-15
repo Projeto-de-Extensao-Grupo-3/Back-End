@@ -1,7 +1,9 @@
 package school.sptech.CRUDBackend.dto.LoteItemEstoque;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import school.sptech.CRUDBackend.entity.LoteItemEstoque;
 
+@Schema(description = "Classe de mapeamento de DTOs LoteItemEstoque.")
 public class LoteItemEstoqueMapper {
 
     public static LoteItemEstoque toEntity(LoteItemEstoqueRequestDto requestDto){

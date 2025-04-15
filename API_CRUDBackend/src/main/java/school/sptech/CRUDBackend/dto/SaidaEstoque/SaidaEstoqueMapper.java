@@ -1,10 +1,12 @@
 package school.sptech.CRUDBackend.dto.SaidaEstoque;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import school.sptech.CRUDBackend.dto.permissao.PermissaoMapper;
 import school.sptech.CRUDBackend.entity.SaidaEstoque;
 
 import java.util.List;
 
+@Schema(description = "Classe de mapeamento de DTOs SaidaEstoque")
 public class SaidaEstoqueMapper {
 
     public static SaidaEstoque toEntity(SaidaEstoqueRequestDto requestDto){

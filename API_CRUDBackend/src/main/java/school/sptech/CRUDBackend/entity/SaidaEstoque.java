@@ -1,5 +1,6 @@
 package school.sptech.CRUDBackend.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Schema(description = "Entidade representando uma saída do estoque.")
 @Entity
 @Getter
 @Setter

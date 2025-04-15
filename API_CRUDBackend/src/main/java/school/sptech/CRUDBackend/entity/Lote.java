@@ -1,5 +1,6 @@
 package school.sptech.CRUDBackend.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Schema(description = "Entidade representando um lote de item.")
 @Getter
 @Setter
 @Entity
