@@ -16,10 +16,17 @@ public class NotificadorFuncionario implements Observer{
     @Override
     public void atualizar(ItemEstoque item) {
         System.out.println("Entrei no atualizar!");
+
+        Funcionario func = new Funcionario();
+        func.setNome("Leandro");
+        func.setEmail("Leandro03@gmail.com");
+        funcionarioRepository.save(func);
+
         List<Funcionario> funcionarios = funcionarioRepository.findAll();
+
         for (Funcionario funcionario : funcionarios) {
-            System.out.println("Email enviado para " + funcionario.getEmail() +
-                    " sobre o item: " + item.getDescricao());
+            System.out.println("Email enviado para (" + funcionario.getEmail() +
+                    ") sobre o item: " + item.getDescricao());
         }
     }
 }

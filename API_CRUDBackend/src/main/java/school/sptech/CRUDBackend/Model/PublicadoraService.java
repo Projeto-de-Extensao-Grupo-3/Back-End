@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PublicadoraService {
+public class PublicadoraService implements Subject{
 
     private List<Observer> observadores = new ArrayList<>();
 
@@ -18,14 +18,17 @@ public class PublicadoraService {
         adicionarObservador(notificadorFuncionario);
     }
 
+    @Override
     public void adicionarObservador(Observer observador) {
         observadores.add(observador);
     }
 
+    @Override
     public void removerObservador(Observer observador) {
         observadores.remove(observador);
     }
 
+    @Override
     public void notificarObservers(ItemEstoque item){
 
         for (Observer obs : observadores) {
