@@ -1,9 +1,11 @@
 package school.sptech.CRUDBackend.dto.corteTecido;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import school.sptech.CRUDBackend.entity.CorteTecido;
 
 import java.util.List;
 
+@Schema(description = "Classe de mapeamento de DTOs CorteTecido.")
 public class CorteTecidoMapper {
     public static CorteTecido toEntity(CorteTecidoRequestDto requestDto) {
         return new CorteTecido(
