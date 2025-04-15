@@ -1,9 +1,11 @@
 package school.sptech.CRUDBackend.dto.permissao;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import school.sptech.CRUDBackend.entity.Permissao;
 
 import java.util.List;
 
+@Schema(description = "Classe de mapeamento de DTOs Permissao.")
 public class PermissaoMapper {
     public static Permissao toEntity(PermissaoRequestDto requestDto) {
         return new Permissao(

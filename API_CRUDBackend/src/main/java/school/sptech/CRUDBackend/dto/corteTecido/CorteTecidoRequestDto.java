@@ -1,5 +1,6 @@
 package school.sptech.CRUDBackend.dto.corteTecido;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Schema(description = "DTO para requisição de cadastro de um novo corte de tecido.")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,7 +18,9 @@ import java.time.LocalDateTime;
 public class CorteTecidoRequestDto {
     @NotBlank
     @PastOrPresent
+    @Schema(description = "Data e Hora e inicio do corte", example = "2025-04-12T10:15:30")
     private LocalDateTime inicio;
     @PastOrPresent
+    @Schema(description = "Data e Hora e finalização do corte", example = "2025-04-12T10:15:30")
     private LocalDateTime termino;
 }
