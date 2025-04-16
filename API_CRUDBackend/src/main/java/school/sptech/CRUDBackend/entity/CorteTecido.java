@@ -1,10 +1,7 @@
 package school.sptech.CRUDBackend.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +23,10 @@ public class CorteTecido {
     private LocalDateTime inicio;
     @Schema(description = "Data e Hora e finalização do corte", example = "2025-04-12T10:15:30")
     private LocalDateTime termino;
+    @ManyToOne
+    @JoinColumn(name = "id_funcionario")
+    private Funcionario funcionario;
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private LoteItemEstoque loteItemEstoque;
 }

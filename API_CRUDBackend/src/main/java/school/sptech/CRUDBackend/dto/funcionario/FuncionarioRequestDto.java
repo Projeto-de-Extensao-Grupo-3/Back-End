@@ -37,5 +37,5 @@ public class FuncionarioRequestDto {
     @NotBlank
     private String senha;
     @NotBlank
-    private Set<Permissao> permissoes;
+    private Set<FuncionarioPermissaoRequestDto> permissoes;
 }

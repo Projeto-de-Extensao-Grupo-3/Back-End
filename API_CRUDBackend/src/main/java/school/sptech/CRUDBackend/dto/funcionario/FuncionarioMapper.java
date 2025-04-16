@@ -2,6 +2,7 @@ package school.sptech.CRUDBackend.dto.funcionario;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import school.sptech.CRUDBackend.entity.Funcionario;
+import school.sptech.CRUDBackend.entity.Permissao;
 
 import java.util.List;
 import java.util.Set;
@@ -9,7 +10,14 @@ import java.util.stream.Collectors;
 
 @Schema(description = "Classe de mapeamento de DTOs Funcionario.")
 public class FuncionarioMapper {
+
     public static Funcionario toEntity(FuncionarioRequestDto requestDto) {
+        Set<Permissao> permissoes = requestDto.getPermissoes()
+                .stream()
+                .map(permissao
+                        -> new Permissao(permissao.getIdPermissao(), permissao.getDescricao()))
+                .collect(Collectors.toSet());
+
         return new Funcionario(
                 null,
                 requestDto.getNome(),
@@ -17,7 +25,7 @@ public class FuncionarioMapper {
                 requestDto.getTelefone(),
                 requestDto.getEmail(),
                 requestDto.getSenha(),
-                requestDto.getPermissoes()
+                permissoes
         );
     }
     

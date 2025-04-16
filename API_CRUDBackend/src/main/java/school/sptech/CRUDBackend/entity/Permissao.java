@@ -20,6 +20,4 @@ public class Permissao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPermissao;
     private String descricao;
-    @ManyToMany(mappedBy = "permissoes")
-    private Set<Funcionario> funcionarios;
 }
