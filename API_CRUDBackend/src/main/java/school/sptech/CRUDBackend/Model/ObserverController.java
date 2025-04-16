@@ -22,7 +22,7 @@ public class ObserverController {
         ItemEstoque item = new ItemEstoque();
         item.setDescricao("Oversize");
         item.setQtdArmazenado(5.0);
-        item.setQtdMinima(10.0);
+        item.setQtdMinimo(10.0);
 
         publicadoraService.verificarEstoque(item);
 

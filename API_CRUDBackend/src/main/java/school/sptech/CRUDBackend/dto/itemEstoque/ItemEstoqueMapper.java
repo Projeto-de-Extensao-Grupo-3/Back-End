@@ -14,19 +14,19 @@ public class ItemEstoqueMapper {
                 requestDto.getDescricao(),
                 requestDto.getComplemento(),
                 requestDto.getPeso(),
-                requestDto.getQtdMinima(),
+                requestDto.getQtdMinimo(),
                 requestDto.getQtdArmazenado()
         );
     }
 
     public static ItemEstoqueResponseDto toResponseDto(ItemEstoque item) {
         return new ItemEstoqueResponseDto(
-                item.getId(),
+                item.getIdItemEstoque(),
                 item.getCategoria(),
                 item.getDescricao(),
                 item.getComplemento(),
                 item.getPeso(),
-                item.getQtdMinima(),
+                item.getQtdMinimo(),
                 item.getQtdArmazenado()
         );
     }

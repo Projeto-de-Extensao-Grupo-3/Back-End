@@ -28,7 +28,7 @@ public class CorteTecidoService {
 
     public CorteTecido atualizarCorteTecido(Integer id, CorteTecido corteTecido) {
         if (corteTecidoRepository.existsById(id)) {
-            corteTecido.setId(id);
+            corteTecido.setIdCorteTecido(id);
             return corteTecidoRepository.save(corteTecido);
         }
         throw new CorteTecidoNaoEncontradoException("O registro de corte de tecido não existe");

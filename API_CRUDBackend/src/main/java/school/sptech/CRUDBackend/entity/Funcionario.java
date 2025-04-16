@@ -1,15 +1,12 @@
 package school.sptech.CRUDBackend.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import school.sptech.CRUDBackend.Model.Observer;
+import java.util.Set;
 
 @Schema(description = "Entidade representando um funcionário.")
 @Entity
@@ -28,4 +25,10 @@ public class Funcionario {
     private String telefone;
     private String email;
     private String senha;
+    @ManyToMany
+    @JoinTable(
+            name = "controle_acesso",
+            joinColumns = @JoinColumn(name = "id_funcionario"),
+            inverseJoinColumns = @JoinColumn(name = "id_permissao"))
+    private Set<Permissao> permissoes;
 }

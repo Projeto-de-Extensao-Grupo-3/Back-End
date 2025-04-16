@@ -17,7 +17,7 @@ public class CorteTecidoMapper {
 
     public static CorteTecidoResponseDto toResponseDto(CorteTecido corteTecido) {
         return new CorteTecidoResponseDto(
-                corteTecido.getId(),
+                corteTecido.getIdCorteTecido(),
                 corteTecido.getInicio(),
                 corteTecido.getTermino()
         );

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Schema(description = "DTO para resposta de Funcionário.")
 @Getter
 @Setter
@@ -19,4 +21,5 @@ public class FuncionarioResponseDto {
     private String telefone;
     @Schema(description = "Email do Funcionário", example = "fernando@gmail.com")
     private String email;
+    private Set<FuncionarioPermissaoResponseDto> permissoes;
 }

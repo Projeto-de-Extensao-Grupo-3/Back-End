@@ -33,7 +33,7 @@ public class ItemEstoqueService {
 
     public ItemEstoque atualizarItemEstoquePorId(Integer id, ItemEstoque itemAtualizar) {
         if (itemEstoqueRepository.existsById(id)) {
-            itemAtualizar.setId(id);
+            itemAtualizar.setIdItemEstoque(id);
             return itemEstoqueRepository.save(itemAtualizar);
         }
         throw new ItemEstoqueNaoEncontradoException("O item para atualizar não existe");

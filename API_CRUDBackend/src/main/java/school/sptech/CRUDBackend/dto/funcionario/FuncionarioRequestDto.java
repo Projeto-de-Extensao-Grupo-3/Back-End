@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
+import school.sptech.CRUDBackend.entity.Permissao;
+
+import java.util.Set;
 
 @Schema(description = "DTO para requisição de cadastro de um novo funcionário.")
 @Getter
@@ -33,4 +36,6 @@ public class FuncionarioRequestDto {
     @Hidden
     @NotBlank
     private String senha;
+    @NotBlank
+    private Set<Permissao> permissoes;
 }
