@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class LoteResponseDto {
 
     private Integer idLote;
-    @Schema(description = "", example = "")
+    @Schema(description = "Entrada de lote de tecido ou roupa", example = "Lote de Roupa Costureira")
     private String descricao;
     @Schema(description = "Data de chegada do Lote", example = "2025-04-12T10:15:30")
     private LocalDateTime dataEntrada;
