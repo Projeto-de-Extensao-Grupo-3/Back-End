@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import school.sptech.CRUDBackend.entity.Funcionario;
+import school.sptech.CRUDBackend.entity.LoteItemEstoque;
 
 import java.time.LocalDateTime;
 
@@ -23,4 +25,6 @@ public class CorteTecidoRequestDto {
     @PastOrPresent
     @Schema(description = "Data e Hora e finalização do corte", example = "2025-04-12T10:15:30")
     private LocalDateTime termino;
+    private CorteTecidoFuncionarioRequestDto funcionario;
+    private CorteTecidoLoteItemEstoqueRequestDto loteItemEstoque;
 }
