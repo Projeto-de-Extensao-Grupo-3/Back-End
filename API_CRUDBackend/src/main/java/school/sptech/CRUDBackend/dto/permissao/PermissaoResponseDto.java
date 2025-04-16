@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PermissaoResponseDto {
-    private Integer id;
+    private Integer idPermissao;
     @Schema(description = "Descreve a função da permissão.", example = "Consegue alterar permissões de funcionários.")
     private String descricao;
 }

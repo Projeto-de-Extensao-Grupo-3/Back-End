@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CorteTecidoResponseDto {
-    private Integer id;
+    private Integer idCorteTecido;
     @Schema(description = "Data e Hora de inicio do corte", example = "2025-04-12T10:15:30")
     private LocalDateTime inicio;
     @Schema(description = "Data e Hora de finalização do corte", example = "2025-04-12T10:15:30")

@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 public class CorteTecido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idCorteTecido;
     @Schema(description = "Data e Hora e inicio do corte", example = "2025-04-12T10:15:30")
     private LocalDateTime inicio;
     @Schema(description = "Data e Hora e finalização do corte", example = "2025-04-12T10:15:30")

@@ -37,7 +37,7 @@ public class PublicadoraService implements Subject{
     }
 
     public void verificarEstoque(ItemEstoque item){
-        if (item.getQtdArmazenado() <= item.getQtdMinima()){
+        if (item.getQtdArmazenado() <= item.getQtdMinimo()){
             notificarObservers(item);
         }
     }

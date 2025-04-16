@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Schema(description = "DTO para requisição de um objeto ItemEstoque.")
 @Getter
 @Setter
@@ -29,7 +31,7 @@ public class ItemEstoqueRequestDto {
     @Schema(description = "Quantidade mínima para item.", example = "100")
     @NotBlank
     @Positive
-    private Double qtdMinima;
+    private Double qtdMinimo;
     @Schema(description = "Quantidade que ainda possui no estoque.", example = "100")
     @NotBlank
     @Positive
