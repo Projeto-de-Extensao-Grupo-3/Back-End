@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 public class LoteRequestDto {
 
-    @Schema(description = "", example = "")
+    @Schema(description = "Entrada de lote de tecido ou roupa", example = "Lote de Roupa Costureira")
     @NotBlank
     private String descricao;
     @Schema(description = "Data de chegada do Lote", example = "2025-04-12T10:15:30")
