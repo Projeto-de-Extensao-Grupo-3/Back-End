@@ -16,7 +16,7 @@ public class LoteItemEstoqueMapper {
 
     public static LoteItemEstoqueResponseDto toResponseDto(LoteItemEstoque loteItemEstoque){
             LoteItemEstoqueResponseDto responseDto = new LoteItemEstoqueResponseDto();
-            responseDto.setId(loteItemEstoque.getId());
+            responseDto.setId(loteItemEstoque.getIdLoteItemEstoque());
             responseDto.setQtdItem(loteItemEstoque.getQtdItem());
             responseDto.setPreco(loteItemEstoque.getPreco());
             return responseDto;

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.CRUDBackend.dto.Lote.LoteMapper;
@@ -21,9 +22,10 @@ import java.util.List;
 @Tag(name = "Lote", description = "Operações CRUD relacionadas aos lotes de entrada dos Itens.")
 @RestController
 @RequestMapping("/lotes")
+@RequiredArgsConstructor
 public class LoteController {
 
-    private LoteService service;
+    private final LoteService service;
 
     @Operation(
             summary = "Cadastro de um novo Lote.",

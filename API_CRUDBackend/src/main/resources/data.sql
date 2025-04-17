@@ -39,3 +39,10 @@ INSERT INTO servico_terceiro (categoria, nome, telefone, email, endereco) VAlUES
 	('fornecedor', 'Best Tecidos', '11918465729', 'best_tecidos@gmail.com', 'Rua 1'),
 	('fornecedor', 'Fornecedor X', '11918465729', 'fornecedorx@gmail.com', 'Rua 2'),
 	('fornecedor', 'Fornecedor Z', '11918465729', 'fornecedorys@gmail.com', 'Rua 3');
+
+INSERT INTO lote (descricao, data_entrada, id_servico_terceiro) VAlUES
+	('lote de roupas', now(), 1),
+	('lote de tecido', now(), 2);
+
+INSERT INTO lote_item_estoque (id_lote, id_item_estoque, qtd_item, preco) VAlUES
+	(2, 4, 3.5, 80.0);

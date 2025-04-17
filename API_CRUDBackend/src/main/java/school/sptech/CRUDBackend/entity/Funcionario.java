@@ -1,5 +1,6 @@
 package school.sptech.CRUDBackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Funcionario {
+
+    public Funcionario(Integer idFuncionario) {
+        this.idFuncionario = idFuncionario;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idFuncionario;

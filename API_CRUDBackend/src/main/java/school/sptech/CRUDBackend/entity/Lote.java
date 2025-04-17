@@ -15,8 +15,10 @@ import java.time.format.DateTimeFormatter;
 public class Lote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer idLote;
     private String descricao;
     private LocalDateTime dataEntrada;
+    @ManyToOne
+    @JoinColumn(name = "id_servico_terceiro")
+    private ServicoTerceiro servicoTerceiro;
 }
