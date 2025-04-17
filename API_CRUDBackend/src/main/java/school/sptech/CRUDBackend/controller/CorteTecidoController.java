@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.CRUDBackend.dto.corteTecido.CorteTecidoCadastroDto;
 import school.sptech.CRUDBackend.dto.corteTecido.CorteTecidoMapper;
 import school.sptech.CRUDBackend.dto.corteTecido.CorteTecidoRequestDto;
 import school.sptech.CRUDBackend.dto.corteTecido.CorteTecidoResponseDto;
@@ -35,11 +36,11 @@ public class CorteTecidoController {
             required = true
     )
     @PostMapping
-    public ResponseEntity<CorteTecidoResponseDto> cadastrar(
+    public ResponseEntity<CorteTecidoCadastroDto> cadastrar(
             @RequestBody @Valid CorteTecidoRequestDto corteTecido
     ) {
         CorteTecido corteParaCadastrar = CorteTecidoMapper.toEntity(corteTecido);
-        CorteTecidoResponseDto corteTecidoCadastrado = CorteTecidoMapper.toResponseDto(
+        CorteTecidoCadastroDto corteTecidoCadastrado = CorteTecidoMapper.toCadastroDto(
                 corteTecidoService.cadastrarCorteTecido(corteParaCadastrar)
         );
         return ResponseEntity.status(201).body(corteTecidoCadastrado);

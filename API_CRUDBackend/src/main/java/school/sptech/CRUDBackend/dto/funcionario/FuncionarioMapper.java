@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 @Schema(description = "Classe de mapeamento de DTOs Funcionario.")
 public class FuncionarioMapper {
-
     public static Funcionario toEntity(FuncionarioRequestDto requestDto) {
         Set<Permissao> permissoes = requestDto.getPermissoes()
                 .stream()

@@ -36,7 +36,7 @@ public class LoteItemEstoqueService {
     public LoteItemEstoque atualizarLoteItemEstoquePorId(Integer id, LoteItemEstoque loteItemEstoqueParaAtualizar){
 
         if (repository.existsById(id)){
-            loteItemEstoqueParaAtualizar.setId(id);
+            loteItemEstoqueParaAtualizar.setIdLoteItemEstoque(id);
             return repository.save(loteItemEstoqueParaAtualizar);
         }
         throw new LoteNaoEncontradoException("O lote do estoque não foi encontrado");
