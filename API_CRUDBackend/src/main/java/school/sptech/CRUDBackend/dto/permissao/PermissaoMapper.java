@@ -7,12 +7,6 @@ import java.util.List;
 
 @Schema(description = "Classe de mapeamento de DTOs Permissao.")
 public class PermissaoMapper {
-//    public static Permissao toEntity(PermissaoRequestDto requestDto) {
-//        return new Permissao(
-//                null,
-//                requestDto.getDescricao()
-//        );
-//    }
 
     public static PermissaoResponseDto toResponseDto(Permissao permissao) {
         return new PermissaoResponseDto(

@@ -24,13 +24,13 @@ INSERT INTO controle_acesso VALUES
     (5, 3),
     (6, 3);
 
-INSERT INTO item_estoque (categoria, descricao, complemento, peso, qtd_minimo, qtd_armazenado) VALUES
-    ('roupa', 'vestido,azul', 'florido', 1.0, 0, 0),
-    ('roupa', 'camisa,vermelho', 'liso', 1.0, 0, 0),
-    ('roupa', 'bermuda,cinza', 'liso', 1.0, 0, 0),
-    ('tecido', 'vermelho', 'liso', 1.0, 0, 0),
-    ('tecido', 'azul', 'florido', 1.0, 0, 0),
-    ('tecido', 'cinza', 'liso', 1.0, 0, 0);
+INSERT INTO item_estoque (descricao, peso, qtd_minimo, qtd_armazenado) VALUES
+    ('vestido,azul, florido', 1.0, 0, 0),
+    ('camisa,vermelho, liso', 1.0, 0, 0),
+    ('bermuda,cinza, liso', 1.0, 0, 0),
+    ('vermelho, liso', 1.0, 0, 0),
+    ('azul, florido', 1.0, 0, 0),
+    ('cinza, liso', 1.0, 0, 0);
 
 INSERT INTO servico_terceiro (categoria, nome, telefone, email, endereco) VAlUES
 	('costureira', 'Maria', '11938563748', 'maria@gmail.com', 'Rua X'),
