@@ -1,6 +1,7 @@
 package school.sptech.CRUDBackend.dto.SaidaEstoque;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -29,4 +30,8 @@ public class SaidaEstoqueRequestDto {
     private Integer qtSaida;
     @Schema(description = "Se foi para costureira ou venda", example = "Venda direta do Brás.")
     private String motivoSaida;
+    private SaidaEstoqueFuncionarioRequestDto responsavel;
+    private SaidaEstoqueLoteItemEstoqueRequestDto loteItemEstoque;
+    @Nullable
+    private SaidaEstoqueCostureiraRequestDto costureira;
 }

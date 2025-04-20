@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import school.sptech.CRUDBackend.entity.CorteTecido;
 import school.sptech.CRUDBackend.entity.Funcionario;
 import school.sptech.CRUDBackend.entity.LoteItemEstoque;
-import school.sptech.CRUDBackend.repository.FuncionarioRepository;
 
 import java.util.List;
 
@@ -14,14 +13,10 @@ import java.util.List;
 public class CorteTecidoMapper {
 
     public static CorteTecido toEntity(CorteTecidoRequestDto requestDto) {
-        CorteTecidoFuncionarioRequestDto funcionarioDto = requestDto.getFuncionario();
-
-        Funcionario funcionario = new Funcionario(funcionarioDto.getIdFuncionario());
-
-        CorteTecidoLoteItemEstoqueRequestDto loteItemEstoqueDto = requestDto.getLoteItemEstoque();
-
-        LoteItemEstoque loteItemEstoque = new LoteItemEstoque(loteItemEstoqueDto.getIdLoteItemEstoque());
-
+        Funcionario funcionario = new Funcionario();
+        funcionario.setIdFuncionario(requestDto.getFuncionario().getIdFuncionario());
+        LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
+        loteItemEstoque.setIdLoteItemEstoque(requestDto.getLoteItemEstoque().getIdLoteItemEstoque());
         return new CorteTecido(
                 null,
                 requestDto.getInicio(),
