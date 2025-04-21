@@ -11,8 +11,6 @@ public class ItemEstoqueMapper {
         return new ItemEstoque(
                 null,
                 requestDto.getCategoria(),
-                requestDto.getDescricao(),
-                requestDto.getComplemento(),
                 requestDto.getPeso(),
                 requestDto.getQtdMinimo(),
                 requestDto.getQtdArmazenado()
@@ -22,9 +20,7 @@ public class ItemEstoqueMapper {
     public static ItemEstoqueResponseDto toResponseDto(ItemEstoque item) {
         return new ItemEstoqueResponseDto(
                 item.getIdItemEstoque(),
-                item.getCategoria(),
                 item.getDescricao(),
-                item.getComplemento(),
                 item.getPeso(),
                 item.getQtdMinimo(),
                 item.getQtdArmazenado()

@@ -18,7 +18,7 @@ public class ServicoTerceiroService {
         if (servicoTerceiroRepository.existsByEmailOrIdentificacaoOrEnderecoAllIgnoreCase(
                 servicoTerceiro.getEmail(), servicoTerceiro.getIdentificacao(), servicoTerceiro.getEndereco())
         ) {
-            throw new ServicoTerceiroConflitoException("Já existe um serviço de terceiro cadastrado.");
+            throw new ServicoTerceiroConflitoException("Esse provedor de serviço já foi cadastrado.");
         }
 
         return servicoTerceiroRepository.save(servicoTerceiro);
@@ -33,7 +33,7 @@ public class ServicoTerceiroService {
                 .orElseThrow(() -> new ServicoTerceiroNaoEncontradoException("O serviço não foi encotrado"));
     }
 
-    public ServicoTerceiro atualizarServicoTerceiroPorId (Integer id, ServicoTerceiro servicoTerceiroAtualizar) {
+    public ServicoTerceiro atualizarServicoTerceiroPorId(Integer id, ServicoTerceiro servicoTerceiroAtualizar) {
         if(servicoTerceiroRepository.existsById(id)) {
             servicoTerceiroAtualizar.setIdServicoTerceiro(id);
             return servicoTerceiroRepository.save(servicoTerceiroAtualizar);

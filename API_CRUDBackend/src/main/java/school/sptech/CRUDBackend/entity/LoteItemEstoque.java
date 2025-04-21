@@ -14,11 +14,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoteItemEstoque {
-
-    public LoteItemEstoque(Integer idLoteItemEstoque) {
-        this.idLoteItemEstoque = idLoteItemEstoque;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idLoteItemEstoque;
