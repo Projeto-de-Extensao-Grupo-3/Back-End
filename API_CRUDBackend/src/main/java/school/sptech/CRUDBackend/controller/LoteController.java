@@ -4,17 +4,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.CRUDBackend.dto.Lote.LoteMapper;
 import school.sptech.CRUDBackend.dto.Lote.LoteRequestDto;
 import school.sptech.CRUDBackend.dto.Lote.LoteResponseDto;
-import school.sptech.CRUDBackend.dto.LoteItemEstoque.LoteItemEstoqueMapper;
-import school.sptech.CRUDBackend.dto.LoteItemEstoque.LoteItemEstoqueRequestDto;
-import school.sptech.CRUDBackend.dto.LoteItemEstoque.LoteItemEstoqueResponseDto;
 import school.sptech.CRUDBackend.entity.Lote;
-import school.sptech.CRUDBackend.entity.LoteItemEstoque;
 import school.sptech.CRUDBackend.service.LoteService;
 
 import java.util.List;
@@ -24,7 +21,6 @@ import java.util.List;
 @RequestMapping("/lotes")
 @RequiredArgsConstructor
 public class LoteController {
-
     private final LoteService service;
 
     @Operation(
@@ -41,11 +37,10 @@ public class LoteController {
     )
     @PostMapping
     public ResponseEntity<LoteResponseDto> cadastrar(
-            @RequestBody LoteRequestDto loteParaCadastrar
+            @RequestBody @Valid LoteRequestDto loteParaCadastrar
     ){
         Lote lote = LoteMapper.toEntity(loteParaCadastrar);
         LoteResponseDto loteCadastrado = LoteMapper.toResponseDto(service.cadastrarLote(lote));
-
         return ResponseEntity.status(201).body(loteCadastrado);
     }
 
@@ -56,14 +51,10 @@ public class LoteController {
     })
     @GetMapping
     public ResponseEntity<List<LoteResponseDto>> listarTodos(){
-        List<LoteResponseDto> todosOsLotes = service
-                .listarTodosOsLotes()
-                .stream().map(LoteMapper::toResponseDto)
-                .toList();
-        if (todosOsLotes.isEmpty()){
+        List<LoteResponseDto> todosOsLotes = LoteMapper.toResponseDtos(service.listarTodosOsLotes());
+        if (todosOsLotes.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
-
         return ResponseEntity.status(200).body(todosOsLotes);
     }
 
@@ -89,12 +80,11 @@ public class LoteController {
             required = true
     )
     @PutMapping("/{id}")
-    public ResponseEntity<LoteResponseDto> atualizarPorId(@PathVariable
-                                                                     Integer id, @RequestBody
-                                                                     LoteRequestDto loteAtualizar){
+    public ResponseEntity<LoteResponseDto> atualizarPorId(
+            @PathVariable Integer id,
+            @RequestBody @Valid LoteRequestDto loteAtualizar){
         Lote loteParaAtualizar = LoteMapper.toEntity(loteAtualizar);
         LoteResponseDto loteAtualizado = LoteMapper.toResponseDto(service.atualizarLotePorId(id, loteParaAtualizar));
-
         return ResponseEntity.status(200).body(loteAtualizado);
     }
 
