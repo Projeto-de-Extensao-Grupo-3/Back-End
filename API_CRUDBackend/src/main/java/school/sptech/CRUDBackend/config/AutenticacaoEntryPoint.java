@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class AutenticacaoEntryPoint implements AuthenticationEntryPoint {
 
     @Override

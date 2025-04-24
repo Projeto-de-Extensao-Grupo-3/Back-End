@@ -12,7 +12,7 @@ import school.sptech.CRUDBackend.service.serviceLogin.FuncionarioServiceLogin;
 import java.util.List;
 
 @RestController
-@RequestMapping("/funcionarios")
+@RequestMapping("/funcionarios-login")
 public class FuncionarioControllerLogin {
     @Autowired
     private FuncionarioServiceLogin funcionarioServiceLogin;
