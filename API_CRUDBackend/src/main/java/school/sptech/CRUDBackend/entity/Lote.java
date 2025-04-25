@@ -2,21 +2,27 @@ package school.sptech.CRUDBackend.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 @Schema(description = "Entidade representando um lote de item.")
+@Entity
 @Getter
 @Setter
-@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Lote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer idLote;
     private String descricao;
-    private LocalDateTime dataEntrada;
+    private String dataEntrada;
+    @ManyToOne
+    @JoinColumn(name = "id_servico_terceiro")
+    private ServicoTerceiro servicoTerceiro;
+    @ManyToOne
+    @JoinColumn(name = "id_funcionario")
+    private Funcionario responsavel;
 }

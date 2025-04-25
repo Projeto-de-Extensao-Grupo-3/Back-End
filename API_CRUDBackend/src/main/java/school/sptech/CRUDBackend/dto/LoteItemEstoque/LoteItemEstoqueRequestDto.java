@@ -3,7 +3,6 @@ package school.sptech.CRUDBackend.dto.LoteItemEstoque;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoteItemEstoqueRequestDto {
-
     @Schema(description = "Quantidade de item que chegou no Lote.", example = "100")
     @NotNull
     private Integer qtdItem;
@@ -19,4 +17,6 @@ public class LoteItemEstoqueRequestDto {
     @NotNull
     @Min(1)
     private Double preco;
+    private LoteItemEstoqueItemRequestDto itemEstoque;
+    private LoteItemEstoqueLoteRequestDto lote;
 }

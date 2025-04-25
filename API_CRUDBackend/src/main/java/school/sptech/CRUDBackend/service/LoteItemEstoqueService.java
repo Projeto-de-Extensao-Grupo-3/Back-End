@@ -13,11 +13,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class LoteItemEstoqueService {
-
     private final LoteItemEstoqueRepository repository;
 
     public LoteItemEstoque cadastrarLoteItemEstoque(LoteItemEstoque loteParaCadastrar){
-
        return repository.save(loteParaCadastrar);
     }
 
@@ -29,14 +27,14 @@ public class LoteItemEstoqueService {
 
         Optional<LoteItemEstoque> loteItemEstoqueExistente = repository.findById(id);
 
-        return loteItemEstoqueExistente.map(intemEst ->
-                loteItemEstoqueExistente.get()).orElseThrow(() -> new LoteItemEstoqueNaoEncontradoException("O este lote do item não foi encontrado"));
+        return loteItemEstoqueExistente.orElseThrow(()
+                -> new LoteItemEstoqueNaoEncontradoException("O este lote do item não foi encontrado"));
     }
 
     public LoteItemEstoque atualizarLoteItemEstoquePorId(Integer id, LoteItemEstoque loteItemEstoqueParaAtualizar){
 
         if (repository.existsById(id)){
-            loteItemEstoqueParaAtualizar.setId(id);
+            loteItemEstoqueParaAtualizar.setIdLoteItemEstoque(id);
             return repository.save(loteItemEstoqueParaAtualizar);
         }
         throw new LoteNaoEncontradoException("O lote do estoque não foi encontrado");
@@ -46,7 +44,8 @@ public class LoteItemEstoqueService {
 
         if (repository.existsById(id)){
             repository.deleteById(id);
+        } else {
+            throw new LoteItemEstoqueNaoEncontradoException("O lote do item não existe");
         }
-        throw new LoteItemEstoqueNaoEncontradoException("O lote do item não existe");
     }
 }

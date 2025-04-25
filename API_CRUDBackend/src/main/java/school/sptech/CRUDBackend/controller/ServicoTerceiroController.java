@@ -41,7 +41,8 @@ public class ServicoTerceiroController {
     ) {
         ServicoTerceiro servicoParaCadastrar = ServicoTerceiroMapper.toEntity(servicoTerceiroCad);
         ServicoTerceiroResponseDto novoServicoTerceiro = ServicoTerceiroMapper.toResponseDto(
-                servicoTerceiroService.cadastrarServicoTerceiro(servicoParaCadastrar));
+                servicoTerceiroService.cadastrarServicoTerceiro(servicoParaCadastrar)
+        );
         return ResponseEntity.status(201).body(novoServicoTerceiro);
     }
 

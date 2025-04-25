@@ -4,9 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import school.sptech.CRUDBackend.dto.Lote.LoteMapper;
 import school.sptech.CRUDBackend.dto.LoteItemEstoque.LoteItemEstoqueMapper;
 import school.sptech.CRUDBackend.dto.LoteItemEstoque.LoteItemEstoqueRequestDto;
 import school.sptech.CRUDBackend.dto.LoteItemEstoque.LoteItemEstoqueResponseDto;
@@ -17,10 +18,10 @@ import java.util.List;
 
 @Tag(name = "Lote de Quantidade e Preço do Item", description = "Operações CRUD relacionadas aos lotes de quantidade e preço dos Itens.")
 @RestController
-@RequestMapping("/lotesItemEstoques")
+@RequestMapping("/lotes-item-estoque")
+@RequiredArgsConstructor
 public class LoteItemEstoqueController {
-
-    private LoteItemEstoqueService service;
+    private final LoteItemEstoqueService service;
 
     @Operation(
             summary = "Cadastro de um novo Lote de Item.",
@@ -34,11 +35,13 @@ public class LoteItemEstoqueController {
             required = true
     )
     @PostMapping
-    public ResponseEntity<LoteItemEstoqueResponseDto> cadastrar(@RequestBody LoteItemEstoqueRequestDto loteItemEstoqueCadastrar){
-
+    public ResponseEntity<LoteItemEstoqueResponseDto> cadastrar(
+            @RequestBody @Valid LoteItemEstoqueRequestDto loteItemEstoqueCadastrar
+    ) {
       LoteItemEstoque loteItemEstoqueParaCadastrar = LoteItemEstoqueMapper.toEntity(loteItemEstoqueCadastrar);
-      LoteItemEstoqueResponseDto loteItemEstoqueCadastrado = LoteItemEstoqueMapper.toResponseDto(service.cadastrarLoteItemEstoque(loteItemEstoqueParaCadastrar));
-
+      LoteItemEstoqueResponseDto loteItemEstoqueCadastrado = LoteItemEstoqueMapper.toResponseDto(
+              service.cadastrarLoteItemEstoque(loteItemEstoqueParaCadastrar)
+      );
       return ResponseEntity.status(201).body(loteItemEstoqueCadastrado);
     }
 
@@ -50,15 +53,12 @@ public class LoteItemEstoqueController {
     @GetMapping
     public ResponseEntity<List<LoteItemEstoqueResponseDto>> listarTodos(){
 
-        List<LoteItemEstoqueResponseDto> todosOsLoteItemEstoque = service
-                .listarTodos()
-                .stream()
-                .map(LoteItemEstoqueMapper::toResponseDto)
-                .toList();
+        List<LoteItemEstoqueResponseDto> todosOsLoteItemEstoque = LoteItemEstoqueMapper.toResponseDtos(
+                service.listarTodos()
+        );
         if (todosOsLoteItemEstoque.isEmpty()){
             return ResponseEntity.status(204).build();
         }
-
         return ResponseEntity.status(200).body(todosOsLoteItemEstoque);
     }
 
@@ -69,8 +69,9 @@ public class LoteItemEstoqueController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<LoteItemEstoqueResponseDto> buscarPorId(@PathVariable Integer id){
-        LoteItemEstoqueResponseDto loteItemEstoqueEcontrado = LoteItemEstoqueMapper.toResponseDto(service.buscarLoteItemEstoquePorId(id));
-
+        LoteItemEstoqueResponseDto loteItemEstoqueEcontrado = LoteItemEstoqueMapper.toResponseDto(
+                service.buscarLoteItemEstoquePorId(id)
+        );
         return ResponseEntity.status(200).body(loteItemEstoqueEcontrado);
     }
 
@@ -84,13 +85,14 @@ public class LoteItemEstoqueController {
             required = true
     )
     @PutMapping("/{id}")
-    public ResponseEntity<LoteItemEstoqueResponseDto> atualizarPorId(@PathVariable Integer id,
-                                                                     @RequestBody LoteItemEstoqueRequestDto loteItemEstoqueCadastrar)
-    {
+    public ResponseEntity<LoteItemEstoqueResponseDto> atualizarPorId(
+            @PathVariable Integer id,
+            @RequestBody @Valid LoteItemEstoqueRequestDto loteItemEstoqueCadastrar
+    ) {
         LoteItemEstoque loteItemEstoqueParaAtualizar = LoteItemEstoqueMapper.toEntity(loteItemEstoqueCadastrar);
         LoteItemEstoqueResponseDto loteItemEstoqueAtualizado = LoteItemEstoqueMapper.toResponseDto(
-                service.atualizarLoteItemEstoquePorId(id, loteItemEstoqueParaAtualizar));
-
+                service.atualizarLoteItemEstoquePorId(id, loteItemEstoqueParaAtualizar)
+        );
         return ResponseEntity.status(200).body(loteItemEstoqueAtualizado);
     }
 

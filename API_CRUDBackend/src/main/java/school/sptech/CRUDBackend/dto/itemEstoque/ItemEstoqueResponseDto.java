@@ -13,12 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ItemEstoqueResponseDto {
     private Integer idItemEstoque;
-    @Schema(description = "Tecido ou Roupa", example = "Tecido")
-    private String categoria;
     @Schema(description = "Descrição do item", example = "Tecidos: jeans, dry-fit | Roupas: calça, camiseta")
     private String descricao;
-    @Schema(description = "Complemento do item / Estampa", example = "listrado, vermelho, azul")
-    private String complemento;
     @Schema(description = "Peso do item", example = "")
     private Double peso;
     @Schema(description = "Quantidade mínima para item.", example = "100")
