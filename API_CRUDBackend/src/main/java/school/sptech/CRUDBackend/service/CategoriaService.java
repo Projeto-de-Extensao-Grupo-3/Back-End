@@ -1,5 +1,6 @@
 package school.sptech.CRUDBackend.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.CRUDBackend.entity.Categoria;
 import school.sptech.CRUDBackend.exception.Categoria.CategoriaConflitoException;
@@ -9,13 +10,10 @@ import school.sptech.CRUDBackend.repository.CategoriaRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CategoriaService {
 
     private final CategoriaRepository repository;
-
-    public CategoriaService(CategoriaRepository repository) {
-        this.repository = repository;
-    }
 
     public Categoria cadastrarCategoria(Categoria categoriaParaCadastrar){
 
