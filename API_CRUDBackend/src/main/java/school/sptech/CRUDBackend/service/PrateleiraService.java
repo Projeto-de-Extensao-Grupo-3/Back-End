@@ -1,5 +1,6 @@
 package school.sptech.CRUDBackend.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.CRUDBackend.entity.Prateleira;
 import school.sptech.CRUDBackend.exception.Prateleira.PrateleiraConflitoException;
@@ -9,13 +10,10 @@ import school.sptech.CRUDBackend.repository.PrateleiraRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PrateleiraService {
 
     private final PrateleiraRepository repository;
-
-    public PrateleiraService(PrateleiraRepository repository) {
-        this.repository = repository;
-    }
 
     public Prateleira cadastrarPrateleira(Prateleira prateleiraParaCadastrar) {
 
