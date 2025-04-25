@@ -25,6 +25,6 @@ public class CorteTecidoRequestDto {
     @PastOrPresent
     @Schema(description = "Data e Hora e finalização do corte", example = "2025-04-12T10:15:30")
     private LocalDateTime termino;
-    private CorteTecidoFuncionarioRequestDto funcionario;
-    private CorteTecidoLoteItemEstoqueRequestDto loteItemEstoque;
+    private Funcionario funcionario;
+    private LoteItemEstoque loteItemEstoque;
 }
