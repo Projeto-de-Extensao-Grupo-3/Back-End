@@ -11,4 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CorteTecidoFuncionarioResponseDto {
     private String nome;
+    private String telefone;
+    private String email;
 }
