@@ -49,12 +49,13 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/webjars/**"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/actuator/*"),
-            new AntPathRequestMatcher("/usuarios/login/**"),
+            new AntPathRequestMatcher("/funcionarios-login/**"),
             new AntPathRequestMatcher("/h2-console/**"),
             new AntPathRequestMatcher("/h2-console/**/**"),
             new AntPathRequestMatcher("/error/**"),
-            new AntPathRequestMatcher("/itens-estoque"), // Liberado para teste, depois remover
-            new AntPathRequestMatcher("/confeccao-roupas") // Liberado para teste, depois remover
+//            new AntPathRequestMatcher("/itens-estoque"), // Liberado para teste, depois remover
+//            new AntPathRequestMatcher("/confeccao-roupas"), // Liberado para teste, depois remover
+//            new AntPathRequestMatcher("/funcionarios") // Liberado para teste, depois remover
     };
 
     @Bean

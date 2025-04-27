@@ -27,7 +27,7 @@ public class SaidaEstoqueRequestDto {
     private LocalTime hora;
     @Schema(description = "Quantidade do Item que saiu", example = "250")
     @Min(1)
-    private Integer qtSaida;
+    private Double qtdSaida;
     @Schema(description = "Se foi para costureira ou venda", example = "Venda direta do Brás.")
     private String motivoSaida;
     private SaidaEstoqueFuncionarioRequestDto responsavel;

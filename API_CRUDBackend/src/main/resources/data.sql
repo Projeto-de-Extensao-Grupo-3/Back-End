@@ -25,7 +25,7 @@ INSERT INTO controle_acesso VALUES
     (6, 3);
 
 INSERT INTO item_estoque (descricao, peso, qtd_minimo, qtd_armazenado) VALUES
-    ('Vestido azul florido', 1.0, 0, 0),
+    ('Vestido azul florido', 1.0, 10.0, 15.0),
     ('Camisa vermelha lisa', 1.0, 0, 0),
     ('Bermuda cinza com listras vermelhas', 1.0, 0, 0),
     ('Tecido vermelho liso', 1.0, 0, 0),
@@ -40,9 +40,9 @@ INSERT INTO servico_terceiro (categoria, nome, telefone, email, endereco) VAlUES
 	('fornecedor', 'Fornecedor X', '11918465729', 'fornecedorx@gmail.com', 'Rua 2'),
 	('fornecedor', 'Fornecedor Z', '11918465729', 'fornecedorys@gmail.com', 'Rua 3');
 
-INSERT INTO lote (descricao, data_entrada, id_servico_terceiro) VAlUES
-	('lote de roupas', now(), 1),
-	('lote de tecido', now(), 2);
+INSERT INTO lote (descricao, data_entrada, id_servico_terceiro, id_funcionario) VAlUES
+	('lote de roupas', now(), 1, 1),
+	('lote de tecido', now(), 2, 1);
 
-INSERT INTO lote_item_estoque (id_lote, id_item_estoque, qtd_item, preco) VAlUES
-	(2, 4, 3.5, 80.0);
+INSERT INTO lote_item_estoque (qtd_item, preco, id_item_estoque, id_lote) VALUES
+    (10.0, 230.0, 1, 1);

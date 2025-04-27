@@ -12,7 +12,7 @@ import lombok.Setter;
 public class LoteItemEstoqueRequestDto {
     @Schema(description = "Quantidade de item que chegou no Lote.", example = "100")
     @NotNull
-    private Integer qtdItem;
+    private Double qtdItem;
     @Schema(description = "Preço que o Item está valendo nesse lote.", example = "35")
     @NotNull
     @Min(1)
