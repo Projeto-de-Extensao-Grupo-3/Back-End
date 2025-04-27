@@ -47,7 +47,8 @@ public class FuncionarioServiceLogin {
 
         final Authentication authentication = authenticationManager.authenticate(credentials);
 
-        Funcionario funcionarioAutenticado = funcionarioRepository.findByEmail(funcionario.getEmail()).orElseThrow(
+        Funcionario funcionarioAutenticado = funcionarioRepository.findByEmail(
+                funcionario.getEmail()).orElseThrow(
                 () -> new ResponseStatusException(404, "Email do usuário não cadastro", null)
         );
 

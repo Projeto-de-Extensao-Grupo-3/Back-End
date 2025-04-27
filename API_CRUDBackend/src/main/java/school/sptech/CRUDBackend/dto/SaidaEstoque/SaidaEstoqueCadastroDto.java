@@ -16,6 +16,6 @@ public class SaidaEstoqueCadastroDto {
     private Integer idSaida;
     private LocalDate data;
     private LocalTime hora;
-    private Integer qtdSaida;
+    private Double qtdSaida;
     private String motivoSaida;
 }

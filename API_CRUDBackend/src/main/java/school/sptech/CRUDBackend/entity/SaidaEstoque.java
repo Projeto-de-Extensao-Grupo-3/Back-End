@@ -1,6 +1,7 @@
 package school.sptech.CRUDBackend.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class SaidaEstoque {
     private Integer idSaida;
     private LocalDate data;
     private LocalTime hora;
-    private Integer qtdSaida;
+    private Double qtdSaida;
     private String motivoSaida;
     @ManyToOne
     @JoinColumn(name = "id_funcionario")
@@ -32,5 +33,6 @@ public class SaidaEstoque {
     private LoteItemEstoque loteItemEstoque;
     @ManyToOne
     @JoinColumn(name = "id_servico_terceiro")
+    @Nullable
     private ServicoTerceiro costureira;
 }

@@ -17,7 +17,7 @@ public class LoteItemEstoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idLoteItemEstoque;
-    private Integer qtdItem;
+    private Double qtdItem;
     private Double preco;
     @ManyToOne
     @JoinColumn(name = "id_item_estoque")
