@@ -22,7 +22,7 @@ public class SaidaEstoqueResponseDto {
     @Schema(description = "Hora da saída", example = "14:30:00")
     private LocalTime hora;
     @Schema(description = "Quantidade do Item que saiu", example = "250")
-    private Integer qtSaida;
+    private Double qtSaida;
     @Schema(description = "Se foi para costureira ou venda", example = "Venda direta do Brás.")
     private String motivoSaida;
     private SaidaEstoqueFuncionarioResponseDto funcionario;

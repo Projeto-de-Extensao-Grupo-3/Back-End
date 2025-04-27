@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SaidaEstoqueLoteItemEstoqueResponseDto {
-    private Integer qtdItem;
+    private Double qtdItem;
     private Double preco;
 }
