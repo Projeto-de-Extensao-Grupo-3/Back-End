@@ -17,7 +17,7 @@ import school.sptech.CRUDBackend.service.CorteTecidoService;
 
 import java.util.List;
 
-@Tag(name = "Cortes de Tecidos", description = "Operações CRUD relacionadas aos cortes de tecidos (data de inicio, término do corte e quem efetuou).")
+@Tag(name = "Cortes de Tecidos Controller", description = "Operações CRUD relacionadas aos cortes de tecidos (data de inicio, término do corte e quem efetuou).")
 @RestController
 @RequestMapping("/cortes-tecido")
 @RequiredArgsConstructor

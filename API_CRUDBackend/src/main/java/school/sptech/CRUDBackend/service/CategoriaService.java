@@ -17,7 +17,7 @@ public class CategoriaService {
 
     public Categoria cadastrarCategoria(Categoria categoriaParaCadastrar){
 
-        if (repository.existxByNome(categoriaParaCadastrar.getNome())){
+        if (repository.existsByNome(categoriaParaCadastrar.getNome())){
             throw new CategoriaConflitoException("Essa categoria já existe");
         }
         return repository.save(categoriaParaCadastrar);

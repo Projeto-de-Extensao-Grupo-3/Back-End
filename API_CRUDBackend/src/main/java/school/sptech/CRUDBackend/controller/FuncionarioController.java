@@ -17,7 +17,7 @@ import school.sptech.CRUDBackend.service.FuncionarioService;
 
 import java.util.List;
 
-@Tag(name = "Funcionários", description = "Operações CRUD relacionadas funcionários..")
+@Tag(name = "Funcionários Controller", description = "Operações CRUD relacionadas funcionários..")
 @RestController
 @RequestMapping("/funcionarios")
 @RequiredArgsConstructor

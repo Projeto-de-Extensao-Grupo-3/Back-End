@@ -16,7 +16,7 @@ import school.sptech.CRUDBackend.service.LoteService;
 
 import java.util.List;
 
-@Tag(name = "Lote", description = "Operações CRUD relacionadas aos lotes de entrada dos Itens.")
+@Tag(name = "Lote Controller", description = "Operações CRUD relacionadas aos lotes de entrada dos Itens.")
 @RestController
 @RequestMapping("/lotes")
 @RequiredArgsConstructor

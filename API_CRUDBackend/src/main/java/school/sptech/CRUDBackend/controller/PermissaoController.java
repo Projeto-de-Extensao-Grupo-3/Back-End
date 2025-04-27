@@ -14,7 +14,7 @@ import school.sptech.CRUDBackend.service.PermissaoService;
 import java.util.List;
 
 
-@Tag(name = "Permissão", description = "Operações CRUD relacionadas ás permissões de funcionários.")
+@Tag(name = "Permissão Controller", description = "Operações CRUD relacionadas ás permissões de funcionários.")
 @RestController
 @RequestMapping("/permissoes")
 @RequiredArgsConstructor

@@ -15,7 +15,7 @@ import school.sptech.CRUDBackend.service.SaidaEstoqueService;
 
 import java.util.List;
 
-@Tag(name = "Saída de Estoque", description = "Operações CRUD relacionadas ás Saídas de Item do Estoque.")
+@Tag(name = "Saída de Estoque Controller", description = "Operações CRUD relacionadas ás Saídas de Item do Estoque.")
 @RestController
 @RequestMapping("/saidas-estoque")
 public class SaidaEstoqueController {
