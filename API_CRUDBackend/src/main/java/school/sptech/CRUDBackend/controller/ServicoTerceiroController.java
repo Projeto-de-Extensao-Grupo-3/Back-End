@@ -16,7 +16,7 @@ import school.sptech.CRUDBackend.service.ServicoTerceiroService;
 
 import java.util.List;
 
-@Tag(name = "Serviço Terceira", description = "Operações CRUD relacionadas aos fornecedores ou costureiras que atuam como serviços terceiro.")
+@Tag(name = "Serviço Terceiro Controller", description = "Operações CRUD relacionadas aos fornecedores ou costureiras que atuam como serviços terceiro.")
 @RestController
 @RequestMapping("/servico-terceiros")
 @RequiredArgsConstructor

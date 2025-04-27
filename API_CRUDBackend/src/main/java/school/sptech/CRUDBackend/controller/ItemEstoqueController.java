@@ -16,7 +16,7 @@ import school.sptech.CRUDBackend.service.ItemEstoqueService;
 
 import java.util.List;
 
-@Tag(name = "Item de Estoque", description = "Operações CRUD relacionadas aos itens de estoque (tecido ou roupa).")
+@Tag(name = "Item de Estoque Controller", description = "Operações CRUD relacionadas aos itens de estoque (tecido ou roupa).")
 @RestController
 @RequestMapping("/itens-estoque")
 @RequiredArgsConstructor

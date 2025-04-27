@@ -16,7 +16,7 @@ import school.sptech.CRUDBackend.service.LoteItemEstoqueService;
 
 import java.util.List;
 
-@Tag(name = "Lote de Quantidade e Preço do Item", description = "Operações CRUD relacionadas aos lotes de quantidade e preço dos Itens.")
+@Tag(name = "Lote de Quantidade e Preço do Item Controller", description = "Operações CRUD relacionadas aos lotes de quantidade e preço dos Itens.")
 @RestController
 @RequestMapping("/lotes-item-estoque")
 @RequiredArgsConstructor
