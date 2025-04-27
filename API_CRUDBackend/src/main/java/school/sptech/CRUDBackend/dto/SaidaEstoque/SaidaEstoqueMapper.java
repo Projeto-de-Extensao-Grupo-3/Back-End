@@ -17,14 +17,16 @@ public class SaidaEstoqueMapper {
         funcionario.setIdFuncionario(requestDto.getResponsavel().getIdFuncionario());
         LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
         loteItemEstoque.setIdLoteItemEstoque(requestDto.getLoteItemEstoque().getIdLoteItemEstoque());
-        ServicoTerceiro costureira = new ServicoTerceiro();
-        assert requestDto.getCostureira() != null;
-        costureira.setIdServicoTerceiro(requestDto.getCostureira().getIdCostureira());
+        ServicoTerceiro costureira = null;
+        if (requestDto.getCostureira() != null) {
+            costureira = new ServicoTerceiro();
+            costureira.setIdServicoTerceiro(requestDto.getCostureira().getIdCostureira());
+        }
         return new SaidaEstoque(
                 null,
                 requestDto.getData(),
                 requestDto.getHora(),
-                requestDto.getQtSaida(),
+                requestDto.getQtdSaida(),
                 requestDto.getMotivoSaida(),
                 funcionario,
                 loteItemEstoque,

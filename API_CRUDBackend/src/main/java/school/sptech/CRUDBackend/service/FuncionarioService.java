@@ -2,7 +2,6 @@ package school.sptech.CRUDBackend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import school.sptech.CRUDBackend.dto.dtoLogin.FuncionarioTokenDto;
 import school.sptech.CRUDBackend.entity.Funcionario;
 import school.sptech.CRUDBackend.exception.funcionario.FuncionarioConflitoException;
 import school.sptech.CRUDBackend.exception.funcionario.FuncionarioNaoEncontradoException;
@@ -28,7 +27,7 @@ public class FuncionarioService {
 
     public Funcionario buscarFuncionarioPorId(Integer id) {
         return funcionarioRepository.findById(id)
-                .orElseThrow(() -> new FuncionarioNaoEncontradoException("O funcionário para atualizar não existe."));
+                .orElseThrow(() -> new FuncionarioNaoEncontradoException("O funcionário não existe."));
     }
 
     public Funcionario atualizarFuncionarioPorId(Integer id, Funcionario funcionarioAtualizar) {
