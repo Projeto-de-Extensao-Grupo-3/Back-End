@@ -20,7 +20,19 @@ public class ItemEstoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idItemEstoque;
     private String descricao;
+    private String complemento;
     private Double peso;
     private Double qtdMinimo;
     private Double qtdArmazenado;
+    @ManyToOne
+    private Categoria categoria;
+    @ManyToMany
+    @JoinTable(
+            name = "caracteristica_item_estoque",
+            joinColumns = @JoinColumn(name = "id_item_estoque"),
+            inverseJoinColumns = @JoinColumn(name = "id_categoria")
+    )
+    private Set<Categoria> caracteristicas;
+    @ManyToOne
+    private Prateleira prateleira;
 }

@@ -40,7 +40,7 @@ public class CategoriaService {
     public Categoria atualizarPorId(Integer id, Categoria categoriaParaAtualizar) {
 
         if (repository.existsById(id)) {
-            categoriaParaAtualizar.setId(id);
+            categoriaParaAtualizar.setIdCategoria(id);
             return repository.save(categoriaParaAtualizar);
         }
         throw new CategoriaNaoEncontradaException("A categoria para atualizar não existe");

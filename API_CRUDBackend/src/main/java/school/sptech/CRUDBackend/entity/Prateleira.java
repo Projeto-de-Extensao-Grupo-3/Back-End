@@ -17,6 +17,6 @@ import lombok.Setter;
 public class Prateleira {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idPrateleira;
     private String codigo;
 }
