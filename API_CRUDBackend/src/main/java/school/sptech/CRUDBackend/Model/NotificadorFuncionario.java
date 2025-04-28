@@ -8,7 +8,7 @@ import school.sptech.CRUDBackend.repository.FuncionarioRepository;
 
 import java.util.List;
 @Component
-public class NotificadorFuncionario implements Observer{
+public class NotificadorFuncionario implements FuncionarioObserver {
 
     @Autowired
     private FuncionarioRepository funcionarioRepository;

@@ -2,24 +2,29 @@ package school.sptech.CRUDBackend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import school.sptech.CRUDBackend.Model.itemEstoque.Observer;
+import school.sptech.CRUDBackend.Model.itemEstoque.Subject;
 import school.sptech.CRUDBackend.entity.ItemEstoque;
 import school.sptech.CRUDBackend.entity.LoteItemEstoque;
 import school.sptech.CRUDBackend.entity.SaidaEstoque;
 import school.sptech.CRUDBackend.exception.SaidaEstoque.SaidaEstoqueNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.SaidaEstoqueRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class SaidaEstoqueService {
+public class SaidaEstoqueService implements Subject {
     private final SaidaEstoqueRepository repository;
     private final LoteItemEstoqueService loteItemEstoqueService;
-    private final ItemEstoqueService itemEstoqueService;
+
+    private final List<Observer> observadores = new ArrayList<>();
 
     public SaidaEstoque cadastrar(SaidaEstoque saidaParaCadastrar){
-        atualizarQtdItemEstoque(saidaParaCadastrar, 0.0);
+        ItemEstoque itemEstoque = atualizarQtdItemEstoque(saidaParaCadastrar, 0.0);
+        notificarObservers(itemEstoque);
         return repository.save(saidaParaCadastrar);
     }
 
@@ -50,7 +55,8 @@ public class SaidaEstoqueService {
             Double qtdAntiga = saidaEstoqueAntigo.getQtdSaida();
             Double qtdNova = saidaParaAtualizar.getQtdSaida();
             Double qtdAtualizado = qtdNova - qtdAntiga;
-            atualizarQtdItemEstoque(saidaParaAtualizar, qtdAtualizado);
+            ItemEstoque itemEstoque = atualizarQtdItemEstoque(saidaParaAtualizar, qtdAtualizado);
+            notificarObservers(itemEstoque);
             return repository.save(saidaParaAtualizar);
         }
         throw new SaidaEstoqueNaoEncontradoException("A saída não existe");
@@ -64,7 +70,24 @@ public class SaidaEstoqueService {
         throw new SaidaEstoqueNaoEncontradoException("A saída não existe para remover");
     }
 
-    private void atualizarQtdItemEstoque(SaidaEstoque saidaEstoque, Double qtdAtualizar) {
+    @Override
+    public void adicionarObservador(Observer observador) {
+        observadores.add(observador);
+    }
+
+    @Override
+    public void removerObservador(Observer observador) {
+        observadores.remove(observador);
+    }
+
+    @Override
+    public void notificarObservers(ItemEstoque itemEstoque){
+        for (Observer observador : observadores) {
+            observador.atualizarQuantidade(itemEstoque);
+        }
+    }
+
+    private ItemEstoque atualizarQtdItemEstoque(SaidaEstoque saidaEstoque, Double qtdAtualizar) {
         Integer idLoteItemEstoque = saidaEstoque.getLoteItemEstoque().getIdLoteItemEstoque();
         LoteItemEstoque loteItemEstoque = loteItemEstoqueService.buscarLoteItemEstoquePorId(idLoteItemEstoque);
         ItemEstoque itemEstoque = loteItemEstoque.getItemEstoque();
@@ -72,6 +95,6 @@ public class SaidaEstoqueService {
                 ? saidaEstoque.getQtdSaida()
                 : qtdAtualizar;
         itemEstoque.setQtdArmazenado(itemEstoque.getQtdArmazenado() - qtdEntradaNova);
-        itemEstoqueService.atualizarItemEstoquePorId(itemEstoque.getIdItemEstoque(), itemEstoque);
+        return itemEstoque;
     }
 }

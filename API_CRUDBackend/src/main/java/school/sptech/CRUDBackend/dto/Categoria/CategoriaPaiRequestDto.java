@@ -7,9 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class CategoriaResponseDto {
-    private Integer id;
-    private String nome;
+@NoArgsConstructor
+public class CategoriaPaiRequestDto {
+    private Integer idCategoria;
 }

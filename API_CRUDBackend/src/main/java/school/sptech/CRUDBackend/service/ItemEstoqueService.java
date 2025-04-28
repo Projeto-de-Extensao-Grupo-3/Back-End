@@ -2,17 +2,17 @@ package school.sptech.CRUDBackend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import school.sptech.CRUDBackend.Model.itemEstoque.Observer;
 import school.sptech.CRUDBackend.entity.ItemEstoque;
 import school.sptech.CRUDBackend.exception.itensEstoque.ItemEstoqueConflitoException;
 import school.sptech.CRUDBackend.exception.itensEstoque.ItemEstoqueNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.ItemEstoqueRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ItemEstoqueService {
+public class ItemEstoqueService implements Observer {
     private final ItemEstoqueRepository itemEstoqueRepository;
 
     public ItemEstoque cadastrarItemEstoque(ItemEstoque itemCadastrar) {
@@ -45,5 +45,9 @@ public class ItemEstoqueService {
         } else {
             throw new ItemEstoqueNaoEncontradoException("O item para atualizar não existe");
         }
+    }
+
+    public void atualizarQuantidade(ItemEstoque itemEstoque) {
+        atualizarItemEstoquePorId(itemEstoque.getIdItemEstoque(), itemEstoque);
     }
 }

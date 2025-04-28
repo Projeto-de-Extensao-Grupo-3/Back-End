@@ -11,6 +11,6 @@ public class PrateleiraMapper {
     }
 
     public static PrateleiraResponseDto toResponseDto(Prateleira prateleira) {
-        return new PrateleiraResponseDto(prateleira.getId(), prateleira.getCodigo());
+        return new PrateleiraResponseDto(prateleira.getIdPrateleira(), prateleira.getCodigo());
     }
 }

@@ -16,9 +16,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemEstoqueRequestDto {
-    @Schema(description = "Tecido ou Roupa", example = "Tecido")
-    @NotBlank
-    private String categoria;
     @Schema(description = "Descrição do item", example = "Tecidos: jeans, dry-fit | Roupas: calça, camiseta")
     @NotBlank
     private String descricao;
@@ -36,4 +33,7 @@ public class ItemEstoqueRequestDto {
     @NotBlank
     @Positive
     private Double qtdArmazenado;
+    private ItemEstoqueCategoriaRequestDto categoria;
+    private Set<ItemEstoqueCategoriaRequestDto> caracteristicas;
+    private ItemEstoquePrateleiraRequestDto plateleira;
 }

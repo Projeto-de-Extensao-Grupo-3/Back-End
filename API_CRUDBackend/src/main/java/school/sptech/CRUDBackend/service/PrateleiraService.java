@@ -40,7 +40,7 @@ public class PrateleiraService {
     public Prateleira atualizarPorId(Integer id, Prateleira prateleiraParaAtualizar) {
 
         if (repository.existsById(id)) {
-            prateleiraParaAtualizar.setId(id);
+            prateleiraParaAtualizar.setIdPrateleira(id);
             return repository.save(prateleiraParaAtualizar);
         }
         throw new PrateleiraNaoEncontradaException("A prateleira para atualizar não existe");
