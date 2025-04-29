@@ -3,6 +3,7 @@ package school.sptech.CRUDBackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class LoteItemEstoqueController {
             description = "Objeto do tipo LoteItemEstoqueRequestDto para cadastro.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PostMapping
     public ResponseEntity<LoteItemEstoqueResponseDto> cadastrar(
             @RequestBody @Valid LoteItemEstoqueRequestDto loteItemEstoqueCadastrar
@@ -50,6 +52,7 @@ public class LoteItemEstoqueController {
             @ApiResponse(responseCode = "200", description = "lista possui Lotes de Itens"),
             @ApiResponse(responseCode = "204", description = "lista de Lotes está vazia"),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping
     public ResponseEntity<List<LoteItemEstoqueResponseDto>> listarTodos(){
 
@@ -67,6 +70,7 @@ public class LoteItemEstoqueController {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID informado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
     public ResponseEntity<LoteItemEstoqueResponseDto> buscarPorId(@PathVariable Integer id){
         LoteItemEstoqueResponseDto loteItemEstoqueEcontrado = LoteItemEstoqueMapper.toResponseDto(
@@ -84,6 +88,7 @@ public class LoteItemEstoqueController {
             description = "Objeto do tipo CorteTecidoRequestDto com valores de atualização.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PutMapping("/{id}")
     public ResponseEntity<LoteItemEstoqueResponseDto> atualizarPorId(
             @PathVariable Integer id,
@@ -101,6 +106,7 @@ public class LoteItemEstoqueController {
             @ApiResponse(responseCode = "200", description = "Lote de Item deletado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID informado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerPorId(
             @PathVariable Integer id)

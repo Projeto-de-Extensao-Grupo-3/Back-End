@@ -3,6 +3,7 @@ package school.sptech.CRUDBackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,7 @@ public class SaidaEstoqueController {
             description = "Objeto do tipo SaidaEstoqueRequestDto para cadastro.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PostMapping
     public ResponseEntity<SaidaEstoqueResponseDto> cadastrarSaida(@RequestBody @Valid SaidaEstoqueRequestDto saidaCadastro){
         SaidaEstoque saidaParaCadastrar = SaidaEstoqueMapper.toEntity(saidaCadastro);
@@ -51,6 +53,7 @@ public class SaidaEstoqueController {
             @ApiResponse(responseCode = "200", description = "Lista possui saídas."),
             @ApiResponse(responseCode = "204", description = "Lista de saídas está vazia"),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping
     public ResponseEntity<List<SaidaEstoqueResponseDto>> listarSaidas(){
         List<SaidaEstoqueResponseDto> todasAsSaidas = SaidaEstoqueMapper.toResponseDtos(service.listar());
@@ -65,6 +68,7 @@ public class SaidaEstoqueController {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
     public ResponseEntity<SaidaEstoqueResponseDto> buscarPorId(@PathVariable Integer id){
         SaidaEstoqueResponseDto saidaEncontrada = SaidaEstoqueMapper.toResponseDto(service.buscarPorId(id));
@@ -77,6 +81,7 @@ public class SaidaEstoqueController {
             @ApiResponse(responseCode = "200", description = "Lista possui registros de saída."),
             @ApiResponse(responseCode = "204", description = "A lista não possui nenhuma saída com o motivo passado"),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/{motivo}")
     public ResponseEntity<List<SaidaEstoqueResponseDto>> buscarPorMotivo(@PathVariable String motivo){
         List<SaidaEstoqueResponseDto> saidasEncontradas = SaidaEstoqueMapper.toResponseDtos(service.buscarPorMotivo(motivo));
@@ -93,6 +98,7 @@ public class SaidaEstoqueController {
             description = "Objeto do tipo PermissaoRequestDto com valores de atualização.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PutMapping("/{id}")
     public ResponseEntity<SaidaEstoqueResponseDto> atualizarSaida(
             @PathVariable Integer id,
@@ -110,6 +116,7 @@ public class SaidaEstoqueController {
             @ApiResponse(responseCode = "204", description = "Sem corpo de resposta, registro deletado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarSaida(@PathVariable Integer id) {
         service.removerPorId(id);

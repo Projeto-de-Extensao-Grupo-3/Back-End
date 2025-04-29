@@ -3,6 +3,7 @@ package school.sptech.CRUDBackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,7 @@ public class PrateleiraController {
             description = "Objeto do tipo PrateleiraRequestDto para cadastro.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PostMapping
     public ResponseEntity<PrateleiraResponseDto> cadastrar(@RequestBody PrateleiraRequestDto prateleiraParaCadastrar) {
         Prateleira prateleira = PrateleiraMapper.toEntity(prateleiraParaCadastrar);
@@ -51,6 +53,7 @@ public class PrateleiraController {
             @ApiResponse(responseCode = "200", description = "Lista de Prateleiras."),
             @ApiResponse(responseCode = "204", description = "Lista de Prateleiras está vazia"),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping
     public ResponseEntity<List<PrateleiraResponseDto>> listarTodas() {
         List<PrateleiraResponseDto> todasPrateleiras = service.listarTodos()
@@ -70,6 +73,7 @@ public class PrateleiraController {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
     public ResponseEntity<PrateleiraResponseDto> buscarPorId(@PathVariable Integer id) {
         PrateleiraResponseDto prateleiraEncontrada = PrateleiraMapper.toResponseDto(service.buscarPorId(id));
@@ -81,6 +85,7 @@ public class PrateleiraController {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/{codigo}")
     public ResponseEntity<PrateleiraResponseDto> buscarPorCodigo(@PathVariable String codigo) {
         PrateleiraResponseDto prateleiraEncontrada = PrateleiraMapper.toResponseDto(service.buscarPorCodigo(codigo));
@@ -96,6 +101,7 @@ public class PrateleiraController {
             description = "Objeto do tipo CategoriaRequestDto com valores de atualização.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PutMapping("/{id}")
     public ResponseEntity<PrateleiraResponseDto> atualizarPorId(
             @PathVariable Integer id,
@@ -110,10 +116,10 @@ public class PrateleiraController {
             @ApiResponse(responseCode = "204", description = "Sem corpo de resposta, registro deletado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerPorId(@PathVariable Integer id) {
         service.removerPorId(id);
         return ResponseEntity.status(200).build();
     }
-
 }

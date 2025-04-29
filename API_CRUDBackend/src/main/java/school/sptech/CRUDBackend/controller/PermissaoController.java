@@ -3,6 +3,7 @@ package school.sptech.CRUDBackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class PermissaoController {
             @ApiResponse(responseCode = "200", description = "Lista possui permissões."),
             @ApiResponse(responseCode = "204", description = "Lista de permissões está vazia"),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping
     public ResponseEntity<List<PermissaoResponseDto>> listarTodos() {
         List<PermissaoResponseDto> permissoes = PermissaoMapper.toResponseDtos(

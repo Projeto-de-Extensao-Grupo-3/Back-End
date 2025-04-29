@@ -3,6 +3,7 @@ package school.sptech.CRUDBackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ public class CorteTecidoController {
             description = "Objeto do tipo CorteTecidoRequestDto para cadastro.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PostMapping
     public ResponseEntity<CorteTecidoCadastroDto> cadastrar(
             @RequestBody @Valid CorteTecidoRequestDto corteTecido
@@ -52,6 +54,7 @@ public class CorteTecidoController {
             @ApiResponse(responseCode = "200", description = "lista possui cortes de tecido"),
             @ApiResponse(responseCode = "204", description = "lista de cortes está vazia"),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping
     public ResponseEntity<List<CorteTecidoResponseDto>> listarTodos() {
         List<CorteTecidoResponseDto> cortesTecido = CorteTecidoMapper.toResponseDtos(
@@ -69,6 +72,7 @@ public class CorteTecidoController {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID informado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
     public ResponseEntity<CorteTecidoResponseDto> buscarPorId(@PathVariable Integer id) {
         CorteTecidoResponseDto corteTecido = CorteTecidoMapper.toResponseDto(
@@ -86,6 +90,7 @@ public class CorteTecidoController {
             description = "Objeto do tipo CorteTecidoRequestDto com valores de atualização.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PutMapping("/{id}")
     public ResponseEntity<CorteTecidoResponseDto> atualizar(
             @PathVariable Integer id,
@@ -103,6 +108,7 @@ public class CorteTecidoController {
             @ApiResponse(responseCode = "204", description = "Sem corpo de resposta, registro deletado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID informado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         corteTecidoService.deletarCorteTecido(id);
