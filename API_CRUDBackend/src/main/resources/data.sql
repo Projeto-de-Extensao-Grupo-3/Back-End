@@ -16,21 +16,83 @@ INSERT INTO permissao (descricao) VALUES
 	('Receber alertas de falta de estoque');
 
 INSERT INTO controle_acesso VALUES
-    (1, 3),
-    (1, 4),
-    (2, 3),
-    (3, 3),
-    (4, 3),
-    (5, 3),
-    (6, 3);
+	(1, 1),
+	(1, 2),
+	(1, 3),
+    (2, 1),
+	(2, 2),
+	(2, 3),
+    (3, 1),
+	(3, 2),
+	(3, 3),
+    (4, 1),
+	(4, 2),
+	(4, 3),
+    (5, 1),
+	(5, 2),
+	(5, 3),
+	(6, 1),
+	(6, 2),
+	(6, 3);
 
-INSERT INTO item_estoque (descricao, peso, qtd_minimo, qtd_armazenado) VALUES
-    ('Vestido azul florido', 1.0, 10.0, 15.0),
-    ('Camisa vermelha lisa', 1.0, 0, 0),
-    ('Bermuda cinza com listras vermelhas', 1.0, 0, 0),
-    ('Tecido vermelho liso', 1.0, 0, 0),
-    ('Tecido azul florido', 1.0, 0, 0),
-    ('Tecido cinza liso', 1.0, 0, 0);
+INSERT INTO prateleira (codigo) VALUES
+	('1R'),
+	('2R'),
+	('3R'),
+	('1T'),
+	('2T'),
+	('3T');
+
+INSERT INTO categoria (nome) VALUES
+	('Tecido'),
+	('Roupa');
+
+INSERT INTO categoria (nome, id_categoria_pai) VALUES
+	('Nylon', 1),
+	('Poliéster', 1),
+	('Algodão', 1),
+	('Seda', 1),
+	('Lã', 1),
+	('Vestido', 2),
+	('Camiseta', 2),
+	('Calça', 2),
+	('Shorts', 2),
+	('Saia', 2);
+
+INSERT INTO categoria (nome) VALUES
+	('Azul'),
+	('Vermelho'),
+	('Verde'),
+	('Amarelo'),
+	('Cinza'),
+	('Listrado'),
+	('Liso'),
+	('Florido'),
+	('Grosso'),
+	('Fino');
+
+INSERT INTO item_estoque (id_categoria, id_prateleira, descricao, peso, qtd_minimo, qtd_armazenado) VALUES
+	(8, 1, 'Vestido azul florido', 1.0, 0, 0),
+	(9, 2, 'Camiseta vermelha lisa', 1.0, 0, 0),
+	(11, 3, 'Shorts cinza com listras vermelhas', 1.0, 0, 0),
+	(5, 4, 'Tecido vermelho liso', 1.0, 0, 0),
+	(6, 5, 'Tecido azul florido', 1.0, 0, 0),
+	(3, 6, 'Tecido cinza liso', 1.0, 0, 0);
+
+INSERT INTO caracteristica_item_estoque (id_categoria, id_item_estoque) VALUES
+	(13, 1),
+	(20, 1),
+	(14, 2),
+	(19, 2),
+	(17, 3),
+	(18, 3),
+	(14, 3),
+	(14, 4),
+	(19, 4),
+	(13, 5),
+	(20, 5),
+	(17, 6),
+	(19, 6);
 
 INSERT INTO servico_terceiro (categoria, nome, telefone, email, endereco) VAlUES
 	('costureira', 'Maria', '11938563748', 'maria@gmail.com', 'Rua X'),
@@ -46,3 +108,5 @@ INSERT INTO lote (descricao, data_entrada, id_servico_terceiro, id_funcionario) 
 
 INSERT INTO lote_item_estoque (qtd_item, preco, id_item_estoque, id_lote) VALUES
     (10.0, 230.0, 1, 1);
+
+

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Schema(description = "DTO para resposta de um objeto ItemEstoque.")
 @Getter
 @Setter
@@ -21,4 +23,6 @@ public class ItemEstoqueResponseDto {
     private Double qtdMinimo;
     @Schema(description = "Quantidade que ainda possui no estoque.", example = "100")
     private Double qtdArmazenado;
+    private ItemEstoqueCategoriaResponseDto subcategoria;
+    private Set<ItemEstoqueCaracteristicaResponseDto> caracteriticas;
 }

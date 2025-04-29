@@ -25,6 +25,7 @@ public class ItemEstoque {
     private Double qtdMinimo;
     private Double qtdArmazenado;
     @ManyToOne
+    @JoinColumn(name = "id_categoria")
     private Categoria categoria;
     @ManyToMany
     @JoinTable(
@@ -34,5 +35,6 @@ public class ItemEstoque {
     )
     private Set<Categoria> caracteristicas;
     @ManyToOne
+    @JoinColumn(name = "id_prateleira")
     private Prateleira prateleira;
 }
