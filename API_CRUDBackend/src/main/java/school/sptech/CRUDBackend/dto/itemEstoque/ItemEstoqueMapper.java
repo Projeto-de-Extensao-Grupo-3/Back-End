@@ -41,12 +41,27 @@ public class ItemEstoqueMapper {
     }
 
     public static ItemEstoqueResponseDto toResponseDto(ItemEstoque item) {
+
+        Categoria categoria = item.getCategoria();
+        ItemEstoqueCategoriaPaiResponseDto categoriaPai = new ItemEstoqueCategoriaPaiResponseDto(
+                categoria.getCategoriaPai().getNome()
+        );
+        ItemEstoqueCategoriaResponseDto categoriaDto = new ItemEstoqueCategoriaResponseDto(
+                categoria.getNome(), categoriaPai
+        );
+        Set<ItemEstoqueCaracteristicaResponseDto> caracteristicasDto = item.getCaracteristicas()
+                .stream()
+                .map(caracteristica -> new ItemEstoqueCaracteristicaResponseDto(caracteristica.getNome()))
+                .collect(Collectors.toSet());
+
         return new ItemEstoqueResponseDto(
                 item.getIdItemEstoque(),
                 item.getDescricao(),
                 item.getPeso(),
                 item.getQtdMinimo(),
-                item.getQtdArmazenado()
+                item.getQtdArmazenado(),
+                categoriaDto,
+                caracteristicasDto
         );
     }
 

@@ -19,5 +19,6 @@ public class Categoria {
     private String nome;
     @Nullable
     @ManyToOne
+    @JoinColumn(name = "id_categoria_pai")
     private Categoria categoriaPai;
 }
