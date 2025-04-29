@@ -19,7 +19,7 @@ public class FuncionarioCriacaoDto {
     private String nome;
 
     @Email
-    @Schema(description = "Email do funcionário", example = "fernando@.com")
+    @Schema(description = "Email do funcionário", example = "fernando_amorim@gmail.com")
     private String email;
 
     @Size(min = 6, max = 45)

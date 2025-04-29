@@ -3,6 +3,7 @@ package school.sptech.CRUDBackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ public class ServicoTerceiroController {
             description = "Objeto do tipo ServicoTerceiroRequestDto para cadastro.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PostMapping
     public ResponseEntity<ServicoTerceiroResponseDto> cadastrar(
             @RequestBody @Valid ServicoTerceiroRequestDto servicoTerceiroCad
@@ -51,6 +53,7 @@ public class ServicoTerceiroController {
             @ApiResponse(responseCode = "200", description = "Lista possui Serviços."),
             @ApiResponse(responseCode = "204", description = "Lista de Serviços está vazia"),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping
     public ResponseEntity<List<ServicoTerceiroResponseDto>> verificarTodos() {
         List<ServicoTerceiroResponseDto> servicosTerceiro = ServicoTerceiroMapper.toResponseDtos(
@@ -68,6 +71,7 @@ public class ServicoTerceiroController {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
     public ResponseEntity<ServicoTerceiroResponseDto> servicoTerceiroPorId (@PathVariable Integer id) {
         ServicoTerceiroResponseDto servicoTerceiroPorId = ServicoTerceiroMapper.toResponseDto(
@@ -85,6 +89,7 @@ public class ServicoTerceiroController {
             description = "Objeto do tipo ServicoTerceiroRequestDto com valores de atualização.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PutMapping("/{id}")
     public ResponseEntity<ServicoTerceiroResponseDto> atualizarPorId (
             @PathVariable Integer id,
@@ -102,6 +107,7 @@ public class ServicoTerceiroController {
             @ApiResponse(responseCode = "204", description = "Sem corpo de resposta, registro deletado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerPorId(@PathVariable Integer id) {
         servicoTerceiroService.removerServicoTerceiroPorId(id);

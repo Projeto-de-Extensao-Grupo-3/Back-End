@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class FuncionarioLoginDto {
-    @Schema(description = "Email do funcionário", example = "fernando@.com")
+    @Schema(description = "Email do funcionário", example = "fernando_amorim@gmail.com")
     private String email;
 
     @Schema(description = "Senha do funcionário", example = "123456")

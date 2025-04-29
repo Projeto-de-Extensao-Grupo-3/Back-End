@@ -3,6 +3,7 @@ package school.sptech.CRUDBackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ public class LoteController {
             description = "Objeto do tipo LoteRequestDto para cadastro.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PostMapping
     public ResponseEntity<LoteResponseDto> cadastrar(
             @RequestBody @Valid LoteRequestDto loteParaCadastrar
@@ -49,6 +51,7 @@ public class LoteController {
             @ApiResponse(responseCode = "200", description = "Lista possui itens de estoque."),
             @ApiResponse(responseCode = "204", description = "Lista de itens está vazia"),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping
     public ResponseEntity<List<LoteResponseDto>> listarTodos(){
         List<LoteResponseDto> todosOsLotes = LoteMapper.toResponseDtos(service.listarTodosOsLotes());
@@ -63,6 +66,7 @@ public class LoteController {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
     public ResponseEntity<LoteResponseDto> buscarPorId(@PathVariable Integer id){
         LoteResponseDto loteEncontrado = LoteMapper.toResponseDto(
@@ -79,6 +83,7 @@ public class LoteController {
             description = "Objeto do tipo LoteRequestDto com valores de atualização.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PutMapping("/{id}")
     public ResponseEntity<LoteResponseDto> atualizarPorId(
             @PathVariable Integer id,
@@ -93,6 +98,7 @@ public class LoteController {
             @ApiResponse(responseCode = "200", description = "Lote deletado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerPorId(@PathVariable Integer id){
 

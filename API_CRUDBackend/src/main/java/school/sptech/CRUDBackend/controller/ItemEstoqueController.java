@@ -3,6 +3,7 @@ package school.sptech.CRUDBackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ public class ItemEstoqueController {
             description = "Objeto do tipo ItemEstoqueRequestDto para cadastro.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PostMapping
     public ResponseEntity<ItemEstoqueResponseDto> cadastrar(
             @RequestBody @Valid ItemEstoqueRequestDto itemEstoqueCadastrar
@@ -51,6 +53,7 @@ public class ItemEstoqueController {
             @ApiResponse(responseCode = "200", description = "Lista possui itens de estoque."),
             @ApiResponse(responseCode = "204", description = "Lista de itens está vazia"),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping
     public ResponseEntity<List<ItemEstoqueResponseDto>> verificarTodos() {
         List<ItemEstoqueResponseDto> todosItens = ItemEstoqueMapper.toResponseDtos(
@@ -67,6 +70,7 @@ public class ItemEstoqueController {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
     public ResponseEntity<ItemEstoqueResponseDto> buscarPorId(@PathVariable Integer id) {
         ItemEstoqueResponseDto itemEstoque = ItemEstoqueMapper.toResponseDto(
@@ -84,6 +88,7 @@ public class ItemEstoqueController {
             description = "Objeto do tipo ItemEstoqueRequestDto com valores de atualização.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PutMapping("/{id}")
     public ResponseEntity<ItemEstoqueResponseDto> atualizarPorId(
             @PathVariable Integer id,
@@ -101,6 +106,7 @@ public class ItemEstoqueController {
             @ApiResponse(responseCode = "204", description = "Sem corpo de resposta, registro deletado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerPorId(
             @PathVariable Integer id
