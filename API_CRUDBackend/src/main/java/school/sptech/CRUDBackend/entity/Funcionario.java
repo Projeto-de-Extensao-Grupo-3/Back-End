@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.Set;
 
-@Schema(description = "Entidade representando um funcionário.")
+@Schema(description = "Entidade que representa um funcionário.")
 @Entity
 @Getter
 @Setter
@@ -36,5 +36,6 @@ public class Funcionario {
             name = "controle_acesso",
             joinColumns = @JoinColumn(name = "id_funcionario"),
             inverseJoinColumns = @JoinColumn(name = "id_permissao"))
+    @Schema(description = "Lista de permissões.")
     private Set<Permissao> permissoes;
 }

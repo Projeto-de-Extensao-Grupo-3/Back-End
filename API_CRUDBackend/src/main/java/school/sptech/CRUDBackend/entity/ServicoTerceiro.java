@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Schema(description = "Entidade representando um serviço terceiro.")
+@Schema(description = "Entidade que representa um serviço terceiro.")
 @Entity
 @Getter
 @Setter
@@ -19,6 +19,7 @@ public class ServicoTerceiro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idServicoTerceiro;
+    @Schema(example = "Costureira ou fornecedor.")
     private String categoria;
     private String nome;
     private String telefone;
