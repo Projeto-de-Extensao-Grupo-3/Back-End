@@ -11,7 +11,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Schema(description = "Entidade representando uma saída do estoque.")
+@Schema(description = "Entidade que representa a saída de um item.", example = "Venda, ou saída para costura")
 @Entity
 @Getter
 @Setter

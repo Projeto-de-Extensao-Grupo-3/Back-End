@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Entidade representando um lote de item do estoque.")
+@Schema(description = "Entidade que identifica quais itens do estoque chegaram em um lote específico.")
 @Entity
 @Setter
 @Getter
@@ -24,5 +24,6 @@ public class LoteItemEstoque {
     private ItemEstoque itemEstoque;
     @ManyToOne
     @JoinColumn(name = "id_lote")
+    @Schema(description = "Representa o lote do item.")
     private Lote lote;
 }

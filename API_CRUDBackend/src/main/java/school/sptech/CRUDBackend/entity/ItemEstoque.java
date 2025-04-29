@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.util.Set;
 
-@Schema(description = "Entidade representando um item de estoque.")
+@Schema(description = "Entidade que representa um item de estoque.")
 @Entity
 @Getter
 @Setter
@@ -36,5 +36,6 @@ public class ItemEstoque {
     private Set<Categoria> caracteristicas;
     @ManyToOne
     @JoinColumn(name = "id_prateleira")
+    @Schema(description = "Local onde o item está localizado (em qual prateleira).")
     private Prateleira prateleira;
 }

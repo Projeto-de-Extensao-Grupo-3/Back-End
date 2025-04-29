@@ -21,8 +21,10 @@ public class Lote {
     private String dataEntrada;
     @ManyToOne
     @JoinColumn(name = "id_servico_terceiro")
+    @Schema(description = "Atributo que representa de qual serviço terceiro veio.", example = "Costureira ou fornecedor.")
     private ServicoTerceiro servicoTerceiro;
     @ManyToOne
     @JoinColumn(name = "id_funcionario")
+    @Schema(description = "Funcionário responsável pelo registro.")
     private Funcionario responsavel;
 }

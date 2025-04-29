@@ -1,12 +1,15 @@
 package school.sptech.CRUDBackend.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jdk.jfr.Description;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Schema(description = "Entidade que representa a categoria (tecido ou roupa), subcategorias (Tipos de roupas e tipo de tecido) e características gerais.")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,5 +23,6 @@ public class Categoria {
     @Nullable
     @ManyToOne
     @JoinColumn(name = "id_categoria_pai")
+    @Schema(description = "Categoria principal de um item", example = "Roupa ou tecido")
     private Categoria categoriaPai;
 }

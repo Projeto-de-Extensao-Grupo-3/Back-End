@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.util.Set;
 
-@Schema(description = "Entidade representando uma permissão.")
+@Schema(description = "Entidade que representa uma permissão.")
 @Entity
 @Getter
 @Setter
@@ -19,5 +19,6 @@ public class Permissao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPermissao;
+    @Schema(example = "Acesso a dashboard.")
     private String descricao;
 }

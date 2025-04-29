@@ -10,7 +10,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Schema(description = "Entidade representando um corte de tecido.")
+@Schema(description = "Entidade que representa o corte de um tecido.")
 @Entity
 @Getter
 @Setter
@@ -20,14 +20,16 @@ public class CorteTecido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCorteTecido;
-    @Schema(description = "Data e Hora e inicio do corte", example = "2025-04-12T10:15:30")
+    @Schema(description = "Data e Hora do inicio do corte", example = "2025-04-12T10:15:30")
     private String inicio;
-    @Schema(description = "Data e Hora e finalização do corte", example = "2025-04-12T10:15:30")
+    @Schema(description = "Data e Hora da finalização do corte", example = "2025-04-12T10:15:30")
     private String termino;
     @ManyToOne
     @JoinColumn(name = "id_funcionario")
+    @Schema(description = "Funcionário responsável pelo corte")
     private Funcionario funcionario;
     @ManyToOne
     @JoinColumn(name = "id_lote_item_estoque")
+    @Schema(description = "Lote ao qual o tecido que foi cortado pertence.")
     private LoteItemEstoque loteItemEstoque;
 }
