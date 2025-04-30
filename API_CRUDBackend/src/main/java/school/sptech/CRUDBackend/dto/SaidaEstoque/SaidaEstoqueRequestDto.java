@@ -25,7 +25,7 @@ public class SaidaEstoqueRequestDto {
     @NotNull(message = "O campo hora é obrigatório")
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime hora;
-    @Schema(description = "Quantidade do Item que saiu", example = "250")
+    @Schema(description = "Quantidade do Item que saiu", example = "5")
     @Min(1)
     private Double qtdSaida;
     @Schema(description = "Se foi para costureira ou venda", example = "Venda direta do Brás.")
@@ -33,5 +33,6 @@ public class SaidaEstoqueRequestDto {
     private SaidaEstoqueFuncionarioRequestDto responsavel;
     private SaidaEstoqueLoteItemEstoqueRequestDto loteItemEstoque;
     @Nullable
+    @Schema(description = "Se foi para costureira", example = "null")
     private SaidaEstoqueCostureiraRequestDto costureira;
 }

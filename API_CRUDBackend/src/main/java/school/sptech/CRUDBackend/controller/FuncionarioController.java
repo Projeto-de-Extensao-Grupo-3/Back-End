@@ -3,12 +3,16 @@ package school.sptech.CRUDBackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.CRUDBackend.dto.dtoLogin.FuncionarioLoginDto;
+import school.sptech.CRUDBackend.dto.dtoLogin.FuncionarioLoginMapper;
+import school.sptech.CRUDBackend.dto.dtoLogin.FuncionarioTokenDto;
 import school.sptech.CRUDBackend.dto.funcionario.FuncionarioMapper;
 import school.sptech.CRUDBackend.dto.funcionario.FuncionarioRequestDto;
 import school.sptech.CRUDBackend.dto.funcionario.FuncionarioResponseDto;
@@ -48,11 +52,29 @@ public class FuncionarioController {
         return ResponseEntity.status(201).body(funcionarioCadastrado);
     }
 
+    @Operation(
+            summary = "Login de funcionário.",
+            description = "Retorna um objeto do tipo FuncionarioResponseDto e o token de acesso"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Funcionário logado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Funcionário inválido")
+    })
+    @PostMapping("/login")
+    public ResponseEntity<FuncionarioTokenDto> login(@RequestBody FuncionarioLoginDto funcionarioLoginDto) {
+
+        final Funcionario usuario = FuncionarioLoginMapper.of(funcionarioLoginDto);
+        FuncionarioTokenDto funcionarioTokenDto = this.funcionarioService.autenticar(usuario);
+
+        return ResponseEntity.status(200).body(funcionarioTokenDto);
+    }
+
     @Operation(summary = "Listagem de todos os Funcionários.", description = "Retorna uma lista de FuncionarioResponseDto com todos os funcionários no sistema.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista possui funcionários."),
             @ApiResponse(responseCode = "204", description = "Lista de funcionários está vazia"),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping
     public ResponseEntity<List<FuncionarioResponseDto>> verificarTodos() {
         List<FuncionarioResponseDto> todosFuncionarios = FuncionarioMapper.toResponseDtos(
@@ -69,6 +91,7 @@ public class FuncionarioController {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
     public ResponseEntity<FuncionarioResponseDto> buscarPorId(@PathVariable Integer id) {
         FuncionarioResponseDto funcionario = FuncionarioMapper.toResponseDto(
@@ -86,6 +109,7 @@ public class FuncionarioController {
             description = "Objeto do tipo FuncionarioRequestDto com valores de atualização.",
             required = true
     )
+    @SecurityRequirement(name = "Bearer")
     @PutMapping("/{id}")
     public ResponseEntity<FuncionarioResponseDto> atualizarPorId (
             @PathVariable Integer id,
@@ -103,6 +127,7 @@ public class FuncionarioController {
             @ApiResponse(responseCode = "204", description = "Sem corpo de resposta, registro deletado com sucesso."),
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
+    @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerPorId(@PathVariable Integer id) {
         funcionarioService.removerFuncionarioPorId(id);

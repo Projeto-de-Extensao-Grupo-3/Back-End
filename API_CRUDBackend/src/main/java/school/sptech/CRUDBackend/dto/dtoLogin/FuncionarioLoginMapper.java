@@ -2,7 +2,7 @@ package school.sptech.CRUDBackend.dto.dtoLogin;
 
 import school.sptech.CRUDBackend.entity.Funcionario;
 
-public class FuncionarioMapper {
+public class FuncionarioLoginMapper {
 
     public static Funcionario of(FuncionarioCriacaoDto funcionarioCriacaoDto) {
         Funcionario funcionario = new Funcionario();
@@ -26,7 +26,6 @@ public class FuncionarioMapper {
     public static FuncionarioTokenDto of(Funcionario funcionario, String token) {
         FuncionarioTokenDto funcionarioTokenDto = new FuncionarioTokenDto();
 
-        funcionarioTokenDto.setIdFuncionario(funcionarioTokenDto.getIdFuncionario());
         funcionarioTokenDto.setEmail(funcionario.getEmail());
         funcionarioTokenDto.setNome(funcionario.getNome());
         funcionarioTokenDto.setToken(token);

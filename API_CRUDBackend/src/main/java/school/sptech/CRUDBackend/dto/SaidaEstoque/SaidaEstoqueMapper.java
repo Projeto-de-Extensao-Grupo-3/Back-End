@@ -35,30 +35,27 @@ public class SaidaEstoqueMapper {
     }
 
     public static SaidaEstoqueResponseDto toResponseDto(SaidaEstoque saidaEstoque){
-        Funcionario funcionario = saidaEstoque.getResponsavel();
-        SaidaEstoqueFuncionarioResponseDto funcionarioDto = new SaidaEstoqueFuncionarioResponseDto(
-                funcionario.getNome(), funcionario.getEmail()
-        );
-        LoteItemEstoque loteItemEstoque = saidaEstoque.getLoteItemEstoque();
-        SaidaEstoqueLoteItemEstoqueResponseDto loteItemEstoqueDto = new SaidaEstoqueLoteItemEstoqueResponseDto(
-                loteItemEstoque.getQtdItem(), loteItemEstoque.getPreco()
-        );
-        ServicoTerceiro costureira = saidaEstoque.getCostureira();
-        SaidaEstoqueCostureiraResponseDto costureiraDto =
-                costureira != null ?
-                new SaidaEstoqueCostureiraResponseDto(
-                    costureira.getNome(), costureira.getTelefone(), costureira.getEmail()
-                )
-                : null;
+//        Funcionario funcionario = saidaEstoque.getResponsavel();
+//        SaidaEstoqueFuncionarioResponseDto funcionarioDto = new SaidaEstoqueFuncionarioResponseDto(
+//                funcionario.getNome(), funcionario.getEmail()
+//        );
+//        LoteItemEstoque loteItemEstoque = saidaEstoque.getLoteItemEstoque();
+//        SaidaEstoqueLoteItemEstoqueResponseDto loteItemEstoqueDto = new SaidaEstoqueLoteItemEstoqueResponseDto(
+//                loteItemEstoque.getQtdItem(), loteItemEstoque.getPreco()
+//        );
+//        ServicoTerceiro costureira = saidaEstoque.getCostureira();
+//        SaidaEstoqueCostureiraResponseDto costureiraDto =
+//                costureira != null ?
+//                new SaidaEstoqueCostureiraResponseDto(
+//                    costureira.getNome(), costureira.getTelefone(), costureira.getEmail()
+//                )
+//                : null;
         return new SaidaEstoqueResponseDto(
                 saidaEstoque.getIdSaida(),
                 saidaEstoque.getData(),
                 saidaEstoque.getHora(),
                 saidaEstoque.getQtdSaida(),
-                saidaEstoque.getMotivoSaida(),
-                funcionarioDto,
-                loteItemEstoqueDto,
-                costureiraDto
+                saidaEstoque.getMotivoSaida()
         );
     }
 
