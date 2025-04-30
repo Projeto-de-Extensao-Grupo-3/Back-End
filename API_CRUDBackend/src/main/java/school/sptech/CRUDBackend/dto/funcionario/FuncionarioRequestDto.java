@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,23 +20,22 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FuncionarioRequestDto {
-    @Schema(description = "Nome do Funcionário", example = "Fernando")
+    @Schema(description = "Nome do Funcionário", example = "Fernando Almeida")
     @NotBlank
     private String nome;
-    @Schema(description = "CPF do Funcionário", example = "XXX-XXX-XXX/XX")
+    @Schema(description = "CPF do Funcionário", example = "000.000.000-00")
     @NotBlank
-    @CPF
     private String cpf;
     @Schema(description = "Telefone do Funcionário", example = "DD 00000-0000")
     @NotBlank
     private String telefone;
-    @Schema(description = "Email do Funcionário", example = "fernando@gmail.com")
+    @Schema(description = "Email do Funcionário", example = "fernando_almeida@gmail.com")
     @NotBlank
     @Email
     private String email;
-    @Hidden
+    @Schema(description = "senha do usuário", example = "123456")
     @NotBlank
     private String senha;
-    @NotBlank
+    @NotNull
     private Set<FuncionarioPermissaoRequestDto> permissoes;
 }

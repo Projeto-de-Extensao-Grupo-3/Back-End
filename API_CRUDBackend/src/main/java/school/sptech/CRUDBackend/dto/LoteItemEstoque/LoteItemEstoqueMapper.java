@@ -36,9 +36,7 @@ public class LoteItemEstoqueMapper {
         return new LoteItemEstoqueResponseDto(
                 loteItemEstoque.getIdLoteItemEstoque(),
                 loteItemEstoque.getQtdItem(),
-                loteItemEstoque.getPreco(),
-                itemEstoqueDto,
-                loteDto
+                loteItemEstoque.getPreco()
         );
     }
 

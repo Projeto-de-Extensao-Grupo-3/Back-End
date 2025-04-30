@@ -25,7 +25,7 @@ public class SaidaEstoqueResponseDto {
     private Double qtSaida;
     @Schema(description = "Se foi para costureira ou venda", example = "Venda direta do Brás.")
     private String motivoSaida;
-    private SaidaEstoqueFuncionarioResponseDto funcionario;
-    private SaidaEstoqueLoteItemEstoqueResponseDto loteItemEstoque;
-    private SaidaEstoqueCostureiraResponseDto costureira;
+//    private SaidaEstoqueFuncionarioResponseDto funcionario;
+//    private SaidaEstoqueLoteItemEstoqueResponseDto loteItemEstoque;
+//    private SaidaEstoqueCostureiraResponseDto costureira;
 }

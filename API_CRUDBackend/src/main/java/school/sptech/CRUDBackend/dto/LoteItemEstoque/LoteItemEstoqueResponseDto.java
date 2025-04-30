@@ -18,6 +18,4 @@ public class LoteItemEstoqueResponseDto {
     private Double qtdItem;
     @Schema(description = "Preço que o Item está valendo nesse lote.", example = "35")
     private Double preco;
-    private LoteItemEstoqueItemResponseDto itemEstoque;
-    private LoteItemEstoqueLoteResponseDto lote;
 }
