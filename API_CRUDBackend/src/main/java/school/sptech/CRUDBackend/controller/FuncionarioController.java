@@ -21,7 +21,7 @@ import school.sptech.CRUDBackend.service.FuncionarioService;
 
 import java.util.List;
 
-@Tag(name = "Funcionários Controller", description = "Operações CRUD relacionadas funcionários..")
+@Tag(name = "* Funcionários Controller", description = "Operações CRUD relacionadas funcionários..")
 @RestController
 @RequestMapping("/funcionarios")
 @RequiredArgsConstructor
@@ -53,7 +53,7 @@ public class FuncionarioController {
     }
 
     @Operation(
-            summary = "Login de funcionário.",
+            summary = "* Login de funcionário.",
             description = "Retorna um objeto do tipo FuncionarioResponseDto e o token de acesso"
     )
     @ApiResponses(value = {

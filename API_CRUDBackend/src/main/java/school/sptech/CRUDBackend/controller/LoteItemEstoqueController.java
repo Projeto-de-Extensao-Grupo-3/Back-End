@@ -17,7 +17,7 @@ import school.sptech.CRUDBackend.service.LoteItemEstoqueService;
 
 import java.util.List;
 
-@Tag(name = "Lote de Quantidade e Preço do Item Controller", description = "Operações CRUD relacionadas aos lotes de quantidade e preço dos Itens.")
+@Tag(name = "* Entrada de Item Estoque Controller", description = "Operações CRUD relacionadas aos itens que chegaram em um lote.")
 @RestController
 @RequestMapping("/lotes-item-estoque")
 @RequiredArgsConstructor
@@ -25,7 +25,7 @@ public class LoteItemEstoqueController {
     private final LoteItemEstoqueService service;
 
     @Operation(
-            summary = "Cadastro de um novo Lote de Item.",
+            summary = "* Cadastro de um novo Lote de Item.",
             description = "Retorna um objeto do tipo LoteItemEstoqueResponseDto quando cadastrado com sucesso."
     )
     @ApiResponses(value = {
