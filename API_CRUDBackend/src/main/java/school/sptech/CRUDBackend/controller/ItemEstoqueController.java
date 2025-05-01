@@ -17,7 +17,7 @@ import school.sptech.CRUDBackend.service.ItemEstoqueService;
 
 import java.util.List;
 
-@Tag(name = "Item de Estoque Controller", description = "Operações CRUD relacionadas aos itens de estoque (tecido ou roupa).")
+@Tag(name = "* Item de Estoque Controller", description = "Operações CRUD relacionadas aos itens de estoque (tecido ou roupa).")
 @RestController
 @RequestMapping("/itens-estoque")
 @RequiredArgsConstructor
@@ -48,7 +48,7 @@ public class ItemEstoqueController {
         return ResponseEntity.status(201).body(itemCadastrado);
     }
 
-    @Operation(summary = "Listagem de todos os Itens no Estoque.", description = "Retorna uma lista de ItemEstoqueResponseDto com todos os Itens no sistema.")
+    @Operation(summary = "* Listagem de todos os Itens no Estoque.", description = "Retorna uma lista de ItemEstoqueResponseDto com todos os Itens no sistema.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista possui itens de estoque."),
             @ApiResponse(responseCode = "204", description = "Lista de itens está vazia"),
