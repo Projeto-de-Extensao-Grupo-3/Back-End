@@ -13,4 +13,6 @@ import lombok.Setter;
 public class LoteItemEstoqueItemRequestDto {
     @Schema(description = "ID do item", example = "1")
     private Integer idItemEstoque;
+    @Schema(description = "Descrição do item do estoque", example = "Vestido azul florido")
+    private String descricao;
 }
