@@ -20,9 +20,9 @@ public class Lote {
     private String descricao;
     private String dataEntrada;
     @ManyToOne
-    @JoinColumn(name = "id_servico_terceiro")
-    @Schema(description = "Atributo que representa de qual serviço terceiro veio.", example = "Costureira ou fornecedor.")
-    private ServicoTerceiro servicoTerceiro;
+    @JoinColumn(name = "id_parceiro")
+    @Schema(description = "Atributo que representa de qual parceiro veio.", example = "Costureira ou fornecedor.")
+    private Parceiro parceiro;
     @ManyToOne
     @JoinColumn(name = "id_funcionario")
     @Schema(description = "Funcionário responsável pelo registro.")

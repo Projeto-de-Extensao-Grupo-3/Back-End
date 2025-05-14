@@ -18,5 +18,5 @@ public class LoteResponseDto {
     @Schema(description = "Data de chegada do Lote", example = "2025-04-12T10:15:30")
     private String dataEntrada;
     private LoteFuncionarioResponseDto responsavel;
-    private LoteServicoTerceiroResponseDto servicoTerceiro;
+    private LoteParceiroResponseDto parceiro;
 }

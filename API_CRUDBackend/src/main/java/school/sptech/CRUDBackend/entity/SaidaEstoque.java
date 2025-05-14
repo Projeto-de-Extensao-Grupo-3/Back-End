@@ -32,7 +32,7 @@ public class SaidaEstoque {
     @JoinColumn(name = "id_lote_item_estoque")
     private LoteItemEstoque loteItemEstoque;
     @ManyToOne
-    @JoinColumn(name = "id_servico_terceiro")
+    @JoinColumn(name = "id_parceiro")
     @Nullable
-    private ServicoTerceiro costureira;
+    private Parceiro costureira;
 }

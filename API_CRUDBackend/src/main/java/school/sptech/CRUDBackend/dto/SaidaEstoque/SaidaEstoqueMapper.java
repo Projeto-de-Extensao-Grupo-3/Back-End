@@ -1,11 +1,10 @@
 package school.sptech.CRUDBackend.dto.SaidaEstoque;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import school.sptech.CRUDBackend.dto.permissao.PermissaoMapper;
 import school.sptech.CRUDBackend.entity.Funcionario;
 import school.sptech.CRUDBackend.entity.LoteItemEstoque;
 import school.sptech.CRUDBackend.entity.SaidaEstoque;
-import school.sptech.CRUDBackend.entity.ServicoTerceiro;
+import school.sptech.CRUDBackend.entity.Parceiro;
 
 import java.util.List;
 
@@ -17,10 +16,10 @@ public class SaidaEstoqueMapper {
         funcionario.setIdFuncionario(requestDto.getResponsavel().getIdFuncionario());
         LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
         loteItemEstoque.setIdLoteItemEstoque(requestDto.getLoteItemEstoque().getIdLoteItemEstoque());
-        ServicoTerceiro costureira = null;
+        Parceiro costureira = null;
         if (requestDto.getCostureira() != null) {
-            costureira = new ServicoTerceiro();
-            costureira.setIdServicoTerceiro(requestDto.getCostureira().getIdCostureira());
+            costureira = new Parceiro();
+            costureira.setIdParceiro(requestDto.getCostureira().getIdCostureira());
         }
         return new SaidaEstoque(
                 null,
