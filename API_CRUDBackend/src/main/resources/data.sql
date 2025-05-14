@@ -94,7 +94,7 @@ INSERT INTO caracteristica_item_estoque (id_categoria, id_item_estoque) VALUES
 	(17, 6),
 	(19, 6);
 
-INSERT INTO servico_terceiro (categoria, nome, telefone, email, endereco) VAlUES
+INSERT INTO parceiro (categoria, nome, telefone, email, endereco) VAlUES
 	('costureira', 'Maria', '11938563748', 'maria@gmail.com', 'Rua X'),
 	('costureira', 'Alice', '11938563748', 'alice@gmail.com', 'Rua Y'),
 	('costureira', 'Rebeca', '11938563748', 'rebeca@gmail.com', 'Rua Z'),
@@ -102,7 +102,7 @@ INSERT INTO servico_terceiro (categoria, nome, telefone, email, endereco) VAlUES
 	('fornecedor', 'Fornecedor X', '11918465729', 'fornecedorx@gmail.com', 'Rua 2'),
 	('fornecedor', 'Fornecedor Z', '11918465729', 'fornecedorys@gmail.com', 'Rua 3');
 
-INSERT INTO lote (descricao, data_entrada, id_servico_terceiro, id_funcionario) VAlUES
+INSERT INTO lote (descricao, data_entrada, id_parceiro, id_funcionario) VAlUES
 	('lote de roupas', now(), 1, 1),
 	('lote de tecido', now(), 2, 1);
 

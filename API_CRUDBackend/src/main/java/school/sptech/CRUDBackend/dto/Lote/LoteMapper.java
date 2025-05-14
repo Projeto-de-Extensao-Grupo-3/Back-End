@@ -3,7 +3,7 @@ package school.sptech.CRUDBackend.dto.Lote;
 import io.swagger.v3.oas.annotations.media.Schema;
 import school.sptech.CRUDBackend.entity.Funcionario;
 import school.sptech.CRUDBackend.entity.Lote;
-import school.sptech.CRUDBackend.entity.ServicoTerceiro;
+import school.sptech.CRUDBackend.entity.Parceiro;
 
 import java.util.List;
 
@@ -11,15 +11,15 @@ import java.util.List;
 public class LoteMapper {
 
     public static Lote toEntity(LoteRequestDto requestDto){
-        ServicoTerceiro servicoTerceiro = new ServicoTerceiro();
-        servicoTerceiro.setIdServicoTerceiro(requestDto.getServicoTerceiro().getIdServicoTerceiro());
+        Parceiro parceiro = new Parceiro();
+        parceiro.setIdParceiro(requestDto.getParceiro().getIdParceiro());
         Funcionario funcionario = new Funcionario();
         funcionario.setIdFuncionario(requestDto.getResponsavel().getIdFuncionario());
         return new Lote(
                 null,
                 requestDto.getDescricao(),
                 requestDto.getDataEntrada(),
-                servicoTerceiro,
+                parceiro,
                 funcionario
         );
     }
@@ -29,17 +29,17 @@ public class LoteMapper {
         LoteFuncionarioResponseDto funcionarioDto = new LoteFuncionarioResponseDto(
                 funcionario.getNome(), funcionario.getTelefone(), funcionario.getEmail()
         );
-        ServicoTerceiro servicoTerceiro = lote.getServicoTerceiro();
-        LoteServicoTerceiroResponseDto servicoTerceiroDto = new LoteServicoTerceiroResponseDto(
-                servicoTerceiro.getCategoria(), servicoTerceiro.getNome(),
-                servicoTerceiro.getTelefone(), servicoTerceiro.getEmail()
+        Parceiro parceiro = lote.getParceiro();
+        LoteParceiroResponseDto parceiroDto = new LoteParceiroResponseDto(
+                parceiro.getCategoria(), parceiro.getNome(),
+                parceiro.getTelefone(), parceiro.getEmail()
         );
         return new LoteResponseDto(
                 lote.getIdLote(),
                 lote.getDescricao(),
                 lote.getDataEntrada(),
                 funcionarioDto,
-                servicoTerceiroDto
+                parceiroDto
         );
     }
 

@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class LoteServicoTerceiroRequestDto {
-    private Integer idServicoTerceiro;
+public class LoteParceiroRequestDto {
+    private Integer idParceiro;
 }
