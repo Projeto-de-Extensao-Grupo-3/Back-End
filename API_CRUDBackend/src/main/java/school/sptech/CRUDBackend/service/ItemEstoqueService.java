@@ -3,12 +3,14 @@ package school.sptech.CRUDBackend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.CRUDBackend.Model.itemEstoque.Observer;
+import school.sptech.CRUDBackend.entity.ConfeccaoRoupa;
 import school.sptech.CRUDBackend.entity.ItemEstoque;
 import school.sptech.CRUDBackend.exception.itensEstoque.ItemEstoqueConflitoException;
 import school.sptech.CRUDBackend.exception.itensEstoque.ItemEstoqueNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.ItemEstoqueRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +22,15 @@ public class ItemEstoqueService implements Observer {
             throw new ItemEstoqueConflitoException("Este item já existe no sistema.");
         }
         return itemEstoqueRepository.save(itemCadastrar);
+    }
+
+    public ItemEstoque cadastrarTecidosDaRoupa(Integer idRoupa, Set<ConfeccaoRoupa> tecidos) {
+        if (itemEstoqueRepository.existsById(idRoupa)) {
+            ItemEstoque roupa = itemEstoqueRepository.findById(idRoupa).get();
+            roupa.setConfeccaoRoupa(tecidos);
+            return itemEstoqueRepository.save(roupa);
+        }
+        throw new ItemEstoqueNaoEncontradoException("A roupa não existe no estoque");
     }
 
     public List<ItemEstoque> verificarTodosItemEstoque() {

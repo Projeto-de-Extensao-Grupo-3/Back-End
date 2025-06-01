@@ -9,13 +9,17 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.CRUDBackend.dto.itemEstoque.ItemEstoqueConfeccaoRoupaDto;
 import school.sptech.CRUDBackend.dto.itemEstoque.ItemEstoqueMapper;
 import school.sptech.CRUDBackend.dto.itemEstoque.ItemEstoqueRequestDto;
 import school.sptech.CRUDBackend.dto.itemEstoque.ItemEstoqueResponseDto;
+import school.sptech.CRUDBackend.entity.ConfeccaoRoupa;
 import school.sptech.CRUDBackend.entity.ItemEstoque;
 import school.sptech.CRUDBackend.service.ItemEstoqueService;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Tag(name = "* Item de Estoque Controller", description = "Operações CRUD relacionadas aos itens de estoque (tecido ou roupa).")
 @RestController
@@ -46,6 +50,26 @@ public class ItemEstoqueController {
                 itemEstoqueService.cadastrarItemEstoque(itemParaCadastrar)
         );
         return ResponseEntity.status(201).body(itemCadastrado);
+    }
+
+    @PostMapping("/tecidos/{id}")
+    public ResponseEntity<ItemEstoqueResponseDto> cadastrarTecidosDaRoupa(
+            @PathVariable Integer id,
+            @RequestBody Set<ItemEstoqueConfeccaoRoupaDto> confeccaoRoupaDto
+    ) {
+        Set<ConfeccaoRoupa> confeccaoRoupa = new HashSet<>();
+        for (ItemEstoqueConfeccaoRoupaDto confeccaoDto : confeccaoRoupaDto) {
+            ConfeccaoRoupa confeccao = new ConfeccaoRoupa();
+            confeccao.setIdConfeccaoRoupa(confeccaoDto.getIdConfeccaoRoupa());
+            ItemEstoque tecido = new ItemEstoque();
+            tecido.setIdItemEstoque(confeccaoDto.getTecido().getIdTecido());
+            confeccao.setTecido(tecido);
+            confeccaoRoupa.add(confeccao);
+        }
+        ItemEstoqueResponseDto roupaComTecidos = ItemEstoqueMapper.toResponseDto(
+                itemEstoqueService.cadastrarTecidosDaRoupa(id, confeccaoRoupa)
+        );
+        return ResponseEntity.status(201).body(roupaComTecidos);
     }
 
     @Operation(summary = "* Listagem de todos os Itens no Estoque.", description = "Retorna uma lista de ItemEstoqueResponseDto com todos os Itens no sistema.")
