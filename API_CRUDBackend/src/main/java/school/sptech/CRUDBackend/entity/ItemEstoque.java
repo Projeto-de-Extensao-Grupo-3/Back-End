@@ -38,4 +38,6 @@ public class ItemEstoque {
     @JoinColumn(name = "id_prateleira")
     @Schema(description = "Local onde o item está localizado (em qual prateleira).")
     private Prateleira prateleira;
+    @OneToMany(mappedBy = "roupa")
+    private Set<ConfeccaoRoupa> confeccaoRoupa;
 }

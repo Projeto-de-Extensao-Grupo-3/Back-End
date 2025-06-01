@@ -79,6 +79,12 @@ INSERT INTO item_estoque (id_categoria, id_prateleira, descricao, peso, qtd_mini
 	(6, 5, 'Tecido azul florido', 1.0, 0, 0),
 	(3, 6, 'Tecido cinza liso', 1.0, 0, 0);
 
+INSERT INTO confeccao_roupa (roupa_id_item_estoque, tecido_id_item_estoque) VALUES
+	(1, 5),
+	(2, 4),
+	(3, 4),
+	(3, 6);
+
 INSERT INTO caracteristica_item_estoque (id_categoria, id_item_estoque) VALUES
 	(13, 1),
 	(20, 1),
