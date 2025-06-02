@@ -139,7 +139,7 @@ class LoteServiceTest {
     }
 
     @Test
-    @DisplayName("Deve lanca excessao quando ID de Lote for invalido")
+    @DisplayName("Deve lancar excessao para quando buscar por ID de Lote for invalido")
     void deveLancarExcessaoParaIdLoteInvalido(){
         //Given
 
@@ -168,12 +168,58 @@ class LoteServiceTest {
         Lote resultado = loteService.atualizarLotePorId(loteTeste.getIdLote(), loteParaAtualizar);
 
         //Assert
-        verify(parceiroRepository, times(1)).save(any());
-        assertEquals(parceiroParaAtualizar, resultado);
-        assertEquals(parceiroParaAtualizar.getTelefone(), resultado.getTelefone());
-        assertEquals(parceiroParaAtualizar.getEmail(), resultado.getEmail());
-        assertEquals(parceiroParaAtualizar.getEndereco(), resultado.getEndereco());
+        verify(loteRepository, times(1)).save(any());
+        assertEquals(loteParaAtualizar, resultado);
+        assertEquals(loteParaAtualizar.getResponsavel(), resultado.getResponsavel());
+        assertEquals(loteParaAtualizar.getParceiro(), resultado.getParceiro());
     }
 
+    @Test
+    @DisplayName("Deve lancar excessao ao tentar atualizar ID de parceiro invalido")
+    void deveLancarExcessaoParaIdNaoEncontrado(){
+        //Given
+        Parceiro parceiroParaAtualizar = new Parceiro(2, "Fabricante", "Fornecedor de Algodões Peruanos", "000", "fabricante2@gmail.com",
+                "R. Haddock Lobo, 595", "teste1");
+        Lote loteParaAtualizar = new Lote(1, "Lote de Algodão Peruano", "10/06/2025", parceiroParaAtualizar, funcionarioTeste);
+
+        //When
+        when(loteRepository.existsById(anyInt())).thenReturn(false);
+
+        //Then
+
+        //Assert
+        assertThrows(LoteNaoEncontradoException.class, () -> loteService.atualizarLotePorId(anyInt(), loteParaAtualizar));
+    }
+
+    @Test
+    @DisplayName("Deve remover Lote com ID informado")
+    void deveRemoverLoteComIdInformado(){
+        //Given
+
+        //When
+        when(loteRepository.existsById(anyInt())).thenReturn(true);
+        doNothing().when(loteRepository).deleteById(anyInt());
+
+        //Then
+        loteService.removerPorId(loteTeste.getIdLote());
+
+        //Assert
+        verify(loteService, times(1)).removerPorId(loteTeste.getIdLote());
+    }
+
+    @Test
+    @DisplayName("Deve lancar excessao ao tentar remover Lote com ID invalido")
+    void deveLancarExcessaoParaIdInvalidoAoTentarRemover(){
+        //Given
+
+        //When
+        when(loteRepository.existsById(anyInt())).thenReturn(false);
+
+        //Then
+
+        //Assert
+        assertThrows(LoteNaoEncontradoException.class, () -> loteService.removerPorId(loteTeste.getIdLote()));
+        verify(loteRepository, never()).delete(any());
+    }
 
 }
