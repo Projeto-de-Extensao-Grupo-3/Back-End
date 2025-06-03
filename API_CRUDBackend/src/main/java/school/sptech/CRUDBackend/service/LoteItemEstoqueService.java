@@ -50,7 +50,7 @@ public class LoteItemEstoqueService implements Subject {
             atualizarQtdItemEstoque(loteItemEstoqueParaAtualizar, qtdAtualizado);
             return repository.save(loteItemEstoqueParaAtualizar);
         }
-        throw new LoteNaoEncontradoException("O lote do estoque não foi encontrado");
+        throw new LoteItemEstoqueNaoEncontradoException("O lote do estoque não foi encontrado");
     }
 
     public void removerPorId(Integer id){

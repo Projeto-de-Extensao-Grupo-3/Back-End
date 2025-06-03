@@ -9,12 +9,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import school.sptech.CRUDBackend.Model.itemEstoque.Observer;
 import school.sptech.CRUDBackend.entity.*;
+import school.sptech.CRUDBackend.exception.Lote.LoteConflitoException;
+import school.sptech.CRUDBackend.exception.Lote.LoteNaoEncontradoException;
+import school.sptech.CRUDBackend.exception.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.LoteItemEstoqueRepository;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -40,6 +40,8 @@ class LoteItemEstoqueServiceTest {
     private Alerta alerta;
 
     private ItemEstoque itemEstoque;
+
+    private Lote lote;
 
     private Set<Categoria> caracteristicas = new HashSet<>();
 
@@ -67,7 +69,7 @@ class LoteItemEstoqueServiceTest {
         listaPermissaoTeste.add(permissaoTeste2);
         Funcionario funcionario = new Funcionario(1, "Leandro", "123456789", "11 977839256",
                 "leandro@gmail.com", "123", listaPermissaoTeste);
-        Lote lote = new Lote(1, "Lote de Tecido Algodão", "10/06/2025", parceiro, funcionario);
+        lote = new Lote(1, "Lote de Tecido Algodão", "10/06/2025", parceiro, funcionario);
     loteItemEstoque = new LoteItemEstoque(1, 10.0, 25.00, itemEstoque, lote);
     }
 
@@ -78,6 +80,7 @@ class LoteItemEstoqueServiceTest {
 
         // When
         when(loteItemEstoqueRepository.save(any())).thenReturn(loteItemEstoque);
+        when(itemEstoqueService.buscarItemEstoquePorId(anyInt())).thenReturn(itemEstoque);
 
         //Then
         LoteItemEstoque resultado = loteItemEstoqueService.cadastrarLoteItemEstoque(loteItemEstoque);
@@ -87,6 +90,136 @@ class LoteItemEstoqueServiceTest {
         assertEquals(loteItemEstoque, resultado);
     }
 
+    @Test
+    @DisplayName("Deve retornar lista com Lote de Item Estoque cadastrado")
+    void deveListarLoteDeItemEstoqueCadastrados(){
+        //Given
+        List<LoteItemEstoque> lotes = List.of(loteItemEstoque);
 
+        //When
+        when(loteItemEstoqueRepository.findAll()).thenReturn(lotes);
+
+        //Then
+        List<LoteItemEstoque> resultado = loteItemEstoqueService.listarTodos();
+
+        //Assert
+        assertEquals(lotes, resultado);
+        assertEquals(lotes.size(), resultado.size());
+    }
+
+    @Test
+    @DisplayName("Deve retornar uma lista de Lote De Item Estoque vazia")
+    void deveRetornarListaDeLoteItemEstoqueVazia(){
+        //Given
+
+        //When
+        when(loteItemEstoqueRepository.findAll()).thenReturn(Collections.emptyList());
+
+        //Then
+        List<LoteItemEstoque> resultado = loteItemEstoqueService.listarTodos();
+
+        //Assert
+        assertTrue(resultado.isEmpty(), "A lista deve estar vazia");
+        assertEquals(0, resultado.size());
+    }
+
+    @Test
+    @DisplayName("Deve retornar Lote de Item Estoque com ID informado")
+    void deveRetornarLoteDeItemEstoqueComIdInformado(){
+        //Given
+
+        //When
+        when(loteItemEstoqueRepository.findById(anyInt())).thenReturn(Optional.of(loteItemEstoque));
+
+        //Then
+        LoteItemEstoque resultado = loteItemEstoqueService.buscarLoteItemEstoquePorId(loteItemEstoque.getIdLoteItemEstoque());
+
+        //Assert
+        assertEquals(loteItemEstoque, resultado);
+        assertEquals(loteItemEstoque.getIdLoteItemEstoque(), resultado.getIdLoteItemEstoque());
+    }
+
+    @Test
+    @DisplayName("Deve lancar excessao para quando buscar por ID de Lote de Item Estoque for invalido")
+    void deveLancarExcessaoParaIdLoteItemEstoqueInvalido(){
+        //Given
+
+        //When
+        when(loteItemEstoqueRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        //Then
+
+        //Assert
+        assertThrows(LoteItemEstoqueNaoEncontradoException.class, () -> loteItemEstoqueService.buscarLoteItemEstoquePorId(loteItemEstoque.getIdLoteItemEstoque()));
+    }
+
+    @Test
+    @DisplayName("Deve atualizar Lote de Item Estoque com novos dados e ID informado")
+    void deveAtualizarLoteItemEstoqueComNovosDados(){
+        //Given
+        LoteItemEstoque loteItemEstoqueAtualizar = new LoteItemEstoque(null, 60.0, 30.00, itemEstoque, lote);
+        Double qtdAtualizada = loteItemEstoqueAtualizar.getQtdItem() - loteItemEstoque.getQtdItem();
+
+        //When
+        when(loteItemEstoqueRepository.existsById(anyInt())).thenReturn(true);
+        when(loteItemEstoqueRepository.findById(anyInt())).thenReturn(Optional.of(loteItemEstoque));
+        when(itemEstoqueService.buscarItemEstoquePorId(anyInt())).thenReturn(itemEstoque);
+        when(loteItemEstoqueRepository.save(any())).thenReturn(loteItemEstoqueAtualizar);
+
+        //Then
+        LoteItemEstoque resultado = loteItemEstoqueService.atualizarLoteItemEstoquePorId(loteItemEstoque.getIdLoteItemEstoque(), loteItemEstoqueAtualizar);
+
+        //Assert
+        verify(loteItemEstoqueRepository, times(1)).save(any());
+        assertEquals(loteItemEstoqueAtualizar, resultado);
+        assertEquals(loteItemEstoqueAtualizar.getQtdItem(), resultado.getQtdItem());
+        assertEquals(loteItemEstoqueAtualizar.getPreco(), resultado.getPreco());
+    }
+
+    @Test
+    @DisplayName("Deve lancar excessao ao tentar atualizar ID de Lote Item Estoque invalido")
+    void deveLancarExcessaoParaIdNaoEncontrado(){
+        //Given
+        LoteItemEstoque loteItemEstoqueAtualizar = new LoteItemEstoque(null, 60.0, 30.00, itemEstoque, lote);
+
+        //When
+        when(loteItemEstoqueRepository.existsById(anyInt())).thenReturn(false);
+
+        //Then
+
+        //Assert
+        assertThrows(LoteItemEstoqueNaoEncontradoException.class, () -> loteItemEstoqueService.atualizarLoteItemEstoquePorId(anyInt(), loteItemEstoqueAtualizar));
+    }
+
+    @Test
+    @DisplayName("Deve remover Lote de Item Estoque com ID informado")
+    void deveRemoverLoteItemEstoqueComIdInformado(){
+        //Given
+
+        //When
+        when(loteItemEstoqueRepository.existsById(anyInt())).thenReturn(true);
+        doNothing().when(loteItemEstoqueRepository).deleteById(anyInt());
+
+        //Then
+        loteItemEstoqueService.removerPorId(loteItemEstoque.getIdLoteItemEstoque());
+
+        //Assert
+        verify(loteItemEstoqueRepository, times(1)).deleteById(loteItemEstoque.getIdLoteItemEstoque());
+    }
+
+    @Test
+    @DisplayName("Deve lancar excessao ao tentar remover Lote de Item Estoque com ID invalido")
+    void deveLancarExcessaoParaIdInvalidoAoTentarRemover(){
+        //Given
+
+        //When
+        when(loteItemEstoqueRepository.existsById(anyInt())).thenReturn(false);
+
+        //Then
+
+        //Assert
+        assertThrows(LoteItemEstoqueNaoEncontradoException.class, () -> loteItemEstoqueService.removerPorId(loteItemEstoque.getIdLoteItemEstoque()));
+        verify(loteItemEstoqueRepository, never()).delete(any());
+    }
 
 }
