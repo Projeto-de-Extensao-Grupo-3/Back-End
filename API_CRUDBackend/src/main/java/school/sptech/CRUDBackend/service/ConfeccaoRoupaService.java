@@ -28,4 +28,12 @@ public class ConfeccaoRoupaService {
             throw new ConfeccaoRoupaNaoEncontradaException("relação entre roupa e tecido não encontrada");
         }
     }
+
+    public ConfeccaoRoupa atualizarConfeccaoRoupa(Integer id, ConfeccaoRoupa confeccaoRoupa) {
+        if (confeccaoRoupaRepository.existsById(id)) {
+            confeccaoRoupa.setIdConfeccaoRoupa(id);
+            return confeccaoRoupaRepository.save(confeccaoRoupa);
+        }
+        throw new ConfeccaoRoupaNaoEncontradaException("Esse registro de confecção de roupa não existe");
+    }
 }
