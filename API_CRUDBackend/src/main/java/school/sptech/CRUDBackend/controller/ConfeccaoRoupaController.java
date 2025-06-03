@@ -56,4 +56,15 @@ public class ConfeccaoRoupaController {
         service.deletarConfeccaoRoupa(id);
         return ResponseEntity.status(204).build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ConfeccaoRoupaResponseDto> atualizar(
+            @PathVariable Integer id,
+            @RequestBody ConfeccaoRoupaRequestDto confeccaoRoupaDto
+    ) {
+        ConfeccaoRoupa confeccaoRoupaAtualizar = ConfeccaoRoupaMapper.toEntity(confeccaoRoupaDto);
+        ConfeccaoRoupaResponseDto confeccaoRoupa = ConfeccaoRoupaMapper.toResponseDto(
+                service.atualizarConfeccaoRoupa(id, confeccaoRoupaAtualizar));
+        return ResponseEntity.status(200).body(confeccaoRoupa);
+    }
 }

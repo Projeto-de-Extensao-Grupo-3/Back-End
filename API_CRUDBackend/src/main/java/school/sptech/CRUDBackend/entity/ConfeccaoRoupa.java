@@ -23,4 +23,6 @@ public class ConfeccaoRoupa {
     @ManyToOne
     @Schema(description = "O tecido que foi utilizado na confecção.", example = "Couro")
     private ItemEstoque tecido;
+    @Schema(description = "A quantidade de tecida utilizada em uma roupa", example = "10.0")
+    private Double qtdTecido;
 }

@@ -13,4 +13,6 @@ public class ConfeccaoRoupaRequestDto {
     private ConfeccaoRoupaRoupaRequestDto roupa;
     @NotNull
     private ConfeccaoRoupaTecidoRequestDto tecido;
+    @NotNull
+    private Double qtdTecido;
 }

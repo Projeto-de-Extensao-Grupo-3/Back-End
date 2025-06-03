@@ -37,7 +37,8 @@ public class ItemEstoqueMapper {
                 categoria,
                 caracteristicas,
                 prateleira,
-                null
+                null,
+                requestDto.getPreco()
         );
     }
 
@@ -60,7 +61,13 @@ public class ItemEstoqueMapper {
                 .map(confeccaoRoupa ->
                         new ItemEstoqueConfeccaoRoupaDto(
                                 confeccaoRoupa.getIdConfeccaoRoupa(),
-                                new ItemEstoqueTecidoDto(confeccaoRoupa.getTecido().getIdItemEstoque(), confeccaoRoupa.getTecido().getDescricao())))
+                                new ItemEstoqueTecidoDto(
+                                        confeccaoRoupa.getTecido().getIdItemEstoque(),
+                                        confeccaoRoupa.getTecido().getDescricao()
+                                ),
+                                confeccaoRoupa.getQtdTecido()
+                        )
+                )
                 .collect(Collectors.toSet());
 
 
@@ -72,7 +79,8 @@ public class ItemEstoqueMapper {
                 item.getQtdArmazenado(),
                 categoriaDto,
                 caracteristicasDto,
-                confeccaoRoupaDto
+                confeccaoRoupaDto,
+                item.getPreco()
         );
     }
 

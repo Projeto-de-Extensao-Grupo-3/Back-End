@@ -26,4 +26,5 @@ public class ItemEstoqueResponseDto {
     private ItemEstoqueCategoriaResponseDto subcategoria;
     private Set<ItemEstoqueCaracteristicaResponseDto> caracteriticas;
     private Set<ItemEstoqueConfeccaoRoupaDto> confeccaoRoupa;
+    private Double preco;
 }

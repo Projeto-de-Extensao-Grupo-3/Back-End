@@ -18,7 +18,8 @@ public class ConfeccaoRoupaMapper {
         return new ConfeccaoRoupa(
                 null,
                 roupa,
-                tecido
+                tecido,
+                requestDto.getQtdTecido()
         );
     }
 

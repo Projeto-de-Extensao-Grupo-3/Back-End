@@ -12,4 +12,5 @@ import lombok.Setter;
 public class ItemEstoqueConfeccaoRoupaDto {
     private Integer idConfeccaoRoupa;
     private ItemEstoqueTecidoDto tecido;
+    private Double qtdTecido;
 }
