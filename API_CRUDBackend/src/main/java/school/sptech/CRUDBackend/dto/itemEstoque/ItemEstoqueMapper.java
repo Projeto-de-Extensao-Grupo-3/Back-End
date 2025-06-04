@@ -2,6 +2,7 @@ package school.sptech.CRUDBackend.dto.itemEstoque;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import school.sptech.CRUDBackend.entity.Categoria;
+import school.sptech.CRUDBackend.entity.Imagem;
 import school.sptech.CRUDBackend.entity.ItemEstoque;
 import school.sptech.CRUDBackend.entity.Prateleira;
 
@@ -27,6 +28,8 @@ public class ItemEstoqueMapper {
         Prateleira prateleira = new Prateleira();
         prateleira.setIdPrateleira(requestDto.getPlateleira().getIdPrateleira());
 
+        Imagem imagem = new Imagem(requestDto.getImagem().getIdImagem(), requestDto.getImagem().getUrl());
+
         return new ItemEstoque(
                 null,
                 requestDto.getDescricao(),
@@ -38,7 +41,8 @@ public class ItemEstoqueMapper {
                 caracteristicas,
                 prateleira,
                 null,
-                requestDto.getPreco()
+                requestDto.getPreco(),
+                imagem
         );
     }
 
@@ -70,6 +74,7 @@ public class ItemEstoqueMapper {
                 )
                 .collect(Collectors.toSet());
 
+        ItemEstoqueImagemResponseDto imagemDto = new ItemEstoqueImagemResponseDto(item.getImagem().getUrl());
 
         return new ItemEstoqueResponseDto(
                 item.getIdItemEstoque(),
@@ -80,7 +85,8 @@ public class ItemEstoqueMapper {
                 categoriaDto,
                 caracteristicasDto,
                 confeccaoRoupaDto,
-                item.getPreco()
+                item.getPreco(),
+                imagemDto
         );
     }
 

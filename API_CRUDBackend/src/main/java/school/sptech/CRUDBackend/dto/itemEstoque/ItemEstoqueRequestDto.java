@@ -37,4 +37,5 @@ public class ItemEstoqueRequestDto {
     private Set<ItemEstoqueCategoriaRequestDto> caracteristicas;
     private ItemEstoquePrateleiraRequestDto plateleira;
     private Double preco;
+    private ItemEstoqueImagemRequestDto imagem;
 }

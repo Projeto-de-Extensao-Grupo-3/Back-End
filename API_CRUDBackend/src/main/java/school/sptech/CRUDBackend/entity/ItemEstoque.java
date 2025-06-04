@@ -41,4 +41,6 @@ public class ItemEstoque {
     @OneToMany(mappedBy = "roupa")
     private Set<ConfeccaoRoupa> confeccaoRoupa;
     private Double preco;
+    @OneToOne
+    private Imagem imagem;
 }
