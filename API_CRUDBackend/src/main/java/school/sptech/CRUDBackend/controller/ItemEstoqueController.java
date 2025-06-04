@@ -138,4 +138,26 @@ public class ItemEstoqueController {
         itemEstoqueService.removerPorId(id);
         return ResponseEntity.status(204).build();
     }
+
+    @GetMapping("/filtros")
+    public ResponseEntity<List<ItemEstoqueResponseDto>> buscarPorDescricao(@RequestParam String descricao) {
+        List<ItemEstoqueResponseDto> itens = ItemEstoqueMapper.toResponseDtos(
+                itemEstoqueService.buscarItemEstoquePorDescricao(descricao)
+        );
+        if(itens.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+        return ResponseEntity.status(200).body(itens);
+    }
+
+    @GetMapping("/categorias")
+    public ResponseEntity<List<ItemEstoqueResponseDto>> buscarPorTipo(@RequestParam String tipo) {
+        List<ItemEstoqueResponseDto> itens = ItemEstoqueMapper.toResponseDtos(
+                itemEstoqueService.buscarItemEstoquePorTipo(tipo)
+        );
+        if(itens.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+        return ResponseEntity.status(200).body(itens);
+    }
 }
