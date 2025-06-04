@@ -74,7 +74,9 @@ public class ItemEstoqueMapper {
                 )
                 .collect(Collectors.toSet());
 
-        ItemEstoqueImagemResponseDto imagemDto = new ItemEstoqueImagemResponseDto(item.getImagem().getUrl());
+        ItemEstoqueImagemResponseDto imagemDto = item.getImagem() != null
+                ? new ItemEstoqueImagemResponseDto(item.getImagem().getUrl())
+                : null;
 
         return new ItemEstoqueResponseDto(
                 item.getIdItemEstoque(),

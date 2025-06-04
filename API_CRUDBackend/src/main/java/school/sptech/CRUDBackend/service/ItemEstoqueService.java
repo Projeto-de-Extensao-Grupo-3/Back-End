@@ -61,4 +61,12 @@ public class ItemEstoqueService implements Observer {
     public void atualizarQuantidade(ItemEstoque itemEstoque) {
         atualizarItemEstoquePorId(itemEstoque.getIdItemEstoque(), itemEstoque);
     }
+
+    public List<ItemEstoque> buscarItemEstoquePorDescricao(String descricao) {
+        return itemEstoqueRepository.findByDescricaoContainsIgnoreCase(descricao);
+    }
+
+    public List<ItemEstoque> buscarItemEstoquePorTipo(String tipo) {
+        return itemEstoqueRepository.findByTipo(tipo);
+    }
 }
