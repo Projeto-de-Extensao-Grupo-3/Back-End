@@ -29,9 +29,6 @@ class LoteItemEstoqueServiceTest {
     @Mock
     private ItemEstoqueService itemEstoqueService;
 
-    @Mock
-    private List<Observer> observadores = new ArrayList<>();
-
     @InjectMocks
     private LoteItemEstoqueService loteItemEstoqueService;
 
@@ -51,6 +48,7 @@ class LoteItemEstoqueServiceTest {
 
     @BeforeEach
     void setUp(){
+        loteItemEstoqueService.adicionarObservador(itemEstoqueService);
         Categoria tecido = new Categoria(1, "Tecido", null);
         Categoria categoriaPai = new Categoria(2, "Vestido", null);
         Categoria categoriaFilho = new Categoria(3, "Vestido Florido", categoriaPai);
@@ -59,8 +57,9 @@ class LoteItemEstoqueServiceTest {
         caracteristicas.add(caracteristica1);
         caracteristicas.add(caracteristica2);
         Prateleira prateleira = new Prateleira(1, "1A");
+        Imagem imagem = new Imagem(1, "afkasmfoa");
         itemEstoque = new ItemEstoque(1, "Vestido com Flores Azuis", "Tamanho Unico", 1.5,
-                10.0, 50.0, categoriaFilho, caracteristicas, prateleira, confeccaoRoupas);
+                10.0, 50.0, categoriaFilho, caracteristicas, prateleira, confeccaoRoupas, 100.0, imagem);
 
     Parceiro parceiro = new Parceiro(1, "Fabricante", "Fornecedor de Jeans", "000", "fabricante@gmail.com", "R. Haddock Lobo, 595", "teste1");
         Permissao permissaoTeste1 = new Permissao(1, "Cadastrar Funcionario");
@@ -221,5 +220,13 @@ class LoteItemEstoqueServiceTest {
         assertThrows(LoteItemEstoqueNaoEncontradoException.class, () -> loteItemEstoqueService.removerPorId(loteItemEstoque.getIdLoteItemEstoque()));
         verify(loteItemEstoqueRepository, never()).delete(any());
     }
+
+    @Test
+    @DisplayName("Deve notificar os Observers efetivamente")
+    void deveNotificarObserver(){
+        loteItemEstoqueService.notificarObservers(itemEstoque);
+        verify(itemEstoqueService, times(1)).atualizarQuantidade(itemEstoque);
+    }
+
 
 }

@@ -55,8 +55,9 @@ class AlertaServiceTest {
         caracteristicas.add(caracteristica1);
         caracteristicas.add(caracteristica2);
         prateleira = new Prateleira(1, "1A");
+        Imagem imagem = new Imagem(1, "afkasmfoa");
         itemEstoque = new ItemEstoque(1, "Vestido com Flores Azuis", "Tamanho Unico", 1.5,
-                10.0, 50.0, categoriaFilho, caracteristicas, prateleira, confeccaoRoupas);
+                10.0, 50.0, categoriaFilho, caracteristicas, prateleira, confeccaoRoupas, 100.0, imagem);
         alerta = new Alerta(1, "Quantidade minima de roupa atingida",
                 LocalDateTime.of(2025, 5, 2, 10, 1, 30), itemEstoque);
     }
