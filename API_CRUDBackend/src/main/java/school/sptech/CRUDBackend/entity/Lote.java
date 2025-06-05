@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Schema(description = "Entidade representando um lote de item.")
 @Entity
 @Getter
@@ -18,7 +20,7 @@ public class Lote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idLote;
     private String descricao;
-    private String dataEntrada;
+    private LocalDateTime dataEntrada;
     @ManyToOne
     @JoinColumn(name = "id_parceiro")
     @Schema(description = "Atributo que representa de qual parceiro veio.", example = "Costureira ou fornecedor.")

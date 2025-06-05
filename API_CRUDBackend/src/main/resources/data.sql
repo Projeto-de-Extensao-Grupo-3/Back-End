@@ -71,19 +71,19 @@ INSERT INTO categoria (nome) VALUES
 	('Grosso'),
 	('Fino');
 
-INSERT INTO item_estoque (id_categoria, id_prateleira, descricao, peso, qtd_minimo, qtd_armazenado) VALUES
-	(8, 1, 'Vestido azul florido', 1.0, 0, 0),
-	(9, 2, 'Camiseta vermelha lisa', 1.0, 0, 0),
-	(11, 3, 'Shorts cinza com listras vermelhas', 1.0, 0, 0),
-	(5, 4, 'Tecido vermelho liso', 1.0, 0, 0),
-	(6, 5, 'Tecido azul florido', 1.0, 0, 0),
-	(3, 6, 'Tecido cinza liso', 1.0, 0, 0);
+INSERT INTO item_estoque (id_categoria, id_prateleira, descricao, peso, qtd_minimo, qtd_armazenado, preco) VALUES
+	(8, 1, 'Vestido azul florido', 1.0, 0, 0, null),
+	(9, 2, 'Camiseta vermelha lisa', 1.0, 0, 0, null),
+	(11, 3, 'Shorts cinza com listras vermelhas', 1.0, 0, 0, null),
+	(5, 4, 'Tecido vermelho liso', 1.0, 0, 0, 100),
+	(6, 5, 'Tecido azul florido', 1.0, 0, 0, 150),
+	(3, 6, 'Tecido cinza liso', 1.0, 0, 0, 200);
 
 INSERT INTO confeccao_roupa (roupa_id_item_estoque, tecido_id_item_estoque, qtd_tecido) VALUES
-	(1, 5, 100.0),
-	(2, 4, 100.0),
-	(3, 4, 100.0),
-	(3, 6, 100.0);
+	(1, 5, 10.0),
+    (2, 4, 10.0),
+    (3, 4, 10.0),
+    (3, 6, 10.0);
 
 INSERT INTO caracteristica_item_estoque (id_categoria, id_item_estoque) VALUES
 	(13, 1),
@@ -112,7 +112,10 @@ INSERT INTO lote (descricao, data_entrada, id_parceiro, id_funcionario) VAlUES
 	('lote de roupas', now(), 1, 1),
 	('lote de tecido', now(), 2, 1);
 
-INSERT INTO lote_item_estoque (qtd_item, preco, id_item_estoque, id_lote) VALUES
-    (10.0, 230.0, 1, 1);
-
-
+INSERT INTO lote_item_estoque (id_lote, id_item_estoque, qtd_item, preco) VALUES
+    (1, 1, 5, 100.0),
+    (1, 2, 3, 150.0),
+    (1, 3, 10, 200.0),
+    (2, 4, 3.5, 80.0),
+	(2, 5, 6.5, 70.0),
+	(2, 6, 12.5, 120.0);

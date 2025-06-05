@@ -160,4 +160,10 @@ public class ItemEstoqueController {
         }
         return ResponseEntity.status(200).body(itens);
     }
+
+    @GetMapping("/custos/{id}")
+    public ResponseEntity<Double> calcularCustoProducao(@PathVariable Integer id) {
+        Double custo = itemEstoqueService.calcularCustoProducao(id);
+        return ResponseEntity.status(200).body(custo);
+    }
 }
