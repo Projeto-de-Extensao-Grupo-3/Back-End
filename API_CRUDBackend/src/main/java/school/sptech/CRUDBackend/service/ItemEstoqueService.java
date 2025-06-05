@@ -69,4 +69,11 @@ public class ItemEstoqueService implements Observer {
     public List<ItemEstoque> buscarItemEstoquePorTipo(String tipo) {
         return itemEstoqueRepository.findByTipo(tipo);
     }
+
+    public Double calcularCustoProducao(Integer id) {
+        if (itemEstoqueRepository.existsById(id)) {
+            return itemEstoqueRepository.calcularCustoProducao(id);
+        }
+        throw new ItemEstoqueNaoEncontradoException("O item para calcular custo não existe");
+    }
 }

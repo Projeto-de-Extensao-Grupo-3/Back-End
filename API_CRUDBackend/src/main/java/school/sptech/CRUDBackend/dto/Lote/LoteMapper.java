@@ -5,12 +5,15 @@ import school.sptech.CRUDBackend.entity.Funcionario;
 import school.sptech.CRUDBackend.entity.Lote;
 import school.sptech.CRUDBackend.entity.Parceiro;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Schema(description = "Classe de mapeamento de DTOs Lote.")
 public class LoteMapper {
 
-    public static Lote toEntity(LoteRequestDto requestDto){
+    public static Lote toEntity(LoteRequestDto requestDto) {
+        LocalDateTime dataHora = LocalDateTime.parse(requestDto.getDataEntrada());
         Parceiro parceiro = new Parceiro();
         parceiro.setIdParceiro(requestDto.getParceiro().getIdParceiro());
         Funcionario funcionario = new Funcionario();
@@ -18,7 +21,7 @@ public class LoteMapper {
         return new Lote(
                 null,
                 requestDto.getDescricao(),
-                requestDto.getDataEntrada(),
+                dataHora,
                 parceiro,
                 funcionario
         );
@@ -37,7 +40,7 @@ public class LoteMapper {
         return new LoteResponseDto(
                 lote.getIdLote(),
                 lote.getDescricao(),
-                lote.getDataEntrada(),
+                lote.getDataEntrada().toString(),
                 funcionarioDto,
                 parceiroDto
         );
