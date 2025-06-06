@@ -17,6 +17,7 @@ import school.sptech.CRUDBackend.exception.parceiro.ParceiroConflitoException;
 import school.sptech.CRUDBackend.exception.parceiro.ParceiroNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.LoteRepository;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -55,7 +56,7 @@ class LoteServiceTest {
         listaPermissaoTeste.add(permissaoTeste2);
         funcionarioTeste = new Funcionario(1, "Leandro", "123456789", "11 977839256",
                 "leandro@gmail.com", "123", listaPermissaoTeste);
-        loteTeste = new Lote(1, "Lote de Tecido Algodão", "10/06/2025", parceiroTeste, funcionarioTeste);
+        loteTeste = new Lote(1, "Lote de Tecido Algodão", LocalDateTime.parse("2025-05-10 11:36:00"), parceiroTeste, funcionarioTeste);
     }
 
     @Test
@@ -158,7 +159,7 @@ class LoteServiceTest {
         //Given
         Parceiro parceiroParaAtualizar = new Parceiro(2, "Fabricante", "Fornecedor de Algodões Peruanos", "000", "fabricante2@gmail.com",
                 "R. Haddock Lobo, 595", "teste1");
-        Lote loteParaAtualizar = new Lote(1, "Lote de Algodão Peruano", "10/06/2025", parceiroParaAtualizar, funcionarioTeste);
+        Lote loteParaAtualizar = new Lote(1, "Lote de Algodão Peruano", LocalDateTime.parse("2025-05-10 11:36:00"), parceiroParaAtualizar, funcionarioTeste);
 
         //When
         when(loteRepository.existsById(anyInt())).thenReturn(true);
@@ -180,7 +181,7 @@ class LoteServiceTest {
         //Given
         Parceiro parceiroParaAtualizar = new Parceiro(2, "Fabricante", "Fornecedor de Algodões Peruanos", "000", "fabricante2@gmail.com",
                 "R. Haddock Lobo, 595", "teste1");
-        Lote loteParaAtualizar = new Lote(1, "Lote de Algodão Peruano", "10/06/2025", parceiroParaAtualizar, funcionarioTeste);
+        Lote loteParaAtualizar = new Lote(1, "Lote de Algodão Peruano", LocalDateTime.parse("2025-05-10 11:36:00"), parceiroParaAtualizar, funcionarioTeste);
 
         //When
         when(loteRepository.existsById(anyInt())).thenReturn(false);

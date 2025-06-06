@@ -14,6 +14,7 @@ import school.sptech.CRUDBackend.exception.Lote.LoteNaoEncontradoException;
 import school.sptech.CRUDBackend.exception.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.LoteItemEstoqueRepository;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,7 +69,7 @@ class LoteItemEstoqueServiceTest {
         listaPermissaoTeste.add(permissaoTeste2);
         Funcionario funcionario = new Funcionario(1, "Leandro", "123456789", "11 977839256",
                 "leandro@gmail.com", "123", listaPermissaoTeste);
-        lote = new Lote(1, "Lote de Tecido Algodão", "10/06/2025", parceiro, funcionario);
+        lote = new Lote(1, "Lote de Tecido Algodão", LocalDateTime.parse("2025-05-10 11:36:00"), parceiro, funcionario);
     loteItemEstoque = new LoteItemEstoque(1, 10.0, 25.00, itemEstoque, lote);
     }
 
