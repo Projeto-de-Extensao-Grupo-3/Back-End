@@ -13,5 +13,4 @@ import lombok.Setter;
 public class LoteItemEstoqueLoteResponseDto {
     private Integer idLote;
     private String descricao;
-    private String dataEntrada;
 }

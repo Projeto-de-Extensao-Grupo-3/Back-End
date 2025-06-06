@@ -25,7 +25,7 @@ public class LoteItemEstoqueService implements SubjectLoteItem, Subject {
     private final List<ObserverLoteItem> observadoresLoteItem = new ArrayList<>();
 
     public LoteItemEstoque cadastrarLoteItemEstoque(LoteItemEstoque loteParaCadastrar) {
-        ItemEstoque itemEstoque = atualizarDadosItemEstoque(loteParaCadastrar, 0.0, 0.0);
+        ItemEstoque itemEstoque = atualizarDadosItemEstoque(loteParaCadastrar, 0.0);
         notificarObservers(itemEstoque);
         notificarObserversLoteItem(itemEstoque);
         return repository.save(loteParaCadastrar);
@@ -51,7 +51,7 @@ public class LoteItemEstoqueService implements SubjectLoteItem, Subject {
             Double qtdNova = loteItemEstoqueParaAtualizar.getQtdItem();
             Double qtdAtualizado = qtdNova - qtdAntiga;
             Double precoAtualizado = loteItemEstoqueParaAtualizar.getPreco();
-            atualizarDadosItemEstoque(loteItemEstoqueParaAtualizar, qtdAtualizado, precoAtualizado);
+            atualizarDadosItemEstoque(loteItemEstoqueParaAtualizar, qtdAtualizado);
             return repository.save(loteItemEstoqueParaAtualizar);
         }
         throw new LoteItemEstoqueNaoEncontradoException("O lote do estoque não foi encontrado");
@@ -98,7 +98,7 @@ public class LoteItemEstoqueService implements SubjectLoteItem, Subject {
         }
     }
 
-    private ItemEstoque atualizarDadosItemEstoque(LoteItemEstoque loteItemEstoque, Double qtdAtualizar, Double precoAtualizar) {
+    private ItemEstoque atualizarDadosItemEstoque(LoteItemEstoque loteItemEstoque, Double qtdAtualizar) {
         Integer idItemEstoque = loteItemEstoque.getItemEstoque().getIdItemEstoque();
         ItemEstoque itemEstoque = itemEstoqueService.buscarItemEstoquePorId(idItemEstoque);
         Double qtdEntradaNova = qtdAtualizar == 0
@@ -108,7 +108,7 @@ public class LoteItemEstoqueService implements SubjectLoteItem, Subject {
 
         String descricaoItem = itemEstoque.getDescricao();
         if (descricaoItem != null && descricaoItem.toLowerCase().contains("tecido")){
-            itemEstoque.setPreco(precoAtualizar == 0 ? loteItemEstoque.getPreco() : precoAtualizar);
+            itemEstoque.setPreco(loteItemEstoque.getPreco());
         }
 
         return itemEstoque;
