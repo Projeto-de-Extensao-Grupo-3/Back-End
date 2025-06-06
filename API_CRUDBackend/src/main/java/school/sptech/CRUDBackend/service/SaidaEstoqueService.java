@@ -10,6 +10,7 @@ import school.sptech.CRUDBackend.entity.SaidaEstoque;
 import school.sptech.CRUDBackend.exception.SaidaEstoque.SaidaEstoqueNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.SaidaEstoqueRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,6 +47,15 @@ public class SaidaEstoqueService implements Subject {
             throw new SaidaEstoqueNaoEncontradoException("Nenhuma saída com este motivo foi encontrada");
         }
         return saidaPorMotivo;
+    }
+
+    public List<SaidaEstoque> buscarPorData(LocalDate data){
+        List<SaidaEstoque> saidaPorData = repository.findByData(data);
+
+        if (saidaPorData.isEmpty()){
+            throw new SaidaEstoqueNaoEncontradoException("Nenhuma saída para esta data foi encontrada");
+        }
+        return saidaPorData;
     }
 
     public SaidaEstoque atualizarPorId(Integer id, SaidaEstoque saidaParaAtualizar){

@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.PastOrPresent;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.CRUDBackend.dto.SaidaEstoque.SaidaEstoqueMapper;
@@ -14,18 +16,16 @@ import school.sptech.CRUDBackend.dto.SaidaEstoque.SaidaEstoqueResponseDto;
 import school.sptech.CRUDBackend.entity.SaidaEstoque;
 import school.sptech.CRUDBackend.service.SaidaEstoqueService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Tag(name = "Saída de Estoque Controller", description = "Operações CRUD relacionadas ás Saídas de Item do Estoque.")
 @RestController
 @RequestMapping("/saidas-estoque")
+@RequiredArgsConstructor
 public class SaidaEstoqueController {
 
     private final SaidaEstoqueService service;
-
-    public SaidaEstoqueController(SaidaEstoqueService service) {
-        this.service = service;
-    }
 
     @Operation(
             summary = "Cadastramento de uma nova saída.",
@@ -76,15 +76,28 @@ public class SaidaEstoqueController {
         return ResponseEntity.status(200).body(saidaEncontrada);
     }
 
-    @Operation(summary = "Listagem de saídas por motivo.", description = "Retorna uma lista de SaidaEstoqueResponseDto com o motivo de saída passado no PathVariable.")
+    @Operation(summary = "Listagem de saídas por motivo.", description = "Retorna uma lista de SaidaEstoqueResponseDto com o motivo de saída passado no RequestParam.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista possui registros de saída."),
-            @ApiResponse(responseCode = "204", description = "A lista não possui nenhuma saída com o motivo passado"),
+            @ApiResponse(responseCode = "404", description = "A lista não possui nenhuma saída com o motivo passado"),
     })
     @SecurityRequirement(name = "Bearer")
-    @GetMapping("/{motivo}")
-    public ResponseEntity<List<SaidaEstoqueResponseDto>> buscarPorMotivo(@PathVariable String motivo){
+    @GetMapping("/motivo")
+    public ResponseEntity<List<SaidaEstoqueResponseDto>> buscarPorMotivo(@RequestParam String motivo){
         List<SaidaEstoqueResponseDto> saidasEncontradas = SaidaEstoqueMapper.toResponseDtos(service.buscarPorMotivo(motivo));
+
+        return ResponseEntity.status(200).body(saidasEncontradas);
+    }
+
+    @Operation(summary = "Listagem de saídas por data.", description = "Retorna uma lista de SaidaEstoqueResponseDto com a data de saída passado no RequestParam.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista possui registros de saída."),
+            @ApiResponse(responseCode = "404", description = "A lista não possui nenhuma saída na data passada"),
+    })
+    @SecurityRequirement(name = "Bearer")
+    @GetMapping("/data")
+    public ResponseEntity<List<SaidaEstoqueResponseDto>> buscarPorData(@PastOrPresent @RequestParam LocalDate data){
+        List<SaidaEstoqueResponseDto> saidasEncontradas = SaidaEstoqueMapper.toResponseDtos(service.buscarPorData(data));
 
         return ResponseEntity.status(200).body(saidasEncontradas);
     }
