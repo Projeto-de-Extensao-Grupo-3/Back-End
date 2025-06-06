@@ -31,7 +31,7 @@ public class LoteItemEstoqueMapper {
         );
         Lote lote = loteItemEstoque.getLote();
         LoteItemEstoqueLoteResponseDto loteDto = new LoteItemEstoqueLoteResponseDto(
-                lote.getIdLote(), lote.getDescricao(), lote.getDataEntrada().toString()
+                lote.getIdLote(), lote.getDescricao()
         );
         return new LoteItemEstoqueResponseDto(
                 loteItemEstoque.getIdLoteItemEstoque(),
