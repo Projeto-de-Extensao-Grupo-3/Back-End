@@ -185,7 +185,7 @@ class CategoriaServiceTest {
 
     @Test
     void deveRemoverPorIdQuandoIdValido() {
-        Integer id = 1;
+        int id = 1;
 
         when(repository.existsById(id)).thenReturn(true);
 
