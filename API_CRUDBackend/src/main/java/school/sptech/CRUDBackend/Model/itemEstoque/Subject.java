@@ -1,5 +1,6 @@
 package school.sptech.CRUDBackend.Model.itemEstoque;
 
+import school.sptech.CRUDBackend.Model.loteItemEstoque.ObserverLoteItem;
 import school.sptech.CRUDBackend.entity.ItemEstoque;
 
 public interface Subject {

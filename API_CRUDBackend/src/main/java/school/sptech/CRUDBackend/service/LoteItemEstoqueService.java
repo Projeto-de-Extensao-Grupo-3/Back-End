@@ -4,9 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.CRUDBackend.Model.itemEstoque.Observer;
 import school.sptech.CRUDBackend.Model.itemEstoque.Subject;
+import school.sptech.CRUDBackend.Model.loteItemEstoque.ObserverLoteItem;
+import school.sptech.CRUDBackend.Model.loteItemEstoque.SubjectLoteItem;
 import school.sptech.CRUDBackend.entity.ItemEstoque;
 import school.sptech.CRUDBackend.entity.LoteItemEstoque;
-import school.sptech.CRUDBackend.exception.Lote.LoteNaoEncontradoException;
 import school.sptech.CRUDBackend.exception.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.LoteItemEstoqueRepository;
 
@@ -16,15 +17,17 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class LoteItemEstoqueService implements Subject {
+public class LoteItemEstoqueService implements SubjectLoteItem, Subject {
     private final LoteItemEstoqueRepository repository;
     private final ItemEstoqueService itemEstoqueService;
 
     private final List<Observer> observadores = new ArrayList<>();
+    private final List<ObserverLoteItem> observadoresLoteItem = new ArrayList<>();
 
     public LoteItemEstoque cadastrarLoteItemEstoque(LoteItemEstoque loteParaCadastrar) {
-        ItemEstoque itemEstoque = atualizarQtdItemEstoque(loteParaCadastrar, 0.0);
+        ItemEstoque itemEstoque = atualizarDadosItemEstoque(loteParaCadastrar, 0.0, 0.0);
         notificarObservers(itemEstoque);
+        notificarObserversLoteItem(itemEstoque);
         return repository.save(loteParaCadastrar);
     }
 
@@ -47,7 +50,8 @@ public class LoteItemEstoqueService implements Subject {
             Double qtdAntiga = loteItemEstoqueAntigo.getQtdItem();
             Double qtdNova = loteItemEstoqueParaAtualizar.getQtdItem();
             Double qtdAtualizado = qtdNova - qtdAntiga;
-            atualizarQtdItemEstoque(loteItemEstoqueParaAtualizar, qtdAtualizado);
+            Double precoAtualizado = loteItemEstoqueParaAtualizar.getPreco();
+            atualizarDadosItemEstoque(loteItemEstoqueParaAtualizar, qtdAtualizado, precoAtualizado);
             return repository.save(loteItemEstoqueParaAtualizar);
         }
         throw new LoteItemEstoqueNaoEncontradoException("O lote do estoque não foi encontrado");
@@ -79,13 +83,34 @@ public class LoteItemEstoqueService implements Subject {
         }
     }
 
-    private ItemEstoque atualizarQtdItemEstoque(LoteItemEstoque loteItemEstoque, Double qtdAtualizar) {
+    @Override
+    public void adicionarObservadorLoteItem(ObserverLoteItem observerLoteItem){ observadoresLoteItem.add(observerLoteItem);}
+
+    @Override
+    public void removerObservadorLoteItem(ObserverLoteItem observerLoteItem){
+        observadoresLoteItem.remove(observerLoteItem);
+    }
+
+    @Override
+    public void notificarObserversLoteItem(ItemEstoque itemEstoque){
+        for (ObserverLoteItem observador : observadoresLoteItem) {
+            observador.atualizarPreco(itemEstoque);
+        }
+    }
+
+    private ItemEstoque atualizarDadosItemEstoque(LoteItemEstoque loteItemEstoque, Double qtdAtualizar, Double precoAtualizar) {
         Integer idItemEstoque = loteItemEstoque.getItemEstoque().getIdItemEstoque();
         ItemEstoque itemEstoque = itemEstoqueService.buscarItemEstoquePorId(idItemEstoque);
         Double qtdEntradaNova = qtdAtualizar == 0
                 ? loteItemEstoque.getQtdItem()
                 : qtdAtualizar;
         itemEstoque.setQtdArmazenado(itemEstoque.getQtdArmazenado() + qtdEntradaNova);
+
+        String descricaoItem = itemEstoque.getDescricao();
+        if (descricaoItem != null && descricaoItem.toLowerCase().contains("tecido")){
+            itemEstoque.setPreco(precoAtualizar == 0 ? loteItemEstoque.getPreco() : precoAtualizar);
+        }
+
         return itemEstoque;
     }
 }
