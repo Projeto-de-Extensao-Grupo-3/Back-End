@@ -20,10 +20,10 @@ public class LoteItemEstoque {
     private Double qtdItem;
     private Double preco;
     @ManyToOne
-    @JoinColumn(name = "id_item_estoque")
+    @JoinColumn(name = "fk_item_estoque")
     private ItemEstoque itemEstoque;
     @ManyToOne
-    @JoinColumn(name = "id_lote")
+    @JoinColumn(name = "fk_lote")
     @Schema(description = "Representa o lote do item.")
     private Lote lote;
 }

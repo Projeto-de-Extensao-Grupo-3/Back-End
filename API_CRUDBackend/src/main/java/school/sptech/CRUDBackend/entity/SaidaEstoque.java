@@ -20,19 +20,19 @@ import java.time.LocalTime;
 public class SaidaEstoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idSaida;
+    private Integer idSaidaEstoque;
     private LocalDate data;
     private LocalTime hora;
     private Double qtdSaida;
     private String motivoSaida;
     @ManyToOne
-    @JoinColumn(name = "id_funcionario")
+    @JoinColumn(name = "fk_responsavel")
     private Funcionario responsavel;
     @ManyToOne
-    @JoinColumn(name = "id_lote_item_estoque")
+    @JoinColumn(name = "fk_lote_item_estoque")
     private LoteItemEstoque loteItemEstoque;
     @ManyToOne
-    @JoinColumn(name = "id_parceiro")
+    @JoinColumn(name = "fk_costureira")
     @Nullable
     private Parceiro costureira;
 }

@@ -34,8 +34,8 @@ public class Funcionario {
     @ManyToMany
     @JoinTable(
             name = "controle_acesso",
-            joinColumns = @JoinColumn(name = "id_funcionario"),
-            inverseJoinColumns = @JoinColumn(name = "id_permissao"))
+            joinColumns = @JoinColumn(name = "fk_funcionario"),
+            inverseJoinColumns = @JoinColumn(name = "fk_permissao"))
     @Schema(description = "Lista de permissões.")
     private Set<Permissao> permissoes;
 }

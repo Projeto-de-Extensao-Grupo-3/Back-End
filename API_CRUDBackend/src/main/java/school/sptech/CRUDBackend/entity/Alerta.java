@@ -20,5 +20,6 @@ public class Alerta {
     private String descricao;
     private LocalDateTime dataHora;
     @ManyToOne
+    @JoinColumn(name = "fk_item_estoque")
     private ItemEstoque itemEstoque;
 }
