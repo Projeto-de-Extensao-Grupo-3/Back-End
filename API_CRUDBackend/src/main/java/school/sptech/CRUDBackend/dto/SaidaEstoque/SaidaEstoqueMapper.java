@@ -50,7 +50,7 @@ public class SaidaEstoqueMapper {
 //                )
 //                : null;
         return new SaidaEstoqueResponseDto(
-                saidaEstoque.getIdSaida(),
+                saidaEstoque.getIdSaidaEstoque(),
                 saidaEstoque.getData(),
                 saidaEstoque.getHora(),
                 saidaEstoque.getQtdSaida(),
@@ -67,7 +67,7 @@ public class SaidaEstoqueMapper {
 
     public static SaidaEstoqueCadastroDto toCadastroDto(SaidaEstoque saidaEstoque) {
         return new SaidaEstoqueCadastroDto(
-                saidaEstoque.getIdSaida(),
+                saidaEstoque.getIdSaidaEstoque(),
                 saidaEstoque.getData(),
                 saidaEstoque.getHora(),
                 saidaEstoque.getQtdSaida(),

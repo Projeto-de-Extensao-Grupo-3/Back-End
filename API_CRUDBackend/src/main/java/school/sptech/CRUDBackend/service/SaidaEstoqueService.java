@@ -60,7 +60,7 @@ public class SaidaEstoqueService implements Subject {
 
     public SaidaEstoque atualizarPorId(Integer id, SaidaEstoque saidaParaAtualizar){
         if (repository.existsById(id)){
-            saidaParaAtualizar.setIdSaida(id);
+            saidaParaAtualizar.setIdSaidaEstoque(id);
             SaidaEstoque saidaEstoqueAntigo = buscarPorId(id);
             Double qtdAntiga = saidaEstoqueAntigo.getQtdSaida();
             Double qtdNova = saidaParaAtualizar.getQtdSaida();

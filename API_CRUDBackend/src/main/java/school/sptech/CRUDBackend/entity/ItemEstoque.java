@@ -25,22 +25,23 @@ public class ItemEstoque {
     private Double qtdMinimo;
     private Double qtdArmazenado;
     @ManyToOne
-    @JoinColumn(name = "id_categoria")
+    @JoinColumn(name = "fk_categoria")
     private Categoria categoria;
     @ManyToMany
     @JoinTable(
             name = "caracteristica_item_estoque",
-            joinColumns = @JoinColumn(name = "id_item_estoque"),
-            inverseJoinColumns = @JoinColumn(name = "id_categoria")
+            joinColumns = @JoinColumn(name = "fk_item_estoque"),
+            inverseJoinColumns = @JoinColumn(name = "fk_categoria")
     )
     private Set<Categoria> caracteristicas;
     @ManyToOne
-    @JoinColumn(name = "id_prateleira")
+    @JoinColumn(name = "fk_prateleira")
     @Schema(description = "Local onde o item está localizado (em qual prateleira).")
     private Prateleira prateleira;
     @OneToMany(mappedBy = "roupa")
     private Set<ConfeccaoRoupa> confeccaoRoupa;
     private Double preco;
     @OneToOne
+    @JoinColumn(name = "fk_imagem")
     private Imagem imagem;
 }

@@ -22,7 +22,7 @@ public class Categoria {
     private String nome;
     @Nullable
     @ManyToOne
-    @JoinColumn(name = "id_categoria_pai")
+    @JoinColumn(name = "fk_categoria_pai")
     @Schema(description = "Categoria principal de um item", example = "Roupa ou tecido")
     private Categoria categoriaPai;
 }

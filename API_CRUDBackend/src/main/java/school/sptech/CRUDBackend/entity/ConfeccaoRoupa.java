@@ -18,9 +18,11 @@ public class ConfeccaoRoupa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idConfeccaoRoupa;
     @ManyToOne
+    @JoinColumn(name = "fk_roupa")
     @Schema(description = "A roupa que foi utilizada na confecção.", example = "Vestido")
     private ItemEstoque roupa;
     @ManyToOne
+    @JoinColumn(name = "fk_tecido")
     @Schema(description = "O tecido que foi utilizado na confecção.", example = "Couro")
     private ItemEstoque tecido;
     @Schema(description = "A quantidade de tecida utilizada em uma roupa", example = "10.0")
