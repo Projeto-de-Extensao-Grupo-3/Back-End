@@ -2,10 +2,7 @@ package school.sptech.CRUDBackend.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Schema(description = "Entidade que representa o corte de um tecido.")
 @Entity
@@ -13,6 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CorteTecido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

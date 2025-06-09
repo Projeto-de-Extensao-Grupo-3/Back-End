@@ -3,10 +3,8 @@ package school.sptech.CRUDBackend.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.util.Set;
 
 @Schema(description = "Entidade que representa um funcionário.")
@@ -15,6 +13,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Funcionario {
 
     public Funcionario(Integer idFuncionario) {

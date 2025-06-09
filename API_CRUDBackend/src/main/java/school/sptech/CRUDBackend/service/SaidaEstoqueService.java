@@ -77,7 +77,9 @@ public class SaidaEstoqueService implements Subject {
         if (repository.existsById(id)){
             repository.deleteById(id);
         }
-        throw new SaidaEstoqueNaoEncontradoException("A saída não existe para remover");
+        else {
+            throw new SaidaEstoqueNaoEncontradoException("A saída não existe para remover");
+        }
     }
 
     @Override
