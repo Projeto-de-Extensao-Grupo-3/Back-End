@@ -2,10 +2,7 @@ package school.sptech.CRUDBackend.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Schema(description = "Entidade que identifica quais itens do estoque chegaram em um lote específico.")
 @Entity
@@ -13,6 +10,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class LoteItemEstoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
