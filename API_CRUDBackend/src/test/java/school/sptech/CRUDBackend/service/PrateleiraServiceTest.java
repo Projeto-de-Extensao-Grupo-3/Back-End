@@ -1,12 +1,12 @@
+
 package school.sptech.CRUDBackend.service;
 
-import org.hibernate.mapping.Array;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import school.sptech.CRUDBackend.entity.ConfeccaoRoupa;
 import school.sptech.CRUDBackend.entity.Prateleira;
 import school.sptech.CRUDBackend.exception.Prateleira.PrateleiraConflitoException;
 import school.sptech.CRUDBackend.exception.Prateleira.PrateleiraNaoEncontradaException;
@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PrateleiraServiceTest {
@@ -27,31 +26,31 @@ class PrateleiraServiceTest {
     @Mock
     private PrateleiraRepository repository;
 
-    @Mock
-    private Prateleira entity;
-
     @InjectMocks
     private PrateleiraService service;
 
+    private Prateleira entity;
+
+    @BeforeEach
+    void setUp() {
+        entity = new Prateleira(1, "2345678");
+    }
+
     @Test
     void deveCadastrarPrateleiraComSucessoQuandoDadosValidos() {
-        entity.setIdPrateleira(1);
-        entity.setCodigo("2345678");
-
+        when(repository.existsByCodigo(entity.getCodigo())).thenReturn(false);
         when(repository.save(entity)).thenReturn(entity);
 
         Prateleira resultado = service.cadastrarPrateleira(entity);
 
         assertNotNull(resultado);
         assertEquals(1, resultado.getIdPrateleira());
-        assertEquals("2345678",resultado.getCodigo());
+        assertEquals("2345678", resultado.getCodigo());
     }
 
     @Test
     void deveFalharCadastroPrateleiraQuandoPrateleiraJaExiste() {
-        entity.setIdPrateleira(1);
-
-        when(repository.existsById(1)).thenReturn(true);
+        when(repository.existsByCodigo(entity.getCodigo())).thenReturn(true);
 
         assertThrows(PrateleiraConflitoException.class, () -> {
             service.cadastrarPrateleira(entity);
@@ -61,7 +60,7 @@ class PrateleiraServiceTest {
     @Test
     void deveRetornarListaDePrateleirasQuandoHouverRegistros() {
         Prateleira prateleira1 = new Prateleira(1, "2345678");
-        Prateleira prateleira2 = new Prateleira(2, "2345678");
+        Prateleira prateleira2 = new Prateleira(2, "8765432");
 
         List<Prateleira> prateleiras = new ArrayList<>();
         prateleiras.add(prateleira1);
@@ -73,7 +72,7 @@ class PrateleiraServiceTest {
 
         assertEquals(2, resultado.size());
         assertEquals("2345678", resultado.get(0).getCodigo());
-        assertEquals("2345678", resultado.get(1).getCodigo());
+        assertEquals("8765432", resultado.get(1).getCodigo());
     }
 
     @Test
@@ -88,11 +87,9 @@ class PrateleiraServiceTest {
 
     @Test
     void deveRetornarPrateleiraPorIdValido() {
-        Prateleira prateleira = new Prateleira(1, "2345678");
+        when(repository.findById(entity.getIdPrateleira())).thenReturn(Optional.of(entity));
 
-        when(repository.findById(prateleira.getIdPrateleira())).thenReturn(Optional.of(prateleira));
-
-        Prateleira resultado = service.buscarPorId(prateleira.getIdPrateleira());
+        Prateleira resultado = service.buscarPorId(entity.getIdPrateleira());
 
         assertNotNull(resultado);
         assertEquals(1, resultado.getIdPrateleira());
@@ -111,11 +108,9 @@ class PrateleiraServiceTest {
 
     @Test
     void deveRetornarPrateleiraPorCodigoValido() {
-        Prateleira prateleira = new Prateleira(1, "2345678");
+        when(repository.findByCodigo(entity.getCodigo())).thenReturn(Optional.of(entity));
 
-        when(repository.findByCodigo(prateleira.getCodigo())).thenReturn(Optional.of(prateleira));
-
-        Prateleira resultado = service.buscarPorCodigo(prateleira.getCodigo());
+        Prateleira resultado = service.buscarPorCodigo(entity.getCodigo());
 
         assertNotNull(resultado);
         assertEquals(1, resultado.getIdPrateleira());
@@ -134,12 +129,11 @@ class PrateleiraServiceTest {
 
     @Test
     void deveAtualizarPrateleiraPorIdValido() {
-        Prateleira prateleira = new Prateleira(1, "2345678");
+        when(repository.existsById(entity.getIdPrateleira())).thenReturn(true);
+        when(repository.save(entity)).thenReturn(entity);
 
-        when(repository.existsById(prateleira.getIdPrateleira())).thenReturn(true);
-        prateleira.setIdPrateleira(1);
-        prateleira.setCodigo("8765432");
-        Prateleira resultado = service.atualizarPorId(prateleira.getIdPrateleira(), prateleira);
+        entity.setCodigo("8765432");
+        Prateleira resultado = service.atualizarPorId(entity.getIdPrateleira(), entity);
 
         assertNotNull(resultado);
         assertEquals(1, resultado.getIdPrateleira());
@@ -148,12 +142,10 @@ class PrateleiraServiceTest {
 
     @Test
     void deveFalharAoAtualizarPrateleiraComIdInvalido() {
-        Prateleira prateleira = new Prateleira(1, "2345678");
-
-        when(repository.existsById(prateleira.getIdPrateleira())).thenReturn(false);
+        when(repository.existsById(entity.getIdPrateleira())).thenReturn(false);
 
         assertThrows(PrateleiraNaoEncontradaException.class,
-                () -> service.atualizarPorId(prateleira.getIdPrateleira(), prateleira));
+                () -> service.atualizarPorId(entity.getIdPrateleira(), entity));
     }
 
     @Test
