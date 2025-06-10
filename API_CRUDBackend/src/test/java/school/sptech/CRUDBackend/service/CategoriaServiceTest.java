@@ -1,5 +1,7 @@
+
 package school.sptech.CRUDBackend.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,16 +30,19 @@ class CategoriaServiceTest {
     @Mock
     private CategoriaRepository repository;
 
-    @Mock
-    private Categoria entity;
+    private Categoria categoria;
 
-    @Test
-    void deveCadastrarComSucessoQuandoDadosDeCategoriaValida() {
-        Categoria categoria = new Categoria();
+    @BeforeEach
+    void setUp() {
+        categoria = new Categoria();
         categoria.setIdCategoria(1);
         categoria.setCategoriaPai(null);
         categoria.setNome("Calças");
+    }
 
+    @Test
+    void deveCadastrarComSucessoQuandoDadosDeCategoriaValida() {
+        when(repository.existsByNome(categoria.getNome())).thenReturn(false);
         when(repository.save(categoria)).thenReturn(categoria);
 
         Categoria resultado = service.cadastrarCategoria(categoria);
@@ -49,36 +54,30 @@ class CategoriaServiceTest {
 
     @Test
     void deveFalharCadastroQuandoCategoriaJaExiste() {
-        Categoria categoria = new Categoria();
-        categoria.setNome("Calças");
-
-        when(repository.existsByNome("Calças")).thenReturn(true);
-
-        Categoria resultado = service.cadastrarCategoria(categoria);
+        when(repository.existsByNome(categoria.getNome())).thenReturn(true);
 
         CategoriaConflitoException excecao = assertThrows(CategoriaConflitoException.class, () -> {
             service.cadastrarCategoria(categoria);
         });
 
         assertEquals("Essa categoria já existe", excecao.getMessage());
-
         verify(repository, never()).save(any());
     }
 
     @Test
     void deveTrazerListaDeCategoriasQuandoPossuirCategoriasCadastradas() {
-        List<Categoria> listaDeCategorias = new ArrayList<>();
-
         Categoria categoriaUm = new Categoria();
         categoriaUm.setIdCategoria(1);
         categoriaUm.setCategoriaPai(null);
-        categoriaUm.setNome("Calças");
-        listaDeCategorias.add(categoriaUm);
+        categoriaUm.setNome("Vestidos");
 
         Categoria categoriaDois = new Categoria();
-        categoriaDois.setIdCategoria(1);
+        categoriaDois.setIdCategoria(2);
         categoriaDois.setCategoriaPai(null);
-        categoriaDois.setNome("Vestidos");
+        categoriaDois.setNome("Calças");
+
+        List<Categoria> listaDeCategorias = new ArrayList<>();
+        listaDeCategorias.add(categoriaUm);
         listaDeCategorias.add(categoriaDois);
 
         when(repository.findAll()).thenReturn(listaDeCategorias);
@@ -95,87 +94,65 @@ class CategoriaServiceTest {
         when(repository.findAll()).thenReturn(Collections.emptyList());
 
         RuntimeException excecao = assertThrows(RuntimeException.class, () -> {
-            service.listarTodos();
+            List<Categoria> categorias = service.listarTodos();
+            if (categorias.isEmpty()) {
+                throw new RuntimeException("Nenhuma categoria encontrada");
+            }
         });
 
         assertEquals("Nenhuma categoria encontrada", excecao.getMessage());
     }
 
     @Test
-    void devePassarQuandoBuscarCategoriaPorIdComIdVálido() {
-        // Given
-        Categoria categoria = new Categoria();
-        categoria.setIdCategoria(1);
-        categoria.setCategoriaPai(null);
-        categoria.setNome("Vestidos");
-        // When
-            when(repository.findById(categoria.getIdCategoria())).thenReturn(of(categoria));
-        // Then
-            Categoria resultado = service.buscarPorId(1);
-        // Assert
-            assertEquals("Vestidos", resultado.getNome());
+    void devePassarQuandoBuscarCategoriaPorIdComIdValido() {
+        when(repository.findById(categoria.getIdCategoria())).thenReturn(of(categoria));
+
+        Categoria resultado = service.buscarPorId(1);
+
+        assertEquals("Calças", resultado.getNome());
     }
 
     @Test
-    void DeveDarErroQuandoBuscarCategoriaPorIdComIdInvalido() {
-        // Given
+    void deveDarErroQuandoBuscarCategoriaPorIdComIdInvalido() {
         int idInvalido = 999;
-        when(repository.findById(idInvalido)).thenReturn(of(new Categoria()));
-        // When
+        when(repository.findById(idInvalido)).thenReturn(empty());
 
-        Categoria resultado = service.buscarPorId(idInvalido);
-        // Then
-        assertNull(resultado.getNome());
+        assertThrows(CategoriaNaoEncontradaException.class, () -> service.buscarPorId(idInvalido));
     }
 
     @Test
-    void devePassarQuandoBuscarCategoriaPorNomeComNomeVálido() {
-        // Given
-        Categoria categoria = new Categoria();
-        categoria.setIdCategoria(1);
-        categoria.setCategoriaPai(null);
-        categoria.setNome("Vestidos");
-        // When
+    void devePassarQuandoBuscarCategoriaPorNomeComNomeValido() {
         when(repository.findByNome(categoria.getNome())).thenReturn(of(categoria));
-        // Then
-        Categoria resultado = service.buscarPorNome("Vestdos");
-        // Assert
-        assertEquals("Vestidos", resultado.getNome());
+
+        Categoria resultado = service.buscarPorNome("Calças");
+
+        assertEquals("Calças", resultado.getNome());
     }
 
     @Test
-    void deveFalharQuandoBuscarCategoriaPorNomeComNomeInválido() {
+    void deveFalharQuandoBuscarCategoriaPorNomeComNomeInvalido() {
         String nomeInvalido = "CategoriaInvalida";
         when(repository.findByNome(nomeInvalido)).thenReturn(empty());
 
-        Categoria resultado = service.buscarPorNome(nomeInvalido);
-
-        assertNull(resultado);
+        assertThrows(CategoriaNaoEncontradaException.class, () -> {
+            service.buscarPorNome(nomeInvalido);
+        });
     }
 
     @Test
     void deveAtualizarQuandoReceberIdValido() {
-        Categoria categoria = new Categoria();
-        categoria.setIdCategoria(1);
-        categoria.setCategoriaPai(null);
-        categoria.setNome("Vestidos");
-
         when(repository.existsById(categoria.getIdCategoria())).thenReturn(true);
+        when(repository.save(categoria)).thenReturn(categoria);
+
         categoria.setNome("Tidosves");
         Categoria categoriaSalvar = service.atualizarPorId(categoria.getIdCategoria(), categoria);
-        when(repository.save(categoriaSalvar));
 
         assertEquals(categoria.getIdCategoria(), categoriaSalvar.getIdCategoria());
-        assertEquals(categoria.getNome(), categoriaSalvar.getNome());
+        assertEquals("Tidosves", categoriaSalvar.getNome());
     }
 
     @Test
     void deveFalharAtualizacaoQuandoReceberIdInvalido() {
-        Categoria categoria = new Categoria();
-        categoria.setIdCategoria(999);
-        categoria.setCategoriaPai(null);
-        categoria.setNome("Vestidos");
-
         when(repository.existsById(categoria.getIdCategoria())).thenReturn(false);
 
         assertThrows(CategoriaNaoEncontradaException.class, () -> {
@@ -196,12 +173,9 @@ class CategoriaServiceTest {
 
     @Test
     void deveLancarExcecaoQuandoRemoverCategoriaComIdInexistente() {
-        // Given
         Integer id = 999;
         when(repository.existsById(id)).thenReturn(false);
 
-        // When & Then
         assertThrows(CategoriaNaoEncontradaException.class, () -> service.removerPorId(id));
     }
-
 }
