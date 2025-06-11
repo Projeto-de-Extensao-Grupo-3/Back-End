@@ -26,7 +26,7 @@ public class FuncionarioRequestDto {
     @Schema(description = "CPF do Funcionário", example = "000.000.000-00")
     @NotBlank
     private String cpf;
-    @Schema(description = "Telefone do Funcionário", example = "DD 00000-0000")
+    @Schema(description = "Telefone do Funcionário", example = "55 900000000")
     @NotBlank
     private String telefone;
     @Schema(description = "Email do Funcionário", example = "fernando_almeida@gmail.com")

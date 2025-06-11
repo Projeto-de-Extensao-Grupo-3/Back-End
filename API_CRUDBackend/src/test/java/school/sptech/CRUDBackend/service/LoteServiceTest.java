@@ -56,7 +56,7 @@ class LoteServiceTest {
         listaPermissaoTeste.add(permissaoTeste2);
         funcionarioTeste = new Funcionario(1, "Leandro", "123456789", "11 977839256",
                 "leandro@gmail.com", "123", listaPermissaoTeste);
-        loteTeste = new Lote(1, "Lote de Tecido Algodão", LocalDateTime.parse("2025-05-10 11:36:00"), parceiroTeste, funcionarioTeste);
+        loteTeste = new Lote(1, "Lote de Tecido Algodão", LocalDateTime.parse("2025-05-10T11:36:00"), parceiroTeste, funcionarioTeste);
     }
 
     @Test
@@ -159,7 +159,7 @@ class LoteServiceTest {
         //Given
         Parceiro parceiroParaAtualizar = new Parceiro(2, "Fabricante", "Fornecedor de Algodões Peruanos", "000", "fabricante2@gmail.com",
                 "R. Haddock Lobo, 595", "teste1");
-        Lote loteParaAtualizar = new Lote(1, "Lote de Algodão Peruano", LocalDateTime.parse("2025-05-10 11:36:00"), parceiroParaAtualizar, funcionarioTeste);
+        Lote loteParaAtualizar = new Lote(1, "Lote de Algodão Peruano", LocalDateTime.parse("2025-05-10T11:36:00"), parceiroParaAtualizar, funcionarioTeste);
 
         //When
         when(loteRepository.existsById(anyInt())).thenReturn(true);
@@ -181,7 +181,7 @@ class LoteServiceTest {
         //Given
         Parceiro parceiroParaAtualizar = new Parceiro(2, "Fabricante", "Fornecedor de Algodões Peruanos", "000", "fabricante2@gmail.com",
                 "R. Haddock Lobo, 595", "teste1");
-        Lote loteParaAtualizar = new Lote(1, "Lote de Algodão Peruano", LocalDateTime.parse("2025-05-10 11:36:00"), parceiroParaAtualizar, funcionarioTeste);
+        Lote loteParaAtualizar = new Lote(1, "Lote de Algodão Peruano", LocalDateTime.parse("2025-05-10T11:36:00"), parceiroParaAtualizar, funcionarioTeste);
 
         //When
         when(loteRepository.existsById(anyInt())).thenReturn(false);
@@ -205,7 +205,7 @@ class LoteServiceTest {
         loteService.removerPorId(loteTeste.getIdLote());
 
         //Assert
-        verify(loteService, times(1)).removerPorId(loteTeste.getIdLote());
+        verify(loteRepository, times(1)).deleteById(loteTeste.getIdLote());
     }
 
     @Test

@@ -1,5 +1,10 @@
 package school.sptech.CRUDBackend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +15,26 @@ import school.sptech.CRUDBackend.dto.imagem.ImagemResponseDto;
 import school.sptech.CRUDBackend.entity.Imagem;
 import school.sptech.CRUDBackend.service.ImagemService;
 
+@Tag(name = "Imagem Controller",  description = "Operações CRUD relacionadas a entidade Imagem")
 @RestController
 @RequestMapping("/imagens")
 @RequiredArgsConstructor
 public class ImagemController {
     private final ImagemService service;
 
+    @Operation(
+            summary = "Cadastro de uma nova imagem",
+            description = "Cria e retorna um objeto do tipo ImagemResponseDto"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Imagem cadastrada com sucesso."),
+            @ApiResponse(responseCode = "409", description = "Imagem já foi cadastrada previamente.")
+    })
+    @SecurityRequirement(name = "Bearer")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Objeto do tipo ImagemaRequestDto.",
+            required = true
+    )
     @PostMapping
     public ResponseEntity<ImagemResponseDto> cadastrarImagem(@RequestBody @Valid ImagemRequestDto imagemDto) {
         Imagem imagem = ImagemMapper.toEntity(imagemDto);
@@ -23,6 +42,15 @@ public class ImagemController {
         return ResponseEntity.status(201).body(imagemCadastrada);
     }
 
+    @Operation(
+            summary = "Atualização de uma imagem",
+            description = "Atualiza a imagem e retorna um objeto do tipo ImagemResponseDto"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Imagem atualizada com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Imagem para atualizar não encontrada.")
+    })
+    @SecurityRequirement(name = "Bearer")
     @PutMapping("/{id}")
     public ResponseEntity<ImagemResponseDto> atualizarImagem(
             @PathVariable Integer id,
@@ -33,6 +61,15 @@ public class ImagemController {
         return ResponseEntity.status(200).body(imagemAtualizada);
     }
 
+    @Operation(
+            summary = "Deletar uma imagem cadastrada",
+            description = "Deleta uma imagem a partir do ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Imagem deletada com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Imagem para deletar não encontrada.")
+    })
+    @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarImagem(@PathVariable Integer id) {
         service.deletarImagem(id);
