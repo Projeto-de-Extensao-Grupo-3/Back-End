@@ -71,16 +71,16 @@ class ParceiroServiceTest {
     }
 
     @Test
-    @DisplayName("Deve litar 2 parceiros cadastrados no sistema")
+    @DisplayName("Deve costureira cadastrada no sistema")
     void deveListar2ParceirosCadastrados(){
         //Given
-        List<Parceiro> parceiros = List.of(parceiroFabricante, parceiroCostureira);
+        List<Parceiro> parceiros = List.of(parceiroCostureira);
 
         //When
         when(parceiroRepository.findAll()).thenReturn(parceiros);
 
         //Then
-        List<Parceiro> resultado = parceiroService.verificarTodosParceiros();
+        List<Parceiro> resultado = parceiroService.verificarTodosParceiros("costureira");
 
         //Assert
         assertEquals(parceiros, resultado);
@@ -95,7 +95,7 @@ class ParceiroServiceTest {
         when(parceiroRepository.findAll()).thenReturn(Collections.emptyList());
 
         //Then
-        List<Parceiro> resultado = parceiroService.verificarTodosParceiros();
+        List<Parceiro> resultado = parceiroService.verificarTodosParceiros("fornecedor");
 
         //Assert
         assertTrue(resultado.isEmpty(), "A lista deve estar vazia");
