@@ -24,8 +24,8 @@ public class ParceiroService {
         return parceiroRepository.save(parceiro);
     }
 
-    public List<Parceiro> verificarTodosParceiros() {
-        return parceiroRepository.findAll();
+    public List<Parceiro> verificarTodosParceiros(String categoria) {
+        return parceiroRepository.findByCategoria(categoria);
     }
 
     public Parceiro buscarParceiroPorId(Integer id) {

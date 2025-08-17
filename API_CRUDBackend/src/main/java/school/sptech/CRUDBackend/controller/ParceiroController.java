@@ -54,10 +54,10 @@ public class ParceiroController {
             @ApiResponse(responseCode = "204", description = "Lista de Serviços está vazia"),
     })
     @SecurityRequirement(name = "Bearer")
-    @GetMapping
-    public ResponseEntity<List<ParceiroResponseDto>> verificarTodos() {
+    @GetMapping("/listagem/{categoria}")
+    public ResponseEntity<List<ParceiroResponseDto>> verificarTodos(@PathVariable String categoria) {
         List<ParceiroResponseDto> parceiro = ParceiroMapper.toResponseDtos(
-                parceiroService.verificarTodosParceiros()
+                parceiroService.verificarTodosParceiros(categoria)
         );
         if (parceiro.isEmpty()) {
             return ResponseEntity.status(204).build();
