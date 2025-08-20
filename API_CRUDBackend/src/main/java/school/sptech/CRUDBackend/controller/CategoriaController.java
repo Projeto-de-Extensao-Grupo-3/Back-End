@@ -68,6 +68,26 @@ public class CategoriaController {
        return ResponseEntity.status(200).body(todasCategorias);
    }
 
+    @Operation(summary = "Listagem de todas as Categorias por tipo (roupa, tecido ou característica.", description = "Retorna uma lista de CategoriaResponseDto com todas as Categorias no sistema.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de Categorias."),
+            @ApiResponse(responseCode = "204", description = "Lista de Categorias está vazia"),
+    })
+    @SecurityRequirement(name = "Bearer")
+    @GetMapping("/tipo/{tipo}")
+    public ResponseEntity<List<CategoriaResponseDto>> listarTodas(@PathVariable String tipo) {
+        List<CategoriaResponseDto> todasCategorias = service.listarPorTipo(tipo)
+                .stream()
+                .map(CategoriaMapper::toResponseDto)
+                .collect(Collectors.toList());
+
+        if (todasCategorias.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(todasCategorias);
+    }
+
     @Operation(summary = "Exibição de uma Categoria por ID", description = "Retorna um objeto CategoriaResponseDto de acordo com o ID informado na PathVariable.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
