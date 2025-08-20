@@ -32,6 +32,10 @@ public class CategoriaService {
                 .orElseThrow(() -> new CategoriaNaoEncontradaException("Categoria com ID " + id + " não encontrada"));
     }
 
+    public List<Categoria> listarPorTipo(String tipo) {
+        return repository.findByTipo(tipo);
+    }
+
     public Categoria buscarPorNome(String nome) {
         return repository.findByNome(nome)
                 .orElseThrow(() -> new CategoriaNaoEncontradaException("Categoria com nome '" + nome + "' não encontrada"));
