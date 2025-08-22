@@ -133,4 +133,13 @@ public class FuncionarioController {
         funcionarioService.removerFuncionarioPorId(id);
         return ResponseEntity.status(204).build();
     }
+
+    // Endpoint de teste para login sem token. Apagar após testes
+    @GetMapping("/login-teste")
+    public ResponseEntity<FuncionarioResponseDto> loginTeste(@RequestBody FuncionarioLoginDto funcionarioLogin) {
+        FuncionarioResponseDto funcionario = FuncionarioMapper.toResponseDto(
+                funcionarioService.loginTeste(funcionarioLogin.getEmail(), funcionarioLogin.getSenha())
+        );
+        return ResponseEntity.status(200).body(funcionario);
+    }
 }

@@ -18,6 +18,8 @@ public class FuncionarioResponseDto {
     @Schema(description = "Nome do Funcionário", example = "Fernando")
     private String nome;
     @Schema(description = "CPF do Funcionário", example = "XXX-XXX-XXX/XX")
+    private String cpf;
+    @Schema(description = "Telefone do Funcionário", example = "11 99999-9999")
     private String telefone;
     @Schema(description = "Email do Funcionário", example = "fernando@gmail.com")
     private String email;

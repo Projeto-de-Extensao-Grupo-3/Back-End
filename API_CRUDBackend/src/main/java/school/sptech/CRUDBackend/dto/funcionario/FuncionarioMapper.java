@@ -38,6 +38,7 @@ public class FuncionarioMapper {
         return new FuncionarioResponseDto(
                 funcionario.getIdFuncionario(),
                 funcionario.getNome(),
+                funcionario.getCpf(),
                 funcionario.getTelefone(),
                 funcionario.getEmail(),
                 permissoes
