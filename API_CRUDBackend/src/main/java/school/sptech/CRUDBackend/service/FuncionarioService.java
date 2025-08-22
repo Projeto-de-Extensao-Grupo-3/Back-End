@@ -44,7 +44,7 @@ public class FuncionarioService {
 
         Funcionario funcionarioAutenticado = funcionarioRepository.findByEmail(
                 funcionario.getEmail()).orElseThrow(
-                () -> new ResponseStatusException(404, "Email do usuário não cadastro", null)
+                () -> new ResponseStatusException(404, "Usuário inválido", null)
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -77,5 +77,11 @@ public class FuncionarioService {
         } else {
             throw new FuncionarioNaoEncontradoException("O funcionário para atualizar não existe.");
         }
+    }
+
+    // Apenas para teste sem token. Após testes, apagar.
+    public Funcionario loginTeste(String email, String senha) {
+        return funcionarioRepository.findByEmailAndSenha(email, senha)
+                .orElseThrow(() -> new ResponseStatusException(404, "Usuário inválido", null));
     }
 }

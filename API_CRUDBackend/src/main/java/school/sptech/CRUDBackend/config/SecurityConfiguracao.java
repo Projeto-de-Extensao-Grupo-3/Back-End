@@ -54,7 +54,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/h2-console/**/**"),
             new AntPathRequestMatcher("/error/**"),
             new AntPathRequestMatcher("/funcionarios"),
-            new AntPathRequestMatcher("/funcionarios/login")
+            new AntPathRequestMatcher("/funcionarios/login"),
+            new AntPathRequestMatcher("/**") // Para teste sem token. Remover após testes
     };
 
     @Bean

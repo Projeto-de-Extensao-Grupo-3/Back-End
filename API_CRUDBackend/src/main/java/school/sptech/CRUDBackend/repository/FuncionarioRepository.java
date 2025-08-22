@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
     Optional<Funcionario> findByEmail(String email);
+    Optional<Funcionario> findByEmailAndSenha(String email, String senha); // para teste sem token, depois apagar
     Boolean existsByCpfOrEmail(String cpf, String email);
 }
