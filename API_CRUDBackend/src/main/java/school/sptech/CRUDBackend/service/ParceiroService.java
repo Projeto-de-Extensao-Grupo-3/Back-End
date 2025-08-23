@@ -35,11 +35,6 @@ public class ParceiroService {
 
     public Parceiro atualizarParceiroPorId(Integer id, Parceiro parceiroAtualizar) {
         if(parceiroRepository.existsById(id)) {
-            if (parceiroRepository.existsByEmailOrIdentificacaoOrEnderecoAllIgnoreCase(
-                    parceiroAtualizar.getEmail(), parceiroAtualizar.getIdentificacao(), parceiroAtualizar.getEndereco())
-            ) {
-                throw new ParceiroConflitoException("Esse provedor de serviço já foi cadastrado.");
-            }
             parceiroAtualizar.setIdParceiro(id);
             return parceiroRepository.save(parceiroAtualizar);
         }
