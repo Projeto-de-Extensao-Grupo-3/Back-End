@@ -28,9 +28,8 @@ public class ParceiroService {
         return parceiroRepository.findByCategoria(categoria);
     }
 
-    public Parceiro buscarParceiroPorId(Integer id) {
-        return parceiroRepository.findById(id)
-                .orElseThrow(() -> new ParceiroNaoEncontradoException("O serviço não foi encotrado"));
+    public List<Parceiro> buscarParceiroPorNome(String categoria, String nome) {
+        return parceiroRepository.findByCategoriaAndNomeContainsIgnoreCase(categoria, nome);
     }
 
     public Parceiro atualizarParceiroPorId(Integer id, Parceiro parceiroAtualizar) {
@@ -38,14 +37,14 @@ public class ParceiroService {
             parceiroAtualizar.setIdParceiro(id);
             return parceiroRepository.save(parceiroAtualizar);
         }
-        throw new ParceiroNaoEncontradoException("O serviço não foi encotrado");
+        throw new ParceiroNaoEncontradoException("O parceiro não foi encotrado");
     }
 
     public void removerParceiroPorId(Integer id) {
         if (parceiroRepository.existsById(id)) {
             parceiroRepository.deleteById(id);
         } else {
-            throw new ParceiroNaoEncontradoException("O serviço não foi encotrado");
+            throw new ParceiroNaoEncontradoException("O parceiro não foi encotrado");
         }
     }
 }

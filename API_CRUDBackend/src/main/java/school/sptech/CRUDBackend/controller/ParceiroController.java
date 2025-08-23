@@ -72,12 +72,17 @@ public class ParceiroController {
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
     @SecurityRequirement(name = "Bearer")
-    @GetMapping("/{id}")
-    public ResponseEntity<ParceiroResponseDto> servicoTerceiroPorId (@PathVariable Integer id) {
-        ParceiroResponseDto servicoTerceiroPorId = ParceiroMapper.toResponseDto(
-                parceiroService.buscarParceiroPorId(id)
+    @GetMapping("/{categoria}/busca")
+    public ResponseEntity<List<ParceiroResponseDto>> servicoTerceiroPorNome(
+            @PathVariable String categoria, @RequestParam String nome
+    ) {
+        List<ParceiroResponseDto> parceiro = ParceiroMapper.toResponseDtos(
+                parceiroService.buscarParceiroPorNome(categoria, nome)
         );
-        return ResponseEntity.status(200).body(servicoTerceiroPorId);
+        if (parceiro.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+        return ResponseEntity.status(200).body(parceiro);
     }
 
     @Operation(summary = "Atualização de Serviços.", description = "Retorna um objeto ParceiroResponseDto atualizado com os valores de um ParceiroRequestDto.")
