@@ -11,4 +11,5 @@ public interface ParceiroRepository extends JpaRepository<Parceiro, Integer> {
     );
 
     List<Parceiro> findByCategoria(String categoria);
+    List<Parceiro> findByCategoriaAndNomeContainsIgnoreCase(String categoria, String nome);
 }
