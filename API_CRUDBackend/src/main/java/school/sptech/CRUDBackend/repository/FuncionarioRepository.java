@@ -4,11 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import school.sptech.CRUDBackend.entity.Funcionario;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
     Optional<Funcionario> findByEmail(String email);
+    List<Funcionario> findByNomeContainsIgnoreCase(String nome);
     Optional<Funcionario> findByEmailAndSenha(String email, String senha); // para teste sem token, depois apagar
     Boolean existsByCpfOrEmail(String cpf, String email);
 }

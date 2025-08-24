@@ -58,9 +58,8 @@ public class FuncionarioService {
         return funcionarioRepository.findAll();
     }
 
-    public Funcionario buscarFuncionarioPorId(Integer id) {
-        return funcionarioRepository.findById(id)
-                .orElseThrow(() -> new FuncionarioNaoEncontradoException("O funcionário não existe."));
+    public List<Funcionario> buscarFuncionarioPorNome(String nome) {
+        return funcionarioRepository.findByNomeContainsIgnoreCase(nome);
     }
 
     public Funcionario atualizarFuncionarioPorId(Integer id, Funcionario funcionarioAtualizar) {
