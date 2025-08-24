@@ -86,18 +86,21 @@ public class FuncionarioController {
         return ResponseEntity.status(200).body(todosFuncionarios);
     }
 
-    @Operation(summary = "Exibição de um funcionário por ID", description = "Retorna um objeto FuncionarioResponseDto de acordo com o ID informado na PathVariable.")
+    @Operation(summary = "Exibição de um funcionário por nome", description = "Retorna uma lista de objetos FuncionarioResponseDto de acordo com o ID informado na PathVariable.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
-            @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
+            @ApiResponse(responseCode = "204", description = "Nenhum registro com o nome passado no RequestParam foi encontrado."),
     })
     @SecurityRequirement(name = "Bearer")
-    @GetMapping("/{id}")
-    public ResponseEntity<FuncionarioResponseDto> buscarPorId(@PathVariable Integer id) {
-        FuncionarioResponseDto funcionario = FuncionarioMapper.toResponseDto(
-                funcionarioService.buscarFuncionarioPorId(id)
+    @GetMapping("/busca")
+    public ResponseEntity<List<FuncionarioResponseDto>> buscarPorId(@RequestParam String nome) {
+        List<FuncionarioResponseDto> funcionarios = FuncionarioMapper.toResponseDtos(
+                funcionarioService.buscarFuncionarioPorNome(nome)
         );
-        return ResponseEntity.status(200).body(funcionario);
+        if (funcionarios.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+        return ResponseEntity.status(200).body(funcionarios);
     }
 
     @Operation(summary = "Atualização de Funcionário.", description = "Retorna um objeto FuncionarioResponseDto atualizado com os valores de um FuncionarioRequestDto.")
