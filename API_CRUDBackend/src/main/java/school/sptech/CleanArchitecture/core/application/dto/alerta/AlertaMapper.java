@@ -1,31 +1,32 @@
-package school.sptech.CleanArchitecture.core.application.command.alerta;
+package school.sptech.CleanArchitecture.core.application.dto.alerta;
+
 import school.sptech.CleanArchitecture.core.domain.entity.Alerta;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 
 import java.util.List;
 
 public class AlertaMapper {
-    public static Alerta toEntity(AlertaCriacaoCommand alertaDto) {
+    public static Alerta toEntity(AlertaCriacaoDto alertaDto) {
         ItemEstoque itemEstoque = new ItemEstoque();
-        itemEstoque.setIdItemEstoque(alertaDto.itemEstoque().idItemEstoque());
+        itemEstoque.setIdItemEstoque(alertaDto.getItemEstoque().getIdItemEstoque());
         return new Alerta(
                 null,
-                alertaDto.descricao(),
-                alertaDto.dataHora(),
+                alertaDto.getDescricao(),
+                alertaDto.getDataHora(),
                 itemEstoque
         );
     }
 
-    public static AlertaResponseCommand toResponseDto(Alerta alerta) {
+    public static AlertaResponseDto toResponseDto(Alerta alerta) {
         ItemEstoque itemEstoque = alerta.getItemEstoque();
-        AlertaItemEstoqueCommand itemEstoqueDto = new AlertaItemEstoqueCommand(
+        AlertaItemEstoqueDto itemEstoqueDto = new AlertaItemEstoqueDto(
                 itemEstoque.getIdItemEstoque(),
                 itemEstoque.getDescricao(),
                 itemEstoque.getComplemento(),
                 itemEstoque.getQtdMinimo(),
                 itemEstoque.getQtdArmazenado()
         );
-        return new AlertaResponseCommand(
+        return new AlertaResponseDto(
                 alerta.getIdAlerta(),
                 alerta.getDescricao(),
                 alerta.getDataHora(),
@@ -33,7 +34,7 @@ public class AlertaMapper {
         );
     }
 
-    public static List<AlertaResponseCommand> toResponseDtos(List<Alerta> alertas) {
+    public static List<AlertaResponseDto> toResponseDtos(List<Alerta> alertas) {
         return alertas
                 .stream()
                 .map(AlertaMapper::toResponseDto)
