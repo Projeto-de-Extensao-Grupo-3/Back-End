@@ -16,6 +16,23 @@ public class ItemEstoque {
     private Double preco;
     private Imagem imagem;
 
+    public ItemEstoque() {
+    }
+
+    public ItemEstoque(Integer idItemEstoque, String descricao, String complemento, Double peso, Double qtdMinimo, Double qtdArmazenado, Set<Categoria> caracteristicas, Prateleira prateleira, Set<ConfeccaoRoupa> confeccaoRoupa, Double preco, Imagem imagem) {
+        this.idItemEstoque = idItemEstoque;
+        this.descricao = descricao;
+        this.complemento = complemento;
+        this.peso = peso;
+        this.qtdMinimo = qtdMinimo;
+        this.qtdArmazenado = qtdArmazenado;
+        this.caracteristicas = caracteristicas;
+        this.prateleira = prateleira;
+        this.confeccaoRoupa = confeccaoRoupa;
+        this.preco = preco;
+        this.imagem = imagem;
+    }
+
     public Integer getIdItemEstoque() {
         return idItemEstoque;
     }
