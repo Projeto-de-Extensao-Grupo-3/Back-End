@@ -7,7 +7,6 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoqu
 
 import java.util.List;
 
-@Repository
 public interface AlertaRepository extends JpaRepository<AlertaEntity, Integer> {
     List<AlertaEntity> findByItemEstoque(ItemEstoqueEntity itemEstoque);
 }
