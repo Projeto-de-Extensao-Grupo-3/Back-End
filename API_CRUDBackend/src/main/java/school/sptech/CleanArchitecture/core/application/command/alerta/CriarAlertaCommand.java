@@ -1,16 +1,18 @@
-package school.sptech.CleanArchitecture.core.application.dto.alerta;
+package school.sptech.CleanArchitecture.core.application.command.alerta;
+
+import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 
 import java.time.LocalDateTime;
-public class AlertaCriacaoDto {
+public class CriarAlertaCommand {
 
     private String descricao;
     private LocalDateTime dataHora;
-    private AlertaItemEstoqueDto itemEstoque;
+    private ItemEstoque itemEstoque;
 
-    public AlertaCriacaoDto() {
+    public CriarAlertaCommand() {
     }
 
-    public AlertaCriacaoDto(String descricao, LocalDateTime dataHora, AlertaItemEstoqueDto itemEstoque) {
+    public CriarAlertaCommand(String descricao, LocalDateTime dataHora, ItemEstoque itemEstoque) {
         this.descricao = descricao;
         this.dataHora = dataHora;
         this.itemEstoque = itemEstoque;
@@ -32,11 +34,11 @@ public class AlertaCriacaoDto {
         this.dataHora = dataHora;
     }
 
-    public AlertaItemEstoqueDto getItemEstoque() {
+    public ItemEstoque getItemEstoque() {
         return itemEstoque;
     }
 
-    public void setItemEstoque(AlertaItemEstoqueDto itemEstoque) {
+    public void setItemEstoque(ItemEstoque itemEstoque) {
         this.itemEstoque = itemEstoque;
     }
 }
