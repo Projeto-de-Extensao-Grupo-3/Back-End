@@ -1,8 +1,7 @@
 package school.sptech.CleanArchitecture.core.application.usecase;
 
 import school.sptech.CleanArchitecture.core.adapters.AlertaGateway;
-import school.sptech.CleanArchitecture.core.application.dto.alerta.AlertaCriacaoDto;
-import school.sptech.CleanArchitecture.core.application.dto.alerta.AlertaMapper;
+import school.sptech.CleanArchitecture.core.application.command.alerta.CriarAlertaCommand;
 import school.sptech.CleanArchitecture.core.domain.entity.Alerta;
 
 public class CriarAlertaUseCase {
@@ -13,9 +12,12 @@ public class CriarAlertaUseCase {
         this.gateway = alertaGateway;
     }
 
-    public Alerta executar(AlertaCriacaoDto command) {
+    public Alerta executar(CriarAlertaCommand command) {
 
-        var alertaParaRegistrar = AlertaMapper.toEntity(command);
+        var alertaParaRegistrar = new Alerta();
+        alertaParaRegistrar.setDescricao(command.getDescricao());
+        alertaParaRegistrar.setItemEstoque(command.getItemEstoque());
+        alertaParaRegistrar.setDataHora(command.getDataHora());
 
         return gateway.save(alertaParaRegistrar);
     }

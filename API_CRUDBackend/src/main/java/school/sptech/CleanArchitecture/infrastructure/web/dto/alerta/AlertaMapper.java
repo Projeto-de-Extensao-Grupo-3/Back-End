@@ -1,4 +1,5 @@
-package school.sptech.CleanArchitecture.core.application.dto.alerta;
+package school.sptech.CleanArchitecture.infrastructure.web.dto.alerta;
+
 
 import school.sptech.CleanArchitecture.core.domain.entity.Alerta;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
