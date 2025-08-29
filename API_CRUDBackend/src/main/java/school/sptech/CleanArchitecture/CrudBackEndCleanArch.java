@@ -15,7 +15,7 @@ import school.sptech.CRUDBackend.CrudBackendV1Application;
 @SpringBootApplication
 public class CrudBackEndCleanArch {
     public static void main(String[] args) {
-        SpringApplication.run(CrudBackendV1Application.class, args);
+        SpringApplication.run(CrudBackEndCleanArch.class, args);
     }
 
 }

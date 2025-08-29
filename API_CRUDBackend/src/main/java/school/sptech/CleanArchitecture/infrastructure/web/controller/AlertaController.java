@@ -9,12 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.CleanArchitecture.core.application.command.alerta.CriarAlertaCommand;
-import school.sptech.CleanArchitecture.core.application.usecase.CriarAlertaUseCase;
+import school.sptech.CleanArchitecture.core.application.usecase.alerta.CriarAlertaUseCase;
 import school.sptech.CleanArchitecture.core.domain.entity.Alerta;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaResponseDto;
-
-import java.util.List;
 
 @Tag(name = "Alerta Controller",  description = "Operações CRUD relacionadas aos alertas gerados")
 @RestController

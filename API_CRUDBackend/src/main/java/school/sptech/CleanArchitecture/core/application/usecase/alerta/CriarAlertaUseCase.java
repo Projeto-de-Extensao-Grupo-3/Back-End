@@ -1,4 +1,4 @@
-package school.sptech.CleanArchitecture.core.application.usecase;
+package school.sptech.CleanArchitecture.core.application.usecase.alerta;
 
 import school.sptech.CleanArchitecture.core.adapters.AlertaGateway;
 import school.sptech.CleanArchitecture.core.application.command.alerta.CriarAlertaCommand;
