@@ -15,13 +15,14 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "alerta")
 public class AlertaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAlerta;
     private String descricao;
     private LocalDateTime dataHora;
-    @ManyToOne
-    @JoinColumn(name = "fk_item_estoque")
-    private ItemEstoque itemEstoque;
+//    @ManyToOne
+//    @JoinColumn(name = "fk_item_estoque")
+//    private ItemEstoque itemEstoque;
 }

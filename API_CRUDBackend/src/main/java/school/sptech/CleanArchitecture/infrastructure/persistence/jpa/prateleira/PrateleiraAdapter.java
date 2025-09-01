@@ -1,8 +1,8 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleira;
 
 import org.springframework.stereotype.Service;
-import school.sptech.CRUDBackend.exception.Prateleira.PrateleiraNaoEncontradaException;
 import school.sptech.CleanArchitecture.core.adapters.PrateleiraGateway;
+import school.sptech.CleanArchitecture.core.application.exception.Prateleira.PrateleiraNaoEncontradaException;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
 import java.util.List;
 import java.util.Optional;
@@ -49,4 +49,13 @@ public class PrateleiraAdapter implements PrateleiraGateway {
         return prateleiraRepository.findByCodigo(codigo);
     }
 
+    @Override
+    public boolean existsById(Integer id) {
+        return prateleiraRepository.existsById(id);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        prateleiraRepository.deleteById(id);
+    }
 }
