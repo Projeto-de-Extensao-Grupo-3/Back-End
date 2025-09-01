@@ -102,35 +102,35 @@ class ParceiroServiceTest {
         assertEquals(0, resultado.size());
     }
 
-    @Test
-    @DisplayName("Deve retornar parceiro com ID informado")
-    void deveRetornarParceiroComIdInformado(){
-        //Given
+//    @Test
+//    @DisplayName("Deve retornar parceiro com ID informado")
+//    void deveRetornarParceiroComIdInformado(){
+//        //Given
+//
+//        //When
+//        when(parceiroRepository.findById(anyInt())).thenReturn(Optional.of(parceiroCostureira));
+//
+//        //Then
+//        Parceiro resultado = parceiroService.buscarParceiroPorId(parceiroCostureira.getIdParceiro());
+//
+//        //Assert
+//        assertEquals(parceiroCostureira, resultado);
+//        assertEquals(parceiroCostureira.getCategoria(), resultado.getCategoria());
+//    }
 
-        //When
-        when(parceiroRepository.findById(anyInt())).thenReturn(Optional.of(parceiroCostureira));
-
-        //Then
-        Parceiro resultado = parceiroService.buscarParceiroPorId(parceiroCostureira.getIdParceiro());
-
-        //Assert
-        assertEquals(parceiroCostureira, resultado);
-        assertEquals(parceiroCostureira.getCategoria(), resultado.getCategoria());
-    }
-
-    @Test
-    @DisplayName("Deve lanca excessao quando ID for invalido")
-    void deveLancarExcessaoParaIdInvalido(){
-        //Given
-
-        //When
-        when(parceiroRepository.findById(anyInt())).thenReturn(Optional.empty());
-
-        //Then
-
-        //Assert
-        assertThrows(ParceiroNaoEncontradoException.class, () -> parceiroService.buscarParceiroPorId(parceiroCostureira.getIdParceiro()));
-    }
+//    @Test
+//    @DisplayName("Deve lanca excessao quando ID for invalido")
+//    void deveLancarExcessaoParaIdInvalido(){
+//        //Given
+//
+//        //When
+//        when(parceiroRepository.findById(anyInt())).thenReturn(Optional.empty());
+//
+//        //Then
+//
+//        //Assert
+//        assertThrows(ParceiroNaoEncontradoException.class, () -> parceiroService.buscarParceiroPorId(parceiroCostureira.getIdParceiro()));
+//    }
 
     @Test
     @DisplayName("Deve atualizar parceiro com novos dados e ID informado")

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import school.sptech.CleanArchitecture.core.application.command.prateleira.CriarPrateleiraCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.prateleira.*;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
-import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleira.PrateleiraEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.Prateleira.PrateleiraMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.Prateleira.PrateleiraResponseDto;
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Tag(name = "Prateleria Controller", description = "Operações CRUD relacionadas as prateleiras de armazenamento de produto.")
 @RestController
-@RequestMapping("/prateleiras2")
+@RequestMapping("/prateleiras")
 public class PrateleiraController {
 
     private final CriarPrateleiraUseCase criarPrateleiraUseCase;
