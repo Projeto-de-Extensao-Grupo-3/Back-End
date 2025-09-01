@@ -16,7 +16,7 @@ public class AlertaEntityMapper {
         enitity.setIdAlerta(domain.getIdAlerta());
         enitity.setDescricao(domain.getDescricao());
         enitity.setDataHora(domain.getDataHora());
-        enitity.setItemEstoque(domain.getItemEstoque());
+//        enitity.setItemEstoque(domain.getItemEstoque());
 
         return enitity;
     }
@@ -31,7 +31,7 @@ public class AlertaEntityMapper {
         domain.setIdAlerta(entity.getIdAlerta());
         domain.setDescricao(entity.getDescricao());
         domain.setDataHora(entity.getDataHora());
-        domain.setItemEstoque(entity.getItemEstoque());
+//        domain.setItemEstoque(entity.getItemEstoque());
 
         return domain;
     }

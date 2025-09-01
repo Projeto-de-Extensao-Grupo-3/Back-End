@@ -14,6 +14,7 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoqu
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "confeccao_roupa")
 public class ConfeccaoRoupaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

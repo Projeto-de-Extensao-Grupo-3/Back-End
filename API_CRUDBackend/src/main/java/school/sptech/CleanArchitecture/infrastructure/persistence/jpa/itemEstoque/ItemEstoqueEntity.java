@@ -20,6 +20,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "item_estoque")
 public class ItemEstoqueEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

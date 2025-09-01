@@ -2,10 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.di;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import school.sptech.CleanArchitecture.core.application.usecase.prateleira.CriarPrateleiraUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.prateleira.PrateleiraBuscarPorCodigoUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.prateleira.PrateleiraBuscarPorIdUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.prateleira.PrateleiraListarAllUseCase;
+import school.sptech.CleanArchitecture.core.application.usecase.prateleira.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleira.PrateleiraAdapter;
 
 @Configuration
@@ -29,6 +26,15 @@ public class PrateleiraBeanConfig {
     @Bean
     public PrateleiraBuscarPorCodigoUseCase prateleiraBuscarPorCodigoUseCase(PrateleiraAdapter prateleiraAdapter){
         return new PrateleiraBuscarPorCodigoUseCase(prateleiraAdapter);
+    }
+
+    @Bean
+    public PrateleiraAtualizarPorIdUseCase prateleiraAtualizarPorIdUseCase(PrateleiraAdapter prateleiraAdapter){
+        return new PrateleiraAtualizarPorIdUseCase(prateleiraAdapter);
+    }
+
+    @Bean PrateleiraRemoverPorIdUseCase prateleiraRemoverPorIdUseCase(PrateleiraAdapter prateleiraAdapter){
+        return new PrateleiraRemoverPorIdUseCase(prateleiraAdapter);
     }
 
 }

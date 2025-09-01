@@ -1,9 +1,6 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.imagem;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "imagem")
 public class ImagemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,11 +9,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.CleanArchitecture.core.application.command.prateleira.CriarPrateleiraCommand;
-import school.sptech.CleanArchitecture.core.application.usecase.prateleira.CriarPrateleiraUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.prateleira.PrateleiraBuscarPorCodigoUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.prateleira.PrateleiraBuscarPorIdUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.prateleira.PrateleiraListarAllUseCase;
+import school.sptech.CleanArchitecture.core.application.usecase.prateleira.*;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleira.PrateleiraEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.Prateleira.PrateleiraMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.Prateleira.PrateleiraResponseDto;
 import java.util.List;
@@ -21,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Tag(name = "Prateleria Controller", description = "Operações CRUD relacionadas as prateleiras de armazenamento de produto.")
 @RestController
-@RequestMapping("/prateleiras")
+@RequestMapping("/prateleiras2")
 public class PrateleiraController {
 
     private final CriarPrateleiraUseCase criarPrateleiraUseCase;
@@ -32,11 +30,17 @@ public class PrateleiraController {
 
     private final PrateleiraBuscarPorCodigoUseCase prateleiraBuscarPorCodigoUseCase;
 
-    public PrateleiraController(CriarPrateleiraUseCase criarPrateleiraUseCase, PrateleiraListarAllUseCase prateleiraListarAllUseCase, PrateleiraBuscarPorIdUseCase prateleiraBuscarPorIdUseCase, PrateleiraBuscarPorCodigoUseCase prateleiraBuscarPorCodigoUseCase) {
+    private final PrateleiraAtualizarPorIdUseCase prateleiraAtualizarPorIdUseCase;
+
+    private final PrateleiraRemoverPorIdUseCase prateleiraRemoverPorIdUseCase;
+
+    public PrateleiraController(CriarPrateleiraUseCase criarPrateleiraUseCase, PrateleiraListarAllUseCase prateleiraListarAllUseCase, PrateleiraBuscarPorIdUseCase prateleiraBuscarPorIdUseCase, PrateleiraBuscarPorCodigoUseCase prateleiraBuscarPorCodigoUseCase, PrateleiraAtualizarPorIdUseCase prateleiraAtualizarPorIdUseCase, PrateleiraRemoverPorIdUseCase prateleiraRemoverPorIdUseCase) {
         this.criarPrateleiraUseCase = criarPrateleiraUseCase;
         this.prateleiraListarAllUseCase = prateleiraListarAllUseCase;
         this.prateleiraBuscarPorIdUseCase = prateleiraBuscarPorIdUseCase;
         this.prateleiraBuscarPorCodigoUseCase = prateleiraBuscarPorCodigoUseCase;
+        this.prateleiraAtualizarPorIdUseCase = prateleiraAtualizarPorIdUseCase;
+        this.prateleiraRemoverPorIdUseCase = prateleiraRemoverPorIdUseCase;
     }
 
     @Operation(
@@ -117,9 +121,9 @@ public class PrateleiraController {
     public ResponseEntity<PrateleiraResponseDto> atualizarPorId(
             @PathVariable Integer id,
             @RequestBody @Valid CriarPrateleiraCommand prateleiraAtualizar){
-        Prateleira prateleiraParaAtualizar = PrateleiraMapper.toEntity(prateleiraAtualizar);
-        PrateleiraResponseDto prateleiraAtualizada = PrateleiraMapper.toResponseDto(service.atualizarPorId(id, prateleiraParaAtualizar));
-        return ResponseEntity.status(200).body(prateleiraAtualizada);
+        Prateleira prateleiraAtualizada = prateleiraAtualizarPorIdUseCase.executar(id, prateleiraAtualizar);
+        PrateleiraResponseDto responseDto = PrateleiraMapper.toResponseDto(prateleiraAtualizada);
+             return ResponseEntity.status(200).body(responseDto);
     }
 
     @Operation(summary = "Deleção de um registro de Prateleira  .", description = "Não possui retorno de corpo quando o registro é deletado.")
@@ -130,7 +134,7 @@ public class PrateleiraController {
     @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerPorId(@PathVariable Integer id) {
-        service.removerPorId(id);
+        prateleiraRemoverPorIdUseCase.executar(id);
         return ResponseEntity.status(200).build();
     }
 }

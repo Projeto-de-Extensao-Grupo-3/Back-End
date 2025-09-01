@@ -12,6 +12,10 @@ public interface PrateleiraGateway {
 
     List<Prateleira> findAll();
 
+    boolean existsById(Integer id);
+
+    void deleteById(Integer id);
+
     Prateleira findById(Integer id);
 
     boolean existsByCodigo(String codigo);
