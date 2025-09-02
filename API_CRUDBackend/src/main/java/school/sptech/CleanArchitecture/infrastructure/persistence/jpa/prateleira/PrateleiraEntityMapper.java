@@ -12,11 +12,9 @@ public class PrateleiraEntityMapper {
         if (Objects.isNull(domain)) {
             return null;
         }
-
         var entity = new PrateleiraEntity();
         entity.setIdPrateleira(domain.getIdPrateleira());
         entity.setCodigo(domain.getCodigo());
-
         return entity;
     }
 
@@ -24,11 +22,9 @@ public class PrateleiraEntityMapper {
         if (Objects.isNull(entity)) {
             return null;
         }
-
         var domain = new Prateleira();
         domain.setIdPrateleira(entity.getIdPrateleira());
         domain.setCodigo(entity.getCodigo());
-
         return domain;
     }
 

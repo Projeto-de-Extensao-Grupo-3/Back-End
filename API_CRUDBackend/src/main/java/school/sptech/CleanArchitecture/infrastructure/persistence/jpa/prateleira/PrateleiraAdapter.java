@@ -45,8 +45,8 @@ public class PrateleiraAdapter implements PrateleiraGateway {
     }
 
     @Override
-    public Optional<Prateleira> findByCodigo(String codigo) {
-        return prateleiraRepository.findByCodigo(codigo);
+    public Prateleira findByCodigo(String codigo) {
+        return PrateleiraEntityMapper.ofEntity(prateleiraRepository.findByCodigo(codigo));
     }
 
     @Override
