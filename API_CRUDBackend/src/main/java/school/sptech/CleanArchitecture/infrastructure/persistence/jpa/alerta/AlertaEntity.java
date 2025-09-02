@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
 
 
 import java.time.LocalDateTime;
@@ -22,7 +22,7 @@ public class AlertaEntity {
     private Integer idAlerta;
     private String descricao;
     private LocalDateTime dataHora;
-//    @ManyToOne
-//    @JoinColumn(name = "fk_item_estoque")
-//    private ItemEstoque itemEstoque;
+    @ManyToOne
+    @JoinColumn(name = "fk_item_estoque")
+    private ItemEstoqueEntity itemEstoque;
 }

@@ -1,5 +1,8 @@
 package school.sptech.CleanArchitecture.core.domain.entity;
 
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaItemEstoqueDto;
+
 import java.util.Set;
 
 public class ItemEstoque {
@@ -10,6 +13,7 @@ public class ItemEstoque {
     private Double peso;
     private Double qtdMinimo;
     private Double qtdArmazenado;
+    private Categoria categoria;
     private Set<Categoria> caracteristicas;
     private Prateleira prateleira;
     private Set<ConfeccaoRoupa> confeccaoRoupa;
@@ -19,18 +23,27 @@ public class ItemEstoque {
     public ItemEstoque() {
     }
 
-    public ItemEstoque(Integer idItemEstoque, String descricao, String complemento, Double peso, Double qtdMinimo, Double qtdArmazenado, Set<Categoria> caracteristicas, Prateleira prateleira, Set<ConfeccaoRoupa> confeccaoRoupa, Double preco, Imagem imagem) {
+    public ItemEstoque(Integer idItemEstoque, String descricao, String complemento, Double peso, Double qtdMinimo, Double qtdArmazenado, Categoria categoria, Set<Categoria> caracteristicas, Prateleira prateleira, Set<ConfeccaoRoupa> confeccaoRoupa, Double preco, Imagem imagem) {
         this.idItemEstoque = idItemEstoque;
         this.descricao = descricao;
         this.complemento = complemento;
         this.peso = peso;
         this.qtdMinimo = qtdMinimo;
         this.qtdArmazenado = qtdArmazenado;
+        this.categoria = categoria;
         this.caracteristicas = caracteristicas;
         this.prateleira = prateleira;
         this.confeccaoRoupa = confeccaoRoupa;
         this.preco = preco;
         this.imagem = imagem;
+    }
+
+    public ItemEstoque(AlertaItemEstoqueDto itemEstoqueDto) {
+        this.idItemEstoque = itemEstoqueDto.getIdItemEstoque();
+        this.descricao = itemEstoqueDto.getDescricao();
+        this.complemento = itemEstoqueDto.getComplemento();
+        this.qtdMinimo = itemEstoqueDto.getQtdMinimo();
+        this.qtdArmazenado = itemEstoqueDto.getQtdArmazenado();
     }
 
     public Integer getIdItemEstoque() {
@@ -79,6 +92,14 @@ public class ItemEstoque {
 
     public void setQtdArmazenado(Double qtdArmazenado) {
         this.qtdArmazenado = qtdArmazenado;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public Set<Categoria> getCaracteristicas() {
