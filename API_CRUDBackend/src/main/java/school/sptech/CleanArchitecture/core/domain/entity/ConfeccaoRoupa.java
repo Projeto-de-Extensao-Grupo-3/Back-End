@@ -1,11 +1,10 @@
 package school.sptech.CleanArchitecture.core.domain.entity;
 
-import school.sptech.CRUDBackend.entity.ItemEstoque;
 
 public class ConfeccaoRoupa {
 
     private Integer idConfeccaoRoupa;
-    private school.sptech.CRUDBackend.entity.ItemEstoque roupa;
+    private ItemEstoque roupa;
     private ItemEstoque tecido;
     private Double qtdTecido;
 
