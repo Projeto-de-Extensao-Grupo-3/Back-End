@@ -20,5 +20,5 @@ public interface PrateleiraGateway {
 
     boolean existsByCodigo(String codigo);
 
-    Optional<Prateleira> findByCodigo(String codigo);
+    Prateleira findByCodigo(String codigo);
 }

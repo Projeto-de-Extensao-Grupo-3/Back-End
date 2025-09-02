@@ -1,4 +1,4 @@
-package school.sptech.CleanArchitecture.core.application.command.categoria;
+package school.sptech.CleanArchitecture.core.application.usecase.categoria;
 
 import school.sptech.CleanArchitecture.core.adapters.CategoriaGateway;
 import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
