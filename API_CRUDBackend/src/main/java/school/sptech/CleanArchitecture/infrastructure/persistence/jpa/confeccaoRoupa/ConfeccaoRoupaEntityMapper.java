@@ -12,7 +12,6 @@ public class ConfeccaoRoupaEntityMapper {
         if (Objects.isNull(domain)) {
             return null;
         }
-
         var entity = new ConfeccaoRoupaEntity();
         
         ItemEstoqueEntity roupaEntity = new ItemEstoqueEntity();
@@ -33,7 +32,6 @@ public class ConfeccaoRoupaEntityMapper {
         if (Objects.isNull(entity)) {
             return null;
         }
-
         var domain = new ConfeccaoRoupa();
         
         ItemEstoque roupaDomain = new ItemEstoque();

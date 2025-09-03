@@ -1,12 +1,21 @@
 package school.sptech.CleanArchitecture.core.domain.entity;
 
 
+import jakarta.validation.constraints.NotNull;
+
 public class ConfeccaoRoupa {
 
     private Integer idConfeccaoRoupa;
     private ItemEstoque roupa;
     private ItemEstoque tecido;
     private Double qtdTecido;
+
+    public ConfeccaoRoupa(Integer idConfeccaoRoupa, ItemEstoque roupa, ItemEstoque tecido, Double qtdTecido) {
+        this.idConfeccaoRoupa = idConfeccaoRoupa;
+        this.roupa = roupa;
+        this.tecido = tecido;
+        this.qtdTecido = qtdTecido;
+    }
 
     public Integer getIdConfeccaoRoupa() {
         return idConfeccaoRoupa;
