@@ -8,13 +8,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import school.sptech.CRUDBackend.entity.Parceiro;
-import school.sptech.CRUDBackend.exception.parceiro.ParceiroConflitoException;
-import school.sptech.CRUDBackend.exception.parceiro.ParceiroNaoEncontradoException;
+import school.sptech.CleanArchitecture.core.application.exception.parceiro.ParceiroConflitoException;
+import school.sptech.CleanArchitecture.core.application.exception.parceiro.ParceiroNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.ParceiroRepository;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
