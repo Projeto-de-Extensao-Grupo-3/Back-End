@@ -9,12 +9,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.CleanArchitecture.core.application.command.categoria.CategoriaAtualizarCommand;
 import school.sptech.CleanArchitecture.core.application.command.categoria.CriarCategoriaCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.categoria.*;
 import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.categoria.CategoriaMapper;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.categoria.CategoriaRequestDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.categoria.CategoriaResponseDto;
 
 import java.util.List;
@@ -54,8 +56,9 @@ public class CategoriaController {
     )
     @SecurityRequirement(name = "Bearer")
     @PostMapping
-    public ResponseEntity<CategoriaResponseDto> cadastrar(@RequestBody CriarCategoriaCommand categoriaParaCadastrar) {
-        Categoria categoria = criarCategoriaUseCase.executar(categoriaParaCadastrar);
+    public ResponseEntity<CategoriaResponseDto> cadastrar(@RequestBody CategoriaRequestDto categoriaParaCadastrar) {
+        CriarCategoriaCommand command = CategoriaMapper.toCriarCommand(categoriaParaCadastrar);
+        Categoria categoria = criarCategoriaUseCase.executar(command);
         CategoriaEntity entity = CategoriaEntityMapper.ofDomain(categoria);
         CategoriaResponseDto categoriaCadastrada = CategoriaMapper.toResponseDto(entity);
         return ResponseEntity.status(201).body(categoriaCadastrada);
@@ -144,9 +147,10 @@ public class CategoriaController {
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaResponseDto> atualizarPorId(
             @PathVariable Integer id,
-            @RequestBody @Valid CriarCategoriaCommand categoriaAtualizar){
+            @RequestBody @Valid CategoriaRequestDto categoriaAtualizar){
+        CategoriaAtualizarCommand command = CategoriaMapper.toAtualzarCommand(id, categoriaAtualizar);
         CategoriaEntity categoriaEncontrada = CategoriaEntityMapper.ofDomain(
-                categoriaAtualizarPorIdUseCase.execute(id, categoriaAtualizar));
+                categoriaAtualizarPorIdUseCase.execute(command));
         CategoriaResponseDto response = CategoriaMapper.toResponseDto(categoriaEncontrada);
         return ResponseEntity.status(200).body(response);
     }

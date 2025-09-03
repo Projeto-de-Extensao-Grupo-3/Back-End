@@ -9,9 +9,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.CleanArchitecture.core.application.command.imagem.CriarImagemCommand;
+import school.sptech.CleanArchitecture.core.application.command.imagem.ImagemAtualizarCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.imagem.ImagemAtualizarUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.imagem.ImagemCadastrarUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.imagem.ImagemDeletarPorIdUseCase;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.imagem.ImagemEntity;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.imagem.ImagemEntityMapper;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.imagem.ImagemMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.imagem.ImagemRequestDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.imagem.ImagemResponseDto;
 
@@ -41,9 +46,10 @@ public class ImagemController {
     )
     @PostMapping
     public ResponseEntity<ImagemResponseDto> cadastrarImagem(@RequestBody @Valid ImagemRequestDto imagemDto) {
-        Imagem imagem = ImagemMapper.toEntity(imagemDto);
-        ImagemResponseDto imagemCadastrada = ImagemMapper.toResponseDto(service.cadastrarImagem(imagem));
-        return ResponseEntity.status(201).body(imagemCadastrada);
+        CriarImagemCommand command = ImagemMapper.toCriarCommand(imagemDto);
+        ImagemEntity imagemCriada = ImagemEntityMapper.ofDomain(imagemCadastrarUseCase.execute(command));
+        ImagemResponseDto response = ImagemMapper.toResponseDto(imagemCriada);
+        return ResponseEntity.status(201).body(response);
     }
 
     @Operation(
@@ -60,9 +66,10 @@ public class ImagemController {
             @PathVariable Integer id,
             @RequestBody @Valid ImagemRequestDto imagemDto
     ) {
-        Imagem imagem = ImagemMapper.toEntity(imagemDto);
-        ImagemResponseDto imagemAtualizada = ImagemMapper.toResponseDto(service.atualizarImagem(id, imagem));
-        return ResponseEntity.status(200).body(imagemAtualizada);
+        ImagemAtualizarCommand command = ImagemMapper.toAtualizarCommand(id, imagemDto);
+        ImagemEntity imagemCriada = ImagemEntityMapper.ofDomain(imagemAtualizarUseCase.execute(command));
+        ImagemResponseDto response = ImagemMapper.toResponseDto(imagemCriada);
+        return ResponseEntity.status(200).body(response);
     }
 
     @Operation(
@@ -76,7 +83,7 @@ public class ImagemController {
     @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarImagem(@PathVariable Integer id) {
-        service.deletarImagem(id);
+        imagemDeletarPorIdUseCase.execute(id);
         return ResponseEntity.status(204).build();
     }
 }
