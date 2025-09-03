@@ -1,7 +1,7 @@
 package school.sptech.CleanArchitecture.core.application.usecase.prateleira;
 
 import school.sptech.CleanArchitecture.core.adapters.PrateleiraGateway;
-import school.sptech.CleanArchitecture.core.application.command.prateleira.CriarPrateleiraCommand;
+import school.sptech.CleanArchitecture.core.application.command.prateleira.PrateleiraAtualizarCommand;
 import school.sptech.CleanArchitecture.core.application.exception.Prateleira.PrateleiraNaoEncontradaException;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
 
@@ -13,14 +13,14 @@ public class PrateleiraAtualizarPorIdUseCase {
         this.gateway = gateway;
     }
 
-    public Prateleira executar(Integer id, CriarPrateleiraCommand command){
-        if(gateway.existsById(id)){
+    public Prateleira executar(PrateleiraAtualizarCommand command) {
+        if(gateway.existsById(command.id())){
             var prateleiraParaAtualizar = new Prateleira();
-            prateleiraParaAtualizar.setIdPrateleira(id);
+            prateleiraParaAtualizar.setIdPrateleira(command.id());
             prateleiraParaAtualizar.setCodigo(command.codigo());
             return gateway.save(prateleiraParaAtualizar);
         }
-        throw new PrateleiraNaoEncontradaException("Não foi possivel encontrar a prateleira com id: " + id);
+        throw new PrateleiraNaoEncontradaException("Não foi possivel encontrar a prateleira com id: " + command.id());
     }
 
 }

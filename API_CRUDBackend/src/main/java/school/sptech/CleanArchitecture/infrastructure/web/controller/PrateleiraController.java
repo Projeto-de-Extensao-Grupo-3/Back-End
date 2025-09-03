@@ -10,9 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.CleanArchitecture.core.application.command.prateleira.CriarPrateleiraCommand;
+import school.sptech.CleanArchitecture.core.application.command.prateleira.PrateleiraAtualizarCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.prateleira.*;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.prateleira.PrateleiraMapper;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.prateleira.PrateleiraRequestDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.prateleira.PrateleiraResponseDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,7 +51,8 @@ public class PrateleiraController {
     )
     @SecurityRequirement(name = "Bearer")
     @PostMapping
-    public ResponseEntity<PrateleiraResponseDto> cadastrar(@RequestBody CriarPrateleiraCommand command) {
+    public ResponseEntity<PrateleiraResponseDto> cadastrar(@RequestBody PrateleiraRequestDto dto) {
+        CriarPrateleiraCommand command = PrateleiraMapper.toCriarCommand(dto);
         Prateleira prateleira = criarPrateleiraUseCase.executar(command);
         PrateleiraResponseDto prateleiraResponseDto = PrateleiraMapper.toResponseDto(prateleira);
         return ResponseEntity.status(201).body(prateleiraResponseDto);
@@ -112,8 +115,9 @@ public class PrateleiraController {
     @PutMapping("/{id}")
     public ResponseEntity<PrateleiraResponseDto> atualizarPorId(
             @PathVariable Integer id,
-            @RequestBody @Valid CriarPrateleiraCommand prateleiraAtualizar){
-        Prateleira prateleiraAtualizada = prateleiraAtualizarPorIdUseCase.executar(id, prateleiraAtualizar);
+            @RequestBody @Valid PrateleiraRequestDto dto){
+        PrateleiraAtualizarCommand command = PrateleiraMapper.toAtualizarCommand(id, dto);
+        Prateleira prateleiraAtualizada = prateleiraAtualizarPorIdUseCase.executar(command);
         PrateleiraResponseDto responseDto = PrateleiraMapper.toResponseDto(prateleiraAtualizada);
              return ResponseEntity.status(200).body(responseDto);
     }
