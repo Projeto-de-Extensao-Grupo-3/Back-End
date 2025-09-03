@@ -4,7 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.CleanArchitecture.core.application.command.categoria.CriarCategoriaCommand;
@@ -18,6 +20,10 @@ import school.sptech.CleanArchitecture.infrastructure.web.dto.categoria.Categori
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(name = "Categoria Controller", description = "Operações CRUD relacionadas as categorias de item.")
+@RestController
+@RequestMapping("/categorias")
+@RequiredArgsConstructor
 public class CategoriaController {
 
     private final CategoriaAtualizarPorIdUseCase categoriaAtualizarPorIdUseCase;
@@ -33,16 +39,6 @@ public class CategoriaController {
     private final CategoriaRemoverPorId categoriaRemoverPorId;
 
     private final CriarCategoriaUseCase criarCategoriaUseCase;
-
-    public CategoriaController(CategoriaAtualizarPorIdUseCase categoriaAtualizarPorIdUseCase, CategoriaBuscarPorIdUseCase categoriaBuscarPorIdUseCase, CategoriaBuscarPorNomeUseCase categoriaBuscarPorNomeUseCase, CategoriaListAllUseCase categoriaListAllUseCase, CategoriaListarPorTipoUseCase categoriaListarPorTipoUseCase, CategoriaRemoverPorId categoriaRemoverPorId, CriarCategoriaUseCase categoriaUseCase) {
-        this.categoriaAtualizarPorIdUseCase = categoriaAtualizarPorIdUseCase;
-        this.categoriaBuscarPorIdUseCase = categoriaBuscarPorIdUseCase;
-        this.categoriaBuscarPorNomeUseCase = categoriaBuscarPorNomeUseCase;
-        this.categoriaListAllUseCase = categoriaListAllUseCase;
-        this.categoriaListarPorTipoUseCase = categoriaListarPorTipoUseCase;
-        this.categoriaRemoverPorId = categoriaRemoverPorId;
-        this.criarCategoriaUseCase = categoriaUseCase;
-    }
 
     @Operation(
             summary = "Cadastro de uma nova Categoria de Item.",

@@ -8,18 +8,20 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.CleanArchitecture.core.application.command.alerta.AlertaListarPorItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.application.command.alerta.CriarAlertaCommand;
+import school.sptech.CleanArchitecture.core.application.usecase.alerta.AlertaListarAlertasDoItemUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.alerta.CriarAlertaUseCase;
 import school.sptech.CleanArchitecture.core.domain.entity.Alerta;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.alerta.AlertaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.alerta.AlertaEntityMapper;
-import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaCriacaoDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaItemEstoqueDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaResponseDto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Tag(name = "Alerta Controller",  description = "Operações CRUD relacionadas aos alertas gerados")
 @RestController
@@ -27,6 +29,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AlertaController {
     private final CriarAlertaUseCase criarAlertaUseCase;
+
+    private final AlertaListarAlertasDoItemUseCase alertaListarAlertasDoItemUseCase;
 
     @Operation(
             summary = "Geração de um novo alerta",
@@ -62,16 +66,17 @@ public class AlertaController {
     public ResponseEntity<List<AlertaResponseDto>> listarAlertasDoItem(
             @PathVariable AlertaItemEstoqueDto itemEstoqueDto
     ) {
-        ItemEstoqueEntity itemEstoque = new ItemEstoqueEntity();
-        itemEstoque.setIdItemEstoque(itemEstoqueDto.getIdItemEstoque());
+        AlertaListarPorItemEstoqueCommand command = new AlertaListarPorItemEstoqueCommand();
+        command.setIdItemEstoque(itemEstoqueDto.getIdItemEstoque());
 
+        List<AlertaEntity> alertas = alertaListarAlertasDoItemUseCase.execute(command)
+                .stream().map(AlertaEntityMapper::ofDomain).collect(Collectors.toList());
 
-        List<AlertaResponseDto> alertas = AlertaMapper.toResponseDtos(
-                service.listarAlertasDoItem(itemEstoque)
-        );
+        List<AlertaResponseDto> response = AlertaMapper.toResponseDtos(alertas);
+
         if (alertas.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
-        return ResponseEntity.status(200).body(alertas);
+        return ResponseEntity.status(200).body(response);
     }
 }
