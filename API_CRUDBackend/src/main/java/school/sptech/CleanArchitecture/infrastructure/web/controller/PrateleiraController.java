@@ -6,19 +6,21 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.CleanArchitecture.core.application.command.prateleira.CriarPrateleiraCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.prateleira.*;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.Prateleira.PrateleiraMapper;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.Prateleira.PrateleiraResponseDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.prateleira.PrateleiraMapper;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.prateleira.PrateleiraResponseDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Tag(name = "Prateleria Controller", description = "Operações CRUD relacionadas as prateleiras de armazenamento de produto.")
 @RestController
 @RequestMapping("/prateleiras")
+@RequiredArgsConstructor
 public class PrateleiraController {
 
     private final CriarPrateleiraUseCase criarPrateleiraUseCase;
@@ -32,15 +34,6 @@ public class PrateleiraController {
     private final PrateleiraAtualizarPorIdUseCase prateleiraAtualizarPorIdUseCase;
 
     private final PrateleiraRemoverPorIdUseCase prateleiraRemoverPorIdUseCase;
-
-    public PrateleiraController(CriarPrateleiraUseCase criarPrateleiraUseCase, PrateleiraListarAllUseCase prateleiraListarAllUseCase, PrateleiraBuscarPorIdUseCase prateleiraBuscarPorIdUseCase, PrateleiraBuscarPorCodigoUseCase prateleiraBuscarPorCodigoUseCase, PrateleiraAtualizarPorIdUseCase prateleiraAtualizarPorIdUseCase, PrateleiraRemoverPorIdUseCase prateleiraRemoverPorIdUseCase) {
-        this.criarPrateleiraUseCase = criarPrateleiraUseCase;
-        this.prateleiraListarAllUseCase = prateleiraListarAllUseCase;
-        this.prateleiraBuscarPorIdUseCase = prateleiraBuscarPorIdUseCase;
-        this.prateleiraBuscarPorCodigoUseCase = prateleiraBuscarPorCodigoUseCase;
-        this.prateleiraAtualizarPorIdUseCase = prateleiraAtualizarPorIdUseCase;
-        this.prateleiraRemoverPorIdUseCase = prateleiraRemoverPorIdUseCase;
-    }
 
     @Operation(
             summary = "Cadastro de uma nova Prateleira.",

@@ -11,18 +11,46 @@ public class AlertaListarPorItemEstoqueCommand {
     private Integer idItemEstoque;
     private String descricao;
     private String complemento;
-    private Double peso;
     private Double qtdMinimo;
     private Double qtdArmazenado;
 
-    private CategoriaEntity categoria;
+    public Integer getIdItemEstoque() {
+        return idItemEstoque;
+    }
 
-    private Set<CategoriaEntity> caracteristicas;
+    public void setIdItemEstoque(Integer idItemEstoque) {
+        this.idItemEstoque = idItemEstoque;
+    }
 
-    private PrateleiraEntity prateleira;
+    public String getDescricao() {
+        return descricao;
+    }
 
-    private Set<ConfeccaoRoupaEntity> confeccaoRoupa;
-    private Double preco;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-    private ImagemEntity imagem;
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public Double getQtdMinimo() {
+        return qtdMinimo;
+    }
+
+    public void setQtdMinimo(Double qtdMinimo) {
+        this.qtdMinimo = qtdMinimo;
+    }
+
+    public Double getQtdArmazenado() {
+        return qtdArmazenado;
+    }
+
+    public void setQtdArmazenado(Double qtdArmazenado) {
+        this.qtdArmazenado = qtdArmazenado;
+    }
 }

@@ -4,8 +4,10 @@ import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.AlertaGateway;
 import school.sptech.CleanArchitecture.core.domain.entity.Alerta;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AlertaAdapter implements AlertaGateway {
@@ -25,7 +27,9 @@ public class AlertaAdapter implements AlertaGateway {
 
     @Override
     public List<Alerta> findByItemEstoque(ItemEstoque itemEstoque) {
-
-        return List.of();
+        ItemEstoqueEntity itemEstoqueEntity = new ItemEstoqueEntity();
+        itemEstoqueEntity.setIdItemEstoque(itemEstoque.getIdItemEstoque());
+        List<AlertaEntity> entities = repository.findByItemEstoque(itemEstoqueEntity);
+        return entities.stream().map(AlertaEntityMapper::ofEntity).collect(Collectors.toList());
     }
 }

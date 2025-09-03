@@ -1,4 +1,4 @@
-package school.sptech.CleanArchitecture.infrastructure.web.dto.Prateleira;
+package school.sptech.CleanArchitecture.infrastructure.web.dto.prateleira;
 
 
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
