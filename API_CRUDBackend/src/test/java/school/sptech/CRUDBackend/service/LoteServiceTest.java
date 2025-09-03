@@ -13,8 +13,6 @@ import school.sptech.CRUDBackend.entity.Parceiro;
 import school.sptech.CRUDBackend.entity.Permissao;
 import school.sptech.CRUDBackend.exception.Lote.LoteConflitoException;
 import school.sptech.CRUDBackend.exception.Lote.LoteNaoEncontradoException;
-import school.sptech.CRUDBackend.exception.parceiro.ParceiroConflitoException;
-import school.sptech.CRUDBackend.exception.parceiro.ParceiroNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.LoteRepository;
 
 import java.time.LocalDateTime;
