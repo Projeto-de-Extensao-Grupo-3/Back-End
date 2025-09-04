@@ -6,6 +6,7 @@ import school.sptech.CleanArchitecture.core.adapters.CategoriaGateway;
 import school.sptech.CleanArchitecture.core.application.command.alerta.CriarAlertaCommand;
 import school.sptech.CleanArchitecture.core.application.command.categoria.CategoriaPaiCommand;
 import school.sptech.CleanArchitecture.core.application.command.categoria.CriarCategoriaCommand;
+import school.sptech.CleanArchitecture.core.application.mapper.CategoriaMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.Alerta;
 import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 
@@ -21,15 +22,7 @@ public class CriarCategoriaUseCase {
         if(gateway.existsByNome(command.nome())){
             throw new CategoriaConflitoException("Já existe uma categoria cadastrada com o nome de: "+ command.nome());
         }
-        Categoria categoriaPai = null;
-        if (command.categoriaPai() != null) {
-            categoriaPai = new Categoria();
-            categoriaPai.setIdCategoria(command.categoriaPai().idCategoria());
-        }
-
-        var categoriaParaRegistrar = new Categoria();
-        categoriaParaRegistrar.setNome(command.nome());
-        categoriaParaRegistrar.setCategoriaPai(categoriaPai);
+        var categoriaParaRegistrar = CategoriaMapper.ofCriarCategoriaCommand(command);
 
         return gateway.save(categoriaParaRegistrar);
     }

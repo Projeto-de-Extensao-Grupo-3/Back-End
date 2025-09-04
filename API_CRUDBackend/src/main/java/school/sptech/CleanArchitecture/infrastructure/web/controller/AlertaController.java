@@ -17,7 +17,7 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.alerta.Ale
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.alerta.AlertaEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaCriacaoDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaItemEstoqueDto;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaMapper;
+import school.sptech.CleanArchitecture.core.application.mapper.AlertaMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaResponseDto;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class AlertaController {
         CriarAlertaCommand command = AlertaMapper.toCommand(dto);
         Alerta domain = criarAlertaUseCase.executar(command);
         AlertaEntity entity = AlertaEntityMapper.ofDomain(domain);
-        AlertaResponseDto alertaCadastrado = AlertaMapper.toResponseDto(entity);
+        AlertaResponseDto alertaCadastrado = AlertaEntityMapper.toResponseDto(entity);
         return ResponseEntity.status(201).body(alertaCadastrado);
     }
 
@@ -72,7 +72,7 @@ public class AlertaController {
         List<AlertaEntity> alertas = alertaListarAlertasDoItemUseCase.execute(command)
                 .stream().map(AlertaEntityMapper::ofDomain).collect(Collectors.toList());
 
-        List<AlertaResponseDto> response = AlertaMapper.toResponseDtos(alertas);
+        List<AlertaResponseDto> response = AlertaEntityMapper.toResponseDtos(alertas);
 
         if (alertas.isEmpty()) {
             return ResponseEntity.status(204).build();

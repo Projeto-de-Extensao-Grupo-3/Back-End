@@ -13,9 +13,7 @@ public class PrateleiraBuscarPorCodigoUseCase {
     }
 
     public Prateleira executar(String codigo){
-        return gateway.findByCodigo(codigo)
-                .orElseThrow(() -> new PrateleiraNaoEncontradaException("Prateleira com Codigo " + codigo + " não encontrada"));
-
+        return gateway.findByCodigo(codigo);
     }
 
 }

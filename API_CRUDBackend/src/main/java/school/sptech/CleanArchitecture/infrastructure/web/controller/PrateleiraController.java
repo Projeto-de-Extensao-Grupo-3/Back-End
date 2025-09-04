@@ -13,7 +13,7 @@ import school.sptech.CleanArchitecture.core.application.command.prateleira.Criar
 import school.sptech.CleanArchitecture.core.application.command.prateleira.PrateleiraAtualizarCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.prateleira.*;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.prateleira.PrateleiraMapper;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleira.PrateleiraEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.prateleira.PrateleiraRequestDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.prateleira.PrateleiraResponseDto;
 import java.util.List;
@@ -52,9 +52,9 @@ public class PrateleiraController {
     @SecurityRequirement(name = "Bearer")
     @PostMapping
     public ResponseEntity<PrateleiraResponseDto> cadastrar(@RequestBody PrateleiraRequestDto dto) {
-        CriarPrateleiraCommand command = PrateleiraMapper.toCriarCommand(dto);
+        CriarPrateleiraCommand command = PrateleiraEntityMapper.toCriarCommand(dto);
         Prateleira prateleira = criarPrateleiraUseCase.executar(command);
-        PrateleiraResponseDto prateleiraResponseDto = PrateleiraMapper.toResponseDto(prateleira);
+        PrateleiraResponseDto prateleiraResponseDto = PrateleiraEntityMapper.toResponseDto(prateleira);
         return ResponseEntity.status(201).body(prateleiraResponseDto);
     }
 
@@ -68,7 +68,7 @@ public class PrateleiraController {
     public ResponseEntity<List<PrateleiraResponseDto>> listarTodas() {
         List<PrateleiraResponseDto> todasPrateleiras = prateleiraListarAllUseCase.executar()
                 .stream()
-                .map(PrateleiraMapper::toResponseDto)
+                .map(PrateleiraEntityMapper::toResponseDto)
                 .collect(Collectors.toList());
 
         if (todasPrateleiras.isEmpty()) {
@@ -86,7 +86,7 @@ public class PrateleiraController {
     @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
     public ResponseEntity<PrateleiraResponseDto> buscarPorId(@PathVariable Integer id) {
-        PrateleiraResponseDto prateleiraEncontrada = PrateleiraMapper.toResponseDto(prateleiraBuscarPorIdUseCase.executar(id));
+        PrateleiraResponseDto prateleiraEncontrada = PrateleiraEntityMapper.toResponseDto(prateleiraBuscarPorIdUseCase.executar(id));
         return ResponseEntity.status(200).body(prateleiraEncontrada);
     }
 
@@ -98,7 +98,7 @@ public class PrateleiraController {
     @SecurityRequirement(name = "Bearer")
     @GetMapping("/{codigo}")
     public ResponseEntity<PrateleiraResponseDto> buscarPorCodigo(@PathVariable String codigo) {
-        PrateleiraResponseDto prateleiraEncontrada = PrateleiraMapper.toResponseDto(prateleiraBuscarPorCodigoUseCase.executar(codigo));
+        PrateleiraResponseDto prateleiraEncontrada = PrateleiraEntityMapper.toResponseDto(prateleiraBuscarPorCodigoUseCase.executar(codigo));
         return ResponseEntity.status(200).body(prateleiraEncontrada);
     }
 
@@ -116,9 +116,9 @@ public class PrateleiraController {
     public ResponseEntity<PrateleiraResponseDto> atualizarPorId(
             @PathVariable Integer id,
             @RequestBody @Valid PrateleiraRequestDto dto){
-        PrateleiraAtualizarCommand command = PrateleiraMapper.toAtualizarCommand(id, dto);
+        PrateleiraAtualizarCommand command = PrateleiraEntityMapper.toAtualizarCommand(id, dto);
         Prateleira prateleiraAtualizada = prateleiraAtualizarPorIdUseCase.executar(command);
-        PrateleiraResponseDto responseDto = PrateleiraMapper.toResponseDto(prateleiraAtualizada);
+        PrateleiraResponseDto responseDto = PrateleiraEntityMapper.toResponseDto(prateleiraAtualizada);
              return ResponseEntity.status(200).body(responseDto);
     }
 

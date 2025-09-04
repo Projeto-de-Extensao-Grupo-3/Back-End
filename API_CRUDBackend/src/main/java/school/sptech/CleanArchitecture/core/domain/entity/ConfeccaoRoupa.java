@@ -10,6 +10,9 @@ public class ConfeccaoRoupa {
     private ItemEstoque tecido;
     private Double qtdTecido;
 
+    public ConfeccaoRoupa() {
+    }
+
     public ConfeccaoRoupa(Integer idConfeccaoRoupa, ItemEstoque roupa, ItemEstoque tecido, Double qtdTecido) {
         this.idConfeccaoRoupa = idConfeccaoRoupa;
         this.roupa = roupa;

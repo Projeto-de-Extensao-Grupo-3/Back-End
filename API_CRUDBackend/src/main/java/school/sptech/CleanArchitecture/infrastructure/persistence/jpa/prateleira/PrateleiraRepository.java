@@ -7,5 +7,5 @@ public interface PrateleiraRepository extends JpaRepository<PrateleiraEntity, In
 
     boolean existsByCodigo(String codigo);
 
-    PrateleiraEntity findByCodigo(String codigo);
+    Optional<PrateleiraEntity> findByCodigo(String codigo);
 }

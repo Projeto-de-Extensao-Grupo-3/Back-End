@@ -13,7 +13,7 @@ import school.sptech.CleanArchitecture.core.application.command.confeccaoRoupa.C
 import school.sptech.CleanArchitecture.core.application.usecase.confeccaoRoupa.ConfeccaoRoupaAtualizarUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.confeccaoRoupa.ConfeccaoRoupaCadastrarUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.confeccaoRoupa.ConfeccaoRoupaDeletarUseCase;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.confeccaoRoupa.ConfeccaoRoupaMapper;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccaoRoupa.ConfeccaoRoupaEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.confeccaoRoupa.ConfeccaoRoupaRequestDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.confeccaoRoupa.ConfeccaoRoupaResponseDto;
 
@@ -44,8 +44,8 @@ public class ConfeccaoRoupaController {
     public ResponseEntity<ConfeccaoRoupaResponseDto> cadastrar(
             @RequestBody ConfeccaoRoupaRequestDto confeccaoRoupaCadastro
     ) {
-        ConfeccaoRoupaCadastrarCommand command = ConfeccaoRoupaMapper.toCadastrarCommand(confeccaoRoupaCadastro);
-        ConfeccaoRoupaResponseDto confeccaoRoupaCadastrada = ConfeccaoRoupaMapper.toResponseDto(
+        ConfeccaoRoupaCadastrarCommand command = ConfeccaoRoupaEntityMapper.toCadastrarCommand(confeccaoRoupaCadastro);
+        ConfeccaoRoupaResponseDto confeccaoRoupaCadastrada = ConfeccaoRoupaEntityMapper.toResponseDto(
                 confeccaoRoupaCadastrarUseCase.execute(command)
         );
         return ResponseEntity.status(201).body(confeccaoRoupaCadastrada);
@@ -68,8 +68,8 @@ public class ConfeccaoRoupaController {
             @PathVariable Integer id,
             @RequestBody ConfeccaoRoupaRequestDto confeccaoRoupaDto
     ) {
-        ConfeccaoRoupaAtualizarCommand command = ConfeccaoRoupaMapper.toAtualizarCommand(id, confeccaoRoupaDto);
-        ConfeccaoRoupaResponseDto confeccaoRoupaAtualizada = ConfeccaoRoupaMapper.toResponseDto(
+        ConfeccaoRoupaAtualizarCommand command = ConfeccaoRoupaEntityMapper.toAtualizarCommand(id, confeccaoRoupaDto);
+        ConfeccaoRoupaResponseDto confeccaoRoupaAtualizada = ConfeccaoRoupaEntityMapper.toResponseDto(
                 confeccaoRoupaAtualizarUseCase.execute(command)
         );
         return ResponseEntity.status(200).body(confeccaoRoupaAtualizada);
