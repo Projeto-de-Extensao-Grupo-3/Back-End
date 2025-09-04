@@ -5,6 +5,7 @@ import school.sptech.CleanArchitecture.core.application.command.parceiro.CriarPa
 import school.sptech.CleanArchitecture.core.application.exception.parceiro.ParceiroConflitoException;
 import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
 
+
 public class CadastrarParceiroUseCase {
 
     private final ParceiroGateway gateway;

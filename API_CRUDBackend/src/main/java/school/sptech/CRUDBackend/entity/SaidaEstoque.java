@@ -34,5 +34,5 @@ public class SaidaEstoque {
     @ManyToOne
     @JoinColumn(name = "fk_costureira")
     @Nullable
-    private Parceiro costureira;
+    private Parceiroaa costureira;
 }

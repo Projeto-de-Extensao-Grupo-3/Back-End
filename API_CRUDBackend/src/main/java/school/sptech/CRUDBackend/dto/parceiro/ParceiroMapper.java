@@ -1,14 +1,14 @@
 package school.sptech.CRUDBackend.dto.parceiro;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import school.sptech.CRUDBackend.entity.Parceiro;
+import school.sptech.CRUDBackend.entity.Parceiroaa;
 
 import java.util.List;
 
 @Schema(description = "Classe de mapeamento de DTOs Parceiro")
 public class ParceiroMapper {
-    public static Parceiro toEntity(ParceiroRequestDto requestDto) {
-        return new Parceiro(
+    public static Parceiroaa toEntity(ParceiroRequestDto requestDto) {
+        return new Parceiroaa(
                 null,
                 requestDto.getCategoria(),
                 requestDto.getNome(),
@@ -19,7 +19,7 @@ public class ParceiroMapper {
         );
     }
 
-    public static ParceiroResponseDto toResponseDto(Parceiro servico) {
+    public static ParceiroResponseDto toResponseDto(Parceiroaa servico) {
         return new ParceiroResponseDto(
                 servico.getIdParceiro(),
                 servico.getCategoria(),
@@ -31,7 +31,7 @@ public class ParceiroMapper {
         );
     }
 
-    public static List<ParceiroResponseDto> toResponseDtos(List<Parceiro> sericos) {
+    public static List<ParceiroResponseDto> toResponseDtos(List<Parceiroaa> sericos) {
         return sericos
                 .stream()
                 .map(ParceiroMapper::toResponseDto)

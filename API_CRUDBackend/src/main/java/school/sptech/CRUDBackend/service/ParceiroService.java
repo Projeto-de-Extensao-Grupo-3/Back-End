@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.application.exception.parceiro.ParceiroConflitoException;
 import school.sptech.CleanArchitecture.core.application.exception.parceiro.ParceiroNaoEncontradoException;
-import school.sptech.CRUDBackend.entity.Parceiro;
+import school.sptech.CRUDBackend.entity.Parceiroaa;
 import school.sptech.CRUDBackend.repository.ParceiroRepository;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class ParceiroService {
     private final ParceiroRepository parceiroRepository;
 
-    public Parceiro cadastrarParceiro(Parceiro parceiro) {
+    public Parceiroaa cadastrarParceiro(Parceiroaa parceiro) {
         if (parceiroRepository.existsByEmailOrIdentificacaoOrEnderecoAllIgnoreCase(
                 parceiro.getEmail(), parceiro.getIdentificacao(), parceiro.getEndereco())
         ) {
@@ -24,15 +24,15 @@ public class ParceiroService {
         return parceiroRepository.save(parceiro);
     }
 
-    public List<Parceiro> verificarTodosParceiros(String categoria) {
+    public List<Parceiroaa> verificarTodosParceiros(String categoria) {
         return parceiroRepository.findByCategoria(categoria);
     }
 
-    public List<Parceiro> buscarParceiroPorNome(String categoria, String nome) {
+    public List<Parceiroaa> buscarParceiroPorNome(String categoria, String nome) {
         return parceiroRepository.findByCategoriaAndNomeContainsIgnoreCase(categoria, nome);
     }
 
-    public Parceiro atualizarParceiroPorId(Integer id, Parceiro parceiroAtualizar) {
+    public Parceiroaa atualizarParceiroPorId(Integer id, Parceiroaa parceiroAtualizar) {
         if(parceiroRepository.existsById(id)) {
             parceiroAtualizar.setIdParceiro(id);
             return parceiroRepository.save(parceiroAtualizar);

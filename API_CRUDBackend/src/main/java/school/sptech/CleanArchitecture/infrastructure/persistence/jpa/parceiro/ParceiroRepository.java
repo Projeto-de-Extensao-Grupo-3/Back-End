@@ -1,7 +1,6 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import school.sptech.CRUDBackend.entity.Parceiro;
 
 import java.util.List;
 

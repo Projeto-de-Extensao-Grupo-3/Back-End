@@ -11,7 +11,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Parceiro {
+public class Parceiroaa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idParceiro;
