@@ -1,8 +1,6 @@
 package school.sptech.CleanArchitecture.core.domain.entity;
 
-import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaItemEstoqueDto;
-
 import java.util.Set;
 
 public class ItemEstoque {
