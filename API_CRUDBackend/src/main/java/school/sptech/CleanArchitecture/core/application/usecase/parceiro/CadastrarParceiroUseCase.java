@@ -16,7 +16,7 @@ public class CadastrarParceiroUseCase {
     public Parceiro executar(CriarParceiroCommand command) {
 
         if (gateway.existsByEmailOrIdentificacaoOrEnderecoAllIgnoreCase(
-                command.email(),
+                command.email().getValue(),
                 command.identificacao(),
                 command.endereco()
         )) {

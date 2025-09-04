@@ -6,8 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
+import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
 
 @Schema(description = "Entidade que representa um parceiro.")
 @Entity
@@ -16,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "parceiro")
-public class PermissaoEntity {
+public class ParceiroEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idParceiro;
