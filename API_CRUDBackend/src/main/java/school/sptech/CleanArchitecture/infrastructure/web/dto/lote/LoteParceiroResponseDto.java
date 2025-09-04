@@ -1,21 +1,17 @@
-package school.sptech.CleanArchitecture.infrastructure.web.dto.parceiro;
+package school.sptech.CleanArchitecture.infrastructure.web.dto.lote;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class ParceiroResponseDto {
-
-    private Integer id;
+@NoArgsConstructor
+public class LoteParceiroResponseDto {
     private String categoria;
     private String nome;
     private String telefone;
     private String email;
-    private String endereco;
-    private String identificacao;
 }

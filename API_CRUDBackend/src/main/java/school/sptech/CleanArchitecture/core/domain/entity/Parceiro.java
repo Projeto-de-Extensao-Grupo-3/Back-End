@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.core.domain.entity;
 
+
 import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
 
 public class Parceiro {

@@ -7,10 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import school.sptech.CRUDBackend.Model.itemEstoque.Observer;
 import school.sptech.CRUDBackend.entity.*;
-import school.sptech.CRUDBackend.exception.Lote.LoteConflitoException;
-import school.sptech.CRUDBackend.exception.Lote.LoteNaoEncontradoException;
 import school.sptech.CRUDBackend.exception.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.LoteItemEstoqueRepository;
 
@@ -62,7 +59,7 @@ class LoteItemEstoqueServiceTest {
         itemEstoque = new ItemEstoque(1, "Vestido com Flores Azuis", "Tamanho Unico", 1.5,
                 10.0, 50.0, categoriaFilho, caracteristicas, prateleira, confeccaoRoupas, 100.0, imagem);
 
-    Parceiro parceiro = new Parceiro(1, "Fabricante", "Fornecedor de Jeans", "000", "fabricante@gmail.com", "R. Haddock Lobo, 595", "teste1");
+    Parceiroaa parceiro = new Parceiroaa(1, "Fabricante", "Fornecedor de Jeans", "000", "fabricante@gmail.com", "R. Haddock Lobo, 595", "teste1");
         Permissao permissaoTeste1 = new Permissao(1, "Cadastrar Funcionario");
         listaPermissaoTeste.add(permissaoTeste1);
         Permissao permissaoTeste2 = new Permissao(2, "Visualizar Dashboard");

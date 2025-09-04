@@ -8,7 +8,7 @@
         <version>3.4.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>school.sptech</groupId>a
+    <groupId>school.sptech</groupId>
     <artifactId>API_CRUDBackend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>API_CRUDBackend</name>

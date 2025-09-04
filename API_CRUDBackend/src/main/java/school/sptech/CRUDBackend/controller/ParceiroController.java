@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import school.sptech.CRUDBackend.dto.parceiro.ParceiroMapper;
 import school.sptech.CRUDBackend.dto.parceiro.ParceiroRequestDto;
 import school.sptech.CRUDBackend.dto.parceiro.ParceiroResponseDto;
-import school.sptech.CRUDBackend.entity.Parceiro;
+import school.sptech.CRUDBackend.entity.Parceiroaa;
 import school.sptech.CRUDBackend.service.ParceiroService;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class ParceiroController {
     public ResponseEntity<ParceiroResponseDto> cadastrar(
             @RequestBody @Valid ParceiroRequestDto servicoTerceiroCad
     ) {
-        Parceiro servicoParaCadastrar = ParceiroMapper.toEntity(servicoTerceiroCad);
+        Parceiroaa servicoParaCadastrar = ParceiroMapper.toEntity(servicoTerceiroCad);
         ParceiroResponseDto novoParceiro = ParceiroMapper.toResponseDto(
                 parceiroService.cadastrarParceiro(servicoParaCadastrar)
         );
@@ -100,7 +100,7 @@ public class ParceiroController {
             @PathVariable Integer id,
             @RequestBody @Valid ParceiroRequestDto servicoTerceiroAtualizar
     ) {
-        Parceiro servicoParaAtualizar = ParceiroMapper.toEntity(servicoTerceiroAtualizar);
+        Parceiroaa servicoParaAtualizar = ParceiroMapper.toEntity(servicoTerceiroAtualizar);
         ParceiroResponseDto servicoAtualizado = ParceiroMapper.toResponseDto(
                 parceiroService.atualizarParceiroPorId(id, servicoParaAtualizar)
         );
