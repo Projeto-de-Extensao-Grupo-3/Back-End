@@ -46,7 +46,8 @@ public class PrateleiraAdapter implements PrateleiraGateway {
 
     @Override
     public Prateleira findByCodigo(String codigo) {
-        return PrateleiraEntityMapper.ofEntity(prateleiraRepository.findByCodigo(codigo));
+        return PrateleiraEntityMapper.ofEntity(prateleiraRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new school.sptech.CRUDBackend.exception.Prateleira.PrateleiraNaoEncontradaException("Prateleira com Codigo " + codigo + " não encontrada")));
     }
 
     @Override

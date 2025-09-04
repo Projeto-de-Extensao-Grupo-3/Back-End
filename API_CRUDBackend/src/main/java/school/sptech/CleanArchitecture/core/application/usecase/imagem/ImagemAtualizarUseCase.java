@@ -5,6 +5,7 @@ import school.sptech.CleanArchitecture.core.application.command.imagem.CriarImag
 import school.sptech.CleanArchitecture.core.application.command.imagem.ImagemAtualizarCommand;
 import school.sptech.CleanArchitecture.core.application.exception.imagem.ImagemConflitoException;
 import school.sptech.CleanArchitecture.core.application.exception.imagem.ImagemNaoEncontradaexception;
+import school.sptech.CleanArchitecture.core.application.mapper.ImagemMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.Imagem;
 
 public class ImagemAtualizarUseCase {
@@ -20,9 +21,7 @@ public class ImagemAtualizarUseCase {
             if (gateway.existsByUrl(command.url())){
                 throw new ImagemConflitoException("Imagem com URL já cadastrada.");
             }
-            Imagem imagemParaAtualizar = new Imagem();
-            imagemParaAtualizar.setIdImagem(command.id());
-            imagemParaAtualizar.setUrl(command.url());
+            Imagem imagemParaAtualizar = ImagemMapper.ofAtualizarImagemCommand(command);
             return gateway.save(imagemParaAtualizar);
         }
         throw new ImagemNaoEncontradaexception("Imagem com url "+ command.url()+" não foi encontrada.");

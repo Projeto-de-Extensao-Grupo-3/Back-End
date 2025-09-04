@@ -5,6 +5,7 @@ import school.sptech.CleanArchitecture.core.adapters.CategoriaGateway;
 import school.sptech.CleanArchitecture.core.application.command.categoria.CategoriaAtualizarCommand;
 import school.sptech.CleanArchitecture.core.application.command.categoria.CriarCategoriaCommand;
 import school.sptech.CleanArchitecture.core.application.exception.categoria.CategoriaConflitoException;
+import school.sptech.CleanArchitecture.core.application.mapper.CategoriaMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 
 public class CategoriaAtualizarPorIdUseCase {
@@ -20,12 +21,9 @@ public class CategoriaAtualizarPorIdUseCase {
             if (gateway.existsByNome(command.nome())){
                 throw new CategoriaConflitoException("Categoria com nome "+ command.nome()+" já cadastrada.");
             }
-            var categoriaPai = new Categoria();
-            categoriaPai.setIdCategoria(command.categoriaPai().idCategoria());
-            var categoriaParaAtualizar = new Categoria();
-            categoriaParaAtualizar.setIdCategoria(command.id());
-            categoriaParaAtualizar.setNome(command.nome());
-            categoriaParaAtualizar.setCategoriaPai(categoriaPai);
+
+            var categoriaParaAtualizar = CategoriaMapper.ofAtualizarCategoriaCommand(command);
+
             return gateway.save(categoriaParaAtualizar);
         }
         throw new CategoriaNaoEncontradaException("Categoria com id "+ command.id() +" não encontrada.");

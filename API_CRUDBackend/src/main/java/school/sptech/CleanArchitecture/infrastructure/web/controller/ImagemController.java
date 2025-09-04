@@ -16,7 +16,7 @@ import school.sptech.CleanArchitecture.core.application.usecase.imagem.ImagemCad
 import school.sptech.CleanArchitecture.core.application.usecase.imagem.ImagemDeletarPorIdUseCase;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.imagem.ImagemEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.imagem.ImagemEntityMapper;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.imagem.ImagemMapper;
+import school.sptech.CleanArchitecture.core.application.mapper.ImagemMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.imagem.ImagemRequestDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.imagem.ImagemResponseDto;
 
@@ -46,9 +46,9 @@ public class ImagemController {
     )
     @PostMapping
     public ResponseEntity<ImagemResponseDto> cadastrarImagem(@RequestBody @Valid ImagemRequestDto imagemDto) {
-        CriarImagemCommand command = ImagemMapper.toCriarCommand(imagemDto);
+        CriarImagemCommand command = ImagemEntityMapper.toCriarCommand(imagemDto);
         ImagemEntity imagemCriada = ImagemEntityMapper.ofDomain(imagemCadastrarUseCase.execute(command));
-        ImagemResponseDto response = ImagemMapper.toResponseDto(imagemCriada);
+        ImagemResponseDto response = ImagemEntityMapper.toResponseDto(imagemCriada);
         return ResponseEntity.status(201).body(response);
     }
 
@@ -66,9 +66,9 @@ public class ImagemController {
             @PathVariable Integer id,
             @RequestBody @Valid ImagemRequestDto imagemDto
     ) {
-        ImagemAtualizarCommand command = ImagemMapper.toAtualizarCommand(id, imagemDto);
+        ImagemAtualizarCommand command = ImagemEntityMapper.toAtualizarCommand(id, imagemDto);
         ImagemEntity imagemCriada = ImagemEntityMapper.ofDomain(imagemAtualizarUseCase.execute(command));
-        ImagemResponseDto response = ImagemMapper.toResponseDto(imagemCriada);
+        ImagemResponseDto response = ImagemEntityMapper.toResponseDto(imagemCriada);
         return ResponseEntity.status(200).body(response);
     }
 

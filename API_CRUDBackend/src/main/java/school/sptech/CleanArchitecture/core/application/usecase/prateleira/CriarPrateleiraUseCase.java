@@ -4,6 +4,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.prateleira;
 import school.sptech.CleanArchitecture.core.adapters.PrateleiraGateway;
 import school.sptech.CleanArchitecture.core.application.command.prateleira.CriarPrateleiraCommand;
 import school.sptech.CleanArchitecture.core.application.exception.Prateleira.PrateleiraConflitoException;
+import school.sptech.CleanArchitecture.core.application.mapper.PrateleiraMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
 
 public class CriarPrateleiraUseCase {
@@ -19,10 +20,7 @@ public class CriarPrateleiraUseCase {
         if(gateway.existsByCodigo(command.codigo())){
             throw new PrateleiraConflitoException("Essa estante já existe");
         }
-
-        var prateleiraParaRegistrar = new Prateleira();
-        prateleiraParaRegistrar.setCodigo(command.codigo());
-
+        var prateleiraParaRegistrar = PrateleiraMapper.ofCriarPrateleiraCommand(command);
         return gateway.save(prateleiraParaRegistrar);
     }
 

@@ -15,7 +15,7 @@ import school.sptech.CleanArchitecture.core.application.usecase.categoria.*;
 import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntityMapper;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.categoria.CategoriaMapper;
+import school.sptech.CleanArchitecture.core.application.mapper.CategoriaMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.categoria.CategoriaRequestDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.categoria.CategoriaResponseDto;
 
@@ -57,10 +57,10 @@ public class CategoriaController {
     @SecurityRequirement(name = "Bearer")
     @PostMapping
     public ResponseEntity<CategoriaResponseDto> cadastrar(@RequestBody CategoriaRequestDto categoriaParaCadastrar) {
-        CriarCategoriaCommand command = CategoriaMapper.toCriarCommand(categoriaParaCadastrar);
+        CriarCategoriaCommand command = CategoriaEntityMapper.toCriarCommand(categoriaParaCadastrar);
         Categoria categoria = criarCategoriaUseCase.executar(command);
         CategoriaEntity entity = CategoriaEntityMapper.ofDomain(categoria);
-        CategoriaResponseDto categoriaCadastrada = CategoriaMapper.toResponseDto(entity);
+        CategoriaResponseDto categoriaCadastrada = CategoriaEntityMapper.toResponseDto(entity);
         return ResponseEntity.status(201).body(categoriaCadastrada);
     }
 
@@ -79,7 +79,7 @@ public class CategoriaController {
 
         List<CategoriaResponseDto> response = todasCategorias
                 .stream()
-                .map(CategoriaMapper::toResponseDto)
+                .map(CategoriaEntityMapper::toResponseDto)
                 .collect(Collectors.toList());
 
         return response.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(response);
@@ -100,7 +100,7 @@ public class CategoriaController {
 
         List<CategoriaResponseDto> response = todasCategorias
                 .stream()
-                .map(CategoriaMapper::toResponseDto)
+                .map(CategoriaEntityMapper::toResponseDto)
                 .collect(Collectors.toList());
 
         return response.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(response);
@@ -116,7 +116,7 @@ public class CategoriaController {
     public ResponseEntity<CategoriaResponseDto> buscarPorId(@PathVariable Integer id) {
         CategoriaEntity categoriaEncontrada = CategoriaEntityMapper.ofDomain(
                 categoriaBuscarPorIdUseCase.executar(id));
-        CategoriaResponseDto response = CategoriaMapper.toResponseDto(categoriaEncontrada);
+        CategoriaResponseDto response = CategoriaEntityMapper.toResponseDto(categoriaEncontrada);
         return ResponseEntity.status(200).body(response);
     }
 
@@ -130,7 +130,7 @@ public class CategoriaController {
     public ResponseEntity<CategoriaResponseDto> buscarPorNome(@PathVariable String nome) {
         CategoriaEntity categoriaEncontrada = CategoriaEntityMapper.ofDomain(
                 categoriaBuscarPorNomeUseCase.execute(nome));
-        CategoriaResponseDto response = CategoriaMapper.toResponseDto(categoriaEncontrada);
+        CategoriaResponseDto response = CategoriaEntityMapper.toResponseDto(categoriaEncontrada);
         return ResponseEntity.status(200).body(response);
     }
 
@@ -148,10 +148,10 @@ public class CategoriaController {
     public ResponseEntity<CategoriaResponseDto> atualizarPorId(
             @PathVariable Integer id,
             @RequestBody @Valid CategoriaRequestDto categoriaAtualizar){
-        CategoriaAtualizarCommand command = CategoriaMapper.toAtualzarCommand(id, categoriaAtualizar);
+        CategoriaAtualizarCommand command = CategoriaEntityMapper.toAtualzarCommand(id, categoriaAtualizar);
         CategoriaEntity categoriaEncontrada = CategoriaEntityMapper.ofDomain(
                 categoriaAtualizarPorIdUseCase.execute(command));
-        CategoriaResponseDto response = CategoriaMapper.toResponseDto(categoriaEncontrada);
+        CategoriaResponseDto response = CategoriaEntityMapper.toResponseDto(categoriaEncontrada);
         return ResponseEntity.status(200).body(response);
     }
 
