@@ -5,8 +5,9 @@ import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueAtualizarPorIdCommand;
 import school.sptech.CleanArchitecture.core.application.mapper.ItemEstoqueMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
+import school.sptech.CleanArchitecture.core.domain.observer.ObserverItemEstoque;
 
-public class ItemEstoqueAtualizarPorIdUseCase {
+public class ItemEstoqueAtualizarPorIdUseCase implements ObserverItemEstoque {
 
     private final ItemEstoqueGateway gateway;
 
@@ -22,4 +23,10 @@ public class ItemEstoqueAtualizarPorIdUseCase {
         }
         throw new ItemEstoqueNaoEncontradoException("O item para atualizar não existe");
     }
+
+    @Override
+    public void atualizarQuantidade(ItemEstoqueAtualizarPorIdCommand itemEstoque) {
+        execute(itemEstoque);
+    }
+
 }
