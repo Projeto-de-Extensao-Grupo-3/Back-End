@@ -1,11 +1,16 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque;
 
+import jakarta.validation.Valid;
+import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueCadastrarCommand;
 import school.sptech.CleanArchitecture.core.domain.entity.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccaoRoupa.ConfeccaoRoupaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.imagem.ImagemEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleira.PrateleiraEntity;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.*;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -110,5 +115,95 @@ public class ItemEstoqueEntityMapper {
         domain.setImagem(imagem);
 
         return domain;
+    }
+
+    public static ItemEstoqueEntity toEntity(ItemEstoqueRequestDto requestDto) {
+
+        CategoriaEntity categoria = new CategoriaEntity();
+        categoria.setIdCategoria(requestDto.getCategoria().getIdCategoria());
+
+        Set<CategoriaEntity> caracteristicas = new HashSet<>();
+        caracteristicas = requestDto.getCaracteristicas()
+                .stream()
+                .map(caracteristica
+                        -> new CategoriaEntity(caracteristica.getIdCategoria(), null, null))
+                .collect(Collectors.toSet());
+
+        PrateleiraEntity prateleira = new PrateleiraEntity();
+        prateleira.setIdPrateleira(requestDto.getPlateleira().getIdPrateleira());
+
+        ImagemEntity imagem = new ImagemEntity(requestDto.getImagem().getIdImagem(), requestDto.getImagem().getUrl());
+
+        return new ItemEstoqueEntity(
+                null,
+                requestDto.getDescricao(),
+                requestDto.getComplemento(),
+                requestDto.getPeso(),
+                requestDto.getQtdMinimo(),
+                requestDto.getQtdArmazenado(),
+                categoria,
+                caracteristicas,
+                prateleira,
+                null,
+                requestDto.getPreco(),
+                imagem
+        );
+    }
+
+    public static ItemEstoqueResponseDto toResponseDto(ItemEstoqueEntity item) {
+
+        CategoriaEntity categoria = item.getCategoria();
+        ItemEstoqueCategoriaPaiResponseDto categoriaPai = new ItemEstoqueCategoriaPaiResponseDto(
+                categoria.getCategoriaPai().getNome()
+        );
+        ItemEstoqueCategoriaResponseDto categoriaDto = new ItemEstoqueCategoriaResponseDto(
+                categoria.getNome(), categoriaPai
+        );
+        Set<ItemEstoqueCaracteristicaResponseDto> caracteristicasDto = item.getCaracteristicas()
+                .stream()
+                .map(caracteristica -> new ItemEstoqueCaracteristicaResponseDto(caracteristica.getNome()))
+                .collect(Collectors.toSet());
+
+        Set<ItemEstoqueConfeccaoRoupaDto> confeccaoRoupaDto = item.getConfeccaoRoupa()
+                .stream()
+                .map(confeccaoRoupa ->
+                        new ItemEstoqueConfeccaoRoupaDto(
+                                confeccaoRoupa.getIdConfeccaoRoupa(),
+                                new ItemEstoqueTecidoDto(
+                                        confeccaoRoupa.getTecido().getIdItemEstoque(),
+                                        confeccaoRoupa.getTecido().getDescricao()
+                                ),
+                                confeccaoRoupa.getQtdTecido()
+                        )
+                )
+                .collect(Collectors.toSet());
+
+        ItemEstoqueImagemResponseDto imagemDto = item.getImagem() != null
+                ? new ItemEstoqueImagemResponseDto(item.getImagem().getUrl())
+                : null;
+
+        return new ItemEstoqueResponseDto(
+                item.getIdItemEstoque(),
+                item.getDescricao(),
+                item.getPeso(),
+                item.getQtdMinimo(),
+                item.getQtdArmazenado(),
+                categoriaDto,
+                caracteristicasDto,
+                confeccaoRoupaDto,
+                item.getPreco(),
+                imagemDto
+        );
+    }
+
+    public static List<ItemEstoqueResponseDto> toResponseDtos(List<ItemEstoqueEntity> itensEstoque) {
+        return itensEstoque
+                .stream()
+                .map(ItemEstoqueEntityMapper::toResponseDto)
+                .toList();
+    }
+
+    public static ItemEstoqueCadastrarCommand toCadastrarCommand(ItemEstoqueRequestDto itemEstoqueCadastrar) {
+
     }
 }

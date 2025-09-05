@@ -1,7 +1,5 @@
 package school.sptech.CleanArchitecture.core.application.command.itemEstoque;
 
-import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueConfeccaoCommand;
-
 import java.util.Set;
 
 public record ItemEstoqueAtualizarPorIdCommand(

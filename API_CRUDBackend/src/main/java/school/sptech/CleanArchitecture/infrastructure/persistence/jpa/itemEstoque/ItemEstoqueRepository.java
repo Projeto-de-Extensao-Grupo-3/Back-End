@@ -1,19 +1,19 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 
 import java.util.List;
 
-public interface ItemEstoqueRepository {
+public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, Integer> {
     Boolean existsByDescricao(String descricao);
-    List<ItemEstoque> findByDescricaoContainsIgnoreCase(String descricao);
+    List<ItemEstoqueEntity> findByDescricaoContainsIgnoreCase(String descricao);
 
     @Query("SELECT i FROM ItemEstoque i\n" +
             "JOIN i.categoria s\n" +
             "JOIN s.categoriaPai c\n" +
             "WHERE c.nome = ?1")
-    List<ItemEstoque> findByTipo(String tipo);
+    List<ItemEstoqueEntity> findByTipo(String tipo);
 
     @Query(value =
             "SELECT SUM(c.qtd_tecido * tecido.preco + lt_item.preco) AS CUSTO_TOTAL\n" +
