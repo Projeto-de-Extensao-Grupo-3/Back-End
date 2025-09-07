@@ -14,25 +14,13 @@ public class LoteMapper {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     public static CriarLoteCommand toCriarCommand(LoteRequestDto dto) {
-        Parceiro parceiro = null;
-        if (dto.getParceiro() != null && dto.getParceiro().getIdParceiro() != null) {
-            parceiro = new Parceiro();
-            parceiro.setId(dto.getParceiro().getIdParceiro());
-        }
-
-        Funcionario funcionario = null;
-        if (dto.getResponsavel() != null && dto.getResponsavel().getIdFuncionario() != null) {
-            funcionario = new Funcionario();
-            funcionario.setIdFuncionario(dto.getResponsavel().getIdFuncionario());
-        }
-
         LocalDateTime dataEntrada = LocalDateTime.parse(dto.getDataEntrada(), DATE_FORMATTER);
 
         return new CriarLoteCommand(
                 dto.getDescricao(),
                 dataEntrada,
-                parceiro,
-                funcionario
+                dto.getParceiro().getIdParceiro(),
+                dto.getResponsavel().getIdFuncionario()
         );
     }
 
@@ -73,7 +61,7 @@ public class LoteMapper {
             parceiroDto.setNome(entity.getParceiro().getNome());
             parceiroDto.setTelefone(entity.getParceiro().getTelefone());
             parceiroDto.setEmail(entity.getParceiro().getEmail() != null ?
-                entity.getParceiro().getEmail().getValue() : null);
+                entity.getParceiro().getEmail() : null);
             dto.setParceiro(parceiroDto);
         }
 
@@ -82,9 +70,9 @@ public class LoteMapper {
             LoteFuncionarioResponseDto funcionarioDto = new LoteFuncionarioResponseDto();
             funcionarioDto.setNome(entity.getResponsavel().getNome());
             funcionarioDto.setTelefone(entity.getResponsavel().getTelefone() != null ?
-                entity.getResponsavel().getTelefone().getValue() : null);
+                entity.getResponsavel().getTelefone() : null);
             funcionarioDto.setEmail(entity.getResponsavel().getEmail() != null ?
-                entity.getResponsavel().getEmail().getValue() : null);
+                entity.getResponsavel().getEmail() : null);
             dto.setResponsavel(funcionarioDto);
         }
 

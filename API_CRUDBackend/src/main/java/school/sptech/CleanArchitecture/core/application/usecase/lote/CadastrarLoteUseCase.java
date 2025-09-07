@@ -2,6 +2,8 @@ package school.sptech.CleanArchitecture.core.application.usecase.lote;
 
 import school.sptech.CRUDBackend.exception.Lote.LoteConflitoException;
 import school.sptech.CleanArchitecture.core.adapters.LoteGateway;
+import school.sptech.CleanArchitecture.core.application.command.lote.CriarLoteCommand;
+import school.sptech.CleanArchitecture.core.application.mapper.LoteMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.Lote;
 
 public class CadastrarLoteUseCase {
@@ -12,11 +14,12 @@ public class CadastrarLoteUseCase {
         this.gateway = gateway;
     }
 
-    public Lote executar(Lote lote){
-        if (gateway.existsByDescricao(lote.getDescricao())) {
+    public Lote executar(CriarLoteCommand command){
+        if (gateway.existsByDescricao(command.descricao())) {
             throw new LoteConflitoException("Lote já cadastrado");
-        } else {
-            return gateway.save(lote);
         }
+
+        Lote lote = LoteMapper.ofCriarLoteCommand(command);
+        return gateway.save(lote);
     }
 }
