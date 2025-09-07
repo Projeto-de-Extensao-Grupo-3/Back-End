@@ -5,9 +5,10 @@ import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueAtualizarPorIdCommand;
 import school.sptech.CleanArchitecture.core.application.mapper.ItemEstoqueMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
-import school.sptech.CleanArchitecture.core.domain.observer.ObserverItemEstoque;
+import school.sptech.CleanArchitecture.core.domain.observer.Observer;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
 
-public class ItemEstoqueAtualizarPorIdUseCase implements ObserverItemEstoque {
+public class ItemEstoqueAtualizarPorIdUseCase implements Observer {
 
     private final ItemEstoqueGateway gateway;
 
@@ -25,8 +26,8 @@ public class ItemEstoqueAtualizarPorIdUseCase implements ObserverItemEstoque {
     }
 
     @Override
-    public void atualizarQuantidade(ItemEstoqueAtualizarPorIdCommand itemEstoque) {
-        execute(itemEstoque);
+    public void atualizarQuantidade(ItemEstoque itemEstoque) {
+        ItemEstoqueAtualizarPorIdCommand command = ItemEstoqueEntityMapper.toAtualizarPorIdCommand(itemEstoque);
+        execute(command);
     }
-
 }

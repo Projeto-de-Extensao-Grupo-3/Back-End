@@ -21,6 +21,10 @@ public class ItemEstoque {
     public ItemEstoque() {
     }
 
+    public ItemEstoque(Integer idItemEstoque) {
+        this.idItemEstoque = idItemEstoque;
+    }
+
     public ItemEstoque(Integer idItemEstoque, String descricao, String complemento, Double peso, Double qtdMinimo, Double qtdArmazenado, Categoria categoria, Set<Categoria> caracteristicas, Prateleira prateleira, Set<ConfeccaoRoupa> confeccaoRoupa, Double preco, Imagem imagem) {
         this.idItemEstoque = idItemEstoque;
         this.descricao = descricao;
