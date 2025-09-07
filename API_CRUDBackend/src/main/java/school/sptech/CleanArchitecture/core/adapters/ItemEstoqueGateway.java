@@ -1,6 +1,5 @@
 package school.sptech.CleanArchitecture.core.adapters;
 
-
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 
 import java.util.List;

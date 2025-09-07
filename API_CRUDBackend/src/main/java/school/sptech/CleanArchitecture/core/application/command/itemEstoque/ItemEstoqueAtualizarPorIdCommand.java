@@ -12,7 +12,6 @@ public record ItemEstoqueAtualizarPorIdCommand(
         ItemEstoqueCategoriaCommand categoria,
         Set<ItemEstoqueCategoriaCommand> caracteristicas,
         ItemEstoquePrateleiraCommand prateleira,
-        Set<ItemEstoqueConfeccaoCommand> confeccaoRoupa,
         Double preco,
         ItemEstoqueImagemCommand imagem
 ) {

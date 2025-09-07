@@ -1,7 +1,6 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque;
 
-import jakarta.validation.Valid;
-import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueCadastrarCommand;
+import school.sptech.CleanArchitecture.core.application.command.itemEstoque.*;
 import school.sptech.CleanArchitecture.core.domain.entity.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccaoRoupa.ConfeccaoRoupaEntity;
@@ -196,14 +195,160 @@ public class ItemEstoqueEntityMapper {
         );
     }
 
-    public static List<ItemEstoqueResponseDto> toResponseDtos(List<ItemEstoqueEntity> itensEstoque) {
+    public static List<ItemEstoqueResponseDto> toResponseDtosEntity(List<ItemEstoqueEntity> itensEstoque) {
         return itensEstoque
                 .stream()
                 .map(ItemEstoqueEntityMapper::toResponseDto)
                 .toList();
     }
 
-    public static ItemEstoqueCadastrarCommand toCadastrarCommand(ItemEstoqueRequestDto itemEstoqueCadastrar) {
+    public static List<ItemEstoqueResponseDto> toResponseDtosDomain(List<ItemEstoque> itensEstoque) {
+        return itensEstoque
+                .stream()
+                .map(ItemEstoqueEntityMapper::toResponseDto)
+                .toList();
+    }
 
+    public static ItemEstoqueCadastrarCommand toCadastrarCommand(ItemEstoqueRequestDto dto) {
+
+        ItemEstoqueCategoriaCommand categoria = new ItemEstoqueCategoriaCommand(dto.getCategoria().getIdCategoria());
+
+        Set<ItemEstoqueCategoriaCommand> caracteristicasDto = dto.getCaracteristicas()
+                .stream()
+                .map(caracteristica -> new ItemEstoqueCategoriaCommand(caracteristica.getIdCategoria()))
+                .collect(Collectors.toSet());
+
+        ItemEstoquePrateleiraCommand prateleiraCommand = new ItemEstoquePrateleiraCommand(dto.getPlateleira().getIdPrateleira());
+
+        ItemEstoqueImagemCommand imagemCommand = new ItemEstoqueImagemCommand(dto.getImagem().getIdImagem(), dto.getImagem().getUrl());
+
+        return new ItemEstoqueCadastrarCommand(
+                dto.getDescricao(),
+                dto.getComplemento(),
+                dto.getPeso(),
+                dto.getQtdMinimo(),
+                dto.getQtdArmazenado(),
+                categoria,
+                caracteristicasDto,
+                prateleiraCommand,
+                dto.getPreco(),
+                imagemCommand
+        );
+    }
+
+    public static ItemEstoqueAtualizarPorIdCommand toAtualizarPorIdCommand(Integer id, ItemEstoqueRequestDto dto) {
+
+        ItemEstoqueCategoriaCommand categoria = new ItemEstoqueCategoriaCommand(dto.getCategoria().getIdCategoria());
+
+        Set<ItemEstoqueCategoriaCommand> caracteristicasDto = dto.getCaracteristicas()
+                .stream()
+                .map(caracteristica -> new ItemEstoqueCategoriaCommand(caracteristica.getIdCategoria()))
+                .collect(Collectors.toSet());
+
+        ItemEstoquePrateleiraCommand prateleiraCommand = new ItemEstoquePrateleiraCommand(dto.getPlateleira().getIdPrateleira());
+
+        ItemEstoqueImagemCommand imagemCommand = new ItemEstoqueImagemCommand(dto.getImagem().getIdImagem(), dto.getImagem().getUrl());
+
+        return new ItemEstoqueAtualizarPorIdCommand(
+                id,
+                dto.getDescricao(),
+                dto.getComplemento(),
+                dto.getPeso(),
+                dto.getQtdMinimo(),
+                dto.getQtdArmazenado(),
+                categoria,
+                caracteristicasDto,
+                prateleiraCommand,
+                dto.getPreco(),
+                imagemCommand
+        );
+    }
+
+    public static ItemEstoqueAtualizarPorIdCommand toAtualizarPorIdCommand(ItemEstoque domain) {
+
+        ItemEstoqueCategoriaCommand categoria = new ItemEstoqueCategoriaCommand(domain.getCategoria().getIdCategoria());
+
+        Set<ItemEstoqueCategoriaCommand> caracteristicasDto = domain.getCaracteristicas()
+                .stream()
+                .map(caracteristica -> new ItemEstoqueCategoriaCommand(caracteristica.getIdCategoria()))
+                .collect(Collectors.toSet());
+
+        ItemEstoquePrateleiraCommand prateleiraCommand = new ItemEstoquePrateleiraCommand(domain.getPrateleira().getIdPrateleira());
+
+        ItemEstoqueImagemCommand imagemCommand = new ItemEstoqueImagemCommand(domain.getImagem().getIdImagem(), domain.getImagem().getUrl());
+
+        return new ItemEstoqueAtualizarPorIdCommand(
+                domain.getIdItemEstoque(),
+                domain.getDescricao(),
+                domain.getComplemento(),
+                domain.getPeso(),
+                domain.getQtdMinimo(),
+                domain.getQtdArmazenado(),
+                categoria,
+                caracteristicasDto,
+                prateleiraCommand,
+                domain.getPreco(),
+                imagemCommand
+        );
+    }
+
+    public static ItemEstoqueCadastrarTecidoRoupaCommand toCadastrarTecidoRoupaCommand(Integer id, Set<ConfeccaoRoupaEntity> confeccaoRoupaEntity) {
+        Set<ConfeccaoRoupa> confeccaoRoupaDomain;
+
+        confeccaoRoupaDomain = confeccaoRoupaEntity.stream()
+                .map(confeccao -> {
+                    ItemEstoque roupa = new ItemEstoque(confeccao.getRoupa().getIdItemEstoque());
+                    ItemEstoque tecido = new ItemEstoque(confeccao.getTecido().getIdItemEstoque());
+                    return new ConfeccaoRoupa(confeccao.getIdConfeccaoRoupa(), roupa, tecido, confeccao.getQtdTecido());
+                })
+                .collect(Collectors.toSet());
+
+        return new ItemEstoqueCadastrarTecidoRoupaCommand(id, confeccaoRoupaDomain);
+    }
+
+    public static ItemEstoqueResponseDto toResponseDto(ItemEstoque item) {
+
+        Categoria categoria = item.getCategoria();
+        ItemEstoqueCategoriaPaiResponseDto categoriaPai = new ItemEstoqueCategoriaPaiResponseDto(
+                categoria.getCategoriaPai().getNome()
+        );
+        ItemEstoqueCategoriaResponseDto categoriaDto = new ItemEstoqueCategoriaResponseDto(
+                categoria.getNome(), categoriaPai
+        );
+        Set<ItemEstoqueCaracteristicaResponseDto> caracteristicasDto = item.getCaracteristicas()
+                .stream()
+                .map(caracteristica -> new ItemEstoqueCaracteristicaResponseDto(caracteristica.getNome()))
+                .collect(Collectors.toSet());
+
+        Set<ItemEstoqueConfeccaoRoupaDto> confeccaoRoupaDto = item.getConfeccaoRoupa()
+                .stream()
+                .map(confeccaoRoupa ->
+                        new ItemEstoqueConfeccaoRoupaDto(
+                                confeccaoRoupa.getIdConfeccaoRoupa(),
+                                new ItemEstoqueTecidoDto(
+                                        confeccaoRoupa.getTecido().getIdItemEstoque(),
+                                        confeccaoRoupa.getTecido().getDescricao()
+                                ),
+                                confeccaoRoupa.getQtdTecido()
+                        )
+                )
+                .collect(Collectors.toSet());
+
+        ItemEstoqueImagemResponseDto imagemDto = item.getImagem() != null
+                ? new ItemEstoqueImagemResponseDto(item.getImagem().getUrl())
+                : null;
+
+        return new ItemEstoqueResponseDto(
+                item.getIdItemEstoque(),
+                item.getDescricao(),
+                item.getPeso(),
+                item.getQtdMinimo(),
+                item.getQtdArmazenado(),
+                categoriaDto,
+                caracteristicasDto,
+                confeccaoRoupaDto,
+                item.getPreco(),
+                imagemDto
+        );
     }
 }
