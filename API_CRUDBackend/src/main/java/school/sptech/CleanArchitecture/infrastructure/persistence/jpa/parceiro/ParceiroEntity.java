@@ -23,7 +23,7 @@ public class ParceiroEntity {
     private String categoria;
     private String nome;
     private String telefone;
-    private EmailVo email;
+    private String email;
     private String endereco;
     private String identificacao;
 }

@@ -11,7 +11,7 @@ public class ParceiroEntityMapper {
         domain.setCategoria(entity.getCategoria());
         domain.setNome(entity.getNome());
         domain.setTelefone(entity.getTelefone());
-        new EmailVo(entity.getEmail());
+        domain.setEmail(new EmailVo(entity.getEmail()));
         domain.setIdentificacao(entity.getIdentificacao());
         return domain;
     }
