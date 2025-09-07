@@ -68,15 +68,6 @@ public class ItemEstoqueMapper {
         imagem.setIdImagem(command.imagem().idImagem());
         imagem.setUrl(command.imagem().url());
 
-        Set<ConfeccaoRoupa> confeccaoRoupas = command.confeccaoRoupa()
-                .stream().map(
-                        categoriaCommand -> {
-                            ConfeccaoRoupa confeccao = new ConfeccaoRoupa();
-                            confeccao.setIdConfeccaoRoupa(categoriaCommand.idConfeccaoRoupa());
-                            return confeccao;
-                        }
-                ).collect(Collectors.toSet());
-
         itemEstoque.setIdItemEstoque(command.idItemEstoque());
         itemEstoque.setDescricao(command.descricao());
         itemEstoque.setComplemento(command.complemento());
@@ -86,7 +77,7 @@ public class ItemEstoqueMapper {
         itemEstoque.setCategoria(categoria);
         itemEstoque.setCaracteristicas(caracteristicas);
         itemEstoque.setPrateleira(prateleira);
-        itemEstoque.setConfeccaoRoupa(confeccaoRoupas);
+        itemEstoque.setConfeccaoRoupa(null);
         itemEstoque.setPreco(command.preco());
         itemEstoque.setImagem(imagem);
         return itemEstoque;

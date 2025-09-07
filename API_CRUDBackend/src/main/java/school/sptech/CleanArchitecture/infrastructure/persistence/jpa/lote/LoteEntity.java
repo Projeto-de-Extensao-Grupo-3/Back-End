@@ -6,8 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
-import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioEntity;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro.ParceiroEntity;
 
 import java.time.LocalDateTime;
 
@@ -26,9 +26,9 @@ public class LoteEntity {
     @ManyToOne
     @JoinColumn(name = "fk_parceiro")
     @Schema(description = "Atributo que representa de qual parceiro veio.", example = "Costureira ou fornecedor.")
-    private Parceiro parceiro;
+    private ParceiroEntity parceiro;
     @ManyToOne
     @JoinColumn(name = "fk_responsavel")
     @Schema(description = "Funcionário responsável pelo registro.")
-    private Funcionario responsavel;
+    private FuncionarioEntity responsavel;
 }

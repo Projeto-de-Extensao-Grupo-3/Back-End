@@ -94,7 +94,7 @@ public class ItemEstoqueMapper {
     public static List<ItemEstoqueResponseDto> toResponseDtos(List<ItemEstoque> itensEstoque) {
         return itensEstoque
                 .stream()
-                .map(school.sptech.CleanArchitecture.core.application.mapper.ItemEstoqueMapper::toResponseDto)
+                .map(ItemEstoqueMapper::toResponseDto)
                 .toList();
     }
 }
