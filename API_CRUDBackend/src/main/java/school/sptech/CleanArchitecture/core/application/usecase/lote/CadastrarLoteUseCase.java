@@ -3,7 +3,9 @@ package school.sptech.CleanArchitecture.core.application.usecase.lote;
 import school.sptech.CRUDBackend.exception.Lote.LoteConflitoException;
 import school.sptech.CleanArchitecture.core.adapters.LoteGateway;
 import school.sptech.CleanArchitecture.core.application.command.lote.CriarLoteCommand;
+import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.core.domain.entity.Lote;
+import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
 
 public class CadastrarLoteUseCase {
 
@@ -19,10 +21,17 @@ public class CadastrarLoteUseCase {
         }
 
         var loteParaRegistrar = new Lote();
+
+        Parceiro parceiro = new Parceiro();
+        parceiro.setId(command.parceiro());
+
+        Funcionario responsavel = new Funcionario();
+        responsavel.setIdFuncionario(command.responsavel());
+
         loteParaRegistrar.setDescricao(command.descricao());
         loteParaRegistrar.setDataEntrada(command.dataEntrada());
-        loteParaRegistrar.setParceiro(command.parceiro());
-        loteParaRegistrar.setResponsavel(command.responsavel());
+        loteParaRegistrar.setParceiro(parceiro);
+        loteParaRegistrar.setResponsavel(responsavel);
 
         return gateway.save(loteParaRegistrar);
     }
