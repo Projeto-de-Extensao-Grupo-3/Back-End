@@ -4,6 +4,7 @@ import school.sptech.CRUDBackend.exception.Lote.LoteNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.adapters.LoteGateway;
 import school.sptech.CleanArchitecture.core.application.command.lote.AtualizarLotePorIdCommand;
 import school.sptech.CleanArchitecture.core.domain.entity.Lote;
+import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
 
 public class AtualizarLotePorIdUseCase {
 
@@ -14,7 +15,8 @@ public class AtualizarLotePorIdUseCase {
     }
 
     public Lote executar(AtualizarLotePorIdCommand command) {
-        if(gateway.existsById(command.idLote())){
+
+        if (gateway.existsById(command.idLote())){
             var loteParaAtualizar = new Lote();
             loteParaAtualizar.setIdLote(command.idLote());
             loteParaAtualizar.setDescricao(command.descricao());
