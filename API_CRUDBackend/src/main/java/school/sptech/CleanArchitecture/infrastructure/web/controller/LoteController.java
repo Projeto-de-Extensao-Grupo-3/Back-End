@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.CleanArchitecture.core.application.command.lote.AtualizarLotePorIdCommand;
 import school.sptech.CleanArchitecture.core.application.command.lote.CriarLoteCommand;
-import school.sptech.CleanArchitecture.core.application.command.parceiro.AtualizarParceiroCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.lote.*;
 import school.sptech.CleanArchitecture.core.domain.entity.Lote;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote.LoteEntity;
@@ -21,7 +20,6 @@ import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.LoteRequestDt
 import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.LoteResponseDto;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Tag(name = "Lote Controller", description = "Operações CRUD relacionadas aos lotes de entrada dos Itens.")
 @RestController
@@ -68,15 +66,14 @@ public class LoteController {
     @GetMapping
     public ResponseEntity<List<LoteResponseDto>> listarTodos(){
         List<LoteEntity> todosOsLotes = listarTodosLotesUseCase.execute()
-                        .stream()
-                        .map(LoteEntityMapper::ofDomain)
-                        .collect(Collectors.toList());
+                .stream()
+                .map(LoteEntityMapper::ofDomain)
+                .toList();
 
         List<LoteResponseDto> response = todosOsLotes
                 .stream()
                 .map(LoteMapper::toResponseDto)
-                .collect(Collectors.toList());
-
+                .toList();
         return ResponseEntity.status(200).body(response);
     }
 
@@ -88,10 +85,10 @@ public class LoteController {
     @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
     public ResponseEntity<LoteResponseDto> buscarPorId(@PathVariable Integer id){
-        LoteEntity loteEncontrado = LoteEntityMapper.ofDomain(
-                buscarLotePorIdUseCase.executar(id));
-        LoteResponseDto response = LoteMapper.toResponseDto(loteEncontrado);
-        return ResponseEntity.status(200).body(response);
+      LoteEntity lote = LoteEntityMapper.ofDomain(
+              buscarLotePorIdUseCase.executar(id));
+      LoteResponseDto response = LoteMapper.toResponseDto(lote);
+      return ResponseEntity.status(200).body(response);
     }
 
     @Operation(summary = "Atualização de Lote.", description = "Retorna um objeto LoteResponseDto atualizado com os valores de um LoteRequestDto.")
@@ -108,10 +105,8 @@ public class LoteController {
     public ResponseEntity<LoteResponseDto> atualizarPorId(
             @PathVariable Integer id,
             @RequestBody @Valid LoteRequestDto loteAtualizar){
-
         AtualizarLotePorIdCommand command = LoteMapper.toAtualizarCommand(id, loteAtualizar);
-        LoteEntity loteAtualizado = LoteEntityMapper.ofDomain(
-                atualizarLotePorIdUseCase.executar(command));
+        LoteEntity loteAtualizado = LoteEntityMapper.ofDomain(atualizarLotePorIdUseCase.executar(command));
         LoteResponseDto response = LoteMapper.toResponseDto(loteAtualizado);
         return ResponseEntity.status(200).body(response);
     }
@@ -124,6 +119,7 @@ public class LoteController {
     @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerPorId(@PathVariable Integer id){
+
         removerLotePorIdUseCase.executar(id);
         return ResponseEntity.status(200).build();
     }

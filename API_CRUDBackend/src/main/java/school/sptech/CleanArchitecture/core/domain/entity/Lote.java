@@ -9,6 +9,8 @@ public class Lote {
     private Parceiro parceiro;
     private Funcionario responsavel;
 
+
+
     public Integer getIdLote() {
         return idLote;
     }

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
+import school.sptech.CleanArchitecture.core.domain.entity.Lote;
 
 @Schema(description = "DTO para requisição de um objeto LoteItemEstoque.")
 @Getter
@@ -17,6 +19,6 @@ public class LoteItemEstoqueRequestDto {
     @NotNull
     @Min(1)
     private Double preco;
-    private LoteItemEstoqueItemRequestDto itemEstoque;
-    private LoteItemEstoqueLoteRequestDto lote;
+    private ItemEstoque itemEstoque;
+    private Lote lote;
 }
