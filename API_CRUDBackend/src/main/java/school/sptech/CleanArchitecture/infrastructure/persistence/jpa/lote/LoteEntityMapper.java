@@ -15,7 +15,7 @@ public class LoteEntityMapper {
         domain.setDataEntrada(entity.getDataEntrada());
         if (entity.getParceiro() != null) {
             Parceiro parceiro = new Parceiro();
-            parceiro.setId(entity.getParceiro().getIdParceiro();
+            parceiro.setId(entity.getParceiro().getIdParceiro());
             domain.setParceiro(parceiro);
         }
         if (entity.getResponsavel() != null) {
