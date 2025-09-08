@@ -26,9 +26,9 @@ public class LoteEntity {
     @ManyToOne
     @JoinColumn(name = "fk_parceiro")
     @Schema(description = "Atributo que representa de qual parceiro veio.", example = "Costureira ou fornecedor.")
-    private ParceiroEntity parceiro;
+    private Integer parceiro;
     @ManyToOne
     @JoinColumn(name = "fk_responsavel")
     @Schema(description = "Funcionário responsável pelo registro.")
-    private FuncionarioEntity responsavel;
+    private Integer responsavel;
 }
