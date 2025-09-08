@@ -6,7 +6,7 @@ import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 public record CriarCorteTecidoCommand (
         String inicio,
         String temino,
-        Funcionario funcionario,
-        LoteItemEstoque loteItemEstoque
+        Integer funcionario,
+        Integer loteItemEstoque
 ){
 }

@@ -6,7 +6,6 @@ import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
 
 public class LoteEntityMapper {
 
-
     public static Lote ofEntity(LoteEntity entity) {
         Lote domain = new Lote();
         domain.setIdLote(entity.getIdLote());
