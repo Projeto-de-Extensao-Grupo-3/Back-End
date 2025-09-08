@@ -17,8 +17,8 @@ public class CadastrarCorteTecidoUseCase {
 
         corteTecidoParaRegistrar.setInicio(command.inicio());
         corteTecidoParaRegistrar.setTermino(command.temino());
-        corteTecidoParaRegistrar.setFuncionario(command.funcionario());
-        corteTecidoParaRegistrar.setLoteItemEstoque(command.loteItemEstoque());
+        corteTecidoParaRegistrar.setFuncionario(command.funcionario().getIdFuncionario());
+        corteTecidoParaRegistrar.setLoteItemEstoque(command.loteItemEstoque().getIdLoteItemEstoque());
 
         return gateway.save(corteTecidoParaRegistrar);
     }
