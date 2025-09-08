@@ -52,23 +52,8 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
     }
 
     @Override
-    public void adicionarObservador(Observer observador) {
-        if (observador != null && !observers.contains(observador)) {
-            observers.add(observador);
-        }
-    }
-
-    @Override
-    public void removerObservador(Observer observador) {
-        observers.remove(observador);
-    }
-
-    @Override
-    public void notificarObservers(LoteItemEstoque loteItemEstoque) {
-        if (loteItemEstoque != null && loteItemEstoque.getItemEstoque() != null) {
-            for (Observer observer : observers) {
-                observer.atualizarQuantidade(loteItemEstoque.getItemEstoque());
-            }
-        }
+    public LoteItemEstoque buscarPorId(Integer id) {
+        LoteItemEstoqueEntity loteItemEstoqueEntity = repository.findById(id).orElse(null);
+        return LoteItemEstoqueEntityMapper.ofEntity(loteItemEstoqueEntity);
     }
 }

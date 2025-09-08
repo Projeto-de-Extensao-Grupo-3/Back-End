@@ -48,6 +48,10 @@ public class ItemEstoque {
         this.qtdArmazenado = itemEstoqueDto.getQtdArmazenado();
     }
 
+    public void atualizarQuantidade(Double quantidade) {
+        this.qtdArmazenado = this.qtdArmazenado - quantidade;
+    }
+
     public Integer getIdItemEstoque() {
         return idItemEstoque;
     }
