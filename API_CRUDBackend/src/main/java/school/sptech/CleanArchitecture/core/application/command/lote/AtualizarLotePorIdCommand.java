@@ -9,7 +9,7 @@ public record AtualizarLotePorIdCommand(
         Integer idLote,
         String descricao,
         LocalDateTime dataEntrada,
-        Parceiro parceiro,
-        Funcionario responsavel
+        Integer parceiro,
+        Integer responsavel
 ) {
 }

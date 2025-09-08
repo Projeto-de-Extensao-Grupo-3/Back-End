@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "lote")
 public class LoteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,9 +27,9 @@ public class LoteEntity {
     @ManyToOne
     @JoinColumn(name = "fk_parceiro")
     @Schema(description = "Atributo que representa de qual parceiro veio.", example = "Costureira ou fornecedor.")
-    private Integer parceiro;
+    private ParceiroEntity parceiro;
     @ManyToOne
     @JoinColumn(name = "fk_responsavel")
     @Schema(description = "Funcionário responsável pelo registro.")
-    private Integer responsavel;
+    private FuncionarioEntity responsavel;
 }

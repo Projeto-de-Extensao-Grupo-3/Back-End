@@ -3,7 +3,6 @@ package school.sptech.CleanArchitecture.core.application.usecase.lote;
 import school.sptech.CRUDBackend.exception.Lote.LoteConflitoException;
 import school.sptech.CleanArchitecture.core.adapters.LoteGateway;
 import school.sptech.CleanArchitecture.core.application.command.lote.CriarLoteCommand;
-import school.sptech.CleanArchitecture.core.application.mapper.LoteMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.Lote;
 
 public class CadastrarLoteUseCase {
@@ -19,7 +18,12 @@ public class CadastrarLoteUseCase {
             throw new LoteConflitoException("Lote já cadastrado");
         }
 
-        Lote lote = LoteMapper.ofCriarLoteCommand(command);
-        return gateway.save(lote);
+        var loteParaRegistrar = new Lote();
+        loteParaRegistrar.setDescricao(command.descricao());
+        loteParaRegistrar.setDataEntrada(command.dataEntrada());
+        loteParaRegistrar.setParceiro(command.parceiro());
+        loteParaRegistrar.setResponsavel(command.responsavel());
+
+        return gateway.save(loteParaRegistrar);
     }
 }

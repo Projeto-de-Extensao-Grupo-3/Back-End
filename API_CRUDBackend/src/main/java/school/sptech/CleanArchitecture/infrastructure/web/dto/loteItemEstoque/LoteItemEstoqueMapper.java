@@ -1,57 +1,44 @@
 package school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.AtualizarLoteItemEstoqueCommand;
+import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.CriarLoteItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.Lote;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntity;
 
 import java.util.List;
 
 @Schema(description = "Classe de mapeamento de DTOs LoteItemEstoque.")
 public class LoteItemEstoqueMapper {
 
-    public static LoteItemEstoque toEntity(LoteItemEstoqueRequestDto requestDto){
-        ItemEstoque itemEstoque = new ItemEstoque();
-        itemEstoque.setIdItemEstoque(requestDto.getItemEstoque().getIdItemEstoque());
-        Lote lote = new Lote();
-        lote.setIdLote(requestDto.getLote().getIdLote());
-        return new LoteItemEstoque(
-                null,
-                requestDto.getQtdItem(),
-                requestDto.getPreco(),
-                itemEstoque,
-                lote
+    public static CriarLoteItemEstoqueCommand toCriarCommand(LoteItemEstoqueRequestDto dto) {
+        return new CriarLoteItemEstoqueCommand(
+                dto.getQtdItem(),
+                dto.getPreco(),
+                dto.getItemEstoque(),
+                dto.getLote()
         );
     }
 
-    public static LoteItemEstoqueResponseDto toResponseDto(LoteItemEstoque loteItemEstoque) {
-        ItemEstoque itemEstoque = loteItemEstoque.getItemEstoque();
-        LoteItemEstoqueItemResponseDto itemEstoqueDto = new LoteItemEstoqueItemResponseDto(
-                itemEstoque.getIdItemEstoque(), itemEstoque.getDescricao(), itemEstoque.getQtdArmazenado()
+    public static AtualizarLoteItemEstoqueCommand toAtualizarCommand(Integer id, LoteItemEstoqueRequestDto dto) {
+        return new AtualizarLoteItemEstoqueCommand(
+                id,
+                dto.getQtdItem(),
+                dto.getPreco(),
+                dto.getItemEstoque(),
+                dto.getLote()
         );
-        Lote lote = loteItemEstoque.getLote();
-        LoteItemEstoqueLoteResponseDto loteDto = new LoteItemEstoqueLoteResponseDto(
-                lote.getIdLote(), lote.getDescricao()
-        );
+    }
+
+    public static LoteItemEstoqueResponseDto toResponseDto(LoteItemEstoqueEntity entity) {
         return new LoteItemEstoqueResponseDto(
-                loteItemEstoque.getIdLoteItemEstoque(),
-                loteItemEstoque.getQtdItem(),
-                loteItemEstoque.getPreco()
-        );
-    }
-
-    public static List<LoteItemEstoqueResponseDto> toResponseDtos(List<LoteItemEstoque> lotesItemEstoque) {
-        return lotesItemEstoque
-                .stream()
-                .map(LoteItemEstoqueMapper::toResponseDto)
-                .toList();
-    }
-
-    public static LoteItemEstoqueCadastroDto toCadastroDto(LoteItemEstoque loteItemEstoque) {
-        return new LoteItemEstoqueCadastroDto(
-                loteItemEstoque.getIdLoteItemEstoque(),
-                loteItemEstoque.getQtdItem(),
-                loteItemEstoque.getPreco()
+                entity.getIdLoteItemEstoque(),
+                entity.getQtdItem(),
+                entity.getPreco(),
+                entity.getItemEstoque(),
+                entity.getLote()
         );
     }
 }

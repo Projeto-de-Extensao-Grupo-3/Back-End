@@ -2,8 +2,6 @@ package school.sptech.CleanArchitecture.infrastructure.web.dto.lote;
 
 import school.sptech.CleanArchitecture.core.application.command.lote.AtualizarLotePorIdCommand;
 import school.sptech.CleanArchitecture.core.application.command.lote.CriarLoteCommand;
-import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
-import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote.LoteEntity;
 
 import java.time.LocalDateTime;
@@ -15,67 +13,53 @@ public class LoteMapper {
 
     public static CriarLoteCommand toCriarCommand(LoteRequestDto dto) {
         LocalDateTime dataEntrada = LocalDateTime.parse(dto.getDataEntrada(), DATE_FORMATTER);
-
         return new CriarLoteCommand(
                 dto.getDescricao(),
                 dataEntrada,
-                dto.getParceiro().getIdParceiro(),
-                dto.getResponsavel().getIdFuncionario()
+                dto.getParceiro(),
+                dto.getResponsavel()
         );
     }
 
+
     public static AtualizarLotePorIdCommand toAtualizarCommand(Integer id, LoteRequestDto dto) {
-        Parceiro parceiro = null;
-        if (dto.getParceiro() != null && dto.getParceiro().getIdParceiro() != null) {
-            parceiro = new Parceiro();
-            parceiro.setId(dto.getParceiro().getIdParceiro());
-        }
-
-        Funcionario funcionario = null;
-        if (dto.getResponsavel() != null && dto.getResponsavel().getIdFuncionario() != null) {
-            funcionario = new Funcionario();
-            funcionario.setIdFuncionario(dto.getResponsavel().getIdFuncionario());
-        }
-
         LocalDateTime dataEntrada = LocalDateTime.parse(dto.getDataEntrada(), DATE_FORMATTER);
 
         return new AtualizarLotePorIdCommand(
                 id,
                 dto.getDescricao(),
                 dataEntrada,
-                parceiro,
-                funcionario
+                dto.getParceiro(),
+                dto.getResponsavel()
         );
     }
 
     public static LoteResponseDto toResponseDto(LoteEntity entity) {
-        LoteResponseDto dto = new LoteResponseDto();
-        dto.setIdLote(entity.getIdLote());
-        dto.setDescricao(entity.getDescricao());
-        dto.setDataEntrada(entity.getDataEntrada().format(DATE_FORMATTER));
+        LoteResponseDto response = new LoteResponseDto();
+        response.setIdLote(entity.getIdLote());
+        response.setDescricao(entity.getDescricao());
+        response.setDataEntrada(entity.getDataEntrada().format(DATE_FORMATTER));
 
-        // Mapear Parceiro
-        if (entity.getParceiro() != null) {
-            LoteParceiroResponseDto parceiroDto = new LoteParceiroResponseDto();
-            parceiroDto.setCategoria(entity.getParceiro().getCategoria());
-            parceiroDto.setNome(entity.getParceiro().getNome());
-            parceiroDto.setTelefone(entity.getParceiro().getTelefone());
-            parceiroDto.setEmail(entity.getParceiro().getEmail() != null ?
-                entity.getParceiro().getEmail() : null);
-            dto.setParceiro(parceiroDto);
-        }
-
-        // Mapear Funcionario
+        // Mapear responsável (funcionário)
         if (entity.getResponsavel() != null) {
-            LoteFuncionarioResponseDto funcionarioDto = new LoteFuncionarioResponseDto();
-            funcionarioDto.setNome(entity.getResponsavel().getNome());
-            funcionarioDto.setTelefone(entity.getResponsavel().getTelefone() != null ?
-                entity.getResponsavel().getTelefone() : null);
-            funcionarioDto.setEmail(entity.getResponsavel().getEmail() != null ?
-                entity.getResponsavel().getEmail() : null);
-            dto.setResponsavel(funcionarioDto);
+            LoteFuncionarioResponseDto responsavel = new LoteFuncionarioResponseDto();
+            responsavel.setNome(entity.getResponsavel().getNome());
+            responsavel.setTelefone(entity.getResponsavel().getTelefone());
+            responsavel.setEmail(entity.getResponsavel().getEmail());
+            response.setResponsavel(responsavel);
         }
 
-        return dto;
+        // Mapear parceiro
+        if (entity.getParceiro() != null) {
+            LoteParceiroResponseDto parceiro = new LoteParceiroResponseDto();
+            parceiro.setCategoria(entity.getParceiro().getCategoria());
+            parceiro.setNome(entity.getParceiro().getNome());
+            parceiro.setTelefone(entity.getParceiro().getTelefone());
+            parceiro.setEmail(entity.getParceiro().getEmail());
+            response.setParceiro(parceiro);
+        }
+
+        return response;
     }
+
 }
