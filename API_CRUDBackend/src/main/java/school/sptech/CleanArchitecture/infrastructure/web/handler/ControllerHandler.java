@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.infrastructure.web.handler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import school.sptech.CleanArchitecture.core.application.exception.funcionario.FuncionarioConflitoException;
 
 import java.util.Map;
 
