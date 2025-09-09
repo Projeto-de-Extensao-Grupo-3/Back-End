@@ -1,8 +1,5 @@
-package school.sptech.CleanArchitecture.core.domain.entity;
 
-import school.sptech.CleanArchitecture.core.domain.valueObject.CpfVo;
-import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
-import school.sptech.CleanArchitecture.core.domain.valueObject.TelefoneVo;
+package school.sptech.CleanArchitecture.core.domain.entity;
 
 import java.util.Set;
 
@@ -10,11 +7,23 @@ public class Funcionario {
 
     private Integer idFuncionario;
     private String nome;
-    private CpfVo cpf;
-    private TelefoneVo telefone;
-    private EmailVo email;
+    private String cpf;
+    private String telefone;
+    private String email;
     private String senha;
     private Set<Permissao> permissoes;
+
+    public Funcionario() { }
+
+    public Funcionario(Integer idFuncionario, String nome, String cpf, String telefone, String email, String senha, Set<Permissao> permissoes) {
+        this.idFuncionario = idFuncionario;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.email = email;
+        this.senha = senha;
+        this.permissoes = permissoes;
+    }
 
     public Integer getIdFuncionario() {
         return idFuncionario;
@@ -32,27 +41,27 @@ public class Funcionario {
         this.nome = nome;
     }
 
-    public CpfVo getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(CpfVo cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
-    public TelefoneVo getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(TelefoneVo telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
-    public EmailVo getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(EmailVo email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -62,5 +71,13 @@ public class Funcionario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Set<Permissao> getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(Set<Permissao> permissoes) {
+        this.permissoes = permissoes;
     }
 }
