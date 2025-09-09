@@ -5,11 +5,11 @@ import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
 
-public class SaidaEstoqueAtualizarQuantidadeUseCase {
+public class SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase {
 
     private final LoteItemEstoqueGateway gateway;
 
-    public SaidaEstoqueAtualizarQuantidadeUseCase(LoteItemEstoqueGateway gateway) {
+    public SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase(LoteItemEstoqueGateway gateway) {
         this.gateway = gateway;
     }
 
@@ -19,12 +19,11 @@ public class SaidaEstoqueAtualizarQuantidadeUseCase {
 
         ItemEstoque itemEstoque = loteItemEstoque.getItemEstoque();
 
-        Double qtdEntradaNova = qtdAtualizar == 0.0
+        Double qtdEntradaNova = saidaEstoque.getQtdSaida() == 0.0
                 ? saidaEstoque.getQtdSaida()
                 : qtdAtualizar;
 
         itemEstoque.atualizarQuantidade(qtdEntradaNova);
-
         return itemEstoque;
     }
 

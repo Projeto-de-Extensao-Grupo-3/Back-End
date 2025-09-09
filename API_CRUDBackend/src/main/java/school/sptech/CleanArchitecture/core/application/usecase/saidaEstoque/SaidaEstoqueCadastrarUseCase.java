@@ -1,11 +1,9 @@
 package school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque;
 
-import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.adapters.SaidaEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.saidaEstoque.SaidaEstoqueCadastrarCommand;
-import school.sptech.CleanArchitecture.core.application.mapper.SaidaItemEstoqueMapper;
+import school.sptech.CleanArchitecture.core.application.mapper.SaidaEstoqueMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
-import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.core.domain.observer.Subject;
@@ -17,31 +15,21 @@ public class SaidaEstoqueCadastrarUseCase implements Subject {
 
     private final SaidaEstoqueGateway saidaGateway;
 
-    private final LoteItemEstoqueGateway loteGateway;
+    private final SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarSaidaUseCase;
 
     private final List<Observer> observadores = new ArrayList<>();
 
-    public SaidaEstoqueCadastrarUseCase(SaidaEstoqueGateway saidaGateway, LoteItemEstoqueGateway loteGateway) {
+    public SaidaEstoqueCadastrarUseCase(SaidaEstoqueGateway saidaGateway, SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarSaidaUseCase) {
         this.saidaGateway = saidaGateway;
-        this.loteGateway = loteGateway;
+        this.atualizarSaidaUseCase = atualizarSaidaUseCase;
     }
 
     public SaidaEstoque execute(SaidaEstoqueCadastrarCommand command){
-        SaidaEstoque saidaEstoque = SaidaItemEstoqueMapper.ofCadastrarCommand(command);
-
-        Integer idLoteItemEstoque = saidaEstoque.getLoteItemEstoque().getIdLoteItemEstoque();
-        LoteItemEstoque loteItemEstoque = loteGateway.buscarPorId(idLoteItemEstoque);
-
-        ItemEstoque itemEstoque = loteItemEstoque.getItemEstoque();
-
-        Double qtdEntradaNova = command.qtdAtualizar() == 0.0
-                ? saidaEstoque.getQtdSaida()
-                : command.qtdAtualizar();
-
-        itemEstoque.atualizarQuantidade(qtdEntradaNova);
-
-        notificarObservers(itemEstoque);
-        return saidaGateway.save(saidaEstoque);
+        SaidaEstoque saidaDeEstoque = SaidaEstoqueMapper.ofCadastrarCommand(command);
+        Double qtdParaAtualizar = command.qtdAtualizar();
+        ItemEstoque itemEstoqueAtualizado = atualizarSaidaUseCase.execute(saidaDeEstoque, qtdParaAtualizar);
+        notificarObservers(itemEstoqueAtualizado);
+        return saidaGateway.save(saidaDeEstoque);
     }
 
     @Override
@@ -51,7 +39,7 @@ public class SaidaEstoqueCadastrarUseCase implements Subject {
 
     @Override
     public void removerObservador(Observer observador) {
-
+        observadores.remove(observador);
     }
 
     @Override
