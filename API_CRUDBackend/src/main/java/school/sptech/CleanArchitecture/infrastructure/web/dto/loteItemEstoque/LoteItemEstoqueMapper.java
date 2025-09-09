@@ -37,8 +37,8 @@ public class LoteItemEstoqueMapper {
                 entity.getIdLoteItemEstoque(),
                 entity.getQtdItem(),
                 entity.getPreco(),
-                entity.getItemEstoque(),
-                entity.getLote()
+                entity.getItemEstoque().getIdItemEstoque(),
+                entity.getLote().getIdLote()
         );
     }
 }

@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
@@ -9,13 +10,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ItemEstoqueAdapter implements ItemEstoqueGateway {
 
     private final ItemEstoqueRepository repository;
-
-    public ItemEstoqueAdapter(ItemEstoqueRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public ItemEstoque save(ItemEstoque itemEstoque) {

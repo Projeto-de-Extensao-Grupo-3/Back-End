@@ -7,6 +7,7 @@ import school.sptech.CleanArchitecture.core.application.command.corteTecido.Cria
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.corteTecido.CorteTecidoEntity;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioEntity;
 
 import java.util.List;
 
@@ -47,9 +48,9 @@ public class CorteTecidoMapper {
     }
 
     public static CorteTecidoResponseDto toResponseDto(CorteTecidoEntity corteTecido) {
-        Funcionario funcionario = corteTecido.getFuncionario();
+        FuncionarioEntity funcionario = corteTecido.getFuncionario();
         CorteTecidoFuncionarioResponseDto funcionarioResponseDto = new CorteTecidoFuncionarioResponseDto(
-                funcionario.getNome(), funcionario.getTelefone().getValue(), funcionario.getEmail().getValue()
+                funcionario.getNome(), funcionario.getTelefone(), funcionario.getEmail()
         );
         return new CorteTecidoResponseDto(
                 corteTecido.getIdCorteTecido(),
