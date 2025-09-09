@@ -2,10 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.permissao
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
@@ -16,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "permissao")
+@Builder
 public class PermissaoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -18,8 +18,8 @@ public class FuncionarioAdapter implements FuncionarioGateway {
 
     @Override
     public Funcionario save(Funcionario funcionario) {
-        var entity = FuncionarioEntityMapper.ofDomain(funcionario);
-        var saved = repository.save(entity);
+        FuncionarioEntity entity = FuncionarioEntityMapper.ofDomain(funcionario);
+        FuncionarioEntity saved = repository.save(entity);
         return FuncionarioEntityMapper.ofEntity(saved);
     }
 
@@ -49,5 +49,10 @@ public class FuncionarioAdapter implements FuncionarioGateway {
     @Override
     public void deleteById(Integer id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsById(Integer id) {
+        return repository.existsById(id);
     }
 }

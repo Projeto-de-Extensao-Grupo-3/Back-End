@@ -1,5 +1,4 @@
-
-package school.sptech.CleanArchitecture.infrastructure.security;
+package school.sptech.CleanArchitecture.config.jwt;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

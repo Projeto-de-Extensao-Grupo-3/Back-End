@@ -1,34 +1,46 @@
 
 package school.sptech.CleanArchitecture.core.application.usecase.funcionario;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import school.sptech.CleanArchitecture.core.adapters.FuncionarioGateway;
-import school.sptech.CleanArchitecture.core.adapters.JwtProviderGateway;
-import school.sptech.CleanArchitecture.core.adapters.PasswordEncoderGateway;
+import school.sptech.CleanArchitecture.core.adapters.TokenGateway;
 import school.sptech.CleanArchitecture.core.application.command.funcionario.LoginFuncionarioCommand;
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.funcionario.FuncionarioTokenDto;
 
 public class AutenticarFuncionarioUseCase {
 
     private final FuncionarioGateway gateway;
-    private final PasswordEncoderGateway passwordEncoder;
-    private final JwtProviderGateway jwtProvider;
+    private final TokenGateway tokenGateway;
+    private final AuthenticationManager authenticationManager;
 
-    public AutenticarFuncionarioUseCase(FuncionarioGateway gateway,
-                                        PasswordEncoderGateway passwordEncoder,
-                                        JwtProviderGateway jwtProvider) {
+    public AutenticarFuncionarioUseCase(FuncionarioGateway gateway, TokenGateway tokenGateway, AuthenticationManager authenticationManager) {
         this.gateway = gateway;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtProvider = jwtProvider;
+        this.tokenGateway = tokenGateway;
+        this.authenticationManager = authenticationManager;
     }
 
-    public String executar(LoginFuncionarioCommand command) {
+    public FuncionarioTokenDto executar(LoginFuncionarioCommand command) {
+        final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
+                command.email(), command.senha()
+        );
+
+        final Authentication authentication = this.authenticationManager.authenticate(credentials);
+
         Funcionario funcionario = gateway.findByEmail(command.email())
                 .orElseThrow(() -> new RuntimeException("Usuário inválido"));
 
-        if (!passwordEncoder.matches(command.senha(), funcionario.getSenha())) {
-            throw new RuntimeException("Credenciais inválidas");
-        }
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return jwtProvider.generateToken(funcionario);
+        final String token = tokenGateway.generateToken(authentication);
+
+        return new FuncionarioTokenDto(
+                funcionario.getNome(),
+                funcionario.getEmail().getValue(),
+                token
+        );
     }
 }

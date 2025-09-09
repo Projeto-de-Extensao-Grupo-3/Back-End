@@ -4,6 +4,9 @@ package school.sptech.CleanArchitecture.infrastructure.web.dto.funcionario;
 import school.sptech.CleanArchitecture.core.application.command.funcionario.CriarFuncionarioCommand;
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.core.domain.entity.Permissao;
+import school.sptech.CleanArchitecture.core.domain.valueObject.CpfVo;
+import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
+import school.sptech.CleanArchitecture.core.domain.valueObject.TelefoneVo;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,9 +20,9 @@ public class FuncionarioMapper {
 
         return new CriarFuncionarioCommand(
                 dto.getNome(),
-                dto.getCpf(),
-                dto.getTelefone(),
-                dto.getEmail(),
+                new CpfVo(dto.getCpf()),
+                new TelefoneVo(dto.getTelefone()),
+                new EmailVo(dto.getEmail()),
                 dto.getSenha(),
                 permissoes
         );
@@ -33,9 +36,9 @@ public class FuncionarioMapper {
         return new FuncionarioResponseDto(
                 funcionario.getIdFuncionario(),
                 funcionario.getNome(),
-                funcionario.getCpf(),
-                funcionario.getTelefone(),
-                funcionario.getEmail(),
+                funcionario.getCpf().getValue(),
+                funcionario.getTelefone().getValue(),
+                funcionario.getEmail().getValue(),
                 permissoes
         );
     }
