@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque;
 
+import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.exception.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
 
     private final LoteItemEstoqueRepository repository;

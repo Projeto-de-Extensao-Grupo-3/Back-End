@@ -1,0 +1,56 @@
+package school.sptech.CleanArchitecture.infrastructure.di;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque.*;
+import school.sptech.CleanArchitecture.core.domain.observer.Observer;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueAdapter;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.saidaEstoque.SaidaEstoqueAdapter;
+
+import java.util.List;
+
+@Configuration
+public class SaidaEstoqueBeanConfig {
+
+    @Bean
+    public SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase saidaEstoqueAtualizarQuantidadeLoteDeItemUseCase(LoteItemEstoqueAdapter adapter){
+        return new SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase(adapter);
+    }
+
+    @Bean
+    public SaidaEstoqueAtualizarPorIdUseCase saidaEstoqueAtualizarPorIdCommand(SaidaEstoqueAdapter adapter,
+                                                                               SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarQuantidadeUseCase){
+        return new SaidaEstoqueAtualizarPorIdUseCase(adapter, atualizarQuantidadeUseCase);
+    }
+
+    @Bean
+    public SaidaEstoqueBuscarPorDataUseCase saidaEstoqueBuscarPorDataUseCase(SaidaEstoqueAdapter adapter){
+        return new SaidaEstoqueBuscarPorDataUseCase(adapter);
+    }
+
+    @Bean
+    public SaidaEstoqueBuscarPorIdUseCase saidaEstoqueBuscarPorIdUseCase(SaidaEstoqueAdapter adapter){
+        return new SaidaEstoqueBuscarPorIdUseCase(adapter);
+    }
+
+    @Bean
+    public SaidaEstoqueBuscarPorMotivoUseCase saidaEstoqueBuscarPorMotivoUseCase(SaidaEstoqueAdapter adapter){
+        return new SaidaEstoqueBuscarPorMotivoUseCase(adapter);
+    }
+
+    @Bean
+    public SaidaEstoqueCadastrarUseCase saidaEstoqueCadastrarUseCase(SaidaEstoqueAdapter adapter,
+                                                                     SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarQuantidadeUseCase){
+        return new SaidaEstoqueCadastrarUseCase(adapter, atualizarQuantidadeUseCase);
+    }
+
+    @Bean
+    public SaidaEstoqueListAllUseCAse saidaEstoqueListAllUseCAse(SaidaEstoqueAdapter adapter){
+        return new SaidaEstoqueListAllUseCAse(adapter);
+    }
+
+    @Bean
+    public SaidaEstoqueRemoverPorIdUseCase saidaEstoqueRemoverPorIdUseCase(SaidaEstoqueAdapter adapter){
+        return new SaidaEstoqueRemoverPorIdUseCase(adapter);
+    }
+}
