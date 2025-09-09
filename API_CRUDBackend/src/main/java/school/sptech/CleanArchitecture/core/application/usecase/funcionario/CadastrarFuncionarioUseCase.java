@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.funcionario;
 
 import school.sptech.CleanArchitecture.core.adapters.FuncionarioGateway;
 import school.sptech.CleanArchitecture.core.adapters.PasswordEncoderGateway;
+import school.sptech.CleanArchitecture.core.application.command.funcionario.CriarFuncionarioCommand;
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 
 public class CadastrarFuncionarioUseCase {
