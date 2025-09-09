@@ -3,6 +3,8 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemE
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote.LoteEntity;
 
 @Schema(description = "Entidade que identifica quais itens do estoque chegaram em um lote específico.")
 @Entity
@@ -11,6 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "lote_item_estoque")
 public class LoteItemEstoqueEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +22,11 @@ public class LoteItemEstoqueEntity {
     private Double preco;
     @ManyToOne
     @JoinColumn(name = "fk_item_estoque")
-    private Integer itemEstoque;
+    private ItemEstoqueEntity itemEstoque;
     @ManyToOne
     @JoinColumn(name = "fk_lote")
     @Schema(description = "Representa o lote do item.")
-    private Integer lote;
+    private LoteEntity lote;
 
 }
 

@@ -3,8 +3,8 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.corteTeci
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
-import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
-import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioEntity;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntity;
 
 @Schema(description = "Entidade que representa o corte de um tecido.")
 @Entity
@@ -24,9 +24,9 @@ public class CorteTecidoEntity {
     @ManyToOne
     @JoinColumn(name = "fk_funcionario")
     @Schema(description = "Funcionário responsável pelo corte")
-    private Funcionario funcionario;
+    private FuncionarioEntity funcionario;
     @ManyToOne
     @JoinColumn(name = "fk_lote_item_estoque")
     @Schema(description = "Lote ao qual o tecido que foi cortado pertence.")
-    private LoteItemEstoque loteItemEstoque;
+    private LoteItemEstoqueEntity loteItemEstoque;
 }
