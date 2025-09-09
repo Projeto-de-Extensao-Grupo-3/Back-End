@@ -3,6 +3,10 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionar
 
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.core.domain.entity.Permissao;
+import school.sptech.CleanArchitecture.core.domain.valueObject.CpfVo;
+import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
+import school.sptech.CleanArchitecture.core.domain.valueObject.TelefoneVo;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.permissao.PermissaoEntity;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,9 +18,9 @@ public class FuncionarioEntityMapper {
         Funcionario d = new Funcionario();
         d.setIdFuncionario(e.getIdFuncionario());
         d.setNome(e.getNome());
-        d.setCpf(e.getCpf());
-        d.setTelefone(e.getTelefone());
-        d.setEmail(e.getEmail());
+        d.setCpf(new CpfVo(e.getCpf()));
+        d.setTelefone(new TelefoneVo(e.getTelefone()));
+        d.setEmail(new EmailVo(e.getEmail()));
         d.setSenha(e.getSenha());
 
         if (e.getPermissoes() != null) {
@@ -33,9 +37,9 @@ public class FuncionarioEntityMapper {
         FuncionarioEntity e = new FuncionarioEntity();
         e.setIdFuncionario(d.getIdFuncionario());
         e.setNome(d.getNome());
-        e.setCpf(d.getCpf());
-        e.setTelefone(d.getTelefone());
-        e.setEmail(d.getEmail());
+        e.setCpf(d.getCpf().getValue());
+        e.setTelefone(d.getTelefone().getValue());
+        e.setEmail(d.getEmail().getValue());
         e.setSenha(d.getSenha());
         if (d.getPermissoes() != null) {
             e.setPermissoes(d.getPermissoes().stream()

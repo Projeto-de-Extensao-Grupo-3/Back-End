@@ -1,21 +1,25 @@
 
 package school.sptech.CleanArchitecture.core.domain.entity;
 
+import school.sptech.CleanArchitecture.core.domain.valueObject.CpfVo;
+import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
+import school.sptech.CleanArchitecture.core.domain.valueObject.TelefoneVo;
+
 import java.util.Set;
 
 public class Funcionario {
 
     private Integer idFuncionario;
     private String nome;
-    private String cpf;
-    private String telefone;
-    private String email;
+    private CpfVo cpf;
+    private TelefoneVo telefone;
+    private EmailVo email;
     private String senha;
     private Set<Permissao> permissoes;
 
     public Funcionario() { }
 
-    public Funcionario(Integer idFuncionario, String nome, String cpf, String telefone, String email, String senha, Set<Permissao> permissoes) {
+    public Funcionario(Integer idFuncionario, String nome, CpfVo cpf, TelefoneVo telefone, EmailVo email, String senha, Set<Permissao> permissoes) {
         this.idFuncionario = idFuncionario;
         this.nome = nome;
         this.cpf = cpf;
@@ -41,27 +45,27 @@ public class Funcionario {
         this.nome = nome;
     }
 
-    public String getCpf() {
+    public CpfVo getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(CpfVo cpf) {
         this.cpf = cpf;
     }
 
-    public String getTelefone() {
+    public TelefoneVo getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(TelefoneVo telefone) {
         this.telefone = telefone;
     }
 
-    public String getEmail() {
+    public EmailVo getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(EmailVo email) {
         this.email = email;
     }
 

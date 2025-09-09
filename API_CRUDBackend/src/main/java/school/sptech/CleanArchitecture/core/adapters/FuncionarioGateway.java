@@ -13,4 +13,5 @@ public interface FuncionarioGateway {
     List<Funcionario> findAll();
     boolean existsByCpfOrEmail(String cpf, String email);
     void deleteById(Integer id);
+    boolean existsById(Integer integer);
 }

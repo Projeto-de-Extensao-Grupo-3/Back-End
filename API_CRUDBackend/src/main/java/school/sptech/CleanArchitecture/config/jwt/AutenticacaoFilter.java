@@ -1,5 +1,4 @@
-
-package school.sptech.CleanArchitecture.infrastructure.security;
+package school.sptech.CleanArchitecture.config.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -12,22 +11,22 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import school.sptech.CleanArchitecture.infrastructure.security.AutenticacaoService;
 
 import java.io.IOException;
 import java.util.Objects;
 
-@Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+public class AutenticacaoFilter extends OncePerRequestFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AutenticacaoFilter.class);
 
     private final AutenticacaoService autenticacaoService;
-    private final JwtProviderImpl jwtProvider;
 
-    public JwtAuthenticationFilter(AutenticacaoService autenticacaoService, JwtProviderImpl jwtProvider) {
+    private final GerenciadorTokenJwt jwtTokenManager;
+
+    public AutenticacaoFilter(AutenticacaoService autenticacaoService, GerenciadorTokenJwt jwtTokenManager) {
         this.autenticacaoService = autenticacaoService;
-        this.jwtProvider = jwtProvider;
+        this.jwtTokenManager = jwtTokenManager;
     }
 
     @Override
@@ -41,22 +40,39 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             jwtToken = requestTokenHeader.substring(7);
 
             try {
-                username = jwtProvider.getUsernameFromToken(jwtToken);
+                username = jwtTokenManager.getUsernameFromToken(jwtToken);
             } catch (ExpiredJwtException exception) {
-                LOGGER.info("[FALHA AUTENTICACAO] - Token expirado: {} - {}", exception.getClaims().getSubject(), exception.getMessage());
+
+                LOGGER.info("[FALHA AUTENTICACAO] - Token expirado, funcionario: {} - {}",
+                        exception.getClaims().getSubject(), exception.getMessage());
+
+                LOGGER.trace("[FALHA AUTENTICACAO] - stack trace: %s", exception);
+
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
+
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = autenticacaoService.loadUserByUsername(username);
-            if (jwtProvider.validateToken(jwtToken, userDetails.getUsername())) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            }
+            addUsernameInContext(request, username, jwtToken);
         }
+
         filterChain.doFilter(request, response);
+    }
+
+    private void addUsernameInContext(HttpServletRequest request, String username, String jwtToken) {
+
+        UserDetails userDetails = autenticacaoService.loadUserByUsername(username);
+
+        if (jwtTokenManager.validateToken(jwtToken, userDetails)) {
+
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities());
+
+            usernamePasswordAuthenticationToken
+                    .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        }
     }
 }

@@ -3,8 +3,9 @@ package school.sptech.CleanArchitecture.infrastructure.di;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import school.sptech.CleanArchitecture.core.adapters.JwtProviderGateway;
-import school.sptech.CleanArchitecture.core.adapters.PasswordEncoderGateway;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import school.sptech.CleanArchitecture.core.adapters.TokenGateway;
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.AutenticarFuncionarioUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.CadastrarFuncionarioUseCase;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioAdapter;
@@ -13,15 +14,14 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionari
 public class FuncionarioBeanConfig {
 
     @Bean
-    public CadastrarFuncionarioUseCase cadastrarFuncionarioUseCase(FuncionarioAdapter adapter,
-                                                                   PasswordEncoderGateway passwordEncoderGateway) {
-        return new CadastrarFuncionarioUseCase(adapter, passwordEncoderGateway);
+    public CadastrarFuncionarioUseCase cadastrarFuncionarioUseCase(FuncionarioAdapter adapter, PasswordEncoder passwordEncoder) {
+        return new CadastrarFuncionarioUseCase(adapter, passwordEncoder);
     }
 
     @Bean
     public AutenticarFuncionarioUseCase autenticarFuncionarioUseCase(FuncionarioAdapter adapter,
-                                                                     PasswordEncoderGateway passwordEncoderGateway,
-                                                                     JwtProviderGateway jwtProviderGateway) {
-        return new AutenticarFuncionarioUseCase(adapter, passwordEncoderGateway, jwtProviderGateway);
+                                                                     TokenGateway tokenGateway,
+                                                                     AuthenticationManager authenticationManager) {
+        return new AutenticarFuncionarioUseCase(adapter, tokenGateway, authenticationManager);
     }
 }
