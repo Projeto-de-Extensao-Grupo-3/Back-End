@@ -1,9 +1,15 @@
 package school.sptech.CleanArchitecture.core.domain.entity;
 
 public class Permissao {
-
     private Integer idPermissao;
     private String descricao;
+
+    public Permissao() {}
+
+    public Permissao(Integer idPermissao, String descricao) {
+        this.idPermissao = idPermissao;
+        this.descricao = descricao;
+    }
 
     public Integer getIdPermissao() {
         return idPermissao;
