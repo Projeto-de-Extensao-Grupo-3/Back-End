@@ -1,10 +1,12 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro;
 
+import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.ParceiroGateway;
 import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
 
 import java.util.List;
 
+@Service
 public class ParceiroAdapter implements ParceiroGateway {
 
     private final ParceiroRepository parceiroRepository;

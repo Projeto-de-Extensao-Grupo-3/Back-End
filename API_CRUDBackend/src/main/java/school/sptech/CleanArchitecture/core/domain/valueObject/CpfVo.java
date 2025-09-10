@@ -13,12 +13,12 @@ public final class CpfVo {
             throw new IllegalArgumentException("CPF não pode ser nulo ou vazio");
         }
 
-        String digitsOnly = value.replaceAll("\\D", ""); // remove pontos e traços
+        String digitsOnly = value.replaceAll("[.-]", ""); // remove pontos e traços
         if (!CPF_PATTERN.matcher(digitsOnly).matches()) {
             throw new IllegalArgumentException("CPF deve conter 11 dígitos numéricos");
         }
 
-        if (!isValidCpf(digitsOnly)) {
+        if (isValidCpf(digitsOnly)) {
             throw new IllegalArgumentException("CPF inválido");
         }
 
