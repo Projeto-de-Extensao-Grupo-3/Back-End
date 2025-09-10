@@ -14,4 +14,6 @@ public interface FuncionarioGateway {
     boolean existsByCpfOrEmail(String cpf, String email);
     void deleteById(Integer id);
     boolean existsById(Integer integer);
+
+    List<Funcionario> findByNomeContainsIgnoreCase(String nome);
 }

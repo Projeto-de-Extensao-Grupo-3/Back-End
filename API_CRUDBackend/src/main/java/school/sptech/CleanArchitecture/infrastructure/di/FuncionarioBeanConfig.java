@@ -7,8 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import school.sptech.CleanArchitecture.config.jwt.TokenGatewayAdapter;
 import school.sptech.CleanArchitecture.core.adapters.TokenGateway;
-import school.sptech.CleanArchitecture.core.application.usecase.funcionario.AutenticarFuncionarioUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.funcionario.CadastrarFuncionarioUseCase;
+import school.sptech.CleanArchitecture.core.application.usecase.funcionario.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioAdapter;
 
 @Configuration
@@ -24,5 +23,25 @@ public class FuncionarioBeanConfig {
                                                                      TokenGateway tokenGateway,
                                                                      AuthenticationManager authenticationManager) {
         return new AutenticarFuncionarioUseCase(adapter, tokenGateway, authenticationManager);
+    }
+
+    @Bean
+    public FuncionarioAtualizarPorIdUseCase funcionarioAtualizarPorIdUseCase(FuncionarioAdapter adapter){
+        return new FuncionarioAtualizarPorIdUseCase(adapter);
+    }
+
+    @Bean
+    public FuncionarioBuscarPorNomeUseCAse funcionarioBuscarPorNomeUseCAse(FuncionarioAdapter adapter){
+        return new FuncionarioBuscarPorNomeUseCAse(adapter);
+    }
+
+    @Bean
+    public FuncionarioListAllUseCase funcionarioListAllUseCase(FuncionarioAdapter adapter){
+        return new FuncionarioListAllUseCase(adapter);
+    }
+
+    @Bean
+    public FuncionarioRemoverPorIdUseCase funcionarioRemoverPorIdUseCase(FuncionarioAdapter adapter){
+        return new FuncionarioRemoverPorIdUseCase(adapter);
     }
 }
