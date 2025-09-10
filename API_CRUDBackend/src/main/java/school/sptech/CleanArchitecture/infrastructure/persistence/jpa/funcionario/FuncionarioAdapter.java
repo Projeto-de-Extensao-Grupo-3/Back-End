@@ -1,8 +1,7 @@
 
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.FuncionarioGateway;
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 
@@ -10,11 +9,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component
-@RequiredArgsConstructor
+@Service
 public class FuncionarioAdapter implements FuncionarioGateway {
 
     private final FuncionarioRepository repository;
+
+    public FuncionarioAdapter(FuncionarioRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Funcionario save(Funcionario funcionario) {
@@ -54,5 +56,12 @@ public class FuncionarioAdapter implements FuncionarioGateway {
     @Override
     public boolean existsById(Integer id) {
         return repository.existsById(id);
+    }
+
+    @Override
+    public List<Funcionario> findByNomeContainsIgnoreCase(String nome) {
+        return repository.findByNomeContainsIgnoreCase(nome).stream()
+                .map(FuncionarioEntityMapper::ofEntity)
+                .collect(Collectors.toList());
     }
 }
