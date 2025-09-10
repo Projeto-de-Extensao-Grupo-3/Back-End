@@ -5,6 +5,9 @@ import school.sptech.CleanArchitecture.core.application.command.parceiro.CriarPa
 import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro.ParceiroEntity;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ParceiroMapper {
 
     public static CriarParceiroCommand toCriarCommand(ParceiroRequestDto dto) {
@@ -40,5 +43,12 @@ public class ParceiroMapper {
                 entity.getEndereco(),
                 entity.getIdentificacao()
         );
+    }
+
+    public static List<ParceiroResponseDto> toResponseDtos(List<ParceiroEntity> entities) {
+        return entities
+                .stream()
+                .map(ParceiroMapper::toResponseDto)
+                .collect(Collectors.toList());
     }
 }

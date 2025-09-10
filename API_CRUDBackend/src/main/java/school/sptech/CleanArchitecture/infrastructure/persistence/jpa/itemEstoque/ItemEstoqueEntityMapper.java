@@ -74,6 +74,10 @@ public class ItemEstoqueEntityMapper {
         var domain = new ItemEstoque();
         Categoria categoria = new Categoria();
         categoria.setIdCategoria(entity.getCategoria().getIdCategoria());
+        Categoria categoriaPai = new Categoria();
+        categoriaPai.setNome(entity.getCategoria().getCategoriaPai().getNome());
+
+        categoria.setCategoriaPai(categoriaPai);
 
         Set<CategoriaEntity> caracteristicas = entity.getCaracteristicas();
         Set<Categoria> caracteristicasEntity =
@@ -92,7 +96,8 @@ public class ItemEstoqueEntityMapper {
         Set<ConfeccaoRoupa> confeccaoRoupas = confeccaoRoupaEntity.stream()
                 .map(cr -> {
                     ConfeccaoRoupa confeccao = new ConfeccaoRoupa();
-                    confeccao.setIdConfeccaoRoupa(cr.getIdConfeccaoRoupa()); // só seta o id
+                    confeccao.setIdConfeccaoRoupa(cr.getIdConfeccaoRoupa());
+                    confeccao.setTecido(new ItemEstoque(cr.getTecido().getIdItemEstoque()));// só seta o id
                     return confeccao;
                 })
                 .collect(Collectors.toSet());
@@ -195,14 +200,14 @@ public class ItemEstoqueEntityMapper {
         );
     }
 
-    public static List<ItemEstoqueResponseDto> toResponseDtosEntity(List<ItemEstoqueEntity> itensEstoque) {
+    public static List<ItemEstoqueResponseDto> toResponseDtosEntity(List<ItemEstoque> itensEstoque) {
         return itensEstoque
                 .stream()
                 .map(ItemEstoqueEntityMapper::toResponseDto)
                 .toList();
     }
 
-    public static List<ItemEstoqueResponseDto> toResponseDtosDomain(List<ItemEstoque> itensEstoque) {
+    public static List<ItemEstoqueResponseDto> toResponseDtosDomain(List<ItemEstoqueEntity> itensEstoque) {
         return itensEstoque
                 .stream()
                 .map(ItemEstoqueEntityMapper::toResponseDto)

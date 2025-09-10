@@ -13,7 +13,7 @@ public class ListarTodosParceirosUseCase {
         this.gateway = gateway;
     }
 
-    public List<Parceiro> execute() {
-        return gateway.findAll();
+    public List<Parceiro> execute(String categoria) {
+        return gateway.findByCategoria(categoria);
     }
 }
