@@ -11,10 +11,10 @@ public class PermissaoEntityMapper {
         return domain;
     }
 
-    public static PermissaoEntity ofDomain(Permissao imagem) {
+    public static PermissaoEntity ofDomain(Permissao domain) {
         PermissaoEntity entity = new PermissaoEntity();
-        entity.setIdPermissao(entity.getIdPermissao());
-        entity.setDescricao(entity.getDescricao());
+        entity.setIdPermissao(domain.getIdPermissao());
+        entity.setDescricao(domain.getDescricao());
         return entity;
     }
 }

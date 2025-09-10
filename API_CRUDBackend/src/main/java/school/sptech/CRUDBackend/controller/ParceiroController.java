@@ -19,7 +19,7 @@ import java.util.List;
 
 @Tag(name = "Serviço Terceiro Controller", description = "Operações CRUD relacionadas aos fornecedores ou costureiras que atuam como serviços terceiro.")
 @RestController
-@RequestMapping("/servico-terceiros")
+@RequestMapping("/parceiros")
 @RequiredArgsConstructor
 public class ParceiroController {
     private final ParceiroService parceiroService;
@@ -72,7 +72,7 @@ public class ParceiroController {
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
     @SecurityRequirement(name = "Bearer")
-    @GetMapping("/{categoria}/busca")
+    @GetMapping("/{categoria}/nome")
     public ResponseEntity<List<ParceiroResponseDto>> servicoTerceiroPorNome(
             @PathVariable String categoria, @RequestParam String nome
     ) {
