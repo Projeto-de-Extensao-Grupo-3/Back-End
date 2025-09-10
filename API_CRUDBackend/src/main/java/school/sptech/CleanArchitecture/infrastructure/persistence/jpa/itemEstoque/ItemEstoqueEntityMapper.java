@@ -104,6 +104,7 @@ public class ItemEstoqueEntityMapper {
 
         Imagem imagem = new Imagem();
         imagem.setIdImagem(entity.getImagem().getIdImagem());
+        imagem.setUrl(entity.getImagem().getUrl());
 
         domain.setIdItemEstoque(entity.getIdItemEstoque());
         domain.setDescricao(entity.getDescricao());
