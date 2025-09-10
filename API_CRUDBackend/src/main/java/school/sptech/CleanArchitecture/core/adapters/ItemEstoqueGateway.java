@@ -19,7 +19,7 @@ public interface ItemEstoqueGateway {
 
     Boolean existsByDescricao(String descricao);
 
-    List<school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque> findByTipo(String tipo);
+    List<ItemEstoque> findByTipo(String tipo);
 
     List<ItemEstoque> findByDescricaoContainsIgnoreCase(String descricao);
 

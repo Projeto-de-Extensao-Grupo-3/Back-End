@@ -101,7 +101,7 @@ public class ItemEstoqueController {
     @SecurityRequirement(name = "Bearer")
     @GetMapping
     public ResponseEntity<List<ItemEstoqueResponseDto>> verificarTodos() {
-        List<ItemEstoqueResponseDto> todosItens = ItemEstoqueEntityMapper.toResponseDtosDomain(
+        List<ItemEstoqueResponseDto> todosItens = ItemEstoqueEntityMapper.toResponseDtosEntity(
                 itemEstoqueListAllUseCase.execute()
         );
         if(todosItens.isEmpty()) {
@@ -161,7 +161,7 @@ public class ItemEstoqueController {
 
     @GetMapping("/filtros")
     public ResponseEntity<List<ItemEstoqueResponseDto>> buscarPorDescricao(@RequestParam String descricao) {
-        List<ItemEstoqueResponseDto> itens = ItemEstoqueEntityMapper.toResponseDtosDomain(
+        List<ItemEstoqueResponseDto> itens = ItemEstoqueEntityMapper.toResponseDtosEntity(
                itemEstoqueBuscarPorDescricaoUseCase.execute(descricao)
         );
         if(itens.isEmpty()) {
@@ -172,7 +172,7 @@ public class ItemEstoqueController {
 
     @GetMapping("/categorias")
     public ResponseEntity<List<ItemEstoqueResponseDto>> buscarPorTipo(@RequestParam String tipo) {
-        List<ItemEstoqueResponseDto> itens = ItemEstoqueEntityMapper.toResponseDtosDomain(
+        List<ItemEstoqueResponseDto> itens = ItemEstoqueEntityMapper.toResponseDtosEntity(
                 itemEstoqueBuscarPorTipoUseCase.execute(tipo)
         );
         if(itens.isEmpty()) {

@@ -62,9 +62,9 @@ public class ParceiroController {
             @ApiResponse(responseCode = "204", description = "Lista de Parceiros está vazia"),
     })
     @SecurityRequirement(name = "Bearer")
-    @GetMapping
-    public ResponseEntity<List<ParceiroResponseDto>> listarTodos() {
-        List<ParceiroEntity> todosParceiros = listarTodosParceirosUseCase.execute()
+    @GetMapping("/listagem/{categoria}")
+    public ResponseEntity<List<ParceiroResponseDto>> listarTodos(@PathVariable String categoria) {
+        List<ParceiroEntity> todosParceiros = listarTodosParceirosUseCase.execute(categoria)
                 .stream()
                 .map(ParceiroEntityMapper::ofDomain)
                 .collect(Collectors.toList());
@@ -83,11 +83,12 @@ public class ParceiroController {
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o nome passado no PathVariable foi encontrado."),
     })
     @SecurityRequirement(name = "Bearer")
-    @GetMapping("/nome/{nome}")
-    public ResponseEntity<ParceiroResponseDto> buscarPorNome(@PathVariable String nome) {
-        ParceiroEntity parceiroEncontrado = ParceiroEntityMapper.ofDomain(
-                buscarParceiroPorNomeUseCase.executar(nome));
-        ParceiroResponseDto response = ParceiroMapper.toResponseDto(parceiroEncontrado);
+    @GetMapping("/{categoria}/nome")
+    public ResponseEntity<List<ParceiroResponseDto>> buscarPorNome(
+            @PathVariable String categoria, @RequestParam String nome) {
+        List<ParceiroEntity> parceiroEncontrado = ParceiroEntityMapper.ofDomains(
+                buscarParceiroPorNomeUseCase.executar(categoria, nome));
+        List<ParceiroResponseDto> response = ParceiroMapper.toResponseDtos(parceiroEncontrado);
         return ResponseEntity.status(200).body(response);
     }
 

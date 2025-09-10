@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.infrastructure.web.controller;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import school.sptech.CleanArchitecture.core.application.usecase.permissao.ListarTodasPermissoesUseCase;
@@ -22,6 +23,7 @@ public class PermissaoController {
 
     private final ListarTodasPermissoesUseCase listarTodasPermissoesUseCase;
 
+    @GetMapping()
     public ResponseEntity<List<PermissaoListDTO>> listarTodas() {
         List<PermissaoEntity> todasPermissoes = listarTodasPermissoesUseCase.execute()
                 .stream()
