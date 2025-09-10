@@ -1,10 +1,12 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.corteTecido;
 
+import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.CorteTecidoGateway;
 import school.sptech.CleanArchitecture.core.domain.entity.CorteTecido;
 
 import java.util.List;
 
+@Service
 public class CorteTecidoAdapter implements CorteTecidoGateway {
     private final CorteTecidoRepository repository;
 

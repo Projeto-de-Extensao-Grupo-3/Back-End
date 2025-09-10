@@ -9,7 +9,7 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
     Boolean existsByDescricao(String descricao);
     List<ItemEstoqueEntity> findByDescricaoContainsIgnoreCase(String descricao);
 
-    @Query("SELECT i FROM ItemEstoque i\n" +
+    @Query("SELECT i FROM ItemEstoqueEntity i\n" +
             "JOIN i.categoria s\n" +
             "JOIN s.categoriaPai c\n" +
             "WHERE c.nome = ?1")

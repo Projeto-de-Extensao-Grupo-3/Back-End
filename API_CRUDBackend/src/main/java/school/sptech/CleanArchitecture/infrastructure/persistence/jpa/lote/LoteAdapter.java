@@ -1,10 +1,12 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote;
 
+import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.LoteGateway;
 import school.sptech.CleanArchitecture.core.domain.entity.Lote;
 
 import java.util.List;
 
+@Service
 public class LoteAdapter implements LoteGateway {
 
     private final LoteRepository repository;
