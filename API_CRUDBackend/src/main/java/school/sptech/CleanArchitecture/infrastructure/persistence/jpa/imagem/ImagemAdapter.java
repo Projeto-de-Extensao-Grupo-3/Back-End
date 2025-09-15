@@ -20,16 +20,17 @@ public class ImagemAdapter implements ImagemGateway {
 
     @Override
     public Imagem save(Imagem imagem) {
-        return null;
+        ImagemEntity entitySalva = repository.save(ImagemEntityMapper.ofDomain(imagem));
+        return ImagemEntityMapper.ofEntity(entitySalva);
     }
 
     @Override
     public boolean existsById(Integer id) {
-        return false;
+        return repository.existsById(id);
     }
 
     @Override
     public void deleteById(Integer id) {
-
+        repository.deleteById(id);
     }
 }
