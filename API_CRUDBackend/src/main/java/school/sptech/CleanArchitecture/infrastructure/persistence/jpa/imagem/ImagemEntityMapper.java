@@ -16,8 +16,8 @@ public class ImagemEntityMapper {
 
     public static ImagemEntity ofDomain(Imagem imagem) {
         ImagemEntity entity = new ImagemEntity();
-        entity.setIdImagem(entity.getIdImagem());
-        entity.setUrl(entity.getUrl());
+        entity.setIdImagem(imagem.getIdImagem());
+        entity.setUrl(imagem.getUrl());
         return entity;
     }
 
