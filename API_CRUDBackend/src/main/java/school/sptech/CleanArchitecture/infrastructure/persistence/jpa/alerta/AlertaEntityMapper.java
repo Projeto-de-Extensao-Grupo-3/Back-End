@@ -1,6 +1,7 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.alerta;
 
 import school.sptech.CleanArchitecture.core.domain.entity.Alerta;
+import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaCriacaoDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaItemEstoqueDto;
@@ -17,11 +18,19 @@ public class AlertaEntityMapper {
         }
 
         var enitity = new AlertaEntity();
+        ItemEstoqueEntity itemEstoqueEntity = new ItemEstoqueEntity();
+        itemEstoqueEntity.setIdItemEstoque(domain.getItemEstoque().getIdItemEstoque());
+        itemEstoqueEntity.setComplemento(domain.getItemEstoque().getComplemento());
+        itemEstoqueEntity.setDescricao(domain.getItemEstoque().getDescricao());
+        itemEstoqueEntity.setQtdMinimo(domain.getItemEstoque().getQtdMinimo());
+        itemEstoqueEntity.setQtdArmazenado(domain.getItemEstoque().getQtdArmazenado());
+
+        System.out.println("ItemEstoqueEntity para ser salvo no banco: " + itemEstoqueEntity);
 
         enitity.setIdAlerta(domain.getIdAlerta());
         enitity.setDescricao(domain.getDescricao());
         enitity.setDataHora(domain.getDataHora());
-//        enitity.setItemEstoque(domain.getItemEstoque());
+        enitity.setItemEstoque(itemEstoqueEntity);
 
         return enitity;
     }
@@ -32,11 +41,12 @@ public class AlertaEntityMapper {
         }
 
         var domain = new Alerta();
-
+        ItemEstoque itemEstoque = new ItemEstoque();
+        itemEstoque.setIdItemEstoque(entity.getItemEstoque().getIdItemEstoque());
         domain.setIdAlerta(entity.getIdAlerta());
         domain.setDescricao(entity.getDescricao());
         domain.setDataHora(entity.getDataHora());
-//        domain.setItemEstoque(entity.getItemEstoque());
+        domain.setItemEstoque(itemEstoque);
 
         return domain;
     }

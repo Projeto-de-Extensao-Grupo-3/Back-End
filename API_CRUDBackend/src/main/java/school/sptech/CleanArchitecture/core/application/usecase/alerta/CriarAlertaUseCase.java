@@ -16,7 +16,7 @@ public class CriarAlertaUseCase {
     public Alerta executar(CriarAlertaCommand command) {
 
         var alertaParaRegistrar = AlertaMapper.ofCriarCommand(command);
-
+        System.out.println("classe convertida de command " + alertaParaRegistrar.getItemEstoque());
         return gateway.save(alertaParaRegistrar);
     }
 
