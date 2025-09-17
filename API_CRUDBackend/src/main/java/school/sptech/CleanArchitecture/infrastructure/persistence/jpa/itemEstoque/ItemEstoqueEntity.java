@@ -2,10 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoq
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccaoRoupa.ConfeccaoRoupaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.imagem.ImagemEntity;
@@ -18,6 +15,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "item_estoque")

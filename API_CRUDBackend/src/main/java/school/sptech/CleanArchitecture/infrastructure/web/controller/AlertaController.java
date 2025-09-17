@@ -62,12 +62,12 @@ public class AlertaController {
             @ApiResponse(responseCode = "204", description = "Sem alertas para o ItemEstoque.")
     })
     @SecurityRequirement(name = "Bearer")
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<List<AlertaResponseDto>> listarAlertasDoItem(
-            @PathVariable AlertaItemEstoqueDto itemEstoqueDto
+            @PathVariable Integer id
     ) {
         AlertaListarPorItemEstoqueCommand command = new AlertaListarPorItemEstoqueCommand();
-        command.setIdItemEstoque(itemEstoqueDto.getIdItemEstoque());
+        command.setIdItemEstoque(id);
 
         List<AlertaEntity> alertas = alertaListarAlertasDoItemUseCase.execute(command)
                 .stream().map(AlertaEntityMapper::ofDomain).collect(Collectors.toList());

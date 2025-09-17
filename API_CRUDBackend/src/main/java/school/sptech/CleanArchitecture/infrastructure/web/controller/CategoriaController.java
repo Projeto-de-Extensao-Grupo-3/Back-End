@@ -126,7 +126,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o nome passado no PathVariable foi encontrado."),
     })
     @SecurityRequirement(name = "Bearer")
-    @GetMapping("/{nome}")
+    @GetMapping("/nome/{nome}")
     public ResponseEntity<CategoriaResponseDto> buscarPorNome(@PathVariable String nome) {
         CategoriaEntity categoriaEncontrada = CategoriaEntityMapper.ofDomain(
                 categoriaBuscarPorNomeUseCase.execute(nome));
@@ -164,6 +164,6 @@ public class CategoriaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerPorId(@PathVariable Integer id) {
         categoriaRemoverPorId.execute(id);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(204).build();
     }
 }

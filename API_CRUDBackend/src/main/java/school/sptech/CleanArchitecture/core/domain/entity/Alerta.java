@@ -51,4 +51,14 @@ public class Alerta {
     public void setItemEstoque(ItemEstoque itemEstoque) {
         this.itemEstoque = itemEstoque;
     }
+
+    @Override
+    public String toString() {
+        return "Alerta{" +
+                "idAlerta=" + idAlerta +
+                ", descricao='" + descricao + '\'' +
+                ", dataHora=" + dataHora +
+                ", itemEstoque=" + itemEstoque +
+                '}';
+    }
 }
