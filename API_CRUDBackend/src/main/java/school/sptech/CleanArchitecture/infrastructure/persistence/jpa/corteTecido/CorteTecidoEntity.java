@@ -13,6 +13,7 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEs
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "corte_tecido")
 public class CorteTecidoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

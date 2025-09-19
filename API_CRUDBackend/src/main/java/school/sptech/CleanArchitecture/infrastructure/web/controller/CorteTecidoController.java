@@ -86,11 +86,11 @@ public class CorteTecidoController {
     })
     @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
-    public ResponseEntity<CorteTecidoResponseDto> buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<CorteTecidoEntity> buscarPorId(@PathVariable Integer id) {
         CorteTecidoEntity corteTecido = CorteTecidoEntityMapper.ofDomain(
                 buscarCorteTecidoPorIdUseCase.executar(id));
         CorteTecidoResponseDto response = CorteTecidoMapper.toResponseDto(corteTecido);
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(200).body(corteTecido);
     }
 
     @Operation(summary = "Atualização de Corte de Tecido.", description = "Retorna um objeto CorteTecidoResponseDto atualizado com os valores de um CorteTecidoRequestDto.")

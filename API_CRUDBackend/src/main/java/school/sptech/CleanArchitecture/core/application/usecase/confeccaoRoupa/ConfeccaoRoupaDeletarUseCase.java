@@ -11,10 +11,11 @@ public class ConfeccaoRoupaDeletarUseCase {
         this.gateway = gateway;
     }
 
-    public Void execute(Integer id){
+    public void execute(Integer id){
         if (gateway.existsById(id)) {
             gateway.deleteById(id);
+        }else {
+            throw new ConfeccaoRoupaConflitoException("Confecção de roupa com id "+ id+ "não encontrado.");
         }
-        throw new ConfeccaoRoupaConflitoException("Confecção de roupa com id "+ id+ "não encontrado.");
     }
 }

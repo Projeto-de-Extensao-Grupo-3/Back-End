@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemE
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote.LoteEntity;
 
@@ -28,6 +29,9 @@ public class LoteItemEstoqueEntity {
     @Schema(description = "Representa o lote do item.")
     private LoteEntity lote;
 
+    public LoteItemEstoqueEntity(LoteItemEstoque loteItemEstoque) {
+        this.idLoteItemEstoque = loteItemEstoque.getIdLoteItemEstoque();
+    }
 }
 
 

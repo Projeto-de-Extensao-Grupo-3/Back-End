@@ -37,10 +37,15 @@ public class FuncionarioEntityMapper {
         FuncionarioEntity e = new FuncionarioEntity();
         e.setIdFuncionario(d.getIdFuncionario());
         e.setNome(d.getNome());
+
         e.setCpf(d.getCpf().getValue());
+
+
         e.setTelefone(d.getTelefone().getValue());
         e.setEmail(d.getEmail().getValue());
         e.setSenha(d.getSenha());
+
+
         if (d.getPermissoes() != null) {
             e.setPermissoes(d.getPermissoes().stream()
                     .map(p -> PermissaoEntity.builder()
@@ -49,6 +54,8 @@ public class FuncionarioEntityMapper {
                             .build())
                     .collect(Collectors.toSet()));
         }
+
+
         return e;
     }
 }

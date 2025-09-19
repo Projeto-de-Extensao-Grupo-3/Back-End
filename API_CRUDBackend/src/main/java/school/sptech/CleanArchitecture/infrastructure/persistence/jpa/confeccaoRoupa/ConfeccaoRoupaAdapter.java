@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.ConfeccaoRoupaGateway;
 import school.sptech.CleanArchitecture.core.domain.entity.ConfeccaoRoupa;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
 
 @Service
 public class ConfeccaoRoupaAdapter implements ConfeccaoRoupaGateway {
@@ -32,6 +34,10 @@ public class ConfeccaoRoupaAdapter implements ConfeccaoRoupaGateway {
 
     @Override
     public boolean existsByRoupaAndTecido(ItemEstoque roupa, ItemEstoque tecido) {
-        return repository.existsByRoupaAndTecido(roupa, tecido);
+        ItemEstoqueEntity roupaEntity = new ItemEstoqueEntity();
+        roupaEntity.setIdItemEstoque(roupa.getIdItemEstoque());
+        ItemEstoqueEntity tecidoEntity = new ItemEstoqueEntity();
+        tecidoEntity.setIdItemEstoque(tecido.getIdItemEstoque());
+        return repository.existsByRoupaAndTecido(roupaEntity, tecidoEntity);
     }
 }
