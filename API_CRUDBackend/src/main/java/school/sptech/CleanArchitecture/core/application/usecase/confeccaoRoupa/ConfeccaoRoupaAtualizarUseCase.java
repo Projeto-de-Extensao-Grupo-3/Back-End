@@ -24,9 +24,6 @@ public class ConfeccaoRoupaAtualizarUseCase {
         roupa.setIdItemEstoque(command.roupa().idRoupa());
 
         if (gateway.existsById(command.id())) {
-            if (gateway.existsByRoupaAndTecido(roupa, tecido)){
-                throw new ConfeccaoRoupaConflitoException("Confecção de Roupa com essa roupa e tecido já cadastrados.");
-            }
             ConfeccaoRoupa confeccaoParaAtualizar = ConfeccaoRoupaMapper.ofAtualizarCommand(command);
 
             return gateway.save(confeccaoParaAtualizar);

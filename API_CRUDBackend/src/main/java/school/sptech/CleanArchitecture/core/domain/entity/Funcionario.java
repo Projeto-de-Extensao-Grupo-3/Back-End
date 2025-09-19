@@ -4,6 +4,7 @@ package school.sptech.CleanArchitecture.core.domain.entity;
 import school.sptech.CleanArchitecture.core.domain.valueObject.CpfVo;
 import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
 import school.sptech.CleanArchitecture.core.domain.valueObject.TelefoneVo;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioEntity;
 
 import java.util.Set;
 
@@ -27,6 +28,10 @@ public class Funcionario {
         this.email = email;
         this.senha = senha;
         this.permissoes = permissoes;
+    }
+
+    public Funcionario(FuncionarioEntity funcionario) {
+        this.idFuncionario = funcionario.getIdFuncionario();
     }
 
     public Integer getIdFuncionario() {

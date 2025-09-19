@@ -1,6 +1,8 @@
 package school.sptech.CleanArchitecture.core.domain.entity;
 
 
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntity;
+
 public class LoteItemEstoque {
     private Integer idLoteItemEstoque;
     private Double qtdItem;
@@ -25,6 +27,11 @@ public class LoteItemEstoque {
         this.itemEstoque = itemEstoque;
         this.lote = lote;
     }
+
+    public LoteItemEstoque(LoteItemEstoqueEntity loteItemEstoque) {
+        this.idLoteItemEstoque = loteItemEstoque.getIdLoteItemEstoque();
+    }
+
 
     public Integer getIdLoteItemEstoque() {
         return idLoteItemEstoque;
