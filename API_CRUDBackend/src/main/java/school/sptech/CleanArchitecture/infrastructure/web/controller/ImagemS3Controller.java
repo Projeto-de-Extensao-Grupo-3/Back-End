@@ -22,4 +22,10 @@ public class ImagemS3Controller {
         String fileUrl = imagemS3Service.uploadFile(nomeArquivo, conteudoArquivo);
         return ResponseEntity.status(201).body(fileUrl);
     }
+
+    @PostMapping("/remove/{nomeArquivo}")
+    public ResponseEntity<Void> deleteFile(@PathVariable String nomeArquivo) {
+        imagemS3Service.deleteFile(nomeArquivo);
+        return ResponseEntity.noContent().build();
+    }
 }
