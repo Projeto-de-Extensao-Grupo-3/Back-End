@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
@@ -40,6 +41,21 @@ public class ImagemS3Service {
         } catch (S3Exception exception) {
             throw new ResponseStatusException(500,
                     "Erro de envio para o S3: "
+                            + exception.getMessage(), exception);
+        }
+    }
+
+    public void deleteFile(String nomeArquivo) {
+        String s3key = nomeArquivo;
+        DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(s3key)
+                .build();
+        try {
+            s3Client.deleteObject(deleteObjectRequest);
+        } catch (S3Exception exception) {
+            throw new ResponseStatusException(500,
+                    "Erro ao deletar arquivo do S3: "
                             + exception.getMessage(), exception);
         }
     }
