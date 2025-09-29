@@ -22,12 +22,10 @@ public class CorteTecidoEntity {
     private String inicio;
     @Schema(description = "Data e Hora da finalização do corte", example = "2025-04-12T10:15:30")
     private String termino;
-    @ManyToOne
-    @JoinColumn(name = "fk_funcionario")
+    @Column(name = "fk_funcionario", nullable = false)
     @Schema(description = "Funcionário responsável pelo corte")
-    private FuncionarioEntity funcionario;
-    @ManyToOne
-    @JoinColumn(name = "fk_lote_item_estoque")
+    private Integer funcionario;
+    @Column(name = "fk_lote_item_estoque", nullable = false)
     @Schema(description = "Lote ao qual o tecido que foi cortado pertence.")
-    private LoteItemEstoqueEntity loteItemEstoque;
+    private Integer loteItemEstoque;
 }
