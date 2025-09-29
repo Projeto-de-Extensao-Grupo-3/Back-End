@@ -19,6 +19,6 @@ public class LoteItemEstoqueRequestDto {
     @NotNull
     @Min(1)
     private Double preco;
-    private ItemEstoque itemEstoque;
-    private Lote lote;
+    private Integer itemEstoque;
+    private Integer lote;
 }
