@@ -19,8 +19,8 @@ public class AtualizarPorIdloteItemEstoqueUseCase {
             loteItemEstoqueParaAtualizar.setIdLoteItemEstoque(command.idLoteItemEstoque());
             loteItemEstoqueParaAtualizar.setQtdItem(command.qtdItem());
             loteItemEstoqueParaAtualizar.setPreco(command.preco());
-            loteItemEstoqueParaAtualizar.setItemEstoque(command.itemEstoque());
-            loteItemEstoqueParaAtualizar.setLote(command.lote());
+            loteItemEstoqueParaAtualizar.setItemEstoque(command.itemEstoque().getIdItemEstoque());
+            loteItemEstoqueParaAtualizar.setLote(command.lote().getIdLote());
             return gateway.save(loteItemEstoqueParaAtualizar);
         }
         throw new LoteItemEstoqueNaoEncontradoException("Lote Item Estoque não encontrado");

@@ -12,26 +12,23 @@ public class LoteItemEstoqueEntityMapper {
         domain.setIdLoteItemEstoque(entity.getIdLoteItemEstoque());
         domain.setQtdItem(entity.getQtdItem());
         domain.setPreco(entity.getPreco());
-        if (entity.getItemEstoque() != null) {
-            ItemEstoque itemEstoque = new ItemEstoque();
-            itemEstoque.setIdItemEstoque(entity.getItemEstoque().getIdItemEstoque());
-            domain.setItemEstoque(itemEstoque);
-        }
-        if (entity.getLote() != null) {
-            Lote lote = new Lote();
-            lote.setIdLote(entity.getLote().getIdLote());
-            domain.setLote(lote);
-        }
+        domain.setItemEstoque(entity.getItemEstoque());
+        domain.setLote(entity.getLote());
         return domain;
     }
 
     public static LoteItemEstoqueEntity ofDomain(LoteItemEstoque domain) {
+        ItemEstoque itemEstoque = new ItemEstoque();
+        itemEstoque.setIdItemEstoque(domain.getItemEstoque());
+        Lote lote = new Lote();
+        lote.setIdLote(domain.getLote());
+
         LoteItemEstoqueEntity entity = new LoteItemEstoqueEntity();
         entity.setIdLoteItemEstoque(domain.getIdLoteItemEstoque());
         entity.setQtdItem(domain.getQtdItem());
         entity.setPreco(domain.getPreco());
-        entity.setItemEstoque(ItemEstoqueEntityMapper.ofDomain(domain.getItemEstoque()));
-        entity.setLote(LoteEntityMapper.ofDomain(domain.getLote()));
+        entity.setItemEstoque(domain.getItemEstoque());
+        entity.setLote(domain.getLote());
         return entity;
     }
 }

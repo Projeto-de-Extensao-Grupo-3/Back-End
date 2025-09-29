@@ -14,21 +14,33 @@ import java.util.List;
 public class LoteItemEstoqueMapper {
 
     public static CriarLoteItemEstoqueCommand toCriarCommand(LoteItemEstoqueRequestDto dto) {
+        ItemEstoque itemEstoque = new ItemEstoque();
+        itemEstoque.setIdItemEstoque(dto.getItemEstoque());
+
+        Lote lote = new Lote();
+        lote.setIdLote(dto.getLote());
+
         return new CriarLoteItemEstoqueCommand(
                 dto.getQtdItem(),
                 dto.getPreco(),
-                dto.getItemEstoque(),
-                dto.getLote()
+                itemEstoque,
+                lote
         );
     }
 
     public static AtualizarLoteItemEstoqueCommand toAtualizarCommand(Integer id, LoteItemEstoqueRequestDto dto) {
+        ItemEstoque itemEstoque = new ItemEstoque();
+        itemEstoque.setIdItemEstoque(dto.getItemEstoque());
+
+        Lote lote = new Lote();
+        lote.setIdLote(dto.getLote());
+
         return new AtualizarLoteItemEstoqueCommand(
                 id,
                 dto.getQtdItem(),
                 dto.getPreco(),
-                dto.getItemEstoque(),
-                dto.getLote()
+                itemEstoque,
+                lote
         );
     }
 
@@ -37,8 +49,8 @@ public class LoteItemEstoqueMapper {
                 entity.getIdLoteItemEstoque(),
                 entity.getQtdItem(),
                 entity.getPreco(),
-                entity.getItemEstoque().getIdItemEstoque(),
-                entity.getLote().getIdLote()
+                entity.getItemEstoque(),
+                entity.getLote()
         );
     }
 }

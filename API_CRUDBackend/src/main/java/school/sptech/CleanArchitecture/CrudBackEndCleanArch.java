@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         )
 )
 @SpringBootApplication
-public class insomCrudBackEndCleanArch {
+public class CrudBackEndCleanArch {
     public static void main(String[] args) {
         SpringApplication.run(CrudBackEndCleanArch.class, args);
     }

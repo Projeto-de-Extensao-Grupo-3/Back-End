@@ -27,8 +27,8 @@ public class CadastrarLoteItemEstoqueUseCase implements SubjectLoteItem, Subject
         LoteItemEstoque loteItemEstoque = new LoteItemEstoque(
                 command.qtdItem(),
                 command.preco(),
-                command.itemEstoque(),
-                command.lote()
+                command.itemEstoque().getIdItemEstoque(),
+                command.lote().getIdLote()
         );
         return gateway.save(loteItemEstoque);
     }
