@@ -2,6 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.corteTeci
 
 import school.sptech.CleanArchitecture.core.domain.entity.CorteTecido;
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
+import school.sptech.CleanArchitecture.core.domain.entity.Lote;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioEntityMapper;
@@ -15,8 +16,14 @@ public class CorteTecidoEntityMapper {
         domain.setIdCorteTecido(entity.getIdCorteTecido());
         domain.setInicio(entity.getInicio());
         domain.setTermino(entity.getTermino());
-        domain.setFuncionario(new Funcionario(entity.getFuncionario()));
-        domain.setLoteItemEstoque(new LoteItemEstoque(entity.getLoteItemEstoque()));
+
+        Funcionario funcionario = new Funcionario();
+        funcionario.setIdFuncionario(entity.getFuncionario());
+        domain.setFuncionario(funcionario);
+
+        LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
+        loteItemEstoque.setIdLoteItemEstoque(entity.getLoteItemEstoque());
+        domain.setLoteItemEstoque(loteItemEstoque);
         return domain;
     }
 
@@ -25,8 +32,8 @@ public class CorteTecidoEntityMapper {
         entity.setIdCorteTecido(domain.getIdCorteTecido());
         entity.setInicio(domain.getInicio());
         entity.setTermino(domain.getTermino());
-        entity.setFuncionario(new FuncionarioEntity(domain.getFuncionario()));
-        entity.setLoteItemEstoque(new LoteItemEstoqueEntity(domain.getLoteItemEstoque()));
+        entity.setFuncionario(domain.getFuncionario().getIdFuncionario());
+        entity.setLoteItemEstoque(domain.getLoteItemEstoque().getIdLoteItemEstoque());
         return entity;
     }
 }

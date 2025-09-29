@@ -18,12 +18,13 @@ public class AtualizarCorteTecidoPorIdUseCase {
 
         if (gateway.existsById(command.idCorteTecido())) {
             var corteTecidoParaAtualizar = new CorteTecido();
-            corteTecidoParaAtualizar.setInicio(command.inicio());
+            corteTecidoParaAtualizar.setIdCorteTecido(command.idCorteTecido());
             corteTecidoParaAtualizar.setTermino(command.temino());
             corteTecidoParaAtualizar.setFuncionario(command.funcionario());
             corteTecidoParaAtualizar.setLoteItemEstoque(command.loteItemEstoque());
             return gateway.save(corteTecidoParaAtualizar);
         }
+
         throw new CorteTecidoNaoEncontradoException("Corte tecido não encontrado");
     }
 }

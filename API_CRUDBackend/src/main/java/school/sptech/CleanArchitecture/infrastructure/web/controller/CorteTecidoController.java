@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.*;
 import school.sptech.CleanArchitecture.core.application.command.corteTecido.AtualizarCorteTecidoCommand;
 import school.sptech.CleanArchitecture.core.application.command.corteTecido.CriarCorteTecidoCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.corteTecido.*;
+import school.sptech.CleanArchitecture.core.application.usecase.funcionario.BuscarFuncionarioPorIdUseCase;
 import school.sptech.CleanArchitecture.core.domain.entity.CorteTecido;
+import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.corteTecido.CorteTecidoEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.corteTecido.CorteTecidoEntityMapper;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.corteTecido.CorteTecidoCadastroDto;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.corteTecido.CorteTecidoMapper;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.corteTecido.CorteTecidoRequestDto;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.corteTecido.CorteTecidoResponseDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.corteTecido.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Tag(name = "Cortes de Tecidos Controller", description = "Operações CRUD relacionadas aos cortes de tecidos (data de inicio, término do corte e quem efetuou).")
 @RestController
@@ -32,6 +32,7 @@ public class CorteTecidoController {
     private final CadastrarCorteTecidoUseCase cadastrarCorteTecidoUseCase;
     private final DeletarCorteTecidoPorIdUseCase deletarCorteTecidoPorIdUseCase;
     private final ListarTodosCorteTecidoUseCase listarTodosCorteTecidoUseCase;
+    private final BuscarFuncionarioPorIdUseCase buscarFuncionarioPorIdUseCase;
 
     @Operation(
             summary = "Cadastramento de um novo corte de tecido.",
@@ -46,13 +47,23 @@ public class CorteTecidoController {
     )
     @SecurityRequirement(name = "Bearer")
     @PostMapping
-    public ResponseEntity<CorteTecidoCadastroDto> cadastrar(
+    public ResponseEntity<CorteTecidoCadastrarResponseDto> cadastrar(
             @RequestBody @Valid CorteTecidoRequestDto corteTecido
     ) {
         CriarCorteTecidoCommand command = CorteTecidoMapper.toCriarCommand(corteTecido);
         CorteTecido corteParaCadastrar = cadastrarCorteTecidoUseCase.executar(command);
         CorteTecidoEntity entity = CorteTecidoEntityMapper.ofDomain(corteParaCadastrar);
-        CorteTecidoCadastroDto corteTecidoCadastrado = CorteTecidoMapper.toCadastroDto(entity);
+        CorteTecidoCadastrarResponseDto corteTecidoCadastrado = CorteTecidoMapper.toCadastroResponseDto(entity);
+
+        Optional<Funcionario> funcionarioEncontrado = buscarFuncionarioPorIdUseCase.execute(command.funcionario());
+        String nomeFuncionario = funcionarioEncontrado.get().getNome();
+        String emailFuncionario = funcionarioEncontrado.get().getEmail().getValue();
+        String telefoneFuncionario = funcionarioEncontrado.get().getTelefone().getValue();
+
+        corteTecidoCadastrado.setNomeFuncionario(nomeFuncionario);
+        corteTecidoCadastrado.setEmail(emailFuncionario);
+        corteTecidoCadastrado.setTelefone(telefoneFuncionario);
+
         return ResponseEntity.status(201).body(corteTecidoCadastrado);
     }
 
