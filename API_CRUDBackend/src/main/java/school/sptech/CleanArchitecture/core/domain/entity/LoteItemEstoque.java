@@ -1,6 +1,5 @@
 package school.sptech.CleanArchitecture.core.domain.entity;
 
-
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntity;
 
 public class LoteItemEstoque {

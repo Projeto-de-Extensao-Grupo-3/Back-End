@@ -26,8 +26,7 @@ public class SaidaEstoqueCadastrarUseCase implements Subject {
 
     public SaidaEstoque execute(SaidaEstoqueCadastrarCommand command){
         SaidaEstoque saidaDeEstoque = SaidaEstoqueMapper.ofCadastrarCommand(command);
-        Double qtdParaAtualizar = command.qtdAtualizar();
-        ItemEstoque itemEstoqueAtualizado = atualizarSaidaUseCase.execute(saidaDeEstoque, qtdParaAtualizar);
+        ItemEstoque itemEstoqueAtualizado = atualizarSaidaUseCase.execute(saidaDeEstoque, 0.0);
         notificarObservers(itemEstoqueAtualizado);
         return saidaGateway.save(saidaDeEstoque);
     }
