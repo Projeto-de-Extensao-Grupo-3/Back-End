@@ -2,6 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.di;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueBuscarPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque.*;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueAdapter;
@@ -13,8 +14,8 @@ import java.util.List;
 public class SaidaEstoqueBeanConfig {
 
     @Bean
-    public SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase saidaEstoqueAtualizarQuantidadeLoteDeItemUseCase(LoteItemEstoqueAdapter adapter){
-        return new SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase(adapter);
+    public SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase saidaEstoqueAtualizarQuantidadeLoteDeItemUseCase(LoteItemEstoqueAdapter adapter, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarPorIdUseCase){
+        return new SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase(adapter, itemEstoqueBuscarPorIdUseCase);
     }
 
     @Bean
