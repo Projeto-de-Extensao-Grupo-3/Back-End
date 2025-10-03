@@ -2,7 +2,9 @@ package school.sptech.CleanArchitecture.infrastructure.di;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import school.sptech.CleanArchitecture.core.application.usecase.funcionario.BuscarFuncionarioPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.parceiro.*;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioAdapter;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro.ParceiroAdapter;
 
 @Configuration
@@ -21,6 +23,11 @@ public class ParceiroBeanConfig {
     @Bean
     public BuscarParceiroPorNomeUseCase buscarParceiroPorNomeUseCase(ParceiroAdapter parceiroAdapter) {
         return new BuscarParceiroPorNomeUseCase(parceiroAdapter);
+    }
+
+    @Bean
+    public BuscarParceiroPorIdUseCase buscarParceiroPorIdUseCase(ParceiroAdapter parceiroAdapter){
+        return new BuscarParceiroPorIdUseCase(parceiroAdapter);
     }
 
     @Bean

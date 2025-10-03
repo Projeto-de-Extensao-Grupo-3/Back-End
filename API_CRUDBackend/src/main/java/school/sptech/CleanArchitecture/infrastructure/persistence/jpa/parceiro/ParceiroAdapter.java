@@ -2,9 +2,12 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro;
 
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.ParceiroGateway;
+import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioEntityMapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ParceiroAdapter implements ParceiroGateway {
@@ -28,10 +31,8 @@ public class ParceiroAdapter implements ParceiroGateway {
     }
 
     @Override
-    public Parceiro findById(Integer id) {
-        ParceiroEntity parceiro = parceiroRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Parceiro com ID " + id + " não encontrado"));
-        return ParceiroEntityMapper.ofEntity(parceiro);
+    public Optional<Parceiro> findById(Integer id) {
+        return parceiroRepository.findById(id).map(ParceiroEntityMapper::ofEntity);
     }
 
     @Override

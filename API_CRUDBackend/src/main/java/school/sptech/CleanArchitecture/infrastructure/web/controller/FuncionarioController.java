@@ -94,7 +94,7 @@ public class FuncionarioController {
     })
     @SecurityRequirement(name = "Bearer")
     @GetMapping("/busca")
-    public ResponseEntity<List<FuncionarioResponseDto>> buscarPorId(@RequestParam String nome) {
+    public ResponseEntity<List<FuncionarioResponseDto>> buscarPorNome(@RequestParam String nome) {
         List<FuncionarioResponseDto> funcionarios = FuncionarioMapper.toResponseDtos(
                 funcionarioBuscarPorNomeUseCAse.execute(nome)
         );

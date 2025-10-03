@@ -19,4 +19,10 @@ public class LoteResponseDto {
     private String dataEntrada;
     private LoteFuncionarioResponseDto responsavel;
     private LoteParceiroResponseDto parceiro;
+
+    public LoteResponseDto(Integer idLote, String descricao, String dataEntrada) {
+        this.idLote = idLote;
+        this.descricao = descricao;
+        this.dataEntrada = dataEntrada;
+    }
 }

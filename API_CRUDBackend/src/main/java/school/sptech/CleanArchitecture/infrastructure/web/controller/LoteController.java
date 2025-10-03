@@ -11,15 +11,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.CleanArchitecture.core.application.command.lote.AtualizarLotePorIdCommand;
 import school.sptech.CleanArchitecture.core.application.command.lote.CriarLoteCommand;
+import school.sptech.CleanArchitecture.core.application.usecase.funcionario.BuscarFuncionarioPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.lote.*;
+import school.sptech.CleanArchitecture.core.application.usecase.parceiro.BuscarParceiroPorIdUseCase;
+import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.core.domain.entity.Lote;
+import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote.LoteEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote.LoteEntityMapper;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.LoteMapper;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.LoteRequestDto;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.LoteResponseDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Tag(name = "Lote Controller", description = "Operações CRUD relacionadas aos lotes de entrada dos Itens.")
 @RestController
@@ -32,6 +35,8 @@ public class LoteController {
     private final CadastrarLoteUseCase cadastrarLoteUseCase;
     private final ListarTodosLotesUseCase listarTodosLotesUseCase;
     private final RemoverLotePorIdUseCase removerLotePorIdUseCase;
+    private final BuscarParceiroPorIdUseCase buscarParceiroPorIdUseCase;
+    private final BuscarFuncionarioPorIdUseCase buscarFuncionarioPorIdUseCase;
 
     @Operation(
             summary = "Cadastro de um novo Lote.",
@@ -74,6 +79,7 @@ public class LoteController {
                 .stream()
                 .map(LoteMapper::toResponseDto)
                 .toList();
+
         return ResponseEntity.status(200).body(response);
     }
 
