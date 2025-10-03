@@ -13,8 +13,12 @@ import school.sptech.CleanArchitecture.core.application.command.parceiro.Atualiz
 import school.sptech.CleanArchitecture.core.application.command.parceiro.CriarParceiroCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.parceiro.*;
 import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.corteTecido.CorteTecidoEntity;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.corteTecido.CorteTecidoEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro.ParceiroEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro.ParceiroEntityMapper;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.corteTecido.CorteTecidoMapper;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.corteTecido.CorteTecidoResponseDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.parceiro.ParceiroMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.parceiro.ParceiroRequestDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.parceiro.ParceiroResponseDto;
@@ -33,6 +37,7 @@ public class ParceiroController {
     private final BuscarParceiroPorNomeUseCase buscarParceiroPorNomeUseCase;
     private final AtualizarParceiroPorIdUseCase atualizarParceiroPorIdUseCase;
     private final RemoverParceiroPorIdUseCase removerParceiroPorIdUseCase;
+    private final BuscarParceiroPorIdUseCase buscarParceiroPorIdUseCase;
 
     @Operation(
             summary = "Cadastro de um novo Parceiro.",

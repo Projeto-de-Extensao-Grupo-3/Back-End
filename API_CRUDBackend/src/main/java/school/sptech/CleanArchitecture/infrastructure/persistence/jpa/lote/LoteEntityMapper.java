@@ -3,6 +3,9 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote;
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.core.domain.entity.Lote;
 import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
+import school.sptech.CleanArchitecture.core.domain.valueObject.CpfVo;
+import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
+import school.sptech.CleanArchitecture.core.domain.valueObject.TelefoneVo;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro.ParceiroEntity;
 
@@ -16,40 +19,50 @@ public class LoteEntityMapper {
         if (entity.getParceiro() != null) {
             Parceiro parceiro = new Parceiro();
             parceiro.setId(entity.getParceiro().getIdParceiro());
+            parceiro.setCategoria(entity.getParceiro().getCategoria());
+            parceiro.setNome(entity.getParceiro().getNome());
+            parceiro.setTelefone(entity.getParceiro().getTelefone());
+            EmailVo emailVo = new EmailVo(entity.getParceiro().getEmail());
+            parceiro.setEmail(emailVo);
+            parceiro.setEndereco(entity.getParceiro().getEndereco());
+            parceiro.setIdentificacao(entity.getParceiro().getIdentificacao());
             domain.setParceiro(parceiro);
         }
         if (entity.getResponsavel() != null) {
             Funcionario funcionario = new Funcionario();
             funcionario.setIdFuncionario(entity.getResponsavel().getIdFuncionario());
+            funcionario.setNome(entity.getResponsavel().getNome());
+            CpfVo cpfVo = new CpfVo(entity.getResponsavel().getCpf());
+            funcionario.setCpf(cpfVo);
+            TelefoneVo telefoneVo = new TelefoneVo(entity.getResponsavel().getTelefone());
+            funcionario.setTelefone(telefoneVo);
+            EmailVo emailVo = new EmailVo(entity.getResponsavel().getEmail());
+            funcionario.setEmail(emailVo);
             domain.setResponsavel(funcionario);
         }
         return domain;
     }
 
     public static LoteEntity ofDomain(Lote domain) {
-        ParceiroEntity parceiroEntity = new ParceiroEntity();
-        parceiroEntity.setIdParceiro(domain.getParceiro().getId());
-        parceiroEntity.setCategoria(domain.getParceiro().getCategoria());
-        parceiroEntity.setNome(domain.getParceiro().getNome());
-        parceiroEntity.setTelefone(domain.getParceiro().getTelefone());
-        parceiroEntity.setEmail(domain.getParceiro().getEmail().getValue());
-        parceiroEntity.setEndereco(domain.getParceiro().getEndereco());
-        parceiroEntity.setIdentificacao(domain.getParceiro().getIdentificacao());
-
-        FuncionarioEntity funcionarioEntity = new FuncionarioEntity();
-        funcionarioEntity.setIdFuncionario(domain.getResponsavel().getIdFuncionario());
-        funcionarioEntity.setNome(domain.getResponsavel().getNome());
-        funcionarioEntity.setCpf(domain.getResponsavel().getCpf().getValue());
-        funcionarioEntity.setTelefone(domain.getResponsavel().getTelefone().getValue());
-        funcionarioEntity.setEmail(domain.getResponsavel().getEmail().getValue());
-        funcionarioEntity.setSenha(domain.getResponsavel().getSenha());
 
         LoteEntity entity = new LoteEntity();
         entity.setIdLote(domain.getIdLote());
         entity.setDescricao(domain.getDescricao());
         entity.setDataEntrada(domain.getDataEntrada());
-        entity.setParceiro(parceiroEntity);
-        entity.setResponsavel(funcionarioEntity);
+
+        FuncionarioEntity funcionario = new FuncionarioEntity();
+        funcionario.setNome(domain.getResponsavel().getNome());
+        funcionario.setTelefone(domain.getResponsavel().getTelefone().getValue());
+        funcionario.setEmail(domain.getResponsavel().getEmail().getValue());
+        entity.setResponsavel(funcionario);
+
+        ParceiroEntity parceiro = new ParceiroEntity();
+        parceiro.setCategoria(domain.getParceiro().getCategoria());
+        parceiro.setNome(domain.getParceiro().getNome());
+        parceiro.setTelefone(domain.getParceiro().getTelefone());
+        parceiro.setEmail(domain.getParceiro().getEmail().getValue());
+        entity.setParceiro(parceiro);
+
         return entity;
     }
 }

@@ -1,10 +1,14 @@
 package school.sptech.CleanArchitecture.infrastructure.web.dto.lote;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Schema(description = "DTO para requisição de um Lote.")
 @Getter
@@ -15,8 +19,9 @@ public class LoteRequestDto {
     @NotBlank
     private String descricao;
     @Schema(description = "Data de chegada do Lote", example = "2025-04-12T10:15:30")
-    @NotBlank
-    private String dataEntrada;
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dataEntrada;
     private Integer parceiro;
     private Integer responsavel;
 }

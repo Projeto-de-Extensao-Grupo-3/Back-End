@@ -23,6 +23,7 @@ public class LoteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idLote;
     private String descricao;
+    @Column(name = "dt_entrada")
     private LocalDateTime dataEntrada;
     @ManyToOne
     @JoinColumn(name = "fk_parceiro")

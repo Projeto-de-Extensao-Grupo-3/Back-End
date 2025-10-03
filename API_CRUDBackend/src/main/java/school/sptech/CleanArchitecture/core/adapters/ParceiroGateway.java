@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.core.adapters;
 import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ParceiroGateway {
 
@@ -10,7 +11,7 @@ public interface ParceiroGateway {
 
     boolean existsById(Integer id);
 
-    Parceiro findById(Integer id);
+    Optional<Parceiro> findById(Integer id);
 
     List<Parceiro> findAll();
 
