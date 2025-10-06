@@ -33,4 +33,8 @@ public class LoteEntity {
     @JoinColumn(name = "fk_responsavel")
     @Schema(description = "Funcionário responsável pelo registro.")
     private FuncionarioEntity responsavel;
+
+    public LoteEntity(Integer idLote) {
+        this.idLote = idLote;
+    }
 }

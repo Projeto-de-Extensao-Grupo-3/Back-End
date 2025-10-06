@@ -25,4 +25,8 @@ public class CategoriaEntity {
     @JoinColumn(name = "fk_categoria_pai")
     @Schema(description = "Categoria principal de um item", example = "Roupa ou tecido")
     private CategoriaEntity categoriaPai;
+
+    public CategoriaEntity(Integer idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 }

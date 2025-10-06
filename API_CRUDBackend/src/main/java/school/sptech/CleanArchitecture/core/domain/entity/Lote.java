@@ -1,5 +1,7 @@
 package school.sptech.CleanArchitecture.core.domain.entity;
 
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote.LoteEntity;
+
 import java.time.LocalDateTime;
 
 public class Lote {
@@ -8,6 +10,17 @@ public class Lote {
     private LocalDateTime dataEntrada;
     private Parceiro parceiro;
     private Funcionario responsavel;
+
+    public Lote() {
+    }
+
+    public Lote(LoteEntity lote) {
+        this.idLote = lote.getIdLote();
+        this.descricao = lote.getDescricao();
+        this.dataEntrada = lote.getDataEntrada();
+        this.parceiro = new Parceiro(lote.getParceiro().getIdParceiro());
+        this.responsavel = new Funcionario(lote.getResponsavel());
+    }
 
     public Integer getIdLote() {
         return idLote;

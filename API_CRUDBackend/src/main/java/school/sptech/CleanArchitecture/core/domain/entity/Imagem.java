@@ -6,6 +6,13 @@ public class Imagem {
     private Integer idImagem;
     private String url;
 
+    public Imagem() {
+    }
+
+    public Imagem(Integer idImagem) {
+        this.idImagem = idImagem;
+    }
+
     public Integer getIdImagem() {
         return idImagem;
     }

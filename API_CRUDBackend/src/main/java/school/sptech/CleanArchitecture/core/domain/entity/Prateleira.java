@@ -5,6 +5,13 @@ public class Prateleira {
     private Integer idPrateleira;
     private String codigo;
 
+    public Prateleira() {
+    }
+
+    public Prateleira(Integer idPrateleira) {
+        this.idPrateleira = idPrateleira;
+    }
+
     public Integer getIdPrateleira() {
         return idPrateleira;
     }

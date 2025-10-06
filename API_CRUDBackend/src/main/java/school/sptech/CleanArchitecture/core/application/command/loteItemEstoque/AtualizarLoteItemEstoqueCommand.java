@@ -7,7 +7,7 @@ public record AtualizarLoteItemEstoqueCommand (
         Integer idLoteItemEstoque,
         Double qtdItem,
         Double preco,
-        ItemEstoque itemEstoque,
-        Lote lote
+        LoteItemEstoqueItemEstoqueCommand itemEstoque,
+        LoteItemEstoqueLoteCommand lote
 ){
 }
