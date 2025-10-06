@@ -1,7 +1,9 @@
 package school.sptech.CleanArchitecture.core.domain.entity;
 
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.alerta.AlertaItemEstoqueDto;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ItemEstoque {
 
@@ -46,6 +48,33 @@ public class ItemEstoque {
         this.complemento = itemEstoqueDto.getComplemento();
         this.qtdMinimo = itemEstoqueDto.getQtdMinimo();
         this.qtdArmazenado = itemEstoqueDto.getQtdArmazenado();
+    }
+
+    public ItemEstoque(ItemEstoqueEntity itemEstoque) {
+        this.idItemEstoque = itemEstoque.getIdItemEstoque();
+        this.descricao = itemEstoque.getDescricao();
+        this.complemento = itemEstoque.getComplemento();
+        this.peso = itemEstoque.getPeso();
+        this.qtdMinimo = itemEstoque.getQtdMinimo();
+        this.qtdArmazenado = itemEstoque.getQtdArmazenado();
+        this.categoria = new Categoria(itemEstoque.getCategoria().getIdCategoria());
+        this.caracteristicas = itemEstoque.getCaracteristicas().stream()
+                .map(c -> {
+                    Categoria nova = new Categoria();
+                    nova.setIdCategoria(c.getIdCategoria());
+                    return nova;
+                })
+                .collect(Collectors.toSet());
+        this.prateleira = new Prateleira(itemEstoque.getPrateleira().getIdPrateleira());
+        this.confeccaoRoupa = itemEstoque.getConfeccaoRoupa().stream()
+                .map(c -> {
+                    ConfeccaoRoupa nova = new ConfeccaoRoupa();
+                    nova.setIdConfeccaoRoupa(c.getIdConfeccaoRoupa());
+                    return nova;
+                })
+                .collect(Collectors.toSet());
+        this.preco = itemEstoque.getPeso();
+        this.imagem = new Imagem(itemEstoque.getImagem().getIdImagem());
     }
 
     public void atualizarQuantidade(Double quantidade) {

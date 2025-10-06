@@ -24,6 +24,10 @@ public class Parceiro {
         this.identificacao = identificacao;
     }
 
+    public Parceiro(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -6,13 +6,13 @@ public class LoteItemEstoque {
     private Integer idLoteItemEstoque;
     private Double qtdItem;
     private Double preco;
-    private Integer itemEstoque;
-    private Integer lote;
+    private ItemEstoque itemEstoque;
+    private Lote lote;
 
     public LoteItemEstoque() {
     }
 
-    public LoteItemEstoque(Integer idLoteItemEstoque, Double qtdItem, Double preco, Integer itemEstoque, Integer lote) {
+    public LoteItemEstoque(Integer idLoteItemEstoque, Double qtdItem, Double preco, ItemEstoque itemEstoque, Lote lote) {
         this.idLoteItemEstoque = idLoteItemEstoque;
         this.qtdItem = qtdItem;
         this.preco = preco;
@@ -20,7 +20,7 @@ public class LoteItemEstoque {
         this.lote = lote;
     }
 
-    public LoteItemEstoque(Double qtdItem, Double preco, Integer itemEstoque, Integer lote) {
+    public LoteItemEstoque(Double qtdItem, Double preco, ItemEstoque itemEstoque, Lote lote) {
         this.qtdItem = qtdItem;
         this.preco = preco;
         this.itemEstoque = itemEstoque;
@@ -56,19 +56,19 @@ public class LoteItemEstoque {
         this.preco = preco;
     }
 
-    public Integer getItemEstoque() {
+    public ItemEstoque getItemEstoque() {
         return itemEstoque;
     }
 
-    public void setItemEstoque(Integer itemEstoque) {
+    public void setItemEstoque(ItemEstoque itemEstoque) {
         this.itemEstoque = itemEstoque;
     }
 
-    public Integer getLote() {
+    public Lote getLote() {
         return lote;
     }
 
-    public void setLote(Integer lote) {
+    public void setLote(Lote lote) {
         this.lote = lote;
     }
 }

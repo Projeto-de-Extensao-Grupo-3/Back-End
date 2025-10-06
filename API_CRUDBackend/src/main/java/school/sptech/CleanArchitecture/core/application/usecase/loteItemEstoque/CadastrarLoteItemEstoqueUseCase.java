@@ -2,12 +2,14 @@ package school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque
 
 import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.CriarLoteItemEstoqueCommand;
+import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarDadosUseCase;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.core.domain.observer.ObserverLoteItem;
 import school.sptech.CleanArchitecture.core.domain.observer.Subject;
 import school.sptech.CleanArchitecture.core.domain.observer.SubjectLoteItem;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.LoteItemEstoqueMapper;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -16,20 +18,23 @@ public class CadastrarLoteItemEstoqueUseCase implements SubjectLoteItem, Subject
 
     private final LoteItemEstoqueGateway gateway;
 
+    private final ItemEstoqueAtualizarDadosUseCase atualizarDadosUseCase;
+
     private final List<Observer> observadores = new ArrayList<>();
     private final List<ObserverLoteItem> observadoresLoteItem = new ArrayList<>();
 
-    public CadastrarLoteItemEstoqueUseCase(LoteItemEstoqueGateway gateway) {
+    public CadastrarLoteItemEstoqueUseCase(LoteItemEstoqueGateway gateway, ItemEstoqueAtualizarDadosUseCase atualizarDadosUseCase) {
         this.gateway = gateway;
+        this.atualizarDadosUseCase = atualizarDadosUseCase;
     }
 
     public LoteItemEstoque executar(CriarLoteItemEstoqueCommand command){
-        LoteItemEstoque loteItemEstoque = new LoteItemEstoque(
-                command.qtdItem(),
-                command.preco(),
-                command.itemEstoque().getIdItemEstoque(),
-                command.lote().getIdLote()
-        );
+
+        LoteItemEstoque loteItemEstoque = LoteItemEstoqueMapper.ofCadastrarCommand(command);
+        ItemEstoque itemEstoque = atualizarDadosUseCase.execute(loteItemEstoque, 0.0);
+
+        notificarObservers(itemEstoque);
+        notificarObserversLoteItem(itemEstoque);
         return gateway.save(loteItemEstoque);
     }
 

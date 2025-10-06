@@ -21,10 +21,13 @@ public class LoteItemEstoqueEntity {
     private Integer idLoteItemEstoque;
     private Double qtdItem;
     private Double preco;
-
-    private Integer itemEstoque;
-
-    private Integer lote;
+    @ManyToOne
+    @JoinColumn(name = "fk_item_estoque")
+    private ItemEstoqueEntity itemEstoque;
+    @ManyToOne
+    @JoinColumn(name = "fk_lote")
+    @Schema(description = "Representa o lote do item.")
+    private LoteEntity lote;
 
     public LoteItemEstoqueEntity(LoteItemEstoque loteItemEstoque) {
         this.idLoteItemEstoque = loteItemEstoque.getIdLoteItemEstoque();

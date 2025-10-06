@@ -20,4 +20,8 @@ public class PrateleiraEntity {
     private Integer idPrateleira;
     @Schema(example = "1A")
     private String codigo;
+
+    public PrateleiraEntity(Integer idPrateleira) {
+        this.idPrateleira = idPrateleira;
+    }
 }

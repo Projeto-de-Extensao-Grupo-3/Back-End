@@ -6,6 +6,13 @@ public class Categoria {
     private String nome;
     private Categoria categoriaPai;
 
+    public Categoria() {
+    }
+
+    public Categoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
     public Integer getIdCategoria() {
         return idCategoria;
     }

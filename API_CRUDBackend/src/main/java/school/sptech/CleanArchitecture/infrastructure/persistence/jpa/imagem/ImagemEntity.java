@@ -17,4 +17,8 @@ public class ImagemEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idImagem;
     private String url;
+
+    public ImagemEntity(Integer idImagem) {
+        this.idImagem = idImagem;
+    }
 }

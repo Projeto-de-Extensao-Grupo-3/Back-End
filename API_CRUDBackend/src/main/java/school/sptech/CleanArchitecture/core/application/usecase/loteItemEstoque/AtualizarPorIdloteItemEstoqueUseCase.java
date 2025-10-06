@@ -4,6 +4,7 @@ import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.AtualizarLoteItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.application.exception.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.LoteItemEstoqueMapper;
 
 public class AtualizarPorIdloteItemEstoqueUseCase {
 
@@ -15,12 +16,8 @@ public class AtualizarPorIdloteItemEstoqueUseCase {
 
     public LoteItemEstoque executar(AtualizarLoteItemEstoqueCommand command) {
         if(gateway.existsById(command.idLoteItemEstoque())) {
-            var loteItemEstoqueParaAtualizar = new LoteItemEstoque();
-            loteItemEstoqueParaAtualizar.setIdLoteItemEstoque(command.idLoteItemEstoque());
-            loteItemEstoqueParaAtualizar.setQtdItem(command.qtdItem());
-            loteItemEstoqueParaAtualizar.setPreco(command.preco());
-            loteItemEstoqueParaAtualizar.setItemEstoque(command.itemEstoque().getIdItemEstoque());
-            loteItemEstoqueParaAtualizar.setLote(command.lote().getIdLote());
+            LoteItemEstoque loteItemEstoqueParaAtualizar = LoteItemEstoqueMapper.ofAtualizarCommand(command);
+
             return gateway.save(loteItemEstoqueParaAtualizar);
         }
         throw new LoteItemEstoqueNaoEncontradoException("Lote Item Estoque não encontrado");

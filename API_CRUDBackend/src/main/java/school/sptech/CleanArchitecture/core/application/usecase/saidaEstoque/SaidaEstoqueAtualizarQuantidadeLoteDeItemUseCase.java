@@ -22,7 +22,7 @@ public class SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase {
         Integer idLoteItemEstoque = saidaEstoque.getLoteItemEstoque().getIdLoteItemEstoque();
         LoteItemEstoque loteItemEstoque = gateway.buscarPorId(idLoteItemEstoque);
 
-        ItemEstoque itemEstoque = itemEstoqueBuscarPorIdUseCase.execute(loteItemEstoque.getItemEstoque());
+        ItemEstoque itemEstoque = itemEstoqueBuscarPorIdUseCase.execute(loteItemEstoque.getItemEstoque().getIdItemEstoque());
 
         Double qtdEntradaNova = saidaEstoque.getQtdSaida() == 0.0
                 ? saidaEstoque.getQtdSaida()
