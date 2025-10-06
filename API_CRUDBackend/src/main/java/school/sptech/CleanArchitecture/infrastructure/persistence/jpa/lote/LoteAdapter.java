@@ -17,9 +17,9 @@ public class LoteAdapter implements LoteGateway {
 
     @Override
     public Lote save(Lote lote) {
-        LoteEntity entity = LoteEntityMapper.ofDomain(lote);
+        LoteEntity entity = LoteEntityMapper.ofCads(lote); //ofDomain
         LoteEntity savedEntity = repository.save(entity);
-        return LoteEntityMapper.ofEntity(savedEntity);
+        return LoteEntityMapper.ofCadsEntity(savedEntity);
     }
 
     @Override
