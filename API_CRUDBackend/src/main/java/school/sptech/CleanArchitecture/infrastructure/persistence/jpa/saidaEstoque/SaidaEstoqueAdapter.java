@@ -21,7 +21,9 @@ public class SaidaEstoqueAdapter implements SaidaEstoqueGateway {
     @Override
     public SaidaEstoque save(SaidaEstoque saidaEstoque) {
         SaidaEstoqueEntity saidaEstoqueParaSalvar = SaidaEstoqueEntityMapper.toEntity(saidaEstoque);
+        System.out.println("NO METODO SAVE ANTES DE SALVAR: " + saidaEstoqueParaSalvar);
         SaidaEstoqueEntity saidaSalvaNoBanco = repository.save(saidaEstoqueParaSalvar);
+        System.out.println("NO METODO SAVE DEPOIS DE SALVAR: " + saidaSalvaNoBanco);
         return SaidaEstoqueEntityMapper.toDomain(saidaSalvaNoBanco);
     }
 

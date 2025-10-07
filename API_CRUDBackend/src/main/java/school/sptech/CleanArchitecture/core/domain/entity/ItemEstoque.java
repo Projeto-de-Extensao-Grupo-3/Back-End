@@ -74,7 +74,9 @@ public class ItemEstoque {
                 })
                 .collect(Collectors.toSet());
         this.preco = itemEstoque.getPeso();
-        this.imagem = new Imagem(itemEstoque.getImagem().getIdImagem());
+        if (itemEstoque.getImagem() != null){
+            this.imagem = new Imagem(itemEstoque.getImagem().getIdImagem());
+        }
     }
 
     public void atualizarQuantidade(Double quantidade) {

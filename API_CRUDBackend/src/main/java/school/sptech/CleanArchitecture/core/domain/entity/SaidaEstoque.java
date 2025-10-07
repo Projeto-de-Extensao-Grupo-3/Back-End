@@ -31,6 +31,16 @@ public class SaidaEstoque {
         this.costureira = costureira;
     }
 
+    public SaidaEstoque(LocalDate data, LocalTime hora, Double qtdSaida, String motivoSaida, Funcionario responsavel, LoteItemEstoque loteItemEstoque, Parceiro costureira) {
+        this.data = data;
+        this.hora = hora;
+        this.qtdSaida = qtdSaida;
+        this.motivoSaida = motivoSaida;
+        this.responsavel = responsavel;
+        this.loteItemEstoque = loteItemEstoque;
+        this.costureira = costureira;
+    }
+
     public Integer getIdSaidaEstoque() {
         return idSaidaEstoque;
     }
@@ -93,5 +103,19 @@ public class SaidaEstoque {
 
     public void setCostureira(Parceiro costureira) {
         this.costureira = costureira;
+    }
+
+    @Override
+    public String toString() {
+        return "SaidaEstoque{" +
+                "idSaidaEstoque=" + idSaidaEstoque +
+                ", data=" + data +
+                ", hora=" + hora +
+                ", qtdSaida=" + qtdSaida +
+                ", motivoSaida='" + motivoSaida + '\'' +
+                ", responsavel=" + responsavel +
+                ", loteItemEstoque=" + loteItemEstoque +
+                ", costureira=" + costureira +
+                '}';
     }
 }

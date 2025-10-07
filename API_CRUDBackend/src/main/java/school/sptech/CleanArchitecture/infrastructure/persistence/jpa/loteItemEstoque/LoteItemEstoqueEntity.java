@@ -14,6 +14,7 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote.LoteE
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 @Table(name = "lote_item_estoque")
 public class LoteItemEstoqueEntity {
     @Id

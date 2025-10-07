@@ -89,4 +89,17 @@ public class Funcionario {
     public void setPermissoes(Set<Permissao> permissoes) {
         this.permissoes = permissoes;
     }
+
+    @Override
+    public String toString() {
+        return "Funcionario{" +
+                "idFuncionario=" + idFuncionario +
+                ", nome='" + nome + '\'' +
+                ", cpf=" + cpf +
+                ", telefone=" + telefone +
+                ", email=" + email +
+                ", senha='" + senha + '\'' +
+                ", permissoes=" + permissoes +
+                '}';
+    }
 }

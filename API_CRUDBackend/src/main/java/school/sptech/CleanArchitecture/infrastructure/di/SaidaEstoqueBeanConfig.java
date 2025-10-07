@@ -2,7 +2,10 @@ package school.sptech.CleanArchitecture.infrastructure.di;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import school.sptech.CleanArchitecture.core.application.usecase.funcionario.BuscarFuncionarioPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueBuscarPorIdUseCase;
+import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.BuscarPorIdLoteItemEstoqueUseCase;
+import school.sptech.CleanArchitecture.core.application.usecase.parceiro.BuscarParceiroPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque.*;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueAdapter;
@@ -41,8 +44,8 @@ public class SaidaEstoqueBeanConfig {
 
     @Bean
     public SaidaEstoqueCadastrarUseCase saidaEstoqueCadastrarUseCase(SaidaEstoqueAdapter adapter,
-                                                                     SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarQuantidadeUseCase){
-        return new SaidaEstoqueCadastrarUseCase(adapter, atualizarQuantidadeUseCase);
+                                                                     SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarQuantidadeUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase){
+        return new SaidaEstoqueCadastrarUseCase(adapter, atualizarQuantidadeUseCase, funcionarioPorIdUseCase, loteItemEstoqueUseCase, parceiroPorIdUseCase);
     }
 
     @Bean

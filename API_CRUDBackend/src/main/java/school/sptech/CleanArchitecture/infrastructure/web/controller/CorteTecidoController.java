@@ -55,10 +55,10 @@ public class CorteTecidoController {
         CorteTecidoEntity entity = CorteTecidoEntityMapper.ofDomain(corteParaCadastrar);
         CorteTecidoCadastrarResponseDto corteTecidoCadastrado = CorteTecidoMapper.toCadastroResponseDto(entity);
 
-        Optional<Funcionario> funcionarioEncontrado = buscarFuncionarioPorIdUseCase.execute(command.funcionario());
-        String nomeFuncionario = funcionarioEncontrado.get().getNome();
-        String emailFuncionario = funcionarioEncontrado.get().getEmail().getValue();
-        String telefoneFuncionario = funcionarioEncontrado.get().getTelefone().getValue();
+        Funcionario funcionarioEncontrado = buscarFuncionarioPorIdUseCase.execute(command.funcionario());
+        String nomeFuncionario = funcionarioEncontrado.getNome();
+        String emailFuncionario = funcionarioEncontrado.getEmail().getValue();
+        String telefoneFuncionario = funcionarioEncontrado.getTelefone().getValue();
 
         corteTecidoCadastrado.setNomeFuncionario(nomeFuncionario);
         corteTecidoCadastrado.setEmail(emailFuncionario);
