@@ -57,8 +57,25 @@ public class LoteController {
     ){
         CriarLoteCommand command = LoteMapper.toCriarCommand(loteParaCadastrar);
         Lote lote = cadastrarLoteUseCase.executar(command);
-        LoteEntity entity = LoteEntityMapper.ofDomain(lote);
-        LoteResponseDto loteCadastrado = LoteMapper.toResponseDto(entity);
+        LoteEntity entity = LoteEntityMapper.ofCads(lote);
+        LoteResponseDto loteCadastrado = LoteMapper.toCadastroResponseDto(entity);
+
+        Optional<Parceiro> parceiro = buscarParceiroPorIdUseCase.execute(loteParaCadastrar.getParceiro());
+        LoteParceiroResponseDto parceiroResponseDto = new LoteParceiroResponseDto();
+        parceiroResponseDto.setCategoria(parceiro.get().getCategoria());
+        parceiroResponseDto.setNome(parceiro.get().getNome());
+        parceiroResponseDto.setTelefone(parceiro.get().getTelefone());
+        parceiroResponseDto.setEmail(parceiro.get().getEmail().getValue());
+
+        Optional<Funcionario> funcionario = buscarFuncionarioPorIdUseCase.execute(loteParaCadastrar.getResponsavel());
+        LoteFuncionarioResponseDto funcionarioResponseDto = new LoteFuncionarioResponseDto();
+        funcionarioResponseDto.setNome(funcionario.get().getNome());
+        funcionarioResponseDto.setTelefone(funcionario.get().getTelefone().getValue());
+        funcionarioResponseDto.setEmail(funcionario.get().getEmail().getValue());
+
+        loteCadastrado.setParceiro(parceiroResponseDto);
+        loteCadastrado.setResponsavel(funcionarioResponseDto);
+
         return ResponseEntity.status(201).body(loteCadastrado);
     }
 
