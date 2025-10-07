@@ -8,7 +8,7 @@ import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
 
-public class ItemEstoqueAtualizarPorIdUseCase implements Observer {
+public class ItemEstoqueAtualizarPorIdUseCase {
 
     private final ItemEstoqueGateway gateway;
 
@@ -23,11 +23,5 @@ public class ItemEstoqueAtualizarPorIdUseCase implements Observer {
             return gateway.save(itemEstoqueParaAtualizar);
         }
         throw new ItemEstoqueNaoEncontradoException("O item para atualizar não existe");
-    }
-
-    @Override
-    public void atualizarQuantidade(ItemEstoque itemEstoque) {
-        ItemEstoqueAtualizarPorIdCommand command = ItemEstoqueEntityMapper.toAtualizarPorIdCommand(itemEstoque);
-        execute(command);
     }
 }
