@@ -52,7 +52,7 @@ public class CorteTecidoController {
     ) {
         CriarCorteTecidoCommand command = CorteTecidoMapper.toCriarCommand(corteTecido);
         CorteTecido corteParaCadastrar = cadastrarCorteTecidoUseCase.executar(command);
-        CorteTecidoEntity entity = CorteTecidoEntityMapper.ofDomain(corteParaCadastrar);
+        CorteTecidoEntity entity = CorteTecidoEntityMapper.ofDomainCadsatrar(corteParaCadastrar);
         CorteTecidoCadastrarResponseDto corteTecidoCadastrado = CorteTecidoMapper.toCadastroResponseDto(entity);
 
         Optional<Funcionario> funcionarioEncontrado = buscarFuncionarioPorIdUseCase.execute(command.funcionario());
@@ -78,7 +78,7 @@ public class CorteTecidoController {
     public ResponseEntity<List<CorteTecidoResponseDto>> listarTodos() {
         List<CorteTecidoEntity> cortesTecido = listarTodosCorteTecidoUseCase.execute()
                 .stream()
-                .map(CorteTecidoEntityMapper::ofDomain)
+                .map(CorteTecidoEntityMapper::ofDomainCadsatrar)
                 .toList();
 
         List<CorteTecidoResponseDto> cortesTecidoResponseDtos = cortesTecido
@@ -97,11 +97,11 @@ public class CorteTecidoController {
     })
     @SecurityRequirement(name = "Bearer")
     @GetMapping("/{id}")
-    public ResponseEntity<CorteTecidoEntity> buscarPorId(@PathVariable Integer id) {
-        CorteTecidoEntity corteTecido = CorteTecidoEntityMapper.ofDomain(
+    public ResponseEntity<CorteTecidoResponseDto> buscarPorId(@PathVariable Integer id) {
+        CorteTecidoEntity corteTecido = CorteTecidoEntityMapper.ofDomainCadsatrar(
                 buscarCorteTecidoPorIdUseCase.executar(id));
         CorteTecidoResponseDto response = CorteTecidoMapper.toResponseDto(corteTecido);
-        return ResponseEntity.status(200).body(corteTecido);
+        return ResponseEntity.status(200).body(response);
     }
 
     @Operation(summary = "Atualização de Corte de Tecido.", description = "Retorna um objeto CorteTecidoResponseDto atualizado com os valores de um CorteTecidoRequestDto.")
@@ -120,7 +120,7 @@ public class CorteTecidoController {
             @RequestBody @Valid CorteTecidoRequestDto corteTecido
     ) {
         AtualizarCorteTecidoCommand command = CorteTecidoMapper.toAtualizarCommand(id, corteTecido);
-        CorteTecidoEntity corteTecidoAtualizado = CorteTecidoEntityMapper.ofDomain(
+        CorteTecidoEntity corteTecidoAtualizado = CorteTecidoEntityMapper.ofDomainCadsatrar(
                 atualizarCorteTecidoPorIdUseCase.executar(command));
         CorteTecidoResponseDto response = CorteTecidoMapper.toResponseDto(corteTecidoAtualizado);
         return ResponseEntity.status(200).body(response);
