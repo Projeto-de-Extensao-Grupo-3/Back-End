@@ -14,6 +14,7 @@ public class SaidaEstoqueMapper {
     public static SaidaEstoque toEntity(SaidaEstoqueRequestDto requestDto){
         Funcionario funcionario = new Funcionario();
         funcionario.setIdFuncionario(requestDto.getResponsavel().getIdFuncionario());
+
         LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
         loteItemEstoque.setIdLoteItemEstoque(requestDto.getLoteItemEstoque().getIdLoteItemEstoque());
         Parceiroaa costureira = null;

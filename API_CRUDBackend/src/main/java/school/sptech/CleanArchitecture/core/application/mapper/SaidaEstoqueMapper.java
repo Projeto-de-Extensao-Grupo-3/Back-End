@@ -13,6 +13,7 @@ public class SaidaEstoqueMapper {
     public static SaidaEstoque ofCadastrarCommand(SaidaEstoqueCadastrarCommand command){
         Funcionario funcionario = new Funcionario();
         funcionario.setIdFuncionario(command.responsavel().id());
+
         LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
         loteItemEstoque.setIdLoteItemEstoque(command.loteItemEstoque().id());
         Parceiro costureira = null;
@@ -21,7 +22,6 @@ public class SaidaEstoqueMapper {
             costureira.setId(command.costureira().id());
         }
         return new SaidaEstoque(
-                null,
                 command.data(),
                 command.hora(),
                 command.qtdSaida(),
@@ -35,8 +35,10 @@ public class SaidaEstoqueMapper {
     public static SaidaEstoque ofAtualizarCommand(SaidaEstoqueAtualizarPorIdCommand command) {
         Funcionario funcionario = new Funcionario();
         funcionario.setIdFuncionario(command.responsavel().id());
+
         LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
         loteItemEstoque.setIdLoteItemEstoque(command.loteItemEstoque().id());
+
         Parceiro costureira = null;
         if (command.costureira() != null) {
             costureira = new Parceiro();

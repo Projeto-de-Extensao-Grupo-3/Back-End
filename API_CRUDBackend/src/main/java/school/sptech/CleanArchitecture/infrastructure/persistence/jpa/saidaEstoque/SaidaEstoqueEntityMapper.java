@@ -6,6 +6,8 @@ import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
 import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
+import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
+import school.sptech.CleanArchitecture.core.domain.valueObject.TelefoneVo;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro.ParceiroEntity;
@@ -16,19 +18,38 @@ import java.util.List;
 public class SaidaEstoqueEntityMapper {
     public static SaidaEstoqueEntity toEntity(SaidaEstoque saidaEstoque) {
 
-        FuncionarioEntity funcionario = new FuncionarioEntity();
-        funcionario.setIdFuncionario(saidaEstoque.getResponsavel().getIdFuncionario());
+        FuncionarioEntity funcionario = null;
+        if (saidaEstoque.getResponsavel() != null){
+            funcionario = new FuncionarioEntity();
+            funcionario.setIdFuncionario(saidaEstoque.getResponsavel().getIdFuncionario());
+            funcionario.setNome(saidaEstoque.getResponsavel().getNome());
+
+            if (saidaEstoque.getResponsavel().getTelefone() != null){
+                funcionario.setTelefone(saidaEstoque.getResponsavel().getTelefone().getValue());
+            }
+            if(saidaEstoque.getResponsavel().getEmail() != null){
+                funcionario.setEmail(saidaEstoque.getResponsavel().getEmail().getValue());
+            }
+        }
 
         LoteItemEstoqueEntity loteItemEstoque = new LoteItemEstoqueEntity();
         loteItemEstoque.setIdLoteItemEstoque(saidaEstoque.getLoteItemEstoque().getIdLoteItemEstoque());
+        loteItemEstoque.setQtdItem(saidaEstoque.getLoteItemEstoque().getQtdItem());
+        loteItemEstoque.setPreco(saidaEstoque.getLoteItemEstoque().getPreco());
 
         ParceiroEntity costureira = null;
         if (saidaEstoque.getCostureira() != null) {
             costureira = new ParceiroEntity();
             costureira.setIdParceiro(saidaEstoque.getCostureira().getId());
+            costureira.setCategoria(saidaEstoque.getCostureira().getCategoria());
+            costureira.setTelefone(saidaEstoque.getCostureira().getTelefone());
+            costureira.setNome(saidaEstoque.getCostureira().getNome());
+            costureira.setEmail(saidaEstoque.getCostureira().getEmail().getValue());
+            costureira.setEndereco(saidaEstoque.getCostureira().getEndereco());
         }
+
         return new SaidaEstoqueEntity(
-                null,
+                saidaEstoque.getIdSaidaEstoque(),
                 saidaEstoque.getData(),
                 saidaEstoque.getHora(),
                 saidaEstoque.getQtdSaida(),
@@ -42,19 +63,40 @@ public class SaidaEstoqueEntityMapper {
 
     public static SaidaEstoque toDomain(SaidaEstoqueEntity saidaEstoque) {
 
-        Funcionario funcionario = new Funcionario();
-        funcionario.setIdFuncionario(saidaEstoque.getResponsavel().getIdFuncionario());
+        Funcionario funcionario = null;
+        if (saidaEstoque.getResponsavel() != null) {
+            funcionario = new Funcionario();
+            funcionario.setIdFuncionario(saidaEstoque.getResponsavel().getIdFuncionario());
+            funcionario.setNome(saidaEstoque.getResponsavel().getNome());
+            if (saidaEstoque.getResponsavel().getTelefone() != null) {
+                funcionario.setTelefone(new TelefoneVo(saidaEstoque.getResponsavel().getTelefone()));
+            }
+            if (saidaEstoque.getResponsavel().getEmail() != null) {
+                funcionario.setEmail(new EmailVo(saidaEstoque.getResponsavel().getEmail()));
+            }
+        }
 
-        LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
-        loteItemEstoque.setIdLoteItemEstoque(saidaEstoque.getLoteItemEstoque().getIdLoteItemEstoque());
+        LoteItemEstoque loteItemEstoque = null;
+        if (saidaEstoque.getLoteItemEstoque() != null) {
+            loteItemEstoque = new LoteItemEstoque();
+            loteItemEstoque.setIdLoteItemEstoque(saidaEstoque.getLoteItemEstoque().getIdLoteItemEstoque());
+            loteItemEstoque.setQtdItem(saidaEstoque.getLoteItemEstoque().getQtdItem());
+            loteItemEstoque.setPreco(saidaEstoque.getLoteItemEstoque().getPreco());
+        }
 
         Parceiro costureira = null;
         if (saidaEstoque.getCostureira() != null) {
             costureira = new Parceiro();
             costureira.setId(saidaEstoque.getCostureira().getIdParceiro());
+            costureira.setCategoria(saidaEstoque.getCostureira().getCategoria());
+            costureira.setTelefone(saidaEstoque.getCostureira().getTelefone());
+            costureira.setNome(saidaEstoque.getCostureira().getNome());
+            costureira.setEmail(new EmailVo(saidaEstoque.getCostureira().getEmail()));
+            costureira.setEndereco(saidaEstoque.getCostureira().getEndereco());
         }
+
         return new SaidaEstoque(
-                null,
+                saidaEstoque.getIdSaidaEstoque(),
                 saidaEstoque.getData(),
                 saidaEstoque.getHora(),
                 saidaEstoque.getQtdSaida(),
@@ -63,7 +105,6 @@ public class SaidaEstoqueEntityMapper {
                 loteItemEstoque,
                 costureira
         );
-
     }
 
     public static SaidaEstoqueCadastrarCommand toCadastrarCommand(@Valid SaidaEstoqueRequestDto saidaCadastro) {
@@ -90,16 +131,21 @@ public class SaidaEstoqueEntityMapper {
     public static SaidaEstoqueResponseDto toResponseDto(SaidaEstoque domain) {
         Funcionario funcionario = domain.getResponsavel();
         SaidaEstoqueFuncionarioResponseDto responsavelDto =
-                new SaidaEstoqueFuncionarioResponseDto(funcionario.getNome(), funcionario.getSenha());
+                new SaidaEstoqueFuncionarioResponseDto(funcionario.getNome(), funcionario.getEmail().getValue());
 
         LoteItemEstoque loteItemEstoque = domain.getLoteItemEstoque();
         SaidaEstoqueLoteItemEstoqueResponseDto loteItemEstoqueResponseDto =
                 new SaidaEstoqueLoteItemEstoqueResponseDto(loteItemEstoque.getQtdItem(), loteItemEstoque.getPreco());
 
-        Parceiro parceiro = domain.getCostureira();
         SaidaEstoqueCostureiraResponseDto costureiraResponseDto = null;
         if (domain.getCostureira() != null){
-            costureiraResponseDto = new SaidaEstoqueCostureiraResponseDto(parceiro.getNome(), parceiro.getTelefone(), parceiro.getEmail().getValue());
+            Parceiro parceiro = domain.getCostureira();
+            costureiraResponseDto = new SaidaEstoqueCostureiraResponseDto();
+            costureiraResponseDto.setNome(parceiro.getNome());
+            costureiraResponseDto.setTelefone(parceiro.getTelefone());
+            if (parceiro.getEmail() != null){
+                costureiraResponseDto.setEmail(parceiro.getEmail().getValue());
+            }
         }
         return new SaidaEstoqueResponseDto(
                 domain.getIdSaidaEstoque(),

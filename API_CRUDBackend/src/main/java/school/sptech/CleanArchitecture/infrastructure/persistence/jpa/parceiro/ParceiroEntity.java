@@ -2,10 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
 
 @Schema(description = "Entidade que representa um parceiro.")
@@ -14,6 +11,7 @@ import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Table(name = "parceiro")
 public class ParceiroEntity {
     @Id

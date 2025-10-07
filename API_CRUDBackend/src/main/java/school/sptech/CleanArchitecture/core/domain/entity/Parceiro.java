@@ -83,4 +83,17 @@ public class Parceiro {
     public void setIdentificacao(String identificacao) {
         this.identificacao = identificacao;
     }
+
+    @Override
+    public String toString() {
+        return "Parceiro{" +
+                "id=" + id +
+                ", categoria='" + categoria + '\'' +
+                ", nome='" + nome + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", email=" + email +
+                ", endereco='" + endereco + '\'' +
+                ", identificacao='" + identificacao + '\'' +
+                '}';
+    }
 }

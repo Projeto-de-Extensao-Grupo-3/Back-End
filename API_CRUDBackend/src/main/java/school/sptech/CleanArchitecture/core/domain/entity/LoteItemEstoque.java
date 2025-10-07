@@ -71,4 +71,15 @@ public class LoteItemEstoque {
     public void setLote(Lote lote) {
         this.lote = lote;
     }
+
+    @Override
+    public String toString() {
+        return "LoteItemEstoque{" +
+                "idLoteItemEstoque=" + idLoteItemEstoque +
+                ", qtdItem=" + qtdItem +
+                ", preco=" + preco +
+                ", itemEstoque=" + itemEstoque +
+                ", lote=" + lote +
+                '}';
+    }
 }
