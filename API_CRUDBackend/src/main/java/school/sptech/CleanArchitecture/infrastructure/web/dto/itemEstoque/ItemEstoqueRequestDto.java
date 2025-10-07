@@ -23,14 +23,11 @@ public class ItemEstoqueRequestDto {
     @NotBlank
     private String complemento;
     @Schema(description = "Peso do item", example = "")
-    @NotBlank
     private Double peso;
     @Schema(description = "Quantidade mínima para item.", example = "100")
-    @NotBlank
     @Positive
     private Double qtdMinimo;
     @Schema(description = "Quantidade que ainda possui no estoque.", example = "100")
-    @NotBlank
     @Positive
     private Double qtdArmazenado;
     private ItemEstoqueCategoriaRequestDto categoria;

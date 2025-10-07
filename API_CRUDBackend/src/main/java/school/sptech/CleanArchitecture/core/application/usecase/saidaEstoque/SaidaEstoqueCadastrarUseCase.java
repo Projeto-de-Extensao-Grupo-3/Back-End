@@ -40,19 +40,12 @@ public class SaidaEstoqueCadastrarUseCase implements Subject {
         SaidaEstoque saidaDeEstoque = SaidaEstoqueMapper.ofCadastrarCommand(command);
         ItemEstoque itemEstoqueAtualizado = atualizarSaidaUseCase.execute(saidaDeEstoque, 0.0);
         notificarObservers(itemEstoqueAtualizado);
+
         saidaDeEstoque.setResponsavel(funcionarioPorIdUseCase.execute(saidaDeEstoque.getResponsavel().getIdFuncionario()));
         saidaDeEstoque.setCostureira(parceiroPorIdUseCase.execute(saidaDeEstoque.getCostureira().getId()));
         saidaDeEstoque.setLoteItemEstoque(loteItemEstoqueUseCase.executar(saidaDeEstoque.getLoteItemEstoque().getIdLoteItemEstoque()));
-        System.out.println(saidaDeEstoque.getResponsavel());
-        System.out.println(saidaDeEstoque.getCostureira());
-        System.out.println(saidaDeEstoque.getLoteItemEstoque());
 
-        SaidaEstoque saida =  saidaGateway.save(saidaDeEstoque);
-
-        System.out.println(saida.getResponsavel());
-        System.out.println(saida.getCostureira());
-        System.out.println(saida.getLoteItemEstoque());
-        return saida;
+        return saidaGateway.save(saidaDeEstoque);
     }
 
     @Override
