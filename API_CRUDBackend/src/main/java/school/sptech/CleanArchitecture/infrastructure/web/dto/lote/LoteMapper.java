@@ -52,4 +52,12 @@ public class LoteMapper {
         return response;
     }
 
+    public static LoteResponseDto toCadastroResponseDto(LoteEntity entity) {
+        LoteResponseDto response = new LoteResponseDto();
+        response.setIdLote(entity.getIdLote());
+        response.setDescricao(entity.getDescricao());
+        response.setDataEntrada(entity.getDataEntrada().format(DATE_FORMATTER));
+        return response;
+    }
+
 }

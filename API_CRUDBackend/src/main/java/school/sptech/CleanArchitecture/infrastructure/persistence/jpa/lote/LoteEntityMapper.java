@@ -43,6 +43,42 @@ public class LoteEntityMapper {
         return domain;
     }
 
+    public static Lote ofCadsEntity(LoteEntity entity) {
+        Lote domain = new Lote();
+        domain.setIdLote(entity.getIdLote());
+        domain.setDescricao(entity.getDescricao());
+        domain.setDataEntrada(entity.getDataEntrada());
+        if (entity.getParceiro() != null) {
+            Parceiro parceiro = new Parceiro();
+            parceiro.setId(entity.getParceiro().getIdParceiro());
+            domain.setParceiro(parceiro);
+        }
+        if (entity.getResponsavel() != null) {
+            Funcionario funcionario = new Funcionario();
+            funcionario.setIdFuncionario(entity.getResponsavel().getIdFuncionario());
+            domain.setResponsavel(funcionario);
+        }
+        return domain;
+    }
+
+    public static LoteEntity ofCads(Lote domain) {
+
+        LoteEntity entity = new LoteEntity();
+        entity.setIdLote(domain.getIdLote());
+        entity.setDescricao(domain.getDescricao());
+        entity.setDataEntrada(domain.getDataEntrada());
+
+        FuncionarioEntity funcionario = new FuncionarioEntity();
+        funcionario.setIdFuncionario(domain.getResponsavel().getIdFuncionario());
+        entity.setResponsavel(funcionario);
+
+        ParceiroEntity parceiro = new ParceiroEntity();
+        parceiro.setIdParceiro(domain.getParceiro().getId());
+        entity.setParceiro(parceiro);
+
+        return entity;
+    }
+
     public static LoteEntity ofDomain(Lote domain) {
 
         LoteEntity entity = new LoteEntity();
