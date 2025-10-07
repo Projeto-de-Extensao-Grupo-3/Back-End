@@ -18,5 +18,5 @@ public class CorteTecidoResponseDto {
     @Schema(description = "Data e Hora de finalização do corte", example = "2025-04-12T10:15:30")
     private String termino;
 
-    private Integer funcionario;
+    private CorteTecidoFuncionarioResponseDto funcionario;
 }

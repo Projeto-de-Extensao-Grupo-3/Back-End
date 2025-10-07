@@ -47,11 +47,16 @@ public class CorteTecidoMapper {
     }
 
     public static CorteTecidoResponseDto toResponseDto(CorteTecidoEntity corteTecido) {
+        CorteTecidoFuncionarioResponseDto funcionario = new CorteTecidoFuncionarioResponseDto ();
+        funcionario.setNome(corteTecido.getFuncionario().getNome());
+        funcionario.setTelefone(corteTecido.getFuncionario().getTelefone());
+        funcionario.setEmail(corteTecido.getFuncionario().getEmail());
+
         return new CorteTecidoResponseDto(
                 corteTecido.getIdCorteTecido(),
                 corteTecido.getInicio(),
                 corteTecido.getTermino(),
-                corteTecido.getFuncionario()
+                funcionario
         );
     }
 
@@ -60,7 +65,7 @@ public class CorteTecidoMapper {
                 corteTecido.getIdCorteTecido(),
                 corteTecido.getInicio(),
                 corteTecido.getTermino(),
-                corteTecido.getFuncionario()
+                corteTecido.getFuncionario().getIdFuncionario()
         );
     }
 
