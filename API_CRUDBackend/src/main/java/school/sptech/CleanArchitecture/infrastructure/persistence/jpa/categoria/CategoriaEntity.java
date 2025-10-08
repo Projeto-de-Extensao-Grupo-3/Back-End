@@ -26,6 +26,11 @@ public class CategoriaEntity {
     @Schema(description = "Categoria principal de um item", example = "Roupa ou tecido")
     private CategoriaEntity categoriaPai;
 
+    public CategoriaEntity(Integer idCategoria, String nome) {
+        this.idCategoria = idCategoria;
+        this.nome = nome;
+    }
+
     public CategoriaEntity(Integer idCategoria) {
         this.idCategoria = idCategoria;
     }

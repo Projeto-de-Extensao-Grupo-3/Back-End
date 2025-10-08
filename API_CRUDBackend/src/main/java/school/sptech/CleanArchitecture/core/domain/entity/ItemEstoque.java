@@ -23,6 +23,11 @@ public class ItemEstoque {
     public ItemEstoque() {
     }
 
+    public ItemEstoque(Integer idItemEstoque, String descricao) {
+        this.idItemEstoque = idItemEstoque;
+        this.descricao = descricao;
+    }
+
     public ItemEstoque(Integer idItemEstoque) {
         this.idItemEstoque = idItemEstoque;
     }

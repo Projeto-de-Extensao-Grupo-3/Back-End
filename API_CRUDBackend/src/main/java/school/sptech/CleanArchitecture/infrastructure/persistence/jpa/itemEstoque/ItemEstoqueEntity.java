@@ -77,4 +77,9 @@ public class ItemEstoqueEntity {
         this.preco = itemEstoque.getPeso();
         this.imagem = new ImagemEntity(itemEstoque.getImagem().getIdImagem());
     }
+
+    public ItemEstoqueEntity(Integer idItemEstoque, String descricao) {
+        this.idItemEstoque = idItemEstoque;
+        this.descricao = descricao;
+    }
 }
