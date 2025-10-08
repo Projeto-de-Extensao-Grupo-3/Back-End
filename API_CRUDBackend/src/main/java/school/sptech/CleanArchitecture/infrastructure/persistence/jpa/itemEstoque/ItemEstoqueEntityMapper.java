@@ -22,30 +22,48 @@ public class ItemEstoqueEntityMapper {
         }
 
         var entity = new ItemEstoqueEntity();
-        CategoriaEntity categoria = new CategoriaEntity();
-        categoria.setIdCategoria(domain.getCategoria().getIdCategoria());
+        Categoria categoriaDomain = domain.getCategoria();
+        CategoriaEntity categoria = new CategoriaEntity(categoriaDomain.getIdCategoria(), categoriaDomain.getNome());
+
+        Categoria categoriaPai;
+        if(domain.getCategoria().getCategoriaPai() != null){
+            categoriaPai = domain.getCategoria().getCategoriaPai();
+            categoria.setCategoriaPai(new CategoriaEntity(categoriaPai.getIdCategoria(), categoriaPai.getNome()));
+        }
+
 
         Set<Categoria> caracteristicas = domain.getCaracteristicas();
-        Set<CategoriaEntity> caracteristicasEntity =
-                caracteristicas.stream()
-                                .map(c -> {
-                                    CategoriaEntity categoriaEntity = new CategoriaEntity();
-                                    categoriaEntity.setIdCategoria(c.getIdCategoria());
-                                    return categoriaEntity;
-                                        }
-                                ).collect(Collectors.toSet());
+        Set<CategoriaEntity> caracteristicasEntity = null;
+        if (caracteristicas != null){
+            caracteristicasEntity = caracteristicas.stream()
+                    .map(c -> {
+                                CategoriaEntity categoriaEntity = new CategoriaEntity();
+                                categoriaEntity.setIdCategoria(c.getIdCategoria());
+                                categoriaEntity.setNome(c.getNome());
+                                return categoriaEntity;
+                            }
+                    ).collect(Collectors.toSet());
+        }
+
 
         PrateleiraEntity prateleiraEntity = new PrateleiraEntity();
-        prateleiraEntity.setIdPrateleira(domain.getPrateleira().getIdPrateleira());
+        if (domain.getPrateleira() != null){
+            prateleiraEntity.setIdPrateleira(domain.getPrateleira().getIdPrateleira());
+        }
 
         Set<ConfeccaoRoupa> confeccaoRoupa = domain.getConfeccaoRoupa();
-        Set<ConfeccaoRoupaEntity> confeccaoRoupaEntities = confeccaoRoupa.stream()
-                .map(cr -> {
-                    ConfeccaoRoupaEntity confeccaoEntity = new ConfeccaoRoupaEntity();
-                    confeccaoEntity.setIdConfeccaoRoupa(cr.getIdConfeccaoRoupa()); // só seta o id
-                    return confeccaoEntity;
-                })
-                .collect(Collectors.toSet());
+        Set<ConfeccaoRoupaEntity> confeccaoRoupaEntities = null;
+        if(confeccaoRoupa != null){
+            confeccaoRoupaEntities = confeccaoRoupa.stream()
+                    .map(cr -> {
+                        ConfeccaoRoupaEntity confeccaoEntity = new ConfeccaoRoupaEntity();
+                        confeccaoEntity.setIdConfeccaoRoupa(cr.getIdConfeccaoRoupa());// só seta o id
+                        confeccaoEntity.setTecido(new ItemEstoqueEntity(cr.getTecido().getIdItemEstoque(), cr.getTecido().getDescricao()));
+                        confeccaoEntity.setQtdTecido(cr.getQtdTecido());
+                        return confeccaoEntity;
+                    })
+                    .collect(Collectors.toSet());
+        }
 
         ImagemEntity imagemEntity = new ImagemEntity();
         imagemEntity.setIdImagem(domain.getImagem().getIdImagem());
@@ -72,35 +90,45 @@ public class ItemEstoqueEntityMapper {
         }
 
         var domain = new ItemEstoque();
-        Categoria categoria = new Categoria();
-        categoria.setIdCategoria(entity.getCategoria().getIdCategoria());
-        Categoria categoriaPai = new Categoria();
-        categoriaPai.setNome(entity.getCategoria().getCategoriaPai().getNome());
+        CategoriaEntity categoriaEntity = entity.getCategoria();
+        Categoria categoria = new Categoria(categoriaEntity.getIdCategoria(), categoriaEntity.getNome());
 
-        categoria.setCategoriaPai(categoriaPai);
+        CategoriaEntity categoriaPai =  null;
+        if (entity.getCategoria().getCategoriaPai() != null) {
+            categoriaPai = entity.getCategoria().getCategoriaPai();
+            categoria.setCategoriaPai(new Categoria(categoriaPai.getIdCategoria(), categoriaPai.getNome()));
+        }
 
-        Set<CategoriaEntity> caracteristicas = entity.getCaracteristicas();
-        Set<Categoria> caracteristicasEntity =
-                caracteristicas.stream()
-                        .map(c -> {
-                            Categoria categoriaDomain = new Categoria();
-                            categoriaDomain.setIdCategoria(c.getIdCategoria());
-                                    return categoriaDomain;
-                                }
-                        ).collect(Collectors.toSet());
+        Set<Categoria> caracteristicasEntity = null;
+        if (entity.getCaracteristicas() != null){
+            Set<CategoriaEntity> caracteristicas = entity.getCaracteristicas();
+            caracteristicasEntity = caracteristicas.stream()
+                            .map(c -> {
+                                        Categoria categoriaDomain = new Categoria();
+                                        categoriaDomain.setIdCategoria(c.getIdCategoria());
+                                        categoriaDomain.setNome(c.getNome());
+                                        return categoriaDomain;
+                                    }
+                            ).collect(Collectors.toSet());
+        }
 
         Prateleira prateleira = new Prateleira();
         prateleira.setIdPrateleira(entity.getPrateleira().getIdPrateleira());
 
-        Set<ConfeccaoRoupaEntity> confeccaoRoupaEntity = entity.getConfeccaoRoupa();
-        Set<ConfeccaoRoupa> confeccaoRoupas = confeccaoRoupaEntity.stream()
-                .map(cr -> {
-                    ConfeccaoRoupa confeccao = new ConfeccaoRoupa();
-                    confeccao.setIdConfeccaoRoupa(cr.getIdConfeccaoRoupa());
-                    confeccao.setTecido(new ItemEstoque(cr.getTecido().getIdItemEstoque()));// só seta o id
-                    return confeccao;
-                })
-                .collect(Collectors.toSet());
+
+        Set<ConfeccaoRoupa> confeccaoRoupas = null;
+        if (entity.getConfeccaoRoupa() != null){
+            Set<ConfeccaoRoupaEntity> confeccaoRoupaEntity = entity.getConfeccaoRoupa();
+            confeccaoRoupas = confeccaoRoupaEntity.stream()
+                    .map(cr -> {
+                        ConfeccaoRoupa confeccao = new ConfeccaoRoupa();
+                        confeccao.setIdConfeccaoRoupa(cr.getIdConfeccaoRoupa());
+                        confeccao.setTecido(new ItemEstoque(cr.getTecido().getIdItemEstoque(), cr.getTecido().getDescricao()));// só seta o id
+                        confeccao.setQtdTecido(cr.getQtdTecido());
+                        return confeccao;
+                    })
+                    .collect(Collectors.toSet());
+        }
 
         Imagem imagem = new Imagem();
         if (entity.getImagem() != null){
@@ -118,7 +146,7 @@ public class ItemEstoqueEntityMapper {
         domain.setCaracteristicas(caracteristicasEntity);
         domain.setPrateleira(prateleira);
         domain.setConfeccaoRoupa(confeccaoRoupas);
-        domain.setPreco(domain.getPreco());
+        domain.setPreco(entity.getPreco());
         domain.setImagem(imagem);
 
         return domain;
@@ -314,37 +342,44 @@ public class ItemEstoqueEntityMapper {
         return new ItemEstoqueCadastrarTecidoRoupaCommand(id, confeccaoRoupaDomain);
     }
 
+    // --- Domain -> Response DTO (para quando você recebe Domain diretamente)
     public static ItemEstoqueResponseDto toResponseDto(ItemEstoque item) {
+        if (item == null) return null;
 
-        Categoria categoria = item.getCategoria();
-        ItemEstoqueCategoriaPaiResponseDto categoriaPai = new ItemEstoqueCategoriaPaiResponseDto(
-                categoria.getCategoriaPai().getNome()
-        );
-        ItemEstoqueCategoriaResponseDto categoriaDto = new ItemEstoqueCategoriaResponseDto(
-                categoria.getNome(), categoriaPai
-        );
-        Set<ItemEstoqueCaracteristicaResponseDto> caracteristicasDto = item.getCaracteristicas()
-                .stream()
-                .map(caracteristica -> new ItemEstoqueCaracteristicaResponseDto(caracteristica.getNome()))
-                .collect(Collectors.toSet());
+        ItemEstoqueCategoriaPaiResponseDto categoriaPaiDto = null;
+        ItemEstoqueCategoriaResponseDto categoriaDto = null;
 
-        Set<ItemEstoqueConfeccaoRoupaDto> confeccaoRoupaDto = item.getConfeccaoRoupa()
-                .stream()
-                .map(confeccaoRoupa ->
-                        new ItemEstoqueConfeccaoRoupaDto(
-                                confeccaoRoupa.getIdConfeccaoRoupa(),
-                                new ItemEstoqueTecidoDto(
-                                        confeccaoRoupa.getTecido().getIdItemEstoque(),
-                                        confeccaoRoupa.getTecido().getDescricao()
-                                ),
-                                confeccaoRoupa.getQtdTecido()
-                        )
-                )
-                .collect(Collectors.toSet());
+        if (item.getCategoria() != null) {
+            if (item.getCategoria().getCategoriaPai() != null) {
+                categoriaPaiDto = new ItemEstoqueCategoriaPaiResponseDto(item.getCategoria().getCategoriaPai().getNome());
+            }
+            categoriaDto = new ItemEstoqueCategoriaResponseDto(item.getCategoria().getNome(), categoriaPaiDto);
+        }
 
-        ItemEstoqueImagemResponseDto imagemDto = item.getImagem() != null
-                ? new ItemEstoqueImagemResponseDto(item.getImagem().getUrl())
-                : null;
+        Set<ItemEstoqueCaracteristicaResponseDto> caracteristicasDto = null;
+        if (item.getCaracteristicas() != null) {
+            caracteristicasDto = item.getCaracteristicas().stream()
+                    .filter(Objects::nonNull)
+                    .map(c -> new ItemEstoqueCaracteristicaResponseDto(c.getNome()))
+                    .collect(Collectors.toSet());
+        }
+
+        Set<ItemEstoqueConfeccaoRoupaDto> confeccaoRoupaDto = null;
+        if (item.getConfeccaoRoupa() != null) {
+            confeccaoRoupaDto = item.getConfeccaoRoupa().stream()
+                    .filter(Objects::nonNull)
+                    .map(cr -> new ItemEstoqueConfeccaoRoupaDto(
+                            cr.getIdConfeccaoRoupa(),
+                            cr.getTecido() != null ? new ItemEstoqueTecidoDto(cr.getTecido().getIdItemEstoque(), cr.getTecido().getDescricao()) : null,
+                            cr.getQtdTecido()
+                    ))
+                    .collect(Collectors.toSet());
+        }
+
+        ItemEstoqueImagemResponseDto imagemDto = null;
+        if (item.getImagem() != null) {
+            imagemDto = new ItemEstoqueImagemResponseDto(item.getImagem().getUrl());
+        }
 
         return new ItemEstoqueResponseDto(
                 item.getIdItemEstoque(),
@@ -359,4 +394,5 @@ public class ItemEstoqueEntityMapper {
                 imagemDto
         );
     }
+
 }
