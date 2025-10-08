@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import school.sptech.CleanArchitecture.core.application.command.corteTecido.AtualizarCorteTecidoCommand;
 import school.sptech.CleanArchitecture.core.application.command.corteTecido.CriarCorteTecidoCommand;
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
+import school.sptech.CleanArchitecture.core.domain.entity.Lote;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.corteTecido.CorteTecidoEntity;
 
@@ -15,11 +16,17 @@ import java.util.List;
 public class CorteTecidoMapper {
 
     public static CriarCorteTecidoCommand toCriarCommand(CorteTecidoRequestDto dto) {
+        Funcionario funcionario = new Funcionario();
+        funcionario.setIdFuncionario(dto.getFuncionario().getIdFuncionario());
+
+        LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
+        loteItemEstoque.setIdLoteItemEstoque(dto.getLoteItemEstoque().getIdLoteItemEstoque());
+
         return new CriarCorteTecidoCommand(
                 dto.getInicio(),
                 dto.getTermino(),
-                dto.getFuncionario().getIdFuncionario(),
-                dto.getLoteItemEstoque().getIdLoteItemEstoque()
+                funcionario,
+                loteItemEstoque
         );
     }
 
@@ -57,6 +64,14 @@ public class CorteTecidoMapper {
                 corteTecido.getInicio(),
                 corteTecido.getTermino(),
                 funcionario
+        );
+    }
+
+    public static CorteTecidoResponseDto toAtualizarResponseDto(CorteTecidoEntity corteTecido) {
+        return new CorteTecidoResponseDto(
+                corteTecido.getIdCorteTecido(),
+                corteTecido.getInicio(),
+                corteTecido.getTermino()
         );
     }
 

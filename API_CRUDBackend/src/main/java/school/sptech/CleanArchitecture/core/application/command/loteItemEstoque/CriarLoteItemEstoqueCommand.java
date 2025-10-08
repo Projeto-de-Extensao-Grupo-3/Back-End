@@ -6,7 +6,7 @@ import school.sptech.CleanArchitecture.core.domain.entity.Lote;
 public record CriarLoteItemEstoqueCommand (
         Double qtdItem,
         Double preco,
-        LoteItemEstoqueItemEstoqueCommand itemEstoque,
-        LoteItemEstoqueLoteCommand lote
+        Integer itemEstoque,
+        Integer lote
 ){
 }

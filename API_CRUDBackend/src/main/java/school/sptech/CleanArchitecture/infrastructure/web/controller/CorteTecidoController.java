@@ -55,7 +55,7 @@ public class CorteTecidoController {
         CorteTecidoEntity entity = CorteTecidoEntityMapper.ofDomainCadsatrar(corteParaCadastrar);
         CorteTecidoCadastrarResponseDto corteTecidoCadastrado = CorteTecidoMapper.toCadastroResponseDto(entity);
 
-        Funcionario funcionarioEncontrado = buscarFuncionarioPorIdUseCase.execute(command.funcionario());
+        Funcionario funcionarioEncontrado = buscarFuncionarioPorIdUseCase.execute(command.funcionario().getIdFuncionario());
         String nomeFuncionario = funcionarioEncontrado.getNome();
         String emailFuncionario = funcionarioEncontrado.getEmail().getValue();
         String telefoneFuncionario = funcionarioEncontrado.getTelefone().getValue();
@@ -78,7 +78,7 @@ public class CorteTecidoController {
     public ResponseEntity<List<CorteTecidoResponseDto>> listarTodos() {
         List<CorteTecidoEntity> cortesTecido = listarTodosCorteTecidoUseCase.execute()
                 .stream()
-                .map(CorteTecidoEntityMapper::ofDomainCadsatrar)
+                .map(CorteTecidoEntityMapper::ofDomainListarTodos)
                 .toList();
 
         List<CorteTecidoResponseDto> cortesTecidoResponseDtos = cortesTecido
@@ -122,7 +122,15 @@ public class CorteTecidoController {
         AtualizarCorteTecidoCommand command = CorteTecidoMapper.toAtualizarCommand(id, corteTecido);
         CorteTecidoEntity corteTecidoAtualizado = CorteTecidoEntityMapper.ofDomainCadsatrar(
                 atualizarCorteTecidoPorIdUseCase.executar(command));
-        CorteTecidoResponseDto response = CorteTecidoMapper.toResponseDto(corteTecidoAtualizado);
+        CorteTecidoResponseDto response = CorteTecidoMapper.toAtualizarResponseDto(corteTecidoAtualizado);
+
+        Funcionario funcionario = buscarFuncionarioPorIdUseCase.execute(command.funcionario().getIdFuncionario());
+        CorteTecidoFuncionarioResponseDto funcionarioResponseDto = new CorteTecidoFuncionarioResponseDto ();
+        funcionarioResponseDto.setNome(funcionario.getNome());
+        funcionarioResponseDto.setTelefone(funcionario.getTelefone().getValue());
+        funcionarioResponseDto.setEmail(funcionario.getEmail().getValue());
+        response.setFuncionario(funcionarioResponseDto);
+
         return ResponseEntity.status(200).body(response);
     }
 

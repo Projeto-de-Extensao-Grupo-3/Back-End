@@ -18,7 +18,7 @@ public class CorteTecidoAdapter implements CorteTecidoGateway {
     public CorteTecido save(CorteTecido corteTecido) {
         CorteTecidoEntity entity = CorteTecidoEntityMapper.ofDomainCadsatrar(corteTecido);
         CorteTecidoEntity savedEntity = repository.save(entity);
-        return CorteTecidoEntityMapper.ofEntity(savedEntity);
+        return CorteTecidoEntityMapper.ofEntityCadastrar(savedEntity);
     }
 
     @Override
