@@ -349,6 +349,7 @@ public class ItemEstoqueEntityMapper {
         ItemEstoqueCategoriaPaiResponseDto categoriaPaiDto = null;
         ItemEstoqueCategoriaResponseDto categoriaDto = null;
 
+        System.out.println("Metodo de toResponseDto :" + item.getCategoria().getNome());
         if (item.getCategoria() != null) {
             if (item.getCategoria().getCategoriaPai() != null) {
                 categoriaPaiDto = new ItemEstoqueCategoriaPaiResponseDto(item.getCategoria().getCategoriaPai().getNome());

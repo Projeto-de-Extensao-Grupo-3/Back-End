@@ -15,6 +15,7 @@ public class ItemEstoqueMapper {
 
         Categoria categoria = new Categoria();
         categoria.setIdCategoria(command.categoria().idCategoria());
+        System.out.println("Metodo ofCadastrarItemCommand: " + command.categoria().idCategoria());
 
         Set<Categoria> caracteristicas = command.caracteristicas()
                 .stream().map(
