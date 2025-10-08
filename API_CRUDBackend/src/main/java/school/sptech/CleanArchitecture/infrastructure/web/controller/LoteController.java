@@ -60,18 +60,18 @@ public class LoteController {
         LoteEntity entity = LoteEntityMapper.ofCads(lote);
         LoteResponseDto loteCadastrado = LoteMapper.toCadastroResponseDto(entity);
 
-        Optional<Parceiro> parceiro = buscarParceiroPorIdUseCase.execute(loteParaCadastrar.getParceiro());
+        Parceiro parceiro = buscarParceiroPorIdUseCase.execute(loteParaCadastrar.getParceiro());
         LoteParceiroResponseDto parceiroResponseDto = new LoteParceiroResponseDto();
-        parceiroResponseDto.setCategoria(parceiro.get().getCategoria());
-        parceiroResponseDto.setNome(parceiro.get().getNome());
-        parceiroResponseDto.setTelefone(parceiro.get().getTelefone());
-        parceiroResponseDto.setEmail(parceiro.get().getEmail().getValue());
+        parceiroResponseDto.setCategoria(parceiro.getCategoria());
+        parceiroResponseDto.setNome(parceiro.getNome());
+        parceiroResponseDto.setTelefone(parceiro.getTelefone());
+        parceiroResponseDto.setEmail(parceiro.getEmail().getValue());
 
-        Optional<Funcionario> funcionario = buscarFuncionarioPorIdUseCase.execute(loteParaCadastrar.getResponsavel());
+        Funcionario funcionario = buscarFuncionarioPorIdUseCase.execute(loteParaCadastrar.getResponsavel());
         LoteFuncionarioResponseDto funcionarioResponseDto = new LoteFuncionarioResponseDto();
-        funcionarioResponseDto.setNome(funcionario.get().getNome());
-        funcionarioResponseDto.setTelefone(funcionario.get().getTelefone().getValue());
-        funcionarioResponseDto.setEmail(funcionario.get().getEmail().getValue());
+        funcionarioResponseDto.setNome(funcionario.getNome());
+        funcionarioResponseDto.setTelefone(funcionario.getTelefone().getValue());
+        funcionarioResponseDto.setEmail(funcionario.getEmail().getValue());
 
         loteCadastrado.setParceiro(parceiroResponseDto);
         loteCadastrado.setResponsavel(funcionarioResponseDto);

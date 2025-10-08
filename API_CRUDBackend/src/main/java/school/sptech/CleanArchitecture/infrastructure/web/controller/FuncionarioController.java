@@ -35,6 +35,7 @@ public class FuncionarioController {
     private final FuncionarioBuscarPorNomeUseCAse funcionarioBuscarPorNomeUseCAse;
     private final FuncionarioListAllUseCase funcionarioListAllUseCase;
     private final FuncionarioRemoverPorIdUseCase funcionarioRemoverPorIdUseCase;
+    private final BuscarFuncionarioPorIdUseCase buscarFuncionarioPorIdUseCase;
 
     @Operation(
             summary = "Cadastro de funcionário.",
@@ -119,6 +120,8 @@ public class FuncionarioController {
             @PathVariable Integer id,
             @RequestBody @Valid FuncionarioRequestDto funcionarioAtualizar
     ) {
+        Funcionario funcionarioCompleto = buscarFuncionarioPorIdUseCase.execute(id);
+        funcionarioAtualizar.setSenha(funcionarioCompleto.getSenha());
         FuncionarioAtualizarPorIdCommand funcionarioParaAtualizar = FuncionarioMapper.toAtualizarCommand(id, funcionarioAtualizar);
         FuncionarioResponseDto funcionarioAtualizado = FuncionarioMapper.toResponseDto(
                 funcionarioAtualizarPorIdUseCase.execute(funcionarioParaAtualizar)

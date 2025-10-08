@@ -16,6 +16,7 @@ public class AtualizarParceiroPorIdUseCase {
         if(gateway.existsById(command.id())){
             var parceiroParaAtualizar = new Parceiro();
             parceiroParaAtualizar.setId(command.id());
+            parceiroParaAtualizar.setTelefone(command.telefone());
             parceiroParaAtualizar.setNome(command.nome());
             parceiroParaAtualizar.setEmail(command.email());
             parceiroParaAtualizar.setIdentificacao(command.identificacao());

@@ -34,7 +34,7 @@ public class FuncionarioMapper {
     public static FuncionarioResponseDto toResponseDto(Funcionario funcionario) {
         var permissoes = funcionario.getPermissoes() == null ? Set.<PermissaoResponseDto>of() :
                 funcionario.getPermissoes().stream()
-                        .map(p -> new PermissaoResponseDto(p.getDescricao()))
+                        .map(p -> new PermissaoResponseDto(p.getIdPermissao(), p.getDescricao()))
                         .collect(Collectors.toSet());
         return new FuncionarioResponseDto(
                 funcionario.getIdFuncionario(),

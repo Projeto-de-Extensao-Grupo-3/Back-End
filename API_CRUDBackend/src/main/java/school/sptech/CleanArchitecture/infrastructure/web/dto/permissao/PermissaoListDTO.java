@@ -2,23 +2,23 @@ package school.sptech.CleanArchitecture.infrastructure.web.dto.permissao;
 
 public class PermissaoListDTO {
 
-    private Integer idDescricao;
+    private Integer idPermissao;
     private String descricao;
 
-    public PermissaoListDTO(Integer idDescricao, String descricao) {
-        this.idDescricao = idDescricao;
+    public PermissaoListDTO(Integer idPermissao, String descricao) {
+        this.idPermissao = idPermissao;
         this.descricao = descricao;
     }
 
     public PermissaoListDTO() {
     }
 
-    public Integer getIdDescricao() {
-        return idDescricao;
+    public Integer getIdPermissao() {
+        return idPermissao;
     }
 
-    public void setIdDescricao(Integer idDescricao) {
-        this.idDescricao = idDescricao;
+    public void setIdPermissao(Integer idPermissao) {
+        this.idPermissao = idPermissao;
     }
 
     public String getDescricao() {
