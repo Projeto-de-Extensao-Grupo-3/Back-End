@@ -19,7 +19,7 @@ public class FuncionarioRequestDto {
     private String telefone;
     @NotBlank @Email
     private String email;
-    @NotBlank
+//    @NotBlank
     private String senha;
 
     @NotNull
