@@ -19,6 +19,7 @@ public class AtualizarCorteTecidoPorIdUseCase {
         if (gateway.existsById(command.idCorteTecido())) {
             var corteTecidoParaAtualizar = new CorteTecido();
             corteTecidoParaAtualizar.setIdCorteTecido(command.idCorteTecido());
+            corteTecidoParaAtualizar.setInicio(command.inicio());
             corteTecidoParaAtualizar.setTermino(command.temino());
             corteTecidoParaAtualizar.setFuncionario(command.funcionario());
             corteTecidoParaAtualizar.setLoteItemEstoque(command.loteItemEstoque());

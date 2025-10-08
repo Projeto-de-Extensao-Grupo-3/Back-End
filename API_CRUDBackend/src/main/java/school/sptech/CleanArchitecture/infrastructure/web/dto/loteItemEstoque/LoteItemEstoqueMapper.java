@@ -5,26 +5,21 @@ import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.CriarLoteItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.LoteItemEstoqueItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.LoteItemEstoqueLoteCommand;
-import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
-import school.sptech.CleanArchitecture.core.domain.entity.Lote;
-import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
+import school.sptech.CleanArchitecture.core.domain.entity.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntity;
 
 import java.util.List;
+import java.util.Set;
 
 @Schema(description = "Classe de mapeamento de DTOs LoteItemEstoque.")
 public class LoteItemEstoqueMapper {
 
     public static CriarLoteItemEstoqueCommand toCriarCommand(LoteItemEstoqueRequestDto dto) {
-        LoteItemEstoqueItemEstoqueCommand itemEstoque = new LoteItemEstoqueItemEstoqueCommand(dto.getItemEstoque());
-
-        LoteItemEstoqueLoteCommand lote = new LoteItemEstoqueLoteCommand(dto.getLote());
-
         return new CriarLoteItemEstoqueCommand(
                 dto.getQtdItem(),
                 dto.getPreco(),
-                itemEstoque,
-                lote
+                dto.getItemEstoque(),
+                dto.getLote()
         );
     }
 
@@ -69,11 +64,13 @@ public class LoteItemEstoqueMapper {
     }
 
     public static LoteItemEstoque ofCadastrarCommand(CriarLoteItemEstoqueCommand command) {
+
         ItemEstoque itemEstoque = new ItemEstoque();
-        itemEstoque.setIdItemEstoque(command.itemEstoque().idItemEstoque());
+        itemEstoque.setIdItemEstoque(command.itemEstoque());
+
 
         Lote lote = new Lote();
-        lote.setIdLote(command.lote().idLote());
+        lote.setIdLote(command.lote());
 
         return new LoteItemEstoque(
                 command.qtdItem(),

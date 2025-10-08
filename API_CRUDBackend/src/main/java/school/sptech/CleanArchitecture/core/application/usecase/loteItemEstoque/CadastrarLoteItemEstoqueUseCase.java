@@ -30,7 +30,10 @@ public class CadastrarLoteItemEstoqueUseCase implements SubjectLoteItem, Subject
 
     public LoteItemEstoque executar(CriarLoteItemEstoqueCommand command){
 
+        // um loteItemEstoque deve retornar dentro dele um itemEstoque e um lote
         LoteItemEstoque loteItemEstoque = LoteItemEstoqueMapper.ofCadastrarCommand(command);
+
+        //  LoteItemEstoque com os id's de itemEstoque e lote
         ItemEstoque itemEstoque = atualizarDadosUseCase.execute(loteItemEstoque, 0.0);
 
         notificarObservers(itemEstoque);

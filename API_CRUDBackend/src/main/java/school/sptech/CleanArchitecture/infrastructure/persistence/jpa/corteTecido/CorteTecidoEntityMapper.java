@@ -34,6 +34,22 @@ public class CorteTecidoEntityMapper {
         return domain;
     }
 
+    public static CorteTecido ofEntityCadastrar(CorteTecidoEntity entity) {
+        CorteTecido domain = new CorteTecido();
+        domain.setIdCorteTecido(entity.getIdCorteTecido());
+        domain.setInicio(entity.getInicio());
+        domain.setTermino(entity.getTermino());
+
+        Funcionario funcionario = new Funcionario();
+        funcionario.setIdFuncionario(entity.getFuncionario().getIdFuncionario());
+        domain.setFuncionario(funcionario);
+
+        LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
+        loteItemEstoque.setIdLoteItemEstoque(entity.getLoteItemEstoque().getIdLoteItemEstoque());
+        domain.setLoteItemEstoque(loteItemEstoque);
+        return domain;
+    }
+
     public static CorteTecidoEntity ofDomain(CorteTecido domain) {
         CorteTecidoEntity entity = new CorteTecidoEntity();
         entity.setIdCorteTecido(domain.getIdCorteTecido());
@@ -66,9 +82,6 @@ public class CorteTecidoEntityMapper {
 
         FuncionarioEntity funcionarioEntity = new FuncionarioEntity();
         funcionarioEntity.setIdFuncionario(domain.getFuncionario().getIdFuncionario());
-        funcionarioEntity.setNome(domain.getFuncionario().getNome());
-        funcionarioEntity.setEmail(domain.getFuncionario().getEmail().getValue());
-        funcionarioEntity.setTelefone(domain.getFuncionario().getTelefone().getValue());
         entity.setFuncionario(funcionarioEntity);
 
         LoteItemEstoqueEntity loteItemEstoqueEntity = new LoteItemEstoqueEntity();

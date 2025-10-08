@@ -20,10 +20,10 @@ public class CadastrarCorteTecidoUseCase {
         corteTecidoParaRegistrar.setInicio(command.inicio());
         corteTecidoParaRegistrar.setTermino(command.temino());
         Funcionario funcionario = new Funcionario();
-        funcionario.setIdFuncionario(command.funcionario());
+        funcionario.setIdFuncionario(command.funcionario().getIdFuncionario());
         corteTecidoParaRegistrar.setFuncionario(funcionario);
         LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
-        loteItemEstoque.setIdLoteItemEstoque(command.loteItemEstoque());
+        loteItemEstoque.setIdLoteItemEstoque(command.loteItemEstoque().getIdLoteItemEstoque());
         corteTecidoParaRegistrar.setLoteItemEstoque(loteItemEstoque);
 
         return gateway.save(corteTecidoParaRegistrar);

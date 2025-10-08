@@ -19,4 +19,10 @@ public class CorteTecidoResponseDto {
     private String termino;
 
     private CorteTecidoFuncionarioResponseDto funcionario;
+
+    public CorteTecidoResponseDto(Integer idCorteTecido, String inicio, String termino) {
+        this.idCorteTecido = idCorteTecido;
+        this.inicio = inicio;
+        this.termino = termino;
+    }
 }
