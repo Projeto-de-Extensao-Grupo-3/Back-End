@@ -23,9 +23,9 @@ public class ItemEstoqueResponseCadastroDto {
     private Double qtdMinimo;
     @Schema(description = "Quantidade que ainda possui no estoque.", example = "100")
     private Double qtdArmazenado;
-    private Integer categoria;
-    private Set<Integer> caracteriticas;
-    private Integer prateleira;
+    private Integer idCategoria;
+    private Set<Integer> idCaracteriticas;
+    private Integer idPrateleira;
     private Double preco;
-    private Integer imagem;
+    private Integer idImagem;
 }
