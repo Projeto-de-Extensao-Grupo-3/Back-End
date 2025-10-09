@@ -5,6 +5,9 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,12 +18,12 @@ public class RabbitTemplateConfiguration {
     public static final String EMAIL_EXCHANGE = "email_exchange";
 
     // Nomes das filas
-    public static final String QUEUE_EMAIL_VENDA = "fila_email_venda";
+    public static final String QUEUE_EMAIL_SAIDA = "fila_email_saida_estoque";
     public static final String QUEUE_EMAIL_ESTOQUE = "fila_email_estoque";
     public static final String QUEUE_EMAIL_TODOS = "fila_email_todos";
 
     // Routing keys
-    public static final String ROUTING_KEY_VENDA = "email.venda";
+    public static final String ROUTING_KEY_SAIDA = "email.saida";
     public static final String ROUTING_KEY_ESTOQUE = "email.estoque.*";
     public static final String ROUTING_KEY_ALL = "email.#";
 
@@ -33,7 +36,7 @@ public class RabbitTemplateConfiguration {
     // Filas
     @Bean
     public Queue queueEmailVenda() {
-        return new Queue(QUEUE_EMAIL_VENDA, true);
+        return new Queue(QUEUE_EMAIL_SAIDA, true);
     }
 
     @Bean
@@ -49,7 +52,7 @@ public class RabbitTemplateConfiguration {
     // Bindings
     @Bean
     public Binding bindingEmailVenda(Queue queueEmailVenda, TopicExchange emailExchange) {
-        return BindingBuilder.bind(queueEmailVenda).to(emailExchange).with(ROUTING_KEY_VENDA);
+        return BindingBuilder.bind(queueEmailVenda).to(emailExchange).with(ROUTING_KEY_SAIDA);
     }
 
     @Bean
@@ -60,5 +63,19 @@ public class RabbitTemplateConfiguration {
     @Bean
     public Binding bindingEmailTodos(Queue queueEmailTodos, TopicExchange emailExchange) {
         return BindingBuilder.bind(queueEmailTodos).to(emailExchange).with(ROUTING_KEY_ALL);
+    }
+
+
+    @Bean
+    public Jackson2JsonMessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter();
+    }
+
+    @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
+                                         Jackson2JsonMessageConverter messageConverter) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(messageConverter);
+        return rabbitTemplate;
     }
 }

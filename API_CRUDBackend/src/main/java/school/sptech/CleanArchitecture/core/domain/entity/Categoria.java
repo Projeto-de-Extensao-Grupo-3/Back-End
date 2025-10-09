@@ -41,4 +41,13 @@ public class Categoria {
     public void setCategoriaPai(Categoria categoriaPai) {
         this.categoriaPai = categoriaPai;
     }
+
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "idCategoria=" + idCategoria +
+                ", nome='" + nome + '\'' +
+                ", categoriaPai=" + categoriaPai +
+                '}';
+    }
 }

@@ -183,4 +183,22 @@ public class ItemEstoque {
     public void setImagem(Imagem imagem) {
         this.imagem = imagem;
     }
+
+    @Override
+    public String toString() {
+        return "ItemEstoque{" +
+                "idItemEstoque=" + idItemEstoque +
+                ", descricao='" + descricao + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", peso=" + peso +
+                ", qtdMinimo=" + qtdMinimo +
+                ", qtdArmazenado=" + qtdArmazenado +
+                ", categoria=" + categoria +
+                ", caracteristicas=" + caracteristicas +
+                ", prateleira=" + prateleira +
+                ", confeccaoRoupa=" + confeccaoRoupa +
+                ", preco=" + preco +
+                ", imagem=" + imagem +
+                '}';
+    }
 }

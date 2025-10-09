@@ -18,7 +18,10 @@ public class ItemEstoqueAdapter implements ItemEstoqueGateway {
     @Override
     public ItemEstoque save(ItemEstoque itemEstoque) {
         ItemEstoqueEntity entity = ItemEstoqueEntityMapper.ofDomain(itemEstoque);
-        return ItemEstoqueEntityMapper.ofEntity(repository.save(entity));
+        System.out.println(entity);
+        ItemEstoque retorno =  ItemEstoqueEntityMapper.ofEntity(repository.save(entity));
+        System.out.println(retorno);
+        return retorno;
     }
 
     @Override

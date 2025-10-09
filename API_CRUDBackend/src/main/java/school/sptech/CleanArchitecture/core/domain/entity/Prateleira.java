@@ -12,6 +12,11 @@ public class Prateleira {
         this.idPrateleira = idPrateleira;
     }
 
+    public Prateleira(Integer idPrateleira, String codigo) {
+        this.idPrateleira = idPrateleira;
+        this.codigo = codigo;
+    }
+
     public Integer getIdPrateleira() {
         return idPrateleira;
     }
@@ -26,5 +31,13 @@ public class Prateleira {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    @Override
+    public String toString() {
+        return "Prateleira{" +
+                "idPrateleira=" + idPrateleira +
+                ", codigo='" + codigo + '\'' +
+                '}';
     }
 }
