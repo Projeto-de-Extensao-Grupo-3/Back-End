@@ -3,6 +3,8 @@ package school.sptech.CleanArchitecture.infrastructure.web.rabbitmq;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.config.rabbitmq.RabbitTemplateConfiguration;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.saidaEstoque.SaidaEstoqueEntity;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque.SaidaEstoqueResponseDto;
 
 @Service
 public class RabbitProducer {
@@ -13,12 +15,12 @@ public class RabbitProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-//    public void enviarPedido(Pedido pedido) {
-//        rabbitTemplate.convertAndSend(
-//                RabbitTemplateConfiguration.EMAIL_EXCHANGE,
-//                RabbitTemplateConfiguration.ROUTING_KEY_VENDA,
-//                pedido
-//        );
-//        System.out.println("📦 Aviso de venda enviado: " + pedido);
-//    }
+    public void enviarPedido(SaidaEstoqueResponseDto pedido) {
+        rabbitTemplate.convertAndSend(
+                RabbitTemplateConfiguration.EMAIL_EXCHANGE,
+                RabbitTemplateConfiguration.ROUTING_KEY_SAIDA,
+                pedido
+        );
+        System.out.println("📦 Aviso de venda enviado: " + pedido);
+    }
 }

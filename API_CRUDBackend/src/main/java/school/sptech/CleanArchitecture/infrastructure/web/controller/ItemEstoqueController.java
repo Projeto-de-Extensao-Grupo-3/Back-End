@@ -19,6 +19,7 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoqu
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ItemEstoqueConfeccaoRoupaDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ItemEstoqueRequestDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ItemEstoqueResponseCadastroDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ItemEstoqueResponseDto;
 
 import java.util.HashSet;
@@ -63,11 +64,11 @@ public class ItemEstoqueController {
     )
     @SecurityRequirement(name = "Bearer")
     @PostMapping
-    public ResponseEntity<ItemEstoqueResponseDto> cadastrar(
+    public ResponseEntity<ItemEstoqueResponseCadastroDto> cadastrar(
             @RequestBody @Valid ItemEstoqueRequestDto itemEstoqueCadastrar
     ) {
         ItemEstoqueCadastrarCommand command = ItemEstoqueEntityMapper.toCadastrarCommand(itemEstoqueCadastrar);
-        ItemEstoqueResponseDto itemCadastrado = ItemEstoqueEntityMapper.toResponseDto(
+        ItemEstoqueResponseCadastroDto itemCadastrado = ItemEstoqueEntityMapper.toResponseCadastroDto(
                 itemEstoqueCadastrarItemUseCase.execute(command));
         return ResponseEntity.status(201).body(itemCadastrado);
     }

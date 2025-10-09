@@ -3,10 +3,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Schema(description = "Entidade que representa a categoria (tecido ou roupa), subcategorias (Tipos de roupas e tipo de tecido) e características gerais.")
 @Getter
@@ -14,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "categoria")
 public class CategoriaEntity {
     @Id

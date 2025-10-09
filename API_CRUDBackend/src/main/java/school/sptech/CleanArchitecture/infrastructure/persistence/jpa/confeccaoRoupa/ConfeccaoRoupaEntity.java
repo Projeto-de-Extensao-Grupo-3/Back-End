@@ -2,10 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccao
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
 
 @Schema(description = "Entidade que representa a confecção de uma roupa.")
@@ -15,6 +12,7 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoqu
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "confeccao_roupa")
+@ToString
 public class ConfeccaoRoupaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

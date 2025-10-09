@@ -51,4 +51,14 @@ public class ConfeccaoRoupa {
     public void setQtdTecido(Double qtdTecido) {
         this.qtdTecido = qtdTecido;
     }
+
+    @Override
+    public String toString() {
+        return "ConfeccaoRoupa{" +
+                "idConfeccaoRoupa=" + idConfeccaoRoupa +
+                ", roupa=" + roupa +
+                ", tecido=" + tecido +
+                ", qtdTecido=" + qtdTecido +
+                '}';
+    }
 }

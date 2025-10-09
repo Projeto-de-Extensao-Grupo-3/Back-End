@@ -2,10 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleir
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Schema(description = "Entidade que representa uma prateleira (Local onde o item está armazenado).")
 @Entity
@@ -14,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "prateleira")
+@ToString
 public class PrateleiraEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +22,5 @@ public class PrateleiraEntity {
     public PrateleiraEntity(Integer idPrateleira) {
         this.idPrateleira = idPrateleira;
     }
+
 }

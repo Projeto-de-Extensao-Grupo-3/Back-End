@@ -40,6 +40,10 @@ public class ItemEstoqueEntityMapper {
                                 CategoriaEntity categoriaEntity = new CategoriaEntity();
                                 categoriaEntity.setIdCategoria(c.getIdCategoria());
                                 categoriaEntity.setNome(c.getNome());
+                                if(c.getCategoriaPai() != null){
+                                    Categoria categoriaPai2 = domain.getCategoria().getCategoriaPai();
+                                    categoriaEntity.setCategoriaPai(new CategoriaEntity(categoriaPai2.getIdCategoria(), categoriaPai2.getNome()));
+                                }
                                 return categoriaEntity;
                             }
                     ).collect(Collectors.toSet());
@@ -48,7 +52,7 @@ public class ItemEstoqueEntityMapper {
 
         PrateleiraEntity prateleiraEntity = new PrateleiraEntity();
         if (domain.getPrateleira() != null){
-            prateleiraEntity.setIdPrateleira(domain.getPrateleira().getIdPrateleira());
+            prateleiraEntity = new PrateleiraEntity(domain.getPrateleira().getIdPrateleira(), domain.getPrateleira().getCodigo());
         }
 
         Set<ConfeccaoRoupa> confeccaoRoupa = domain.getConfeccaoRoupa();
@@ -58,6 +62,7 @@ public class ItemEstoqueEntityMapper {
                     .map(cr -> {
                         ConfeccaoRoupaEntity confeccaoEntity = new ConfeccaoRoupaEntity();
                         confeccaoEntity.setIdConfeccaoRoupa(cr.getIdConfeccaoRoupa());// só seta o id
+                        confeccaoEntity.setRoupa(new ItemEstoqueEntity(cr.getRoupa().getIdItemEstoque(), cr.getRoupa().getDescricao()));
                         confeccaoEntity.setTecido(new ItemEstoqueEntity(cr.getTecido().getIdItemEstoque(), cr.getTecido().getDescricao()));
                         confeccaoEntity.setQtdTecido(cr.getQtdTecido());
                         return confeccaoEntity;
@@ -66,7 +71,9 @@ public class ItemEstoqueEntityMapper {
         }
 
         ImagemEntity imagemEntity = new ImagemEntity();
-        imagemEntity.setIdImagem(domain.getImagem().getIdImagem());
+        if (domain.getImagem() != null){
+            imagemEntity = new ImagemEntity(domain.getImagem().getIdImagem());
+        }
 
         entity.setIdItemEstoque(domain.getIdItemEstoque());
         entity.setDescricao(domain.getDescricao());
@@ -107,14 +114,19 @@ public class ItemEstoqueEntityMapper {
                                         Categoria categoriaDomain = new Categoria();
                                         categoriaDomain.setIdCategoria(c.getIdCategoria());
                                         categoriaDomain.setNome(c.getNome());
+                                        if(c.getCategoriaPai() != null){
+                                            CategoriaEntity categoriaPai2 = entity.getCategoria().getCategoriaPai();
+                                            categoriaDomain.setCategoriaPai(new Categoria(categoriaPai2.getIdCategoria(), categoriaPai2.getNome()));
+                                        }
                                         return categoriaDomain;
                                     }
                             ).collect(Collectors.toSet());
         }
 
         Prateleira prateleira = new Prateleira();
-        prateleira.setIdPrateleira(entity.getPrateleira().getIdPrateleira());
-
+        if (entity.getPrateleira() != null){
+            prateleira = new Prateleira(entity.getPrateleira().getIdPrateleira(), entity.getPrateleira().getCodigo());
+        }
 
         Set<ConfeccaoRoupa> confeccaoRoupas = null;
         if (entity.getConfeccaoRoupa() != null){
@@ -124,6 +136,7 @@ public class ItemEstoqueEntityMapper {
                         ConfeccaoRoupa confeccao = new ConfeccaoRoupa();
                         confeccao.setIdConfeccaoRoupa(cr.getIdConfeccaoRoupa());
                         confeccao.setTecido(new ItemEstoque(cr.getTecido().getIdItemEstoque(), cr.getTecido().getDescricao()));// só seta o id
+                        confeccao.setRoupa(new ItemEstoque(cr.getRoupa().getIdItemEstoque(), cr.getRoupa().getDescricao()));// só seta o id
                         confeccao.setQtdTecido(cr.getQtdTecido());
                         return confeccao;
                     })
@@ -396,4 +409,45 @@ public class ItemEstoqueEntityMapper {
         );
     }
 
+    public static ItemEstoqueResponseCadastroDto toResponseCadastroDto(ItemEstoque item) {
+        if (item == null) return null;
+
+        Integer idCategoria = null;
+
+        if (item.getCategoria() != null) {
+            idCategoria = item.getCategoria().getIdCategoria();
+        }
+
+        Set<Integer> nomeCaracteristicas = null;
+        if (item.getCaracteristicas() != null) {
+            nomeCaracteristicas = item.getCaracteristicas().stream()
+                    .filter(Objects::nonNull)
+                    .map(Categoria::getIdCategoria)
+                    .collect(Collectors.toSet());
+        }
+
+        Integer idPrateleira = null;
+        if (item.getPrateleira() != null){
+            idPrateleira = item.getPrateleira().getIdPrateleira();
+        }
+
+
+        Integer idImagem = null;
+        if (item.getImagem() != null) {
+            idImagem = item.getImagem().getIdImagem();
+        }
+
+        return new ItemEstoqueResponseCadastroDto(
+                item.getIdItemEstoque(),
+                item.getDescricao(),
+                item.getPeso(),
+                item.getQtdMinimo(),
+                item.getQtdArmazenado(),
+                idCategoria,
+                nomeCaracteristicas,
+                idPrateleira,
+                item.getPreco(),
+                idImagem
+        );
+    }
 }

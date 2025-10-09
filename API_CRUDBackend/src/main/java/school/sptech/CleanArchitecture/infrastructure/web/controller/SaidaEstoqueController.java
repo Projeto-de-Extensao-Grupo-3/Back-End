@@ -16,6 +16,7 @@ import school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.saidaEstoque.SaidaEstoqueEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque.SaidaEstoqueRequestDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque.SaidaEstoqueResponseDto;
+import school.sptech.CleanArchitecture.infrastructure.web.rabbitmq.RabbitProducer;
 
 
 import java.time.LocalDate;
@@ -29,8 +30,6 @@ public class SaidaEstoqueController {
 
     private final SaidaEstoqueAtualizarPorIdUseCase saidaEstoqueAtualizarPorIdUseCase;
 
-    private final SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase saidaEstoqueAtualizarQuantidadeLoteDeItemUseCase;
-
     private final SaidaEstoqueBuscarPorDataUseCase saidaEstoqueBuscarPorDataUseCase;
 
     private final SaidaEstoqueBuscarPorIdUseCase saidaEstoqueBuscarPorIdUseCase;
@@ -42,6 +41,8 @@ public class SaidaEstoqueController {
     private final SaidaEstoqueListAllUseCAse saidaEstoqueListAllUseCAse;
 
     private final SaidaEstoqueRemoverPorIdUseCase saidaEstoqueRemoverPorIdUseCase;
+
+    private final RabbitProducer rabbitProducer;
 
     @Operation(
             summary = "Cadastramento de uma nova saída.",
@@ -60,6 +61,7 @@ public class SaidaEstoqueController {
         SaidaEstoqueCadastrarCommand command = SaidaEstoqueEntityMapper.toCadastrarCommand(saidaCadastro);
         SaidaEstoqueResponseDto responseDto = SaidaEstoqueEntityMapper
                 .toResponseDto(saidaEstoqueCadastrarUseCase.execute(command));
+        rabbitProducer.enviarPedido(responseDto);
         return ResponseEntity.status(201).body(responseDto);
     }
 
