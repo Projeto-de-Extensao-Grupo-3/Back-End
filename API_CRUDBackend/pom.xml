@@ -124,6 +124,7 @@
             <scope>test</scope>
         </dependency>
 
+<<<<<<< HEAD
 
         <!-- Converter LocalDateTime para Json -->
         <dependency>
@@ -133,6 +134,9 @@
 
 
         <!--        Dependencia Docker-->
+=======
+<!--        Dependencia Docker-->
+>>>>>>> cd5bdb80eb00d9ef103a99568fe7732d716c0e92
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-docker-compose</artifactId>

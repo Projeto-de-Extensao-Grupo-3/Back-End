@@ -24,7 +24,11 @@ public class SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase {
 
         ItemEstoque itemEstoque = itemEstoqueBuscarPorIdUseCase.execute(loteItemEstoque.getItemEstoque().getIdItemEstoque());
 
+<<<<<<< HEAD
         Double qtdEntradaNova = qtdAtualizar == 0.0
+=======
+        Double qtdEntradaNova = saidaEstoque.getQtdSaida() == 0.0
+>>>>>>> cd5bdb80eb00d9ef103a99568fe7732d716c0e92
                 ? saidaEstoque.getQtdSaida()
                 : qtdAtualizar;
 
