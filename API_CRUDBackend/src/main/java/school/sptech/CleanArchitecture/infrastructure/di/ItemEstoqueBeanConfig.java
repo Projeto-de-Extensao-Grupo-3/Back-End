@@ -15,6 +15,11 @@ public class ItemEstoqueBeanConfig {
     }
 
     @Bean
+    public ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarQuantidadeUseCase(ItemEstoqueAtualizarPorIdUseCase atualizarPorIdUseCase){
+        return new ItemEstoqueAtualizarQuantidadeUseCase(atualizarPorIdUseCase);
+    }
+
+    @Bean
     public ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarPorIdUseCase(ItemEstoqueAdapter adapter){
         return new ItemEstoqueBuscarPorIdUseCase(adapter);
     }

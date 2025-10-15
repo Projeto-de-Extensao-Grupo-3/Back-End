@@ -15,12 +15,12 @@ public class RabbitProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void enviarPedido(SaidaEstoqueResponseDto pedido) {
+    public void enviarPedido(EmailDto emailDto) {
         rabbitTemplate.convertAndSend(
                 RabbitTemplateConfiguration.EMAIL_EXCHANGE,
                 RabbitTemplateConfiguration.ROUTING_KEY_SAIDA,
-                pedido
+                emailDto
         );
-        System.out.println("📦 Aviso de venda enviado: " + pedido);
+        System.out.println("📦 Aviso de venda enviado: " + emailDto);
     }
 }

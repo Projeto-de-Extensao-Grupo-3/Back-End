@@ -42,8 +42,6 @@ public class SaidaEstoqueController {
 
     private final SaidaEstoqueRemoverPorIdUseCase saidaEstoqueRemoverPorIdUseCase;
 
-    private final RabbitProducer rabbitProducer;
-
     @Operation(
             summary = "Cadastramento de uma nova saída.",
             description = "Retorna um objeto do tipo SaidaEstoqueResponseDto quando cadastrado com sucesso."
@@ -61,7 +59,6 @@ public class SaidaEstoqueController {
         SaidaEstoqueCadastrarCommand command = SaidaEstoqueEntityMapper.toCadastrarCommand(saidaCadastro);
         SaidaEstoqueResponseDto responseDto = SaidaEstoqueEntityMapper
                 .toResponseDto(saidaEstoqueCadastrarUseCase.execute(command));
-        rabbitProducer.enviarPedido(responseDto);
         return ResponseEntity.status(201).body(responseDto);
     }
 

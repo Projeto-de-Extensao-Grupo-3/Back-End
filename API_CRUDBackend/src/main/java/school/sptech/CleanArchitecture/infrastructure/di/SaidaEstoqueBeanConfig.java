@@ -10,6 +10,7 @@ import school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque.*;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueAdapter;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.saidaEstoque.SaidaEstoqueAdapter;
+import school.sptech.CleanArchitecture.infrastructure.web.rabbitmq.RabbitProducer;
 
 import java.util.List;
 
@@ -44,8 +45,9 @@ public class SaidaEstoqueBeanConfig {
 
     @Bean
     public SaidaEstoqueCadastrarUseCase saidaEstoqueCadastrarUseCase(SaidaEstoqueAdapter adapter,
-                                                                     SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarQuantidadeUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase){
-        return new SaidaEstoqueCadastrarUseCase(adapter, atualizarQuantidadeUseCase, funcionarioPorIdUseCase, loteItemEstoqueUseCase, parceiroPorIdUseCase);
+                                                                     SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarQuantidadeUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase,
+                                                                     BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase, RabbitProducer rabbitProducer){
+        return new SaidaEstoqueCadastrarUseCase(adapter, atualizarQuantidadeUseCase, funcionarioPorIdUseCase, loteItemEstoqueUseCase, parceiroPorIdUseCase, rabbitProducer);
     }
 
     @Bean

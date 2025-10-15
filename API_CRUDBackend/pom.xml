@@ -124,7 +124,15 @@
             <scope>test</scope>
         </dependency>
 
-<!--        Dependencia Docker-->
+
+        <!-- Converter LocalDateTime para Json -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+
+        <!--        Dependencia Docker-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-docker-compose</artifactId>
