@@ -5,7 +5,11 @@ import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.exception.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.EntradaPaginacaoDTO;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.PaginacaoResponseDTO;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,5 +61,26 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
     public LoteItemEstoque buscarPorId(Integer id) {
         LoteItemEstoqueEntity loteItemEstoqueEntity = repository.findById(id).orElse(null);
         return LoteItemEstoqueEntityMapper.ofEntity(loteItemEstoqueEntity);
+    }
+
+    @Override
+    public PaginacaoResponseDTO<EntradaPaginacaoDTO> buscarPaginado(int offset, int limit) {
+        List<Object[]> resultado = repository.buscarPaginado(offset, limit);
+
+        List<EntradaPaginacaoDTO> conteudo = resultado.stream()
+                .map(obj -> new EntradaPaginacaoDTO(
+                        (String) obj[0],
+                        (String) obj[1],
+                        obj[2] != null ? ((Number) obj[2]).doubleValue() : null,
+                        (Integer) obj[3],
+                        (String) obj[4]
+                        ,(Timestamp) obj[5]
+                ))
+                .collect(Collectors.toList());
+
+        Long total = repository.contarTotal();
+        int paginaAtual = offset / limit;
+
+        return new PaginacaoResponseDTO<>(conteudo, total, paginaAtual, limit);
     }
 }

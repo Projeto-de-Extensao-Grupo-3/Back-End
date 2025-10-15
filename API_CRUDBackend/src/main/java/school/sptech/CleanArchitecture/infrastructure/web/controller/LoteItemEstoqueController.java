@@ -16,10 +16,7 @@ import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntityMapper;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.LoteItemEstoqueItemResponseDto;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.LoteItemEstoqueMapper;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.LoteItemEstoqueRequestDto;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.LoteItemEstoqueResponseDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.*;
 
 import java.util.List;
 
@@ -34,6 +31,7 @@ public class LoteItemEstoqueController {
     private final BuscarTodosLoteItemEstoqueUseCase buscarTodosLoteItemEstoqueUseCase;
     private final CadastrarLoteItemEstoqueUseCase cadastrarLoteItemEstoqueUseCase;
     private final RemoverLoteItemEstoqueUseCase removerLoteItemEstoqueUseCase;
+    private final BuscarLotesPaginadoUseCase buscarLotesPaginadoUseCase;
 
     @Operation(
             summary = "* Cadastro de um novo Lote de Item.",
@@ -127,5 +125,13 @@ public class LoteItemEstoqueController {
     {
         removerLoteItemEstoqueUseCase.executar(id);
         return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping("/paginado")
+    public PaginacaoResponseDTO<EntradaPaginacaoDTO> buscarPaginado(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int limit
+    ) {
+        return buscarLotesPaginadoUseCase.executar(page, limit);
     }
 }
