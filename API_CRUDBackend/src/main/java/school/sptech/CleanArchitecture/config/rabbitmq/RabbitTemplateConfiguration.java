@@ -18,7 +18,7 @@ public class RabbitTemplateConfiguration {
     public static final String EMAIL_EXCHANGE = "email_exchange";
 
     // Nomes das filas
-    public static final String QUEUE_EMAIL_SAIDA = "fila_email_saida_estoque";
+    public static final String QUEUE_EMAIL_SAIDA = " ";
     public static final String QUEUE_EMAIL_ESTOQUE = "fila_email_estoque";
     public static final String QUEUE_EMAIL_TODOS = "fila_email_todos";
 

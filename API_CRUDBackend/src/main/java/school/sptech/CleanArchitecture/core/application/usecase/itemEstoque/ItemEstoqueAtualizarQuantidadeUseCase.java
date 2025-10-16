@@ -15,10 +15,9 @@ public class ItemEstoqueAtualizarQuantidadeUseCase implements Observer {
 
     @Override
     public void atualizarQuantidade(ItemEstoque itemEstoque){
-<<<<<<< HEAD
+
         System.out.println("NOTIFIQUEI AQUI");
-=======
->>>>>>> cd5bdb80eb00d9ef103a99568fe7732d716c0e92
+
         ItemEstoqueAtualizarPorIdCommand command = ItemEstoqueEntityMapper.toAtualizarPorIdCommand(itemEstoque);
         atualizarPorIdUseCase.execute(command);
     }

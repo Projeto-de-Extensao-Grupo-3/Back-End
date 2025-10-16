@@ -7,13 +7,9 @@ import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.Item
 import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.BuscarPorIdLoteItemEstoqueUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.parceiro.BuscarParceiroPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque.*;
-import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueAdapter;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.saidaEstoque.SaidaEstoqueAdapter;
-<<<<<<< HEAD
 import school.sptech.CleanArchitecture.infrastructure.web.rabbitmq.RabbitProducer;
-=======
->>>>>>> cd5bdb80eb00d9ef103a99568fe7732d716c0e92
 
 import java.util.List;
 
@@ -48,14 +44,10 @@ public class SaidaEstoqueBeanConfig {
 
     @Bean
     public SaidaEstoqueCadastrarUseCase saidaEstoqueCadastrarUseCase(SaidaEstoqueAdapter adapter,
-<<<<<<< HEAD
                                                                      SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarQuantidadeUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase,
                                                                      BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase, RabbitProducer rabbitProducer){
+
         return new SaidaEstoqueCadastrarUseCase(adapter, atualizarQuantidadeUseCase, funcionarioPorIdUseCase, loteItemEstoqueUseCase, parceiroPorIdUseCase, rabbitProducer);
-=======
-                                                                     SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarQuantidadeUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase){
-        return new SaidaEstoqueCadastrarUseCase(adapter, atualizarQuantidadeUseCase, funcionarioPorIdUseCase, loteItemEstoqueUseCase, parceiroPorIdUseCase);
->>>>>>> cd5bdb80eb00d9ef103a99568fe7732d716c0e92
     }
 
     @Bean
