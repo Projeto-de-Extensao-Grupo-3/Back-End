@@ -31,6 +31,7 @@ public class ItemEstoqueRequestDto {
     @Schema(description = "Quantidade que ainda possui no estoque.", example = "100")
     @Positive
     private Double qtdArmazenado;
+    private Boolean notificar;
     private ItemEstoqueCategoriaRequestDto categoria;
     private Set<ItemEstoqueCategoriaRequestDto> caracteristicas;
     private ItemEstoquePrateleiraRequestDto plateleira;

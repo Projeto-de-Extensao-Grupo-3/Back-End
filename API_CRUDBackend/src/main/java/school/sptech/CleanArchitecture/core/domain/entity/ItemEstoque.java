@@ -13,6 +13,7 @@ public class ItemEstoque {
     private Double peso;
     private Double qtdMinimo;
     private Double qtdArmazenado;
+    private Boolean notificar;
     private Categoria categoria;
     private Set<Categoria> caracteristicas;
     private Prateleira prateleira;
@@ -134,6 +135,14 @@ public class ItemEstoque {
 
     public void setQtdArmazenado(Double qtdArmazenado) {
         this.qtdArmazenado = qtdArmazenado;
+    }
+
+    public Boolean getNotificar() {
+        return notificar;
+    }
+
+    public void setNotificar(Boolean notificar) {
+        this.notificar = notificar;
     }
 
     public Categoria getCategoria() {

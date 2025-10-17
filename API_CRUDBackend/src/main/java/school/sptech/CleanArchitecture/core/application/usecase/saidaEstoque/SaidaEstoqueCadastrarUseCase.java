@@ -6,22 +6,11 @@ import school.sptech.CleanArchitecture.core.application.mapper.SaidaEstoqueMappe
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.BuscarFuncionarioPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.BuscarPorIdLoteItemEstoqueUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.parceiro.BuscarParceiroPorIdUseCase;
-import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
-import school.sptech.CleanArchitecture.core.domain.observer.Observer;
-import school.sptech.CleanArchitecture.core.domain.observer.Subject;
-import school.sptech.CleanArchitecture.infrastructure.web.rabbitmq.EmailDto;
-import school.sptech.CleanArchitecture.infrastructure.web.rabbitmq.RabbitProducer;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class SaidaEstoqueCadastrarUseCase implements Subject {
+public class SaidaEstoqueCadastrarUseCase {
 
     private final SaidaEstoqueGateway saidaGateway;
-
-    private final SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarSaidaUseCase;
 
     private final BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase;
 
@@ -29,18 +18,15 @@ public class SaidaEstoqueCadastrarUseCase implements Subject {
 
     private final BuscarParceiroPorIdUseCase parceiroPorIdUseCase;
 
-    private final RabbitProducer rabbitProducer;
+    private final SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers;
 
-    private final List<Observer> observadores = new ArrayList<>();
-
-    public SaidaEstoqueCadastrarUseCase(SaidaEstoqueGateway saidaGateway, SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarSaidaUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase,
-                                        RabbitProducer rabbitProducer) {
+    public SaidaEstoqueCadastrarUseCase(SaidaEstoqueGateway saidaGateway, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase,
+                                        BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase, SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers) {
         this.saidaGateway = saidaGateway;
-        this.atualizarSaidaUseCase = atualizarSaidaUseCase;
         this.funcionarioPorIdUseCase = funcionarioPorIdUseCase;
         this.loteItemEstoqueUseCase = loteItemEstoqueUseCase;
         this.parceiroPorIdUseCase = parceiroPorIdUseCase;
-        this.rabbitProducer = rabbitProducer;
+        this.enviarEmailENotificarObservers = enviarEmailENotificarObservers;
     }
 
     public SaidaEstoque execute(SaidaEstoqueCadastrarCommand command){
@@ -53,39 +39,9 @@ public class SaidaEstoqueCadastrarUseCase implements Subject {
         saidaDeEstoque.setLoteItemEstoque(
                 loteItemEstoqueUseCase.executar(saidaDeEstoque.getLoteItemEstoque().getIdLoteItemEstoque()));
 
-        enviarEmailENotificarObservers(saidaDeEstoque);
+        enviarEmailENotificarObservers.execute(saidaDeEstoque);
 
         return saidaGateway.save(saidaDeEstoque);
     }
 
-    public void enviarEmailENotificarObservers(SaidaEstoque saidaDeEstoque){
-        ItemEstoque itemEstoqueAtualizado = atualizarSaidaUseCase.execute(saidaDeEstoque, 0.0);
-        notificarObservers(itemEstoqueAtualizado);
-
-        EmailDto emailDto = new EmailDto(saidaDeEstoque, itemEstoqueAtualizado);
-        rabbitProducer.enviarPedido(emailDto);
-
-        saidaDeEstoque.setResponsavel(funcionarioPorIdUseCase.execute(saidaDeEstoque.getResponsavel().getIdFuncionario()));
-        saidaDeEstoque.setCostureira(parceiroPorIdUseCase.execute(saidaDeEstoque.getCostureira().getId()));
-        saidaDeEstoque.setLoteItemEstoque(loteItemEstoqueUseCase.executar(saidaDeEstoque.getLoteItemEstoque().getIdLoteItemEstoque()));
-    }
-
-    @Override
-    public void adicionarObservador(Observer observador) {
-            observadores.add(observador);
-    }
-
-    @Override
-    public void removerObservador(Observer observador) {
-        observadores.remove(observador);
-    }
-
-    @Override
-    public void notificarObservers(ItemEstoque itemEstoque) {
-        System.out.println("NOTIFICANDO OBSERVERSSSS");
-
-        for (Observer observador : observadores) {
-            observador.atualizarQuantidade(itemEstoque);
-        }
-    }
 }

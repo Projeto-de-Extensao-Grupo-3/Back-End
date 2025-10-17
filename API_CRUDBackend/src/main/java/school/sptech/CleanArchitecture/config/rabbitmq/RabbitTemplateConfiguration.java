@@ -18,14 +18,12 @@ public class RabbitTemplateConfiguration {
     public static final String EMAIL_EXCHANGE = "email_exchange";
 
     // Nomes das filas
-    public static final String QUEUE_EMAIL_SAIDA = " ";
-    public static final String QUEUE_EMAIL_ESTOQUE = "fila_email_estoque";
-    public static final String QUEUE_EMAIL_TODOS = "fila_email_todos";
+    public static final String QUEUE_EMAIL_SAIDA = "fila_email_saida";
+    public static final String QUEUE_EMAIL_RELATORIO = "fila_email_relatorio";
 
     // Routing keys
     public static final String ROUTING_KEY_SAIDA = "email.saida";
-    public static final String ROUTING_KEY_ESTOQUE = "email.estoque.*";
-    public static final String ROUTING_KEY_ALL = "email.#";
+    public static final String ROUTING_KEY_RELATORIO = "email.relatorio";
 
     // Exchange do tipo Topic
     @Bean
@@ -35,34 +33,24 @@ public class RabbitTemplateConfiguration {
 
     // Filas
     @Bean
-    public Queue queueEmailVenda() {
+    public Queue queueEmailSaida() {
         return new Queue(QUEUE_EMAIL_SAIDA, true);
     }
 
     @Bean
-    public Queue queueEmailEstoque() {
-        return new Queue(QUEUE_EMAIL_ESTOQUE, true);
-    }
-
-    @Bean
-    public Queue queueEmailTodos() {
-        return new Queue(QUEUE_EMAIL_TODOS, true);
+    public Queue queueEmailRelatorio() {
+        return new Queue(QUEUE_EMAIL_RELATORIO, true);
     }
 
     // Bindings
     @Bean
-    public Binding bindingEmailVenda(Queue queueEmailVenda, TopicExchange emailExchange) {
-        return BindingBuilder.bind(queueEmailVenda).to(emailExchange).with(ROUTING_KEY_SAIDA);
+    public Binding bindingEmailVenda(Queue queueEmailSaida, TopicExchange emailExchange) {
+        return BindingBuilder.bind(queueEmailSaida).to(emailExchange).with(ROUTING_KEY_SAIDA);
     }
 
     @Bean
-    public Binding bindingEmailEstoque(Queue queueEmailEstoque, TopicExchange emailExchange) {
-        return BindingBuilder.bind(queueEmailEstoque).to(emailExchange).with(ROUTING_KEY_ESTOQUE);
-    }
-
-    @Bean
-    public Binding bindingEmailTodos(Queue queueEmailTodos, TopicExchange emailExchange) {
-        return BindingBuilder.bind(queueEmailTodos).to(emailExchange).with(ROUTING_KEY_ALL);
+    public Binding bindingEmailEstoque(Queue queueEmailRelatorio, TopicExchange emailExchange) {
+        return BindingBuilder.bind(queueEmailRelatorio).to(emailExchange).with(ROUTING_KEY_RELATORIO);
     }
 
 

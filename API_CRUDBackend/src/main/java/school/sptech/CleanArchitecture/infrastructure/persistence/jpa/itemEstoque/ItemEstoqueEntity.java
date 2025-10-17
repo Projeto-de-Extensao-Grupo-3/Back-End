@@ -30,6 +30,7 @@ public class ItemEstoqueEntity {
     private Double peso;
     private Double qtdMinimo;
     private Double qtdArmazenado;
+    private Boolean notificar;
     @ManyToOne
     @JoinColumn(name = "fk_categoria")
     private CategoriaEntity categoria;

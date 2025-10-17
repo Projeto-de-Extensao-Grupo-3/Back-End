@@ -42,12 +42,15 @@ public class SaidaEstoqueBeanConfig {
         return new SaidaEstoqueBuscarPorMotivoUseCase(adapter);
     }
 
-    @Bean
-    public SaidaEstoqueCadastrarUseCase saidaEstoqueCadastrarUseCase(SaidaEstoqueAdapter adapter,
-                                                                     SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarQuantidadeUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase,
-                                                                     BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase, RabbitProducer rabbitProducer){
+    @Bean SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers(RabbitProducer rabbitProducer, SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarSaidaUseCase){
+        return new SaidaEstoqueEnviarEmailENotificarObservers(rabbitProducer, atualizarSaidaUseCase);
+    }
 
-        return new SaidaEstoqueCadastrarUseCase(adapter, atualizarQuantidadeUseCase, funcionarioPorIdUseCase, loteItemEstoqueUseCase, parceiroPorIdUseCase, rabbitProducer);
+    @Bean
+    public SaidaEstoqueCadastrarUseCase saidaEstoqueCadastrarUseCase(SaidaEstoqueAdapter adapter, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase,
+                                                                     BuscarParceiroPorIdUseCase parceiroPorIdUseCase, SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers){
+
+        return new SaidaEstoqueCadastrarUseCase(adapter, funcionarioPorIdUseCase, loteItemEstoqueUseCase, parceiroPorIdUseCase, enviarEmailENotificarObservers);
     }
 
     @Bean

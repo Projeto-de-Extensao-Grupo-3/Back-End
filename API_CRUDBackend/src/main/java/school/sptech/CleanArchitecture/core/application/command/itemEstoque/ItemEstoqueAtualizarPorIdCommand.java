@@ -10,6 +10,7 @@ public record ItemEstoqueAtualizarPorIdCommand(
         Double peso,
         Double qtdMinimo,
         Double qtdArmazenado,
+        Boolean notificar,
         ItemEstoqueCategoriaCommand categoria,
         Set<ItemEstoqueCategoriaCommand> caracteristicas,
         ItemEstoquePrateleiraCommand prateleira,

@@ -81,6 +81,7 @@ public class ItemEstoqueEntityMapper {
         entity.setPeso(domain.getPeso());
         entity.setQtdMinimo(domain.getQtdMinimo());
         entity.setQtdArmazenado(domain.getQtdArmazenado());
+        entity.setNotificar(domain.getNotificar());
         entity.setCategoria(categoria);
         entity.setCaracteristicas(caracteristicasEntity);
         entity.setPrateleira(prateleiraEntity);
@@ -155,6 +156,7 @@ public class ItemEstoqueEntityMapper {
         domain.setPeso(entity.getPeso());
         domain.setQtdMinimo(entity.getQtdMinimo());
         domain.setQtdArmazenado(entity.getQtdArmazenado());
+        domain.setNotificar(entity.getNotificar());
         domain.setCategoria(categoria);
         domain.setCaracteristicas(caracteristicasEntity);
         domain.setPrateleira(prateleira);
@@ -189,6 +191,7 @@ public class ItemEstoqueEntityMapper {
                 requestDto.getPeso(),
                 requestDto.getQtdMinimo(),
                 requestDto.getQtdArmazenado(),
+                requestDto.getNotificar(),
                 categoria,
                 caracteristicas,
                 prateleira,
@@ -236,6 +239,7 @@ public class ItemEstoqueEntityMapper {
                 item.getPeso(),
                 item.getQtdMinimo(),
                 item.getQtdArmazenado(),
+                item.getNotificar(),
                 categoriaDto,
                 caracteristicasDto,
                 confeccaoRoupaDto,
@@ -277,6 +281,7 @@ public class ItemEstoqueEntityMapper {
                 dto.getPeso(),
                 dto.getQtdMinimo(),
                 dto.getQtdArmazenado(),
+                dto.getNotificar(),
                 categoria,
                 caracteristicasDto,
                 prateleiraCommand,
@@ -305,6 +310,7 @@ public class ItemEstoqueEntityMapper {
                 dto.getPeso(),
                 dto.getQtdMinimo(),
                 dto.getQtdArmazenado(),
+                dto.getNotificar(),
                 categoria,
                 caracteristicasDto,
                 prateleiraCommand,
@@ -333,6 +339,7 @@ public class ItemEstoqueEntityMapper {
                 domain.getPeso(),
                 domain.getQtdMinimo(),
                 domain.getQtdArmazenado(),
+                domain.getNotificar(),
                 categoria,
                 caracteristicasDto,
                 prateleiraCommand,
@@ -401,6 +408,7 @@ public class ItemEstoqueEntityMapper {
                 item.getPeso(),
                 item.getQtdMinimo(),
                 item.getQtdArmazenado(),
+                item.getNotificar(),
                 categoriaDto,
                 caracteristicasDto,
                 confeccaoRoupaDto,
@@ -443,6 +451,7 @@ public class ItemEstoqueEntityMapper {
                 item.getPeso(),
                 item.getQtdMinimo(),
                 item.getQtdArmazenado(),
+                item.getNotificar(),
                 idCategoria,
                 nomeCaracteristicas,
                 idPrateleira,

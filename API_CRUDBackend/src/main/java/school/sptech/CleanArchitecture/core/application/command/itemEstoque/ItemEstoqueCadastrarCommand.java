@@ -8,6 +8,7 @@ public record ItemEstoqueCadastrarCommand(
     Double peso,
     Double qtdMinimo,
     Double qtdArmazenado,
+    Boolean notificar,
     ItemEstoqueCategoriaCommand categoria,
     Set<ItemEstoqueCategoriaCommand> caracteristicas,
     ItemEstoquePrateleiraCommand plateleira,

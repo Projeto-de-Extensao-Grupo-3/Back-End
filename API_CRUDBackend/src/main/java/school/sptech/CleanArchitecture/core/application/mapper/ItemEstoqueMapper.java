@@ -39,6 +39,7 @@ public class ItemEstoqueMapper {
         itemEstoque.setPeso(command.peso());
         itemEstoque.setQtdMinimo(command.qtdMinimo());
         itemEstoque.setQtdArmazenado(command.qtdArmazenado());
+        itemEstoque.setNotificar(command.notificar());
         itemEstoque.setCategoria(categoria);
         itemEstoque.setCaracteristicas(caracteristicas);
         itemEstoque.setPrateleira(prateleira);
@@ -75,6 +76,7 @@ public class ItemEstoqueMapper {
         itemEstoque.setPeso(command.peso());
         itemEstoque.setQtdMinimo(command.qtdMinimo());
         itemEstoque.setQtdArmazenado(command.qtdArmazenado());
+        itemEstoque.setNotificar(command.notificar());
         itemEstoque.setCategoria(categoria);
         itemEstoque.setCaracteristicas(caracteristicas);
         itemEstoque.setPrateleira(prateleira);

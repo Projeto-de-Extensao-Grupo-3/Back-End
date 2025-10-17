@@ -1,6 +1,6 @@
 services:
   rabbitmq:
-    container_name: api_crudbackend
+    container_name: back-end
     image: 'rabbitmq:3.13-management'
     environment:
       - 'RABBITMQ_DEFAULT_PASS=secret'
