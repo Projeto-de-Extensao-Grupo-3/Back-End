@@ -29,7 +29,11 @@ public class SaidaEstoqueEnviarEmailENotificarObservers implements Subject {
 
         if (itemEstoqueAtualizado.getNotificar()) {
             EmailDto emailDto = new EmailDto(saidaDeEstoque, itemEstoqueAtualizado);
-            rabbitProducer.enviarPedido(emailDto);
+            try {
+                rabbitProducer.enviarPedido(emailDto);
+            }catch (Exception e){
+                System.out.println("❌ Falha ao enviar objeto para fila RabbitMQ");
+            }
         }
     }
 
