@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemEstoqueCategoriaResponseDto {
+    private Integer idCategoria;
     private String nome;
     private ItemEstoqueCategoriaPaiResponseDto categoriaPai;
 }

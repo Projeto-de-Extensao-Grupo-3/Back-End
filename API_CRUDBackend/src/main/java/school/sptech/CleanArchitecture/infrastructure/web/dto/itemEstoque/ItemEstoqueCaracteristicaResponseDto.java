@@ -10,5 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemEstoqueCaracteristicaResponseDto {
+    private Integer idCategoria;
     private String nome;
 }

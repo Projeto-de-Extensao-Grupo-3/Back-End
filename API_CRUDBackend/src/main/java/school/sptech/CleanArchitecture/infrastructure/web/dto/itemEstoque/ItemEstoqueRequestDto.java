@@ -29,7 +29,7 @@ public class ItemEstoqueRequestDto {
     @Min(0)
     private Double qtdMinimo;
     @Schema(description = "Quantidade que ainda possui no estoque.", example = "100")
-    @Positive
+    @Min(0)
     private Double qtdArmazenado;
     private Boolean notificar;
     private ItemEstoqueCategoriaRequestDto categoria;

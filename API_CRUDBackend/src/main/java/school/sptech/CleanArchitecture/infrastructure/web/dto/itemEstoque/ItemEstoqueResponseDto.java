@@ -23,10 +23,12 @@ public class ItemEstoqueResponseDto {
     private Double qtdMinimo;
     @Schema(description = "Quantidade que ainda possui no estoque.", example = "100")
     private Double qtdArmazenado;
+    private String complemento;
     private Boolean notificar;
-    private ItemEstoqueCategoriaResponseDto subcategoria;
-    private Set<ItemEstoqueCaracteristicaResponseDto> caracteriticas;
+    private ItemEstoqueCategoriaResponseDto categoria;
+    private Set<ItemEstoqueCaracteristicaResponseDto> caracteristicas;
     private Set<ItemEstoqueConfeccaoRoupaDto> confeccaoRoupa;
+    private Integer prateleira;
     private Double preco;
     private ItemEstoqueImagemResponseDto imagem;
 }

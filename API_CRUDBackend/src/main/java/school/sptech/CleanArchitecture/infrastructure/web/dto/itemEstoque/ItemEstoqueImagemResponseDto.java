@@ -10,5 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemEstoqueImagemResponseDto {
+    private Integer id;
     private String url;
 }

@@ -208,11 +208,11 @@ public class ItemEstoqueEntityMapper {
                 categoria.getCategoriaPai().getNome()
         );
         ItemEstoqueCategoriaResponseDto categoriaDto = new ItemEstoqueCategoriaResponseDto(
-                categoria.getNome(), categoriaPai
+                item.getCategoria().getIdCategoria(), categoria.getNome(), categoriaPai
         );
         Set<ItemEstoqueCaracteristicaResponseDto> caracteristicasDto = item.getCaracteristicas()
                 .stream()
-                .map(caracteristica -> new ItemEstoqueCaracteristicaResponseDto(caracteristica.getNome()))
+                .map(caracteristica -> new ItemEstoqueCaracteristicaResponseDto(caracteristica.getIdCategoria(), caracteristica.getNome()))
                 .collect(Collectors.toSet());
 
         Set<ItemEstoqueConfeccaoRoupaDto> confeccaoRoupaDto = item.getConfeccaoRoupa()
@@ -230,7 +230,7 @@ public class ItemEstoqueEntityMapper {
                 .collect(Collectors.toSet());
 
         ItemEstoqueImagemResponseDto imagemDto = item.getImagem() != null
-                ? new ItemEstoqueImagemResponseDto(item.getImagem().getUrl())
+                ? new ItemEstoqueImagemResponseDto(item.getImagem().getIdImagem(), item.getImagem().getUrl())
                 : null;
 
         return new ItemEstoqueResponseDto(
@@ -239,10 +239,12 @@ public class ItemEstoqueEntityMapper {
                 item.getPeso(),
                 item.getQtdMinimo(),
                 item.getQtdArmazenado(),
+                item.getComplemento(),
                 item.getNotificar(),
                 categoriaDto,
                 caracteristicasDto,
                 confeccaoRoupaDto,
+                item.getPrateleira().getIdPrateleira(),
                 item.getPreco(),
                 imagemDto
         );
@@ -374,14 +376,14 @@ public class ItemEstoqueEntityMapper {
             if (item.getCategoria().getCategoriaPai() != null) {
                 categoriaPaiDto = new ItemEstoqueCategoriaPaiResponseDto(item.getCategoria().getCategoriaPai().getNome());
             }
-            categoriaDto = new ItemEstoqueCategoriaResponseDto(item.getCategoria().getNome(), categoriaPaiDto);
+            categoriaDto = new ItemEstoqueCategoriaResponseDto(item.getCategoria().getIdCategoria(), item.getCategoria().getNome(), categoriaPaiDto);
         }
 
         Set<ItemEstoqueCaracteristicaResponseDto> caracteristicasDto = null;
         if (item.getCaracteristicas() != null) {
             caracteristicasDto = item.getCaracteristicas().stream()
                     .filter(Objects::nonNull)
-                    .map(c -> new ItemEstoqueCaracteristicaResponseDto(c.getNome()))
+                    .map(c -> new ItemEstoqueCaracteristicaResponseDto(c.getIdCategoria(), c.getNome()))
                     .collect(Collectors.toSet());
         }
 
@@ -399,7 +401,7 @@ public class ItemEstoqueEntityMapper {
 
         ItemEstoqueImagemResponseDto imagemDto = null;
         if (item.getImagem() != null) {
-            imagemDto = new ItemEstoqueImagemResponseDto(item.getImagem().getUrl());
+            imagemDto = new ItemEstoqueImagemResponseDto(item.getImagem().getIdImagem(), item.getImagem().getUrl());
         }
 
         return new ItemEstoqueResponseDto(
@@ -408,10 +410,12 @@ public class ItemEstoqueEntityMapper {
                 item.getPeso(),
                 item.getQtdMinimo(),
                 item.getQtdArmazenado(),
+                item.getComplemento(),
                 item.getNotificar(),
                 categoriaDto,
                 caracteristicasDto,
                 confeccaoRoupaDto,
+                item.getPrateleira().getIdPrateleira(),
                 item.getPreco(),
                 imagemDto
         );
