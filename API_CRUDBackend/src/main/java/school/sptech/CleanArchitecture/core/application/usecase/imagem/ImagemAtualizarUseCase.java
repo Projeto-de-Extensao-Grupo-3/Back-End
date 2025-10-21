@@ -1,10 +1,9 @@
 package school.sptech.CleanArchitecture.core.application.usecase.imagem;
 
 import school.sptech.CleanArchitecture.core.adapters.ImagemGateway;
-import school.sptech.CleanArchitecture.core.application.command.imagem.CriarImagemCommand;
 import school.sptech.CleanArchitecture.core.application.command.imagem.ImagemAtualizarCommand;
-import school.sptech.CleanArchitecture.core.application.exception.imagem.ImagemConflitoException;
-import school.sptech.CleanArchitecture.core.application.exception.imagem.ImagemNaoEncontradaexception;
+import school.sptech.CleanArchitecture.core.application.exceptions.imagem.ImagemConflitoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.imagem.ImagemNaoEncontradaexception;
 import school.sptech.CleanArchitecture.core.application.mapper.ImagemMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.Imagem;
 

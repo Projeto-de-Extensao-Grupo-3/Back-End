@@ -2,7 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria
 
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.CategoriaGateway;
-import school.sptech.CleanArchitecture.core.application.exception.categoria.CategoriaNaoEncontradaException;
+import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaNaoEncontradaException;
 import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 
 

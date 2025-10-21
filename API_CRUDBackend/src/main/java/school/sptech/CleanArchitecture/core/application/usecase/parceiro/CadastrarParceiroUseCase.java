@@ -2,7 +2,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.parceiro;
 
 import school.sptech.CleanArchitecture.core.adapters.ParceiroGateway;
 import school.sptech.CleanArchitecture.core.application.command.parceiro.CriarParceiroCommand;
-import school.sptech.CleanArchitecture.core.application.exception.parceiro.ParceiroConflitoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.parceiro.ParceiroConflitoException;
 import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
 
 

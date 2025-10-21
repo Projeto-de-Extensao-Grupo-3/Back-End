@@ -3,7 +3,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.prateleira;
 
 import school.sptech.CleanArchitecture.core.adapters.PrateleiraGateway;
 import school.sptech.CleanArchitecture.core.application.command.prateleira.CriarPrateleiraCommand;
-import school.sptech.CleanArchitecture.core.application.exception.Prateleira.PrateleiraConflitoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.Prateleira.PrateleiraConflitoException;
 import school.sptech.CleanArchitecture.core.application.mapper.PrateleiraMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
 

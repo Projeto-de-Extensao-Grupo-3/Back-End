@@ -1,7 +1,7 @@
 package school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque;
 
 import school.sptech.CleanArchitecture.core.adapters.SaidaEstoqueGateway;
-import school.sptech.CleanArchitecture.core.application.exception.SaidaEstoque.SaidaEstoqueNaoEncontradoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.SaidaEstoque.SaidaEstoqueNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
 
 import java.time.LocalDate;

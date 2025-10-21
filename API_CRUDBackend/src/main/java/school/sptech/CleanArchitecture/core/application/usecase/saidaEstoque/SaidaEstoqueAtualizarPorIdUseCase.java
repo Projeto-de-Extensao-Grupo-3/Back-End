@@ -2,7 +2,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque;
 
 import school.sptech.CleanArchitecture.core.adapters.SaidaEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.saidaEstoque.SaidaEstoqueAtualizarPorIdCommand;
-import school.sptech.CleanArchitecture.core.application.exception.SaidaEstoque.SaidaEstoqueNaoEncontradoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.SaidaEstoque.SaidaEstoqueNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.application.mapper.SaidaEstoqueMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;

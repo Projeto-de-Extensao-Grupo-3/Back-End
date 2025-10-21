@@ -2,7 +2,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.funcionario;
 
 import school.sptech.CleanArchitecture.core.adapters.FuncionarioGateway;
 import school.sptech.CleanArchitecture.core.application.command.funcionario.FuncionarioAtualizarPorIdCommand;
-import school.sptech.CleanArchitecture.core.application.exception.funcionario.FuncionarioNaoEncontradoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.funcionario.FuncionarioNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.funcionario.FuncionarioMapper;
 

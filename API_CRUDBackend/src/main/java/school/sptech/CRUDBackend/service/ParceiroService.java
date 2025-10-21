@@ -2,8 +2,8 @@ package school.sptech.CRUDBackend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import school.sptech.CleanArchitecture.core.application.exception.parceiro.ParceiroConflitoException;
-import school.sptech.CleanArchitecture.core.application.exception.parceiro.ParceiroNaoEncontradoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.parceiro.ParceiroConflitoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.parceiro.ParceiroNaoEncontradoException;
 import school.sptech.CRUDBackend.entity.Parceiroaa;
 import school.sptech.CRUDBackend.repository.ParceiroRepository;
 

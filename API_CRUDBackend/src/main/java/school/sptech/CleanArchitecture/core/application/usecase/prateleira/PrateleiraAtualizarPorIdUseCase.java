@@ -2,7 +2,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.prateleira;
 
 import school.sptech.CleanArchitecture.core.adapters.PrateleiraGateway;
 import school.sptech.CleanArchitecture.core.application.command.prateleira.PrateleiraAtualizarCommand;
-import school.sptech.CleanArchitecture.core.application.exception.Prateleira.PrateleiraNaoEncontradaException;
+import school.sptech.CleanArchitecture.core.application.exceptions.Prateleira.PrateleiraNaoEncontradaException;
 import school.sptech.CleanArchitecture.core.application.mapper.PrateleiraMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
 

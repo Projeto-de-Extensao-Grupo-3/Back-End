@@ -2,7 +2,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.itemEstoque;
 
 import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueCadastrarTecidoRoupaCommand;
-import school.sptech.CleanArchitecture.core.application.exception.itensEstoque.ItemEstoqueNaoEncontradoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.itensEstoque.ItemEstoqueNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 
 public class ItemEstoqueCadastrarTecidoRoupaUseCase {

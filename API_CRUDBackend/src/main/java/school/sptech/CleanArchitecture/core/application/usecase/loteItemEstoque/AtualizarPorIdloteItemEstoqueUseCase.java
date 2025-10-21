@@ -2,7 +2,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque
 
 import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.AtualizarLoteItemEstoqueCommand;
-import school.sptech.CleanArchitecture.core.application.exception.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.LoteItemEstoqueMapper;
 

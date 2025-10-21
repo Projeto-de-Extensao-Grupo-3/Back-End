@@ -2,10 +2,9 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleir
 
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.PrateleiraGateway;
-import school.sptech.CleanArchitecture.core.application.exception.Prateleira.PrateleiraNaoEncontradaException;
+import school.sptech.CleanArchitecture.core.application.exceptions.Prateleira.PrateleiraNaoEncontradaException;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

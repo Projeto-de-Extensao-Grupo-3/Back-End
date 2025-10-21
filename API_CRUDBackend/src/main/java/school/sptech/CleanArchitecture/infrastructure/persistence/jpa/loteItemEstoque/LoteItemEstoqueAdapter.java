@@ -2,14 +2,13 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemE
 
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
-import school.sptech.CleanArchitecture.core.application.exception.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.EntradaPaginacaoDTO;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.PaginacaoResponseDTO;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

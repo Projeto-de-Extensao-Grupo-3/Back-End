@@ -1,7 +1,7 @@
 package school.sptech.CleanArchitecture.core.application.usecase.itemEstoque;
 
 import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
-import school.sptech.CleanArchitecture.core.application.exception.itensEstoque.ItemEstoqueNaoEncontradoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.itensEstoque.ItemEstoqueNaoEncontradoException;
 
 public class ItemEstoqueCalcularCustoProducaoUseCase {
 

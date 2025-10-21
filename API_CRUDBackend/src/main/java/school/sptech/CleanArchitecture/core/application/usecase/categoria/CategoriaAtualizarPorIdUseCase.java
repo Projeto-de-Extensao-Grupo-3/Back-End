@@ -3,8 +3,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.categoria;
 import school.sptech.CRUDBackend.exception.Categoria.CategoriaNaoEncontradaException;
 import school.sptech.CleanArchitecture.core.adapters.CategoriaGateway;
 import school.sptech.CleanArchitecture.core.application.command.categoria.CategoriaAtualizarCommand;
-import school.sptech.CleanArchitecture.core.application.command.categoria.CriarCategoriaCommand;
-import school.sptech.CleanArchitecture.core.application.exception.categoria.CategoriaConflitoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaConflitoException;
 import school.sptech.CleanArchitecture.core.application.mapper.CategoriaMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 

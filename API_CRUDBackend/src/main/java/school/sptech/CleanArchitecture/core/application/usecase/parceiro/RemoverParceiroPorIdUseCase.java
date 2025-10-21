@@ -1,7 +1,7 @@
 package school.sptech.CleanArchitecture.core.application.usecase.parceiro;
 
 import school.sptech.CleanArchitecture.core.adapters.ParceiroGateway;
-import school.sptech.CleanArchitecture.core.application.exception.Prateleira.PrateleiraNaoEncontradaException;
+import school.sptech.CleanArchitecture.core.application.exceptions.Prateleira.PrateleiraNaoEncontradaException;
 
 public class RemoverParceiroPorIdUseCase {
 

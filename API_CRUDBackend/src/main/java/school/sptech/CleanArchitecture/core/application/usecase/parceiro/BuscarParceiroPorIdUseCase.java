@@ -1,10 +1,8 @@
 package school.sptech.CleanArchitecture.core.application.usecase.parceiro;
 
 import school.sptech.CleanArchitecture.core.adapters.ParceiroGateway;
-import school.sptech.CleanArchitecture.core.application.exception.parceiro.ParceiroNaoEncontradoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.parceiro.ParceiroNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
-
-import java.util.Optional;
 
 public class BuscarParceiroPorIdUseCase {
 
