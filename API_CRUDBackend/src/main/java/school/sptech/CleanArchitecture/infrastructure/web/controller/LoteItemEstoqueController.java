@@ -32,6 +32,7 @@ public class LoteItemEstoqueController {
     private final CadastrarLoteItemEstoqueUseCase cadastrarLoteItemEstoqueUseCase;
     private final RemoverLoteItemEstoqueUseCase removerLoteItemEstoqueUseCase;
     private final BuscarLotesPaginadoUseCase buscarLotesPaginadoUseCase;
+    private final BuscarLotesPaginadoSaidaUseCase buscarLotesPaginadoSaidaUseCase;
 
     @Operation(
             summary = "* Cadastro de um novo Lote de Item.",
@@ -133,5 +134,13 @@ public class LoteItemEstoqueController {
             @RequestParam(defaultValue = "10") int limit
     ) {
         return buscarLotesPaginadoUseCase.executar(page, limit);
+    }
+
+    @GetMapping("/paginadoSaida")
+    public PaginacaoResponseDTO<SaidaPaginacaoDTO> buscarPaginadoSaida(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int limit
+    ) {
+        return buscarLotesPaginadoSaidaUseCase.executar(page, limit);
     }
 }

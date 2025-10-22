@@ -7,6 +7,7 @@ import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.EntradaPaginacaoDTO;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.PaginacaoResponseDTO;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.SaidaPaginacaoDTO;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -80,6 +81,26 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
         Long total = repository.contarTotal();
         int paginaAtual = offset / limit;
 
+        return new PaginacaoResponseDTO<>(conteudo, total, paginaAtual, limit);
+    }
+
+    @Override
+    public PaginacaoResponseDTO<SaidaPaginacaoDTO> buscarPaginadoSaida(int offset, int limit) {
+        List<Object[]> resultados = repository.buscarSaidaPaginada(offset, limit);
+
+        List<SaidaPaginacaoDTO> conteudo = resultados.stream()
+                .map(obj -> new SaidaPaginacaoDTO(
+                        (String) obj[0],
+                        (String) obj[1],
+                        ((Number) obj[2]).doubleValue(),
+                        (Integer) obj[3],
+                        (String) obj[4],
+                        (Timestamp) obj[5]
+                ))
+                .collect(Collectors.toList());
+
+        Long total = repository.contarTotal();
+        int paginaAtual = offset / limit;
         return new PaginacaoResponseDTO<>(conteudo, total, paginaAtual, limit);
     }
 }

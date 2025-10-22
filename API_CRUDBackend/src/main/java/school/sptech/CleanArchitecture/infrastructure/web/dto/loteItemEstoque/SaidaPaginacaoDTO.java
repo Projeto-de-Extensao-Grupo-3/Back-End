@@ -17,5 +17,6 @@ public class SaidaPaginacaoDTO {
     private Double qtdItem;
     private Integer idLote;
     private String nomeParceiro;
+    private Timestamp saidaEstoque;
 }
 
