@@ -37,6 +37,7 @@ public class LoteController {
     private final RemoverLotePorIdUseCase removerLotePorIdUseCase;
     private final BuscarParceiroPorIdUseCase buscarParceiroPorIdUseCase;
     private final BuscarFuncionarioPorIdUseCase buscarFuncionarioPorIdUseCase;
+    private final LotesEmEstoqueUseCase lotesEmEstoqueUseCase;
 
     @Operation(
             summary = "Cadastro de um novo Lote.",
@@ -145,5 +146,11 @@ public class LoteController {
 
         removerLotePorIdUseCase.executar(id);
         return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping("/lotesEmEstoque")
+    public ResponseEntity<List<LoteEmEstoqueDto>> listarLotesEmEstoque(){
+        List<LoteEmEstoqueDto> lotesEmEstoque = lotesEmEstoqueUseCase.execute();
+        return lotesEmEstoque.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(lotesEmEstoque);
     }
 }

@@ -17,10 +17,7 @@ import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccaoRoupa.ConfeccaoRoupaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ItemEstoqueConfeccaoRoupaDto;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ItemEstoqueRequestDto;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ItemEstoqueResponseCadastroDto;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ItemEstoqueResponseDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -103,6 +100,17 @@ public class ItemEstoqueController {
     @GetMapping
     public ResponseEntity<List<ItemEstoqueResponseDto>> verificarTodos() {
         List<ItemEstoqueResponseDto> todosItens = ItemEstoqueEntityMapper.toResponseDtosEntity(
+                itemEstoqueListAllUseCase.execute()
+        );
+        if(todosItens.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+        return ResponseEntity.status(200).body(todosItens);
+    }
+
+    @GetMapping("/itensResumidos")
+    public ResponseEntity<List<ItemEstoqueResumidoDto>> listAllResumido(){
+        List<ItemEstoqueResumidoDto> todosItens = ItemEstoqueEntityMapper.toItensEstoqueResumidos(
                 itemEstoqueListAllUseCase.execute()
         );
         if(todosItens.isEmpty()) {

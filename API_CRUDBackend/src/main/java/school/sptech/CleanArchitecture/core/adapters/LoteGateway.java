@@ -1,6 +1,7 @@
 package school.sptech.CleanArchitecture.core.adapters;
 
 import school.sptech.CleanArchitecture.core.domain.entity.Lote;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.LoteEmEstoqueDto;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface LoteGateway {
     List<Lote> findAll();
 
     boolean existsByDescricao(String descricao);
+
+    List<LoteEmEstoqueDto> findLotesEmEstoque();
 }

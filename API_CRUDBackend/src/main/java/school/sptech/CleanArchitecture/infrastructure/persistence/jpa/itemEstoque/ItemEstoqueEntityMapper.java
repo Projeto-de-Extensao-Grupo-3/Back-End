@@ -463,4 +463,15 @@ public class ItemEstoqueEntityMapper {
                 idImagem
         );
     }
+
+    public static ItemEstoqueResumidoDto toItemEstoqueResumido(ItemEstoque itemEstoque){
+        return new ItemEstoqueResumidoDto(itemEstoque.getIdItemEstoque(), itemEstoque.getDescricao());
+    }
+
+    public static List<ItemEstoqueResumidoDto> toItensEstoqueResumidos(List<ItemEstoque> itensEstoque) {
+        return itensEstoque
+                .stream()
+                .map(ItemEstoqueEntityMapper::toItemEstoqueResumido)
+                .toList();
+    }
 }

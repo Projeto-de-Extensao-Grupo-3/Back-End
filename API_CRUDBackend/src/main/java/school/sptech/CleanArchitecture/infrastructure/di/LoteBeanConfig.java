@@ -32,4 +32,9 @@ public class LoteBeanConfig {
     public RemoverLotePorIdUseCase removerLotePorIdUseCase(LoteAdapter adapter) {
         return new RemoverLotePorIdUseCase(adapter);
     }
+
+    @Bean
+    public LotesEmEstoqueUseCase lotesEmEstoqueUseCase(LoteAdapter adapter){
+        return new LotesEmEstoqueUseCase(adapter);
+    }
 }
