@@ -10,8 +10,8 @@ public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Inte
     boolean existsByNome(String nome);
     CategoriaEntity findByNome(String nome);
 
-    @Query(value = "SELECT f.* FROM Categoria AS p\n" +
-            "JOIN Categoria f\n" +
+    @Query(value = "SELECT f.* FROM categoria AS p\n" +
+            "JOIN categoria f\n" +
             "ON f.fk_categoria_pai = p.id_categoria\n" +
             "AND p.nome = ?1", nativeQuery = true)
     List<CategoriaEntity> findByTipo(String tipo);
