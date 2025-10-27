@@ -32,6 +32,12 @@ public interface LoteItemEstoqueRepository extends JpaRepository<LoteItemEstoque
     Long contarTotal();
 
     @Query(value = """
+        SELECT COUNT(*) 
+        FROM saida_estoque
+        """, nativeQuery = true)
+    Long contarTotalSaida();
+
+    @Query(value = """
     SELECT 
         img.url AS url,
         ie.descricao AS nomeItem,

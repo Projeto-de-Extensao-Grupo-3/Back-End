@@ -99,7 +99,7 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
                 ))
                 .collect(Collectors.toList());
 
-        Long total = repository.contarTotal();
+        Long total = repository.contarTotalSaida();
         int paginaAtual = offset / limit;
         return new PaginacaoResponseDTO<>(conteudo, total, paginaAtual, limit);
     }
