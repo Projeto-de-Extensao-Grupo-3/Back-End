@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.infrastructure.di;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import school.sptech.CleanArchitecture.core.application.usecase.categoria.*;
+import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueListarItensCategoriaUseCase;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaAdapter;
 
 @Configuration
@@ -33,9 +34,10 @@ public class CategoriaBeanConfig {
         return new CategoriaListarPorTipoUseCase(categoriaAdapter);
     }
 
+
     @Bean
-    public CategoriaRemoverPorId categoriaRemoverPorId(CategoriaAdapter categoriaAdapter){
-        return new CategoriaRemoverPorId(categoriaAdapter);
+    public CategoriaRemoverPorId categoriaRemoverPorId(CategoriaAdapter categoriaAdapter, ItemEstoqueListarItensCategoriaUseCase listarItensCategoriaUseCase){
+        return new CategoriaRemoverPorId(categoriaAdapter, listarItensCategoriaUseCase);
     }
 
     @Bean

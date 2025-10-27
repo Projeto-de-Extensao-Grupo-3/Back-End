@@ -2,6 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoq
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
 
 import java.util.List;
 
@@ -34,4 +35,6 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
                     "GROUP BY roupa.id_item_estoque\n",
             nativeQuery = true)
     Double calcularCustoProducao(Integer id);
+
+    List<ItemEstoqueEntity> findByCategoria(CategoriaEntity categoria);
 }

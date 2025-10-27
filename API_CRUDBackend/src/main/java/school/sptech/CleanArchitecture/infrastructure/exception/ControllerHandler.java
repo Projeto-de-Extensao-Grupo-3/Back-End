@@ -14,7 +14,9 @@ import school.sptech.CleanArchitecture.core.application.exceptions.Prateleira.Pr
 import school.sptech.CleanArchitecture.core.application.exceptions.SaidaEstoque.SaidaEstoqueConflitoException;
 import school.sptech.CleanArchitecture.core.application.exceptions.SaidaEstoque.SaidaEstoqueNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaConflitoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaEmItemException;
 import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaNaoEncontradaException;
+import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaPaiException;
 import school.sptech.CleanArchitecture.core.application.exceptions.confeccaoRoupa.ConfeccaoRoupaConflitoException;
 import school.sptech.CleanArchitecture.core.application.exceptions.confeccaoRoupa.ConfeccaoRoupaNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.application.exceptions.corteTecido.CorteTecidoConflitoException;
@@ -35,7 +37,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleFuncionarioConflito(FuncionarioConflitoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.CONFLICT.value(),
-                "Conflito de dados relacionado a funcionário, dados já foram cadastrados",
+                "CONFLICT",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -46,7 +48,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleFuncionarioNaoEncontrado(FuncionarioNaoEncontradoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
-                "O Funcionario requisitado não foi encontrado.",
+                "NOT FOUND",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -59,7 +61,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleCategoriaConflito(CategoriaConflitoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.CONFLICT.value(),
-                "Conflito de dados relacionado a Categoria, dados já foram cadastrados",
+                "CONFLICT",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -71,7 +73,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleCategoriaNaoEncontrada(CategoriaNaoEncontradaException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
-                "A Categoria requisitada não foi encontrada ",
+                "NOT FOUND",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -83,7 +85,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleConfeccaoRoupaConflito(ConfeccaoRoupaConflitoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.CONFLICT.value(),
-                "Conflito de dados relacionado a Confeccao de Roupa, dados já foram cadastrados",
+                "CONFLICT",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -95,7 +97,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleCConfeccaoRoupaNaoEncontrado(ConfeccaoRoupaNaoEncontradoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
-                "A Confeccao de Roupa requisitada não foi encontrada ",
+                "NOT FOUND",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -107,7 +109,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleCorteTecidoConflito(CorteTecidoConflitoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.CONFLICT.value(),
-                "Conflito de dados relacionado a Corte de Tecido, dados já foram cadastrados",
+                "CONFLICT",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -119,7 +121,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleCorteTecidoNaoEncontrado(CorteTecidoNaoEncontradoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
-                "O Corte de tecido requisitado não foi encontrado.",
+                "NOT FOUND",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -131,7 +133,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleImagemConflito(ImagemConflitoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.CONFLICT.value(),
-                "Conflito de dados relacionado a Imagem, dados já foram cadastrados",
+                "CONFLICT",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -142,7 +144,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleImagemNaoEncontrada(ImagemNaoEncontradaexception ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
-                "A Imagem requisitada não foi encontrada.",
+                "NOT FOUND",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -154,7 +156,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleItemEstoqueConflito(ItemEstoqueConflitoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.CONFLICT.value(),
-                "Conflito de dados relacionado a Item de Estoque, dados já foram cadastrados",
+                "CONFLICT",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -165,7 +167,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleItemEstoqueNaoEncontrado(ItemEstoqueNaoEncontradoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
-                "O Item de Estoque requisitado não foi encontrado.",
+                "NOT FOUND",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -177,7 +179,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleLoteConflito(LoteConflitoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.CONFLICT.value(),
-                "Conflito de dados relacionado a Lote, dados já foram cadastrados",
+                "CONFLICT",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -188,7 +190,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleLoteNaoEncontrado(LoteNaoEncontradoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
-                "O Lote requisitado não foi encontrado.",
+                "NOT FOUND",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -200,7 +202,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleLoteItemEstoqueConflito(LoteItemEstoqueConflitoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.CONFLICT.value(),
-                "Conflito de dados relacionado a Lote de Item Estoque, dados já foram cadastrados",
+                "CONFLICT",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -212,7 +214,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleLoteItemEstoqueNaoEncontrado(LoteItemEstoqueNaoEncontradoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
-                "O Lote de Item Estoque requisitado não foi encontrado.",
+                "NOT FOUND",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -224,7 +226,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleParceiroConflito(ParceiroConflitoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.CONFLICT.value(),
-                "Conflito de dados relacionado a Parceiro, dados já foram cadastrados",
+                "CONFLICT",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -235,7 +237,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleParceiroNaoEncontrado(ParceiroNaoEncontradoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
-                "O Parceiro requisitado não foi encontrado.",
+                "NOT FOUND",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -247,7 +249,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handlePrateleiraConflito(PrateleiraConflitoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.CONFLICT.value(),
-                "Conflito de dados relacionado a Prateleira, dados já foram cadastrados",
+                "CONFLICT",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -258,7 +260,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handlePrateleiraNaoEncontrada(PrateleiraNaoEncontradaException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
-                "A Prateleira requisitada não foi encontrada.",
+                "NOT FOUND",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -270,7 +272,7 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleSaidaEstoqueConflito(SaidaEstoqueConflitoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.CONFLICT.value(),
-                "Conflito de dados relacionado a Saida de Estoque, dados já foram cadastrados",
+                "CONFLICT",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -281,12 +283,36 @@ public class ControllerHandler {
     public ResponseEntity<ErrorDto> handleSaidaEstoqueNaoEncontrado(SaidaEstoqueNaoEncontradoException ex,  WebRequest request) {
         ErrorDto error = new ErrorDto(
                 HttpStatus.NOT_FOUND.value(),
-                "A Saida de Estoque requisitada não foi encontrada.",
+                "NOT FOUND",
                 ex.getMessage(),
                 request.getDescription(false)
         );
 
         return ResponseEntity.status(404).body(error);
+    }
+
+    @ExceptionHandler(CategoriaPaiException.class)
+    public ResponseEntity<ErrorDto> handleCategoriaPai(CategoriaPaiException ex, WebRequest request){
+        ErrorDto error = new ErrorDto(
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                "UNPROCESSABLE ENTITY",
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+
+        return ResponseEntity.status(422).body(error);
+    }
+
+    @ExceptionHandler(CategoriaEmItemException.class)
+    public ResponseEntity<ErrorDto> handleCategoriaEmItem(CategoriaEmItemException ex, WebRequest request){
+        ErrorDto error = new ErrorDto(
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                "UNPROCESSABLE ENTITY",
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+
+        return ResponseEntity.status(422).body(error);
     }
 
 }

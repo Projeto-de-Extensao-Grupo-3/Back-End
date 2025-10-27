@@ -58,4 +58,8 @@ public class ItemEstoqueBeanConfig {
     public ItemEstoqueCalcularCustoProducaoUseCase itemEstoqueCalcularCustoProducaoUseCase(ItemEstoqueAdapter adapter){
         return new ItemEstoqueCalcularCustoProducaoUseCase(adapter);
     }
+
+    @Bean ItemEstoqueListarItensCategoriaUseCase itemEstoqueListarItensCategoriaUseCase(ItemEstoqueAdapter adapter){
+        return new ItemEstoqueListarItensCategoriaUseCase(adapter);
+    }
 }

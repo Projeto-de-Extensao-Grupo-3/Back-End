@@ -3,7 +3,10 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoq
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
+import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntityMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,5 +72,13 @@ public class ItemEstoqueAdapter implements ItemEstoqueGateway {
     @Override
     public Double calcularCustoProducao(Integer id) {
         return repository.calcularCustoProducao(id);
+    }
+
+    @Override
+    public List<ItemEstoque> findByCategoria(Categoria categoria) {
+        CategoriaEntity categoriaEntity = CategoriaEntityMapper.ofDomain(categoria);
+        return repository.findByCategoria(categoriaEntity).stream()
+                .map(ItemEstoqueEntityMapper::ofEntity)
+                .collect(Collectors.toList());
     }
 }

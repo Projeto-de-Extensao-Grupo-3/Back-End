@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.core.adapters;
 
+import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface ItemEstoqueGateway {
     List<ItemEstoque> findByDescricaoContainsIgnoreCase(String descricao);
 
     Double calcularCustoProducao(Integer id);
+
+    List<ItemEstoque> findByCategoria(Categoria categoria);
 }
