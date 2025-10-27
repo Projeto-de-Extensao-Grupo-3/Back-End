@@ -23,7 +23,7 @@ public interface ParceiroGateway {
             String email, String identificacao, String endereco
     );
 
-    List<Parceiro> findByCategoria(String categoria);
+    List<Parceiro> findByCategoriaOrderByIdParceiroDesc(String categoria);
 
     List<Parceiro> findByCategoriaAndNomeContainsIgnoreCase(String categoria, String nome);
 }

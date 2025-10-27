@@ -168,10 +168,10 @@ public class ItemEstoqueController {
         return ResponseEntity.status(204).build();
     }
 
-    @GetMapping("/filtros")
-    public ResponseEntity<List<ItemEstoqueResponseDto>> buscarPorDescricao(@RequestParam String descricao) {
+    @GetMapping("/{tipo}/filtros")
+    public ResponseEntity<List<ItemEstoqueResponseDto>> buscarPorDescricao(@PathVariable String tipo, @RequestParam String descricao) {
         List<ItemEstoqueResponseDto> itens = ItemEstoqueEntityMapper.toResponseDtosEntity(
-               itemEstoqueBuscarPorDescricaoUseCase.execute(descricao)
+               itemEstoqueBuscarPorDescricaoUseCase.execute(descricao, tipo)
         );
         if(itens.isEmpty()) {
             return ResponseEntity.status(204).build();

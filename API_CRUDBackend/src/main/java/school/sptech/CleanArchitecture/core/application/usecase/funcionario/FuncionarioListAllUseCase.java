@@ -14,6 +14,6 @@ public class FuncionarioListAllUseCase {
     }
 
     public List<Funcionario> execute(){
-        return gateway.findAll();
+        return gateway.findAllByOrderByIdFuncionarioDesc();
     }
 }

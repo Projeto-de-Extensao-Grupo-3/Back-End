@@ -37,8 +37,8 @@ public class FuncionarioAdapter implements FuncionarioGateway {
     }
 
     @Override
-    public List<Funcionario> findAll() {
-        return repository.findAll().stream()
+    public List<Funcionario> findAllByOrderByIdFuncionarioDesc() {
+        return repository.findAllByOrderByIdFuncionarioDesc().stream()
                 .map(FuncionarioEntityMapper::ofEntity)
                 .collect(Collectors.toList());
     }

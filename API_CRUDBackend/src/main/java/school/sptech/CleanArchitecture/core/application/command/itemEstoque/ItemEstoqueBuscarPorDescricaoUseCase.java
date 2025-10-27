@@ -13,7 +13,7 @@ public class ItemEstoqueBuscarPorDescricaoUseCase {
         this.gateway = gateway;
     }
 
-    public List<ItemEstoque> execute(String descricao){
-        return gateway.findByDescricaoContainsIgnoreCase(descricao);
+    public List<ItemEstoque> execute(String descricao, String tipo){
+        return gateway.findByDescricaoContainsIgnoreCase(descricao, tipo);
     }
 }

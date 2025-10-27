@@ -10,7 +10,7 @@ public interface FuncionarioGateway {
     Funcionario save(Funcionario funcionario);
     Optional<Funcionario> findByEmail(String email);
     Optional<Funcionario> findById(Integer id);
-    List<Funcionario> findAll();
+    List<Funcionario> findAllByOrderByIdFuncionarioDesc();
     boolean existsByCpfOrEmail(String cpf, String email);
     void deleteById(Integer id);
     boolean existsById(Integer integer);
