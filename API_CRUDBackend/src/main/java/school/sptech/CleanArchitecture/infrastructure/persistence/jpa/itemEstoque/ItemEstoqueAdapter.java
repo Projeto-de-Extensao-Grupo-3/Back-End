@@ -54,14 +54,14 @@ public class ItemEstoqueAdapter implements ItemEstoqueGateway {
 
     @Override
     public List<ItemEstoque> findByTipo(String tipo) {
-        return repository.findByTipo(tipo).stream()
+        return repository.findByCategoria_CategoriaPai_NomeOrderByIdItemEstoqueDesc(tipo).stream()
                 .map(ItemEstoqueEntityMapper::ofEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ItemEstoque> findByDescricaoContainsIgnoreCase(String descricao) {
-        return repository.findByDescricaoContainsIgnoreCase(descricao).stream()
+    public List<ItemEstoque> findByDescricaoContainsIgnoreCase(String descricao, String tipo) {
+        return repository.findByDescricaoContainsIgnoreCaseAndCategoria_CategoriaPai_Nome(descricao, tipo).stream()
                 .map(ItemEstoqueEntityMapper::ofEntity)
                 .collect(Collectors.toList());
     }

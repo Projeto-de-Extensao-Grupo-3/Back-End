@@ -21,7 +21,7 @@ public interface ItemEstoqueGateway {
 
     List<ItemEstoque> findByTipo(String tipo);
 
-    List<ItemEstoque> findByDescricaoContainsIgnoreCase(String descricao);
+    List<ItemEstoque> findByDescricaoContainsIgnoreCase(String descricao, String tipo);
 
     Double calcularCustoProducao(Integer id);
 }

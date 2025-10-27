@@ -59,8 +59,8 @@ public class ParceiroAdapter implements ParceiroGateway {
     }
 
     @Override
-    public List<Parceiro> findByCategoria(String categoria) {
-        return parceiroRepository.findByCategoria(categoria)
+    public List<Parceiro> findByCategoriaOrderByIdParceiroDesc(String categoria) {
+        return parceiroRepository.findByCategoriaOrderByIdParceiroDesc(categoria)
                 .stream()
                 .map(ParceiroEntityMapper::ofEntity)
                 .toList();

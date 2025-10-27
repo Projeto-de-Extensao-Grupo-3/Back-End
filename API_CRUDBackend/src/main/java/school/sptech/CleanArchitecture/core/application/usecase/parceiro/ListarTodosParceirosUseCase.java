@@ -14,6 +14,6 @@ public class ListarTodosParceirosUseCase {
     }
 
     public List<Parceiro> execute(String categoria) {
-        return gateway.findByCategoria(categoria);
+        return gateway.findByCategoriaOrderByIdParceiroDesc(categoria);
     }
 }

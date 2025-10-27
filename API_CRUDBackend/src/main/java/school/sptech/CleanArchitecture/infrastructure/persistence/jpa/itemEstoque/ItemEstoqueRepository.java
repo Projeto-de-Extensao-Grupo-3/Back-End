@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, Integer> {
     Boolean existsByDescricao(String descricao);
-    List<ItemEstoqueEntity> findByDescricaoContainsIgnoreCase(String descricao);
+    List<ItemEstoqueEntity> findByDescricaoContainsIgnoreCaseAndCategoria_CategoriaPai_Nome(String descricao, String tipo);
 
-    @Query("SELECT i FROM ItemEstoqueEntity i\n" +
-            "JOIN i.categoria s\n" +
-            "JOIN s.categoriaPai c\n" +
-            "WHERE c.nome = ?1")
-    List<ItemEstoqueEntity> findByTipo(String tipo);
+//    @Query("SELECT i FROM ItemEstoqueEntity i\n" +
+//            "JOIN i.categoria s\n" +
+//            "JOIN s.categoriaPai c\n" +
+//            "WHERE c.nome = ?1")
+    List<ItemEstoqueEntity> findByCategoria_CategoriaPai_NomeOrderByIdItemEstoqueDesc(String tipo);
 
     @Query(value =
             "SELECT SUM(c.qtd_tecido * tecido.preco + lt_item.preco) AS CUSTO_TOTAL\n" +
