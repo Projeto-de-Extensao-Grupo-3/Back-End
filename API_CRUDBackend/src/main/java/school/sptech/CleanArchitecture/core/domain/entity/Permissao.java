@@ -6,6 +6,10 @@ public class Permissao {
 
     public Permissao() {}
 
+    public Permissao(Integer idPermissao) {
+        this.idPermissao = idPermissao;
+    }
+
     public Permissao(Integer idPermissao, String descricao) {
         this.idPermissao = idPermissao;
         this.descricao = descricao;

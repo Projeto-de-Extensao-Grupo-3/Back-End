@@ -16,4 +16,6 @@ public interface FuncionarioGateway {
     boolean existsById(Integer integer);
 
     List<Funcionario> findByNomeContainsIgnoreCase(String nome);
+    List<Funcionario> findByPermissoes_IdPermissao(Integer idPermissao);
+
 }

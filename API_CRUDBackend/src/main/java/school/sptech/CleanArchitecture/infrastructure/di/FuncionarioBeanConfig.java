@@ -49,4 +49,9 @@ public class FuncionarioBeanConfig {
     public FuncionarioRemoverPorIdUseCase funcionarioRemoverPorIdUseCase(FuncionarioAdapter adapter){
         return new FuncionarioRemoverPorIdUseCase(adapter);
     }
+
+    @Bean
+    public FuncionarioListarPorPermissaoUserCase funcionarioListarPorPermissaoUserCase(FuncionarioAdapter adapter){
+        return new FuncionarioListarPorPermissaoUserCase(adapter);
+    }
 }

@@ -12,7 +12,7 @@ public class ItemEstoqueEmailDto {
 
     public ItemEstoqueEmailDto(ItemEstoque item) {
         this.descricao = item.getDescricao();
-        this.preco = item.getPreco();
+        this.preco = item.getPreco() == null ? 0.0 : item.getPreco();
         this.qtdArmazenado = item.getQtdArmazenado();
     }
 }

@@ -64,4 +64,11 @@ public class FuncionarioAdapter implements FuncionarioGateway {
                 .map(FuncionarioEntityMapper::ofEntity)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Funcionario> findByPermissoes_IdPermissao(Integer idPermissao) {
+        return repository.findByPermissoes_IdPermissao(idPermissao).stream()
+                .map(FuncionarioEntityMapper::ofEntity)
+                .collect(Collectors.toList());
+    }
 }

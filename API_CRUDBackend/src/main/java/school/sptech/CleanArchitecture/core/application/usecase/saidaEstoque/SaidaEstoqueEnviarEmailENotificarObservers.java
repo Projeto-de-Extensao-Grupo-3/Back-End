@@ -1,6 +1,9 @@
 package school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque;
 
+import school.sptech.CleanArchitecture.core.application.usecase.funcionario.FuncionarioListarPorPermissaoUserCase;
+import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
+import school.sptech.CleanArchitecture.core.domain.entity.Permissao;
 import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.core.domain.observer.Subject;
@@ -16,23 +19,34 @@ public class SaidaEstoqueEnviarEmailENotificarObservers implements Subject {
 
     private final SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarSaidaUseCase;
 
+    private final FuncionarioListarPorPermissaoUserCase listarPorPermissaoUserCase;
+
+    private static final int PERMISSAO_PARA_RECEBER_NOTIFICACAO = 7;
+
     private final List<Observer> observadores = new ArrayList<>();
 
-    public SaidaEstoqueEnviarEmailENotificarObservers(RabbitProducer rabbitProducer, SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarSaidaUseCase) {
+    public SaidaEstoqueEnviarEmailENotificarObservers(RabbitProducer rabbitProducer, SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarSaidaUseCase, FuncionarioListarPorPermissaoUserCase listarPorPermissaoUserCase) {
         this.rabbitProducer = rabbitProducer;
         this.atualizarSaidaUseCase = atualizarSaidaUseCase;
+        this.listarPorPermissaoUserCase = listarPorPermissaoUserCase;
     }
 
     public void execute(SaidaEstoque saidaDeEstoque){
         ItemEstoque itemEstoqueAtualizado = atualizarSaidaUseCase.execute(saidaDeEstoque, 0.0);
         notificarObservers(itemEstoqueAtualizado);
 
+        List<Funcionario> funcionariosParaNotificar = listarPorPermissaoUserCase.execute(new Permissao(PERMISSAO_PARA_RECEBER_NOTIFICACAO));
+        EmailDto emailDto = new EmailDto(saidaDeEstoque, itemEstoqueAtualizado, funcionariosParaNotificar);
+        try {
+            rabbitProducer.enviarItemParaRelatorio(emailDto);
+        }catch (Exception e){
+            System.out.println("❌ Falha ao enviar objeto para o relatório.");
+        }
         if (itemEstoqueAtualizado.getNotificar()) {
-            EmailDto emailDto = new EmailDto(saidaDeEstoque, itemEstoqueAtualizado);
             try {
-                rabbitProducer.enviarPedido(emailDto);
+                rabbitProducer.enviarSaidaMarcada(emailDto);
             }catch (Exception e){
-                System.out.println("❌ Falha ao enviar objeto para fila RabbitMQ");
+                System.out.println("❌ Falha ao enviar objeto marcado para fila RabbitMQ.");
             }
         }
     }

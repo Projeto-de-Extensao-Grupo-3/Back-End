@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.infrastructure.di;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.BuscarFuncionarioPorIdUseCase;
+import school.sptech.CleanArchitecture.core.application.usecase.funcionario.FuncionarioListarPorPermissaoUserCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueBuscarPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.BuscarPorIdLoteItemEstoqueUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.parceiro.BuscarParceiroPorIdUseCase;
@@ -42,8 +43,8 @@ public class SaidaEstoqueBeanConfig {
         return new SaidaEstoqueBuscarPorMotivoUseCase(adapter);
     }
 
-    @Bean SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers(RabbitProducer rabbitProducer, SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarSaidaUseCase){
-        return new SaidaEstoqueEnviarEmailENotificarObservers(rabbitProducer, atualizarSaidaUseCase);
+    @Bean SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers(RabbitProducer rabbitProducer, SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarSaidaUseCase, FuncionarioListarPorPermissaoUserCase listarPorPermissaoUserCase){
+        return new SaidaEstoqueEnviarEmailENotificarObservers(rabbitProducer, atualizarSaidaUseCase, listarPorPermissaoUserCase);
     }
 
     @Bean
