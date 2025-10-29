@@ -83,4 +83,8 @@ public class ItemEstoqueEntity {
         this.idItemEstoque = idItemEstoque;
         this.descricao = descricao;
     }
+
+    public ItemEstoqueEntity(Integer idItemEstoque) {
+        this.idItemEstoque = idItemEstoque;
+    }
 }

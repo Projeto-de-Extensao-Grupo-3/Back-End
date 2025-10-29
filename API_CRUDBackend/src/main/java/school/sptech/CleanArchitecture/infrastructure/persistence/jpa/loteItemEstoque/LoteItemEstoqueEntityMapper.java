@@ -14,8 +14,8 @@ public class LoteItemEstoqueEntityMapper {
         domain.setIdLoteItemEstoque(entity.getIdLoteItemEstoque());
         domain.setQtdItem(entity.getQtdItem());
         domain.setPreco(entity.getPreco());
-        domain.setItemEstoque(new ItemEstoque(entity.getItemEstoque()));
-        domain.setLote(new Lote(entity.getLote()));
+        domain.setItemEstoque(new ItemEstoque(entity.getItemEstoque().getIdItemEstoque()));
+        domain.setLote(new Lote(entity.getLote().getIdLote()));
         return domain;
     }
 
@@ -29,7 +29,7 @@ public class LoteItemEstoqueEntityMapper {
         entity.setIdLoteItemEstoque(domain.getIdLoteItemEstoque());
         entity.setQtdItem(domain.getQtdItem());
         entity.setPreco(domain.getPreco());
-        entity.setItemEstoque(new ItemEstoqueEntity(domain.getItemEstoque()));
+        entity.setItemEstoque(new ItemEstoqueEntity(domain.getItemEstoque().getIdItemEstoque()));
         entity.setLote(new LoteEntity(domain.getLote().getIdLote()));
         return entity;
     }

@@ -229,6 +229,10 @@ public class ItemEstoqueEntityMapper {
                 )
                 .collect(Collectors.toSet());
 
+        ItemEstoquePrateleiraResponseDto prateleiraDto = item.getPrateleira() != null
+                ? new ItemEstoquePrateleiraResponseDto(item.getPrateleira().getIdPrateleira(), item.getPrateleira().getCodigo())
+                : null;
+
         ItemEstoqueImagemResponseDto imagemDto = item.getImagem() != null
                 ? new ItemEstoqueImagemResponseDto(item.getImagem().getIdImagem(), item.getImagem().getUrl())
                 : null;
@@ -244,7 +248,7 @@ public class ItemEstoqueEntityMapper {
                 categoriaDto,
                 caracteristicasDto,
                 confeccaoRoupaDto,
-                item.getPrateleira().getIdPrateleira(),
+                prateleiraDto,
                 item.getPreco(),
                 imagemDto
         );
@@ -399,6 +403,10 @@ public class ItemEstoqueEntityMapper {
                     .collect(Collectors.toSet());
         }
 
+        ItemEstoquePrateleiraResponseDto prateleiraDto = item.getPrateleira() != null
+                ? new ItemEstoquePrateleiraResponseDto(item.getPrateleira().getIdPrateleira(), item.getPrateleira().getCodigo())
+                : null;
+
         ItemEstoqueImagemResponseDto imagemDto = null;
         if (item.getImagem() != null) {
             imagemDto = new ItemEstoqueImagemResponseDto(item.getImagem().getIdImagem(), item.getImagem().getUrl());
@@ -415,7 +423,7 @@ public class ItemEstoqueEntityMapper {
                 categoriaDto,
                 caracteristicasDto,
                 confeccaoRoupaDto,
-                item.getPrateleira().getIdPrateleira(),
+                prateleiraDto,
                 item.getPreco(),
                 imagemDto
         );

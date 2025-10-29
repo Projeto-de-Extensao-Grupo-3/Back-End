@@ -34,7 +34,7 @@ public class SaidaEstoqueCadastrarUseCase {
 
         saidaDeEstoque.setResponsavel(
                 funcionarioPorIdUseCase.execute(saidaDeEstoque.getResponsavel().getIdFuncionario()));
-        saidaDeEstoque.setCostureira(
+        saidaDeEstoque.setCostureira(saidaDeEstoque.getCostureira() == null ? null :
                 parceiroPorIdUseCase.execute(saidaDeEstoque.getCostureira().getId()));
         saidaDeEstoque.setLoteItemEstoque(
                 loteItemEstoqueUseCase.executar(saidaDeEstoque.getLoteItemEstoque().getIdLoteItemEstoque()));

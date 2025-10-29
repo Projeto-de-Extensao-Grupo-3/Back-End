@@ -22,6 +22,10 @@ public class Lote {
         this.responsavel = new Funcionario(lote.getResponsavel());
     }
 
+    public Lote(Integer id) {
+        this.idLote = id;
+    }
+
     public Integer getIdLote() {
         return idLote;
     }
