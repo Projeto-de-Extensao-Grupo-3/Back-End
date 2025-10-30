@@ -37,4 +37,6 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
     Double calcularCustoProducao(Integer id);
 
     List<ItemEstoqueEntity> findByCategoria(CategoriaEntity categoria);
+
+    List<ItemEstoqueEntity> findByCaracteristicas_IdCategoria(Integer idCategoria);
 }

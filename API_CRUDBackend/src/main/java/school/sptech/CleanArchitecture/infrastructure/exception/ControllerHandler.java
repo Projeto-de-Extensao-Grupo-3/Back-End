@@ -13,10 +13,7 @@ import school.sptech.CleanArchitecture.core.application.exceptions.Prateleira.Pr
 import school.sptech.CleanArchitecture.core.application.exceptions.Prateleira.PrateleiraNaoEncontradaException;
 import school.sptech.CleanArchitecture.core.application.exceptions.SaidaEstoque.SaidaEstoqueConflitoException;
 import school.sptech.CleanArchitecture.core.application.exceptions.SaidaEstoque.SaidaEstoqueNaoEncontradoException;
-import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaConflitoException;
-import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaEmItemException;
-import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaNaoEncontradaException;
-import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaPaiException;
+import school.sptech.CleanArchitecture.core.application.exceptions.categoria.*;
 import school.sptech.CleanArchitecture.core.application.exceptions.confeccaoRoupa.ConfeccaoRoupaConflitoException;
 import school.sptech.CleanArchitecture.core.application.exceptions.confeccaoRoupa.ConfeccaoRoupaNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.application.exceptions.corteTecido.CorteTecidoConflitoException;
@@ -308,6 +305,18 @@ public class ControllerHandler {
         ErrorDto error = new ErrorDto(
                 HttpStatus.UNPROCESSABLE_ENTITY.value(),
                 "UNPROCESSABLE ENTITY",
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+
+        return ResponseEntity.status(422).body(error);
+    }
+
+    @ExceptionHandler(CategoriaBadRequestException.class)
+    public ResponseEntity<ErrorDto> handleCategoriaBadRequest(CategoriaBadRequestException ex, WebRequest request){
+        ErrorDto error = new ErrorDto(
+                HttpStatus.BAD_REQUEST.value(),
+                "BAD REQUEST",
                 ex.getMessage(),
                 request.getDescription(false)
         );

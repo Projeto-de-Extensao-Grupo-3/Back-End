@@ -27,4 +27,6 @@ public interface ItemEstoqueGateway {
     Double calcularCustoProducao(Integer id);
 
     List<ItemEstoque> findByCategoria(Categoria categoria);
+
+    List<ItemEstoque> findByCaracteristicas_IdCategoria(Integer idCategoria);
 }

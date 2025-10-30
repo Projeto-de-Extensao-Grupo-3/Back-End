@@ -59,7 +59,19 @@ public class ItemEstoqueBeanConfig {
         return new ItemEstoqueCalcularCustoProducaoUseCase(adapter);
     }
 
-    @Bean ItemEstoqueListarItensCategoriaUseCase itemEstoqueListarItensCategoriaUseCase(ItemEstoqueAdapter adapter){
+    @Bean
+    public ItemEstoqueListarItensCategoriaUseCase itemEstoqueListarItensCategoriaUseCase(ItemEstoqueAdapter adapter){
         return new ItemEstoqueListarItensCategoriaUseCase(adapter);
     }
+
+    @Bean
+    public ItemEstoqueListarItensCaracteristicaUseCase itemEstoqueListarItensCaracteristicaUseCase(ItemEstoqueAdapter adapter){
+        return new ItemEstoqueListarItensCaracteristicaUseCase(adapter);
+    }
+
+    @Bean
+    public ItemEstoqueRemoverCaracteristicaUseCase itemEstoqueRemoverCaracteristicaUseCase(ItemEstoqueAdapter adapter){
+        return new ItemEstoqueRemoverCaracteristicaUseCase(adapter);
+    }
+
 }

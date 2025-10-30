@@ -42,6 +42,8 @@ public class CategoriaController {
 
     private final CriarCategoriaUseCase criarCategoriaUseCase;
 
+    private final CaracteristicaRemoverPorIdUseCase caracteristicaRemoverPorIdUseCase;
+
     @Operation(
             summary = "Cadastro de uma nova Categoria de Item.",
             description = "Retorna um objeto do tipo CategoriaResponseDto quando cadastrado com sucesso."
@@ -162,8 +164,15 @@ public class CategoriaController {
     })
     @SecurityRequirement(name = "Bearer")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerPorId(@PathVariable Integer id) {
+    public ResponseEntity<Void> removerCategoriaPorId(@PathVariable Integer id) {
         categoriaRemoverPorId.execute(id);
+        return ResponseEntity.status(204).build();
+    }
+
+    @SecurityRequirement(name = "Bearer")
+    @DeleteMapping("/caracteristica/{id}")
+    public ResponseEntity<Void> removerCaracteristicaPorId(@PathVariable Integer id) {
+        caracteristicaRemoverPorIdUseCase.execute(id);
         return ResponseEntity.status(204).build();
     }
 }

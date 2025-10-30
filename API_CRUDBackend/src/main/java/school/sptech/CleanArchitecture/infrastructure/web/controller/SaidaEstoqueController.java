@@ -42,8 +42,6 @@ public class SaidaEstoqueController {
 
     private final SaidaEstoqueRemoverPorIdUseCase saidaEstoqueRemoverPorIdUseCase;
 
-    private final RabbitProducer rabbitProducer;
-
     @Operation(
             summary = "Cadastramento de uma nova saída.",
             description = "Retorna um objeto do tipo SaidaEstoqueResponseDto quando cadastrado com sucesso."

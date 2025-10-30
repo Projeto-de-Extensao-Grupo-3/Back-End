@@ -2,6 +2,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.categoria;
 
 import school.sptech.CRUDBackend.exception.Categoria.CategoriaNaoEncontradaException;
 import school.sptech.CleanArchitecture.core.adapters.CategoriaGateway;
+import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaBadRequestException;
 import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaEmItemException;
 import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaPaiException;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueListarItensCategoriaUseCase;
@@ -43,6 +44,7 @@ public class CategoriaRemoverPorId {
                 }
                 gateway.deleteById(id);
             }
+            throw new CategoriaBadRequestException("O objeto precisa ter a categoria pai como Tecido (ID 1) ou Roupa (ID 2).");
         } else {
             throw new CategoriaNaoEncontradaException("Categoria com ID " + id + " não encontrada");
         }

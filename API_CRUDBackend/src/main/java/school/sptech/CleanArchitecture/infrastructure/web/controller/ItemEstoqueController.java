@@ -70,6 +70,7 @@ public class ItemEstoqueController {
         return ResponseEntity.status(201).body(itemCadastrado);
     }
 
+    @SecurityRequirement(name = "Bearer")
     @PostMapping("/tecidos/{id}")
     public ResponseEntity<ItemEstoqueResponseDto> cadastrarTecidosDaRoupa(
             @PathVariable Integer id,
@@ -108,6 +109,7 @@ public class ItemEstoqueController {
         return ResponseEntity.status(200).body(todosItens);
     }
 
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/itensResumidos")
     public ResponseEntity<List<ItemEstoqueResumidoDto>> listAllResumido(){
         List<ItemEstoqueResumidoDto> todosItens = ItemEstoqueEntityMapper.toItensEstoqueResumidos(

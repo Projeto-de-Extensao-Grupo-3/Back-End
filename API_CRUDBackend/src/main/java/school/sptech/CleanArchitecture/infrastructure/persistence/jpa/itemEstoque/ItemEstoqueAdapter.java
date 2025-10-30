@@ -81,4 +81,10 @@ public class ItemEstoqueAdapter implements ItemEstoqueGateway {
                 .map(ItemEstoqueEntityMapper::ofEntity)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ItemEstoque> findByCaracteristicas_IdCategoria(Integer idCategoria) {
+       List<ItemEstoqueEntity> itensEstoque = repository.findByCaracteristicas_IdCategoria(idCategoria);
+       return itensEstoque.stream().map(ItemEstoqueEntityMapper::ofEntity).collect(Collectors.toList());
+    }
 }
