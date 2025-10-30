@@ -4,13 +4,21 @@ import school.sptech.CleanArchitecture.core.adapters.SaidaEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.saidaEstoque.SaidaEstoqueCadastrarCommand;
 import school.sptech.CleanArchitecture.core.application.mapper.SaidaEstoqueMapper;
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.BuscarFuncionarioPorIdUseCase;
+import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarQuantidadeUseCase;
+import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueBuscarPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.BuscarPorIdLoteItemEstoqueUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.parceiro.BuscarParceiroPorIdUseCase;
+import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
+import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
 
 public class SaidaEstoqueCadastrarUseCase {
 
     private final SaidaEstoqueGateway saidaGateway;
+
+    private final ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase;
+
+    private final ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase;
 
     private final BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase;
 
@@ -20,9 +28,11 @@ public class SaidaEstoqueCadastrarUseCase {
 
     private final SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers;
 
-    public SaidaEstoqueCadastrarUseCase(SaidaEstoqueGateway saidaGateway, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase,
+    public SaidaEstoqueCadastrarUseCase(SaidaEstoqueGateway saidaGateway, ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase,
                                         BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase, SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers) {
         this.saidaGateway = saidaGateway;
+        this.itemEstoqueAtualizarUseCase = itemEstoqueAtualizarUseCase;
+        this.itemEstoqueBuscarUseCase = itemEstoqueBuscarUseCase;
         this.funcionarioPorIdUseCase = funcionarioPorIdUseCase;
         this.loteItemEstoqueUseCase = loteItemEstoqueUseCase;
         this.parceiroPorIdUseCase = parceiroPorIdUseCase;
@@ -32,12 +42,19 @@ public class SaidaEstoqueCadastrarUseCase {
     public SaidaEstoque execute(SaidaEstoqueCadastrarCommand command){
         SaidaEstoque saidaDeEstoque = SaidaEstoqueMapper.ofCadastrarCommand(command);
 
+        // Atualização da quantidade de ItemEstoque
+        LoteItemEstoque loteItemEstoque = loteItemEstoqueUseCase.executar(saidaDeEstoque.getLoteItemEstoque().getIdLoteItemEstoque());
+        ItemEstoque itemEstoque = itemEstoqueBuscarUseCase.execute(loteItemEstoque.getItemEstoque().getIdItemEstoque());
+        Double qtdEntradaNova = saidaDeEstoque.getQtdSaida();
+        itemEstoque.setQtdArmazenado(itemEstoque.getQtdArmazenado() - qtdEntradaNova);
+        itemEstoqueAtualizarUseCase.atualizarQuantidade(itemEstoque);
+        /*--------------------------------------------------------------------------------------*/
+
         saidaDeEstoque.setResponsavel(
                 funcionarioPorIdUseCase.execute(saidaDeEstoque.getResponsavel().getIdFuncionario()));
         saidaDeEstoque.setCostureira(saidaDeEstoque.getCostureira() == null ? null :
                 parceiroPorIdUseCase.execute(saidaDeEstoque.getCostureira().getId()));
-        saidaDeEstoque.setLoteItemEstoque(
-                loteItemEstoqueUseCase.executar(saidaDeEstoque.getLoteItemEstoque().getIdLoteItemEstoque()));
+        saidaDeEstoque.setLoteItemEstoque(loteItemEstoque);
 
         enviarEmailENotificarObservers.execute(saidaDeEstoque);
 
