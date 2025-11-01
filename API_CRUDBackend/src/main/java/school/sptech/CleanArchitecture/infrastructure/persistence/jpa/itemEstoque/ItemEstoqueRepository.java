@@ -1,7 +1,10 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
 
 import java.util.List;
@@ -39,4 +42,10 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
     List<ItemEstoqueEntity> findByCategoria(CategoriaEntity categoria);
 
     List<ItemEstoqueEntity> findByCaracteristicas_IdCategoria(Integer idCategoria);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM caracteristica_item_estoque WHERE fk_categoria = :idCategoria", nativeQuery = true)
+    void removerCaracteristica(@Param("idCategoria") Integer idCategoria);
+
 }

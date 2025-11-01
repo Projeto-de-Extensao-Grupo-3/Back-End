@@ -15,4 +15,5 @@ public interface CategoriaRepository extends JpaRepository<CategoriaEntity, Inte
             "ON f.fk_categoria_pai = p.id_categoria\n" +
             "AND p.nome = ?1", nativeQuery = true)
     List<CategoriaEntity> findByTipo(String tipo);
+
 }

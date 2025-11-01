@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.core.adapters;
 
+import org.springframework.data.repository.query.Param;
 import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 
@@ -29,4 +30,6 @@ public interface ItemEstoqueGateway {
     List<ItemEstoque> findByCategoria(Categoria categoria);
 
     List<ItemEstoque> findByCaracteristicas_IdCategoria(Integer idCategoria);
+
+    void removerCaracteristica(Integer idCategoria);
 }

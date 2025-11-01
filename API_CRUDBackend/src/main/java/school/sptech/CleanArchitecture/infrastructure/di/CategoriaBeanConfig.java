@@ -2,10 +2,9 @@ package school.sptech.CleanArchitecture.infrastructure.di;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.usecase.categoria.*;
-import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueListarItensCaracteristicaUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueListarItensCategoriaUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueRemoverCaracteristicaUseCase;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaAdapter;
 
 @Configuration
@@ -43,8 +42,8 @@ public class CategoriaBeanConfig {
     }
 
     @Bean
-    public CaracteristicaRemoverPorIdUseCase caracteristicaRemoverPorIdUseCase(CategoriaAdapter adapter, ItemEstoqueListarItensCaracteristicaUseCase listarItensCaracteristicaUseCase, ItemEstoqueRemoverCaracteristicaUseCase removerCaracteristicaUseCase){
-        return new CaracteristicaRemoverPorIdUseCase(adapter, listarItensCaracteristicaUseCase, removerCaracteristicaUseCase);
+    public CaracteristicaRemoverPorIdUseCase caracteristicaRemoverPorIdUseCase(CategoriaAdapter adapter, ItemEstoqueGateway itemEstoqueGateway){
+        return new CaracteristicaRemoverPorIdUseCase(adapter, itemEstoqueGateway);
     }
 
     @Bean

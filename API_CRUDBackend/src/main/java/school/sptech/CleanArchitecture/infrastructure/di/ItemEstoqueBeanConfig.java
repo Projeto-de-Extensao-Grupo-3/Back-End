@@ -2,6 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.di;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import school.sptech.CleanArchitecture.core.application.usecase.categoria.CategoriaBuscarPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueCalcularCustoProducaoUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueAdapter;
@@ -70,8 +71,8 @@ public class ItemEstoqueBeanConfig {
     }
 
     @Bean
-    public ItemEstoqueRemoverCaracteristicaUseCase itemEstoqueRemoverCaracteristicaUseCase(ItemEstoqueAdapter adapter){
-        return new ItemEstoqueRemoverCaracteristicaUseCase(adapter);
+    public ItemEstoqueRemoverCaracteristicaUseCase itemEstoqueRemoverCaracteristicaUseCase(ItemEstoqueAdapter adapter, CategoriaBuscarPorIdUseCase categoriaBuscarPorIdUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarPorIdUseCase){
+        return new ItemEstoqueRemoverCaracteristicaUseCase(adapter, categoriaBuscarPorIdUseCase, itemEstoqueBuscarPorIdUseCase);
     }
 
 }

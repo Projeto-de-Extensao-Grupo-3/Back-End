@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
@@ -7,6 +8,8 @@ import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntityMapper;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaRepository;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleira.PrateleiraEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,13 +20,12 @@ import java.util.stream.Collectors;
 public class ItemEstoqueAdapter implements ItemEstoqueGateway {
 
     private final ItemEstoqueRepository repository;
+    private final CategoriaRepository categoriaRepository;
 
     @Override
     public ItemEstoque save(ItemEstoque itemEstoque) {
         ItemEstoqueEntity entity = ItemEstoqueEntityMapper.ofDomain(itemEstoque);
-        System.out.println(entity);
         ItemEstoque retorno =  ItemEstoqueEntityMapper.ofEntity(repository.save(entity));
-        System.out.println(retorno);
         return retorno;
     }
 
@@ -86,5 +88,10 @@ public class ItemEstoqueAdapter implements ItemEstoqueGateway {
     public List<ItemEstoque> findByCaracteristicas_IdCategoria(Integer idCategoria) {
        List<ItemEstoqueEntity> itensEstoque = repository.findByCaracteristicas_IdCategoria(idCategoria);
        return itensEstoque.stream().map(ItemEstoqueEntityMapper::ofEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public void removerCaracteristica(Integer idCategoria) {
+        repository.removerCaracteristica(idCategoria);
     }
 }

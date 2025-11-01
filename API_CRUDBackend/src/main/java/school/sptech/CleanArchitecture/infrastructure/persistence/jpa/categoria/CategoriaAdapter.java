@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.CategoriaGateway;
 import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaNaoEncontradaException;
@@ -41,6 +42,12 @@ public class CategoriaAdapter implements CategoriaGateway {
     @Override
     public void deleteById(Integer id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public void delete(Categoria categoria) {
+        CategoriaEntity categoriaEntity = CategoriaEntityMapper.ofDomain(categoria);
+        repository.delete(categoriaEntity);
     }
 
     @Override

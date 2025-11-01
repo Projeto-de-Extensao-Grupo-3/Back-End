@@ -1,37 +1,32 @@
 package school.sptech.CleanArchitecture.core.application.usecase.categoria;
 
+import jakarta.transaction.Transactional;
 import school.sptech.CRUDBackend.exception.Categoria.CategoriaNaoEncontradaException;
 import school.sptech.CleanArchitecture.core.adapters.CategoriaGateway;
+import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.exceptions.categoria.CategoriaBadRequestException;
-import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueListarItensCaracteristicaUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueRemoverCaracteristicaUseCase;
 import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
-import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
-
-import java.util.List;
 
 public class CaracteristicaRemoverPorIdUseCase {
 
     private final CategoriaGateway gateway;
 
-    private final ItemEstoqueListarItensCaracteristicaUseCase listarItensCaracteristicaUseCase;
+    private final ItemEstoqueGateway itemEstoqueGateway;
 
-    private final ItemEstoqueRemoverCaracteristicaUseCase removerCaracteristicaUseCase;
-
-    public CaracteristicaRemoverPorIdUseCase(CategoriaGateway gateway, ItemEstoqueListarItensCaracteristicaUseCase listarItensCaracteristicaUseCase, ItemEstoqueRemoverCaracteristicaUseCase removerCaracteristicaUseCase) {
+    public CaracteristicaRemoverPorIdUseCase(CategoriaGateway gateway, ItemEstoqueGateway itemEstoqueGateway) {
         this.gateway = gateway;
-        this.listarItensCaracteristicaUseCase = listarItensCaracteristicaUseCase;
-        this.removerCaracteristicaUseCase = removerCaracteristicaUseCase;
+        this.itemEstoqueGateway = itemEstoqueGateway;
     }
 
+    @Transactional
     public void execute(Integer id){
         if (gateway.existsById(id)) {
-            Categoria categoria = gateway.findById(id);
-            Integer idPai = categoria.getCategoriaPai().getIdCategoria();
+            Categoria caracteristica = gateway.findById(id);
+            Integer idPai = caracteristica.getCategoriaPai().getIdCategoria();
             if (idPai == 3){
-                List<ItemEstoque> itensComCaracteristica = listarItensCaracteristicaUseCase.execute(categoria.getIdCategoria());
-                itensComCaracteristica.stream().map(i -> removerCaracteristicaUseCase.execute(i, categoria));
-                gateway.deleteById(id);
+                itemEstoqueGateway.removerCaracteristica(id);
+                gateway.delete(caracteristica);
+                return;
             }
             throw new CategoriaBadRequestException("O objeto não corresponde a uma caracteristica pois não possui ID da categoria pai como 3.");
         } else {

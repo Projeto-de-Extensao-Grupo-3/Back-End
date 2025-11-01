@@ -14,6 +14,8 @@ public interface CategoriaGateway {
 
     void deleteById(Integer id);
 
+    void delete(Categoria categoria);
+
     Categoria findById(Integer id);
 
     boolean existsByNome(String nome);
