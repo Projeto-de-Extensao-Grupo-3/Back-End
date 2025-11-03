@@ -42,9 +42,13 @@ public class SaidaEstoqueEntityMapper {
             costureira = new ParceiroEntity();
             costureira.setIdParceiro(saidaEstoque.getCostureira().getId());
             costureira.setCategoria(saidaEstoque.getCostureira().getCategoria());
-            costureira.setTelefone(saidaEstoque.getCostureira().getTelefone());
             costureira.setNome(saidaEstoque.getCostureira().getNome());
-            costureira.setEmail(saidaEstoque.getCostureira().getEmail().getValue());
+            costureira.setTelefone(saidaEstoque.getCostureira().getTelefone());
+
+            if(saidaEstoque.getCostureira().getEmail() != null){
+                costureira.setEmail(saidaEstoque.getCostureira().getEmail().getValue());
+            }
+
             costureira.setEndereco(saidaEstoque.getCostureira().getEndereco());
         }
 

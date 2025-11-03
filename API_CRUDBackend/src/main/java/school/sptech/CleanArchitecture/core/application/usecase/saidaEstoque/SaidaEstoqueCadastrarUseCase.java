@@ -1,22 +1,24 @@
 package school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque;
 
 import school.sptech.CleanArchitecture.core.adapters.SaidaEstoqueGateway;
+import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueAtualizarPorIdCommand;
 import school.sptech.CleanArchitecture.core.application.command.saidaEstoque.SaidaEstoqueCadastrarCommand;
 import school.sptech.CleanArchitecture.core.application.mapper.SaidaEstoqueMapper;
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.BuscarFuncionarioPorIdUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarQuantidadeUseCase;
+import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueBuscarPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.BuscarPorIdLoteItemEstoqueUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.parceiro.BuscarParceiroPorIdUseCase;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
 
 public class SaidaEstoqueCadastrarUseCase {
 
     private final SaidaEstoqueGateway saidaGateway;
 
-    private final ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase;
+    private final ItemEstoqueAtualizarPorIdUseCase atualizarPorIdUseCase;
 
     private final ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase;
 
@@ -28,10 +30,9 @@ public class SaidaEstoqueCadastrarUseCase {
 
     private final SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers;
 
-    public SaidaEstoqueCadastrarUseCase(SaidaEstoqueGateway saidaGateway, ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase,
-                                        BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase, SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers) {
+    public SaidaEstoqueCadastrarUseCase(SaidaEstoqueGateway saidaGateway, ItemEstoqueAtualizarPorIdUseCase atualizarPorIdUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase, SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers) {
         this.saidaGateway = saidaGateway;
-        this.itemEstoqueAtualizarUseCase = itemEstoqueAtualizarUseCase;
+        this.atualizarPorIdUseCase = atualizarPorIdUseCase;
         this.itemEstoqueBuscarUseCase = itemEstoqueBuscarUseCase;
         this.funcionarioPorIdUseCase = funcionarioPorIdUseCase;
         this.loteItemEstoqueUseCase = loteItemEstoqueUseCase;
@@ -47,12 +48,14 @@ public class SaidaEstoqueCadastrarUseCase {
         ItemEstoque itemEstoque = itemEstoqueBuscarUseCase.execute(loteItemEstoque.getItemEstoque().getIdItemEstoque());
         Double qtdEntradaNova = saidaDeEstoque.getQtdSaida();
         itemEstoque.setQtdArmazenado(itemEstoque.getQtdArmazenado() - qtdEntradaNova);
-        itemEstoqueAtualizarUseCase.atualizarQuantidade(itemEstoque);
+
+        ItemEstoqueAtualizarPorIdCommand commandAtualizarItemEstoque = ItemEstoqueEntityMapper.toAtualizarPorIdCommand(itemEstoque);
+        atualizarPorIdUseCase.execute(commandAtualizarItemEstoque);
+
         /*--------------------------------------------------------------------------------------*/
 
         saidaDeEstoque.setResponsavel(
                 funcionarioPorIdUseCase.execute(saidaDeEstoque.getResponsavel().getIdFuncionario()));
-        System.out.println("No Use Case de cadastrar Saida: " + saidaDeEstoque);
         saidaDeEstoque.setCostureira(saidaDeEstoque.getCostureira().getId()  == null ? null :
                 parceiroPorIdUseCase.execute(saidaDeEstoque.getCostureira().getId()));
         saidaDeEstoque.setLoteItemEstoque(loteItemEstoque);

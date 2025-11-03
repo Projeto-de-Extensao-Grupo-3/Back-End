@@ -4,8 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.BuscarFuncionarioPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.FuncionarioListarPorPermissaoUserCase;
+import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarQuantidadeUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueBuscarPorIdUseCase;
+import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueCadastrarItemUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.BuscarPorIdLoteItemEstoqueUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.parceiro.BuscarParceiroPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque.*;
@@ -24,9 +26,9 @@ public class SaidaEstoqueBeanConfig {
     }
 
     @Bean
-    public SaidaEstoqueAtualizarPorIdUseCase saidaEstoqueAtualizarPorIdCommand(SaidaEstoqueAdapter adapter,
-                                                                               SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarQuantidadeUseCase){
-        return new SaidaEstoqueAtualizarPorIdUseCase(adapter, atualizarQuantidadeUseCase);
+    public SaidaEstoqueAtualizarPorIdUseCase saidaEstoqueAtualizarPorIdCommand(SaidaEstoqueAdapter adapter, SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase atualizarQuantidadeUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase,
+                                                                               BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, ItemEstoqueAtualizarPorIdUseCase itemEstoqueAtualizarPorIdUseCase){
+        return new SaidaEstoqueAtualizarPorIdUseCase(adapter, atualizarQuantidadeUseCase, parceiroPorIdUseCase, funcionarioPorIdUseCase, loteItemEstoqueUseCase, itemEstoqueAtualizarPorIdUseCase);
     }
 
     @Bean
@@ -49,10 +51,10 @@ public class SaidaEstoqueBeanConfig {
     }
 
     @Bean
-    public SaidaEstoqueCadastrarUseCase saidaEstoqueCadastrarUseCase(SaidaEstoqueAdapter adapter, ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase,
+    public SaidaEstoqueCadastrarUseCase saidaEstoqueCadastrarUseCase(SaidaEstoqueAdapter adapter, ItemEstoqueAtualizarPorIdUseCase atualizarPorIdUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase,
                                                                      BuscarParceiroPorIdUseCase parceiroPorIdUseCase, SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers){
 
-        return new SaidaEstoqueCadastrarUseCase(adapter, itemEstoqueAtualizarUseCase, itemEstoqueBuscarUseCase, funcionarioPorIdUseCase, loteItemEstoqueUseCase, parceiroPorIdUseCase, enviarEmailENotificarObservers);
+        return new SaidaEstoqueCadastrarUseCase(adapter, atualizarPorIdUseCase, itemEstoqueBuscarUseCase, funcionarioPorIdUseCase, loteItemEstoqueUseCase, parceiroPorIdUseCase, enviarEmailENotificarObservers);
     }
 
     @Bean

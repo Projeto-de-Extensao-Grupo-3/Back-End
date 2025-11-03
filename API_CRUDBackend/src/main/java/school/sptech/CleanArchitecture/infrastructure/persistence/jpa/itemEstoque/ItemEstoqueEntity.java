@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "item_estoque")

@@ -1,7 +1,6 @@
 package school.sptech.CleanArchitecture.core.application.mapper;
 
-import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueAtualizarPorIdCommand;
-import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueCadastrarCommand;
+import school.sptech.CleanArchitecture.core.application.command.itemEstoque.*;
 import school.sptech.CleanArchitecture.core.domain.entity.*;
 
 import java.util.Set;
@@ -85,4 +84,45 @@ public class ItemEstoqueMapper {
         itemEstoque.setImagem(imagem);
         return itemEstoque;
     }
+
+    public static ItemEstoqueAtualizarPorIdCommand toAtualizarCommand(ItemEstoque itemEstoque) {
+
+        ItemEstoqueCategoriaCommand categoria = new ItemEstoqueCategoriaCommand(
+                itemEstoque.getCategoria().getIdCategoria());
+
+        Set<ItemEstoqueCategoriaCommand> caracteristicas = itemEstoque.getCaracteristicas()
+                .stream().map(
+                        caracteristica -> {
+                            ItemEstoqueCategoriaCommand caracteristicaCommand = new ItemEstoqueCategoriaCommand(caracteristica.getIdCategoria());
+                            return caracteristicaCommand;
+                        }
+                ).collect(Collectors.toSet());
+
+        ItemEstoquePrateleiraCommand prateleira = new ItemEstoquePrateleiraCommand(
+                itemEstoque.getPrateleira().getIdPrateleira()
+        );
+
+        ItemEstoqueImagemCommand imagem = new ItemEstoqueImagemCommand(
+                itemEstoque.getImagem().getIdImagem(),
+                itemEstoque.getImagem().getUrl()
+        );
+
+        ItemEstoqueAtualizarPorIdCommand itemCommand = new ItemEstoqueAtualizarPorIdCommand(
+                itemEstoque.getIdItemEstoque(),
+            itemEstoque.getDescricao(),
+            itemEstoque.getComplemento(),
+            itemEstoque.getPeso(),
+                itemEstoque.getQtdMinimo(),
+                itemEstoque.getQtdArmazenado(),
+                itemEstoque.getNotificar(),
+                categoria,
+                caracteristicas,
+                prateleira,
+                itemEstoque.getPreco(),
+                imagem
+        );
+
+        return itemCommand;
+    }
+
 }

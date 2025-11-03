@@ -24,12 +24,13 @@ public class SaidaEstoqueAtualizarQuantidadeLoteDeItemUseCase {
 
         ItemEstoque itemEstoque = itemEstoqueBuscarPorIdUseCase.execute(loteItemEstoque.getItemEstoque().getIdItemEstoque());
 
+        System.out.println("Saida Estoque Atualizar Use Case" + itemEstoque.getQtdArmazenado());
 
-        Double qtdEntradaNova = qtdAtualizar == 0.0
-                ? saidaEstoque.getQtdSaida()
-                : qtdAtualizar;
+//        Double qtdEntradaNova = qtdAtualizar == 0.0
+//                ? saidaEstoque.getQtdSaida()
+//                : qtdAtualizar;
+//        itemEstoque.atualizarQuantidade(qtdEntradaNova);
 
-        itemEstoque.atualizarQuantidade(qtdEntradaNova);
         return itemEstoque;
     }
 
