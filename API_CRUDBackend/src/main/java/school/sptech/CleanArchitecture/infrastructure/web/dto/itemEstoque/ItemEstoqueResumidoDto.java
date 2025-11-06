@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemEstoqueResumidoDto {
+public class    ItemEstoqueResumidoDto {
     private Integer idItem;
     private String descricao;
+    private String tipoItem;
+    private Double preco;
+    private String urlImagem;
 }

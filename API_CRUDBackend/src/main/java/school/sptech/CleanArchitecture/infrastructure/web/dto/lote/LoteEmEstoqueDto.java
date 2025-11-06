@@ -13,4 +13,5 @@ public class LoteEmEstoqueDto {
     private Double qtdItem;
     private Integer idItem;
     private Double precoItem;
+    private Integer idLoteItemEstoque;
 }

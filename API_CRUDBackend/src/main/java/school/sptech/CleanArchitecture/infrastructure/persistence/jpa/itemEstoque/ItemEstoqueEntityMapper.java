@@ -473,7 +473,18 @@ public class ItemEstoqueEntityMapper {
     }
 
     public static ItemEstoqueResumidoDto toItemEstoqueResumido(ItemEstoque itemEstoque){
-        return new ItemEstoqueResumidoDto(itemEstoque.getIdItemEstoque(), itemEstoque.getDescricao());
+        String tipoCategoria = null;
+        if (itemEstoque.getCategoria().getCategoriaPai() != null){
+            Integer idCategoriaPai = itemEstoque.getCategoria().getCategoriaPai().getIdCategoria();
+            tipoCategoria = (idCategoriaPai == 1) ? "tecido" : "roupa";
+        }
+        return new ItemEstoqueResumidoDto(
+                itemEstoque.getIdItemEstoque(),
+                itemEstoque.getDescricao(),
+                tipoCategoria,
+                itemEstoque.getPreco(),
+                itemEstoque.getImagem().getUrl()
+        );
     }
 
     public static List<ItemEstoqueResumidoDto> toItensEstoqueResumidos(List<ItemEstoque> itensEstoque) {

@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(description = "Entidade que representa a categoria (tecido ou roupa), subcategorias (Tipos de roupas e tipo de tecido) e características gerais.")
+    @Schema(description = "Entidade que representa a categoria (tecido ou roupa), subcategorias (Tipos de roupas e tipo de tecido) e características gerais.")
 @Getter
 @Setter
 @NoArgsConstructor
