@@ -10,7 +10,7 @@ public interface LoteRepository extends JpaRepository<LoteEntity, Integer> {
 
     boolean existsByDescricao(String descricao);
 
-    @Query(value = "SELECT fk_lote as idLote, descricao as nomeItem, quantidade as qtdItem, fk_item_estoque as idItem, preco as precoItem, id_lote_item_estoque as idLoteItemEstoque " +
+    @Query(value = "SELECT fk_lote as idLote, descricao as nomeItem, quantidade as qtdItem, fk_item_estoque as idItem, preco as precoItem, id_lote_item_estoque as idLoteItemEstoque, fk_categoria_pai as fkCategoriaPai " +
             "FROM autocomplete_saida", nativeQuery = true)
     List<LoteEmEstoqueDto> findLotesEmEstoque();
 

@@ -8,6 +8,8 @@ import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
 import school.sptech.CleanArchitecture.core.domain.valueObject.TelefoneVo;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro.ParceiroEntity;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.LoteEmEstoqueDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.LoteEmEstoqueResponse;
 
 public class LoteEntityMapper {
 
@@ -101,4 +103,17 @@ public class LoteEntityMapper {
 
         return entity;
     }
+
+    public static LoteEmEstoqueResponse toLoteEmEstoqueResponse(LoteEmEstoqueDto dto){
+        return new LoteEmEstoqueResponse(
+                dto.getIdLote(),
+                dto.getNomeItem(),
+                dto.getQtdItem(),
+                dto.getIdItem(),
+                dto.getPrecoItem() == null ? 0.0 : dto.getPrecoItem(),
+                dto.getIdLoteItemEstoque(),
+                dto.getFkCategoriaPai() != null && dto.getFkCategoriaPai() == 2
+        );
+    }
+
 }

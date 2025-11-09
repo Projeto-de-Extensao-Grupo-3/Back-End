@@ -23,6 +23,7 @@ import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Tag(name = "Lote Controller", description = "Operações CRUD relacionadas aos lotes de entrada dos Itens.")
 @RestController
@@ -149,8 +150,9 @@ public class LoteController {
     }
 
     @GetMapping("/lotesEmEstoque")
-    public ResponseEntity<List<LoteEmEstoqueDto>> listarLotesEmEstoque(){
+    public ResponseEntity<List<LoteEmEstoqueResponse>> listarLotesEmEstoque(){
         List<LoteEmEstoqueDto> lotesEmEstoque = lotesEmEstoqueUseCase.execute();
-        return lotesEmEstoque.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(lotesEmEstoque);
+        List<LoteEmEstoqueResponse> response = lotesEmEstoque.stream().map(LoteEntityMapper::toLoteEmEstoqueResponse).collect(Collectors.toList());
+        return lotesEmEstoque.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(response);
     }
 }

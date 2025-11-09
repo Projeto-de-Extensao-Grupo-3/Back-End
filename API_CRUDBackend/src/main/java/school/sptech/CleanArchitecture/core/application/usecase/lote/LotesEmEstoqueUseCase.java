@@ -15,10 +15,7 @@ public class LotesEmEstoqueUseCase {
     }
 
     public List<LoteEmEstoqueDto> execute(){
-        List<LoteEmEstoqueDto> lotesEmEstoque =  gateway.findLotesEmEstoque();
-        return lotesEmEstoque.stream().map(
-                lote -> new LoteEmEstoqueDto(lote.getIdLote(), lote.getNomeItem(), lote.getQtdItem(), lote.getIdItem(),
-                        lote.getPrecoItem() == null ? 0.0 : lote.getPrecoItem(), lote.getIdLoteItemEstoque())
-        ).collect(Collectors.toList());
+        return   gateway.findLotesEmEstoque();
     }
+
 }

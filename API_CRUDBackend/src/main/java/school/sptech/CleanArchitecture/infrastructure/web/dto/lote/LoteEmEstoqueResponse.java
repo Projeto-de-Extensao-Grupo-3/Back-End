@@ -5,15 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class LoteEmEstoqueDto {
+@NoArgsConstructor
+public class LoteEmEstoqueResponse {
     private Integer idLote;
     private String nomeItem;
     private Double qtdItem;
     private Integer idItem;
     private Double precoItem;
     private Integer idLoteItemEstoque;
-    private Integer fkCategoriaPai;
-
+    private Boolean isRoupa;
 }

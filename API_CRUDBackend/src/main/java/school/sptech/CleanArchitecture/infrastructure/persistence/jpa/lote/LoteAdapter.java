@@ -57,4 +57,5 @@ public class LoteAdapter implements LoteGateway {
     public List<LoteEmEstoqueDto> findLotesEmEstoque() {
         return repository.findLotesEmEstoque();
     }
+
 }
