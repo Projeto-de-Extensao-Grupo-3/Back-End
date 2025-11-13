@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class FuncionarioTokenDto {
+    private Integer idFuncionario;
     private String nome;
     private String email;
     private String token;

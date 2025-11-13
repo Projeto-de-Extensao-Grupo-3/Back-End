@@ -15,12 +15,14 @@ import java.util.Collection;
 @AllArgsConstructor
 public class FuncionarioDetalhesDto implements UserDetails {
 
+    private final Integer idFuncionario;
     private final String nome;
     private final String email;
     private final String senha;
 
     // Construtor adicional
     public FuncionarioDetalhesDto(FuncionarioEntity funcionario) {
+        this.idFuncionario = funcionario.getIdFuncionario();
         this.nome = funcionario.getNome();
         this.email = funcionario.getEmail();
         this.senha = funcionario.getSenha();

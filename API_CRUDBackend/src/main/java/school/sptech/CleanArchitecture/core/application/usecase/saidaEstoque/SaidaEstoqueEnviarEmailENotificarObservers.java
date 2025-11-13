@@ -33,17 +33,28 @@ public class SaidaEstoqueEnviarEmailENotificarObservers implements Subject {
 
     public void execute(SaidaEstoque saidaDeEstoque){
         ItemEstoque itemEstoqueAtualizado = atualizarSaidaUseCase.execute(saidaDeEstoque, 0.0);
-        System.out.println("Enviando para Rabbit " + itemEstoqueAtualizado.getQtdArmazenado());
         notificarObservers(itemEstoqueAtualizado);
 
         List<Funcionario> funcionariosParaNotificar = listarPorPermissaoUserCase.execute(new Permissao(PERMISSAO_PARA_RECEBER_NOTIFICACAO));
         EmailDto emailDto = new EmailDto(saidaDeEstoque, itemEstoqueAtualizado, funcionariosParaNotificar);
+
         try {
             rabbitProducer.enviarItemParaRelatorio(emailDto);
         }catch (Exception e){
             System.out.println("❌ Falha ao enviar objeto para o relatório.");
         }
+
+        if(itemEstoqueAtualizado.getQtdArmazenado() <= itemEstoqueAtualizado.getQtdMinimo()){
+            emailDto.setAtingiuMinimo(true);
+            try {
+                rabbitProducer.enviarSaidaMarcada(emailDto);
+            }catch (Exception e){
+                System.out.println("❌ Falha ao enviar objeto marcado para fila RabbitMQ.");
+            }
+        }
+
         if (itemEstoqueAtualizado.getNotificar()) {
+            emailDto.setAtingiuMinimo(false);
             try {
                 rabbitProducer.enviarSaidaMarcada(emailDto);
             }catch (Exception e){

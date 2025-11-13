@@ -9,12 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class EmailDto {
+public class    EmailDto {
     private SaidaEstoqueEmailDto saidaEstoque;
     private ItemEstoqueEmailDto itemEstoque;
     private LoteEmailDto lote;
     private FuncionarioEmailDto funcionario;
     private List<FuncionarioEmailDto> funcionariosParaNotificar;
+    private boolean atingiuMinimo;
 
     public EmailDto(SaidaEstoque saida, ItemEstoque item, List<Funcionario> funcionariosParaNotificar) {
         this.saidaEstoque = new SaidaEstoqueEmailDto(saida);

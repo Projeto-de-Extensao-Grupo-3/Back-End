@@ -38,6 +38,7 @@ public class AutenticarFuncionarioUseCase {
         final String token = tokenGateway.generateToken(authentication);
 
         return new FuncionarioTokenDto(
+                funcionario.getIdFuncionario(),
                 funcionario.getNome(),
                 funcionario.getEmail().getValue(),
                 token

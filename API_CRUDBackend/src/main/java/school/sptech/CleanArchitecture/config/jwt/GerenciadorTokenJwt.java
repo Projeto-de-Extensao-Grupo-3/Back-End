@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loginDto.FuncionarioDetalhesDto;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -35,7 +37,10 @@ public class GerenciadorTokenJwt {
         final String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        return Jwts.builder().setSubject(authentication.getName())
+        FuncionarioDetalhesDto funcionarioAutenticado = (FuncionarioDetalhesDto) authentication.getPrincipal();
+
+        return Jwts.builder()
+                .setSubject(funcionarioAutenticado.getIdFuncionario().toString())
                 .signWith(parseSecret()).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtTokenValidity * 1_000)).compact();
     }
