@@ -21,6 +21,7 @@ public interface LoteItemEstoqueRepository extends JpaRepository<LoteItemEstoque
     LEFT JOIN imagem img ON img.id_imagem = ie.fk_imagem
     JOIN lote l ON l.id_lote = lie.fk_lote
     JOIN parceiro p ON p.id_parceiro = l.fk_parceiro
+    ORDER BY l.dt_entrada DESC, ie.id_item_estoque
     LIMIT :limit OFFSET :offset
     """, nativeQuery = true)
     List<Object[]> buscarPaginado(@Param("offset") int offset, @Param("limit") int limit);
