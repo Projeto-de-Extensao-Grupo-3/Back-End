@@ -37,4 +37,5 @@ public class PermissaoController {
 
         return response.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(response);
     }
+
 }

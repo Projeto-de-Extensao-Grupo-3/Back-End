@@ -88,6 +88,22 @@ public class FuncionarioController {
         return ResponseEntity.status(200).body(todosFuncionarios);
     }
 
+
+    @Operation(summary = "Exibição de um funcionário por ID", description = "Retorna 1 objeto FuncionarioResponseDto de acordo com o ID informado na PathVariable.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
+            @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
+    })
+    @SecurityRequirement(name = "Bearer")
+    @GetMapping("/{id}")
+    public ResponseEntity<FuncionarioResponseDto> buscarPorId(@PathVariable Integer id) {
+        FuncionarioResponseDto funcionario = FuncionarioMapper.toResponseDto(
+                buscarFuncionarioPorIdUseCase.execute(id)
+        );
+        return ResponseEntity.status(200).body(funcionario);
+    }
+
+
     @Operation(summary = "Exibição de um funcionário por nome", description = "Retorna uma lista de objetos FuncionarioResponseDto de acordo com o ID informado na PathVariable.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Registro encontrado com sucesso."),
