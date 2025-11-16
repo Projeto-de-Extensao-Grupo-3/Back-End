@@ -49,9 +49,9 @@ public class FuncionarioMapper {
 
 
     public static Funcionario ofAtualizarCommand(FuncionarioAtualizarPorIdCommand command) {
-        Set<Permissao> permissoes = command.permissoes().stream()
+        Set<Permissao> permissoes = command.permissoes() != null ? command.permissoes().stream()
                 .map(p -> new Permissao(p.getIdPermissao(), p.getDescricao()))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet()) : null;
 
         return new Funcionario(
                 command.idFuncionario(),
@@ -71,9 +71,9 @@ public class FuncionarioMapper {
     }
 
     public static FuncionarioAtualizarPorIdCommand toAtualizarCommand(Integer id, FuncionarioRequestDto dto) {
-        Set<Permissao> permissoes = dto.getPermissoes().stream()
+        Set<Permissao> permissoes = dto.getPermissoes() != null ? dto.getPermissoes().stream()
                 .map(p -> new Permissao(p.getIdPermissao(), p.getDescricao()))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet()) : null;
 
         return new FuncionarioAtualizarPorIdCommand(
                 id,

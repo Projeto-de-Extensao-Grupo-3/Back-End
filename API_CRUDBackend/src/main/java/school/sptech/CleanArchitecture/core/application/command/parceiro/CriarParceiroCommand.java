@@ -1,11 +1,12 @@
 package school.sptech.CleanArchitecture.core.application.command.parceiro;
 
 import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
+import school.sptech.CleanArchitecture.core.domain.valueObject.TelefoneVo;
 
 public record CriarParceiroCommand (
         String categoria,
         String nome,
-        String telefone,
+        TelefoneVo telefone,
         EmailVo email,
         String endereco,
         String identificacao){

@@ -3,17 +3,15 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionar
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.permissao.PermissaoEntity;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface FuncionarioRepository extends JpaRepository<FuncionarioEntity, Integer> {
     Optional<FuncionarioEntity> findByEmail(String email);
-    List<FuncionarioEntity> findByNomeContainsIgnoreCase(String nome);
-    List<FuncionarioEntity> findAllByOrderByIdFuncionarioDesc();
+    List<FuncionarioEntity> findByNomeContainsIgnoreCaseAndCpfIsNotNull(String nome);
+    List<FuncionarioEntity> findByCpfIsNotNullOrderByIdFuncionarioDesc();
     Boolean existsByCpfOrEmail(String cpf, String email);
     List<FuncionarioEntity> findByPermissoes_IdPermissao(Integer idPermissao);
 }

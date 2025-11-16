@@ -9,19 +9,17 @@ public final class CpfVo {
     private final String value;
 
     public CpfVo(String value) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("CPF não pode ser nulo ou vazio");
-        }
+        String digitsOnly = null;
+        if (value != null) {
+            digitsOnly = value.replaceAll("[.-]", ""); // remove pontos e traços
+            if (!CPF_PATTERN.matcher(digitsOnly).matches()) {
+                throw new IllegalArgumentException("CPF deve conter 11 dígitos numéricos");
+            }
 
-        String digitsOnly = value.replaceAll("[.-]", ""); // remove pontos e traços
-        if (!CPF_PATTERN.matcher(digitsOnly).matches()) {
-            throw new IllegalArgumentException("CPF deve conter 11 dígitos numéricos");
+            if (isValidCpf(digitsOnly)) {
+                throw new IllegalArgumentException("CPF inválido");
+            }
         }
-
-        if (isValidCpf(digitsOnly)) {
-            throw new IllegalArgumentException("CPF inválido");
-        }
-
         this.value = digitsOnly;
     }
 

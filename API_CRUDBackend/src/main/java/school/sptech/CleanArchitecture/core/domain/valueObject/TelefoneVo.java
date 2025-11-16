@@ -9,16 +9,15 @@ public final class TelefoneVo {
     private final String value;
 
     public TelefoneVo(String value) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Telefone não pode ser nulo ou vazio");
+        String digitsOnly = null;
+
+        if (value != null) {
+            digitsOnly = value.replaceAll("\\D", ""); // remove caracteres não numéricos
+
+            if (!PHONE_PATTERN.matcher(digitsOnly).matches()) {
+                throw new IllegalArgumentException("Telefone deve ter 10 ou 11 dígitos numéricos");
+            }
         }
-
-        String digitsOnly = value.replaceAll("\\D", ""); // remove caracteres não numéricos
-
-        if (!PHONE_PATTERN.matcher(digitsOnly).matches()) {
-            throw new IllegalArgumentException("Telefone deve ter 10 ou 11 dígitos numéricos");
-        }
-
         this.value = digitsOnly;
     }
 

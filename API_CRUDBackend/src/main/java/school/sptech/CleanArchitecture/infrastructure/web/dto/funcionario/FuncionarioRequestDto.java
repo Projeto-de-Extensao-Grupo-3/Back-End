@@ -13,16 +13,10 @@ public class FuncionarioRequestDto {
 
     @NotBlank
     private String nome;
-    @NotBlank
     private String cpf;
-    @NotBlank
     private String telefone;
-    @NotBlank @Email
     private String email;
-//    @NotBlank
     private String senha;
-
-    @NotNull
     private Set<PermissaoRequestDto> permissoes;
 
     public String getNome() { return nome; }

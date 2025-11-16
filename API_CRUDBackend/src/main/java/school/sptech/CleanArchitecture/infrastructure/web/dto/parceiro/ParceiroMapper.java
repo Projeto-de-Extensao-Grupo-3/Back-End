@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.infrastructure.web.dto.parceiro;
 import school.sptech.CleanArchitecture.core.application.command.parceiro.AtualizarParceiroCommand;
 import school.sptech.CleanArchitecture.core.application.command.parceiro.CriarParceiroCommand;
 import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
+import school.sptech.CleanArchitecture.core.domain.valueObject.TelefoneVo;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro.ParceiroEntity;
 
 import java.util.List;
@@ -14,10 +15,10 @@ public class ParceiroMapper {
         return new CriarParceiroCommand(
                 dto.getCategoria(),
                 dto.getNome(),
-                dto.getTelefone(),
+                new TelefoneVo(dto.getTelefone()),
                 new EmailVo(dto.getEmail()),
                 dto.getEndereco(),
-                dto.getIdentificacao()
+                dto.getIdentificacao() != null ? dto.getIdentificacao().replaceAll("\\D", "") : null
         );
     }
 
@@ -26,10 +27,10 @@ public class ParceiroMapper {
                 id,
                 dto.getCategoria(),
                 dto.getNome(),
-                dto.getTelefone(),
+                new TelefoneVo(dto.getTelefone()),
                 new EmailVo(dto.getEmail()),
                 dto.getEndereco(),
-                dto.getIdentificacao()
+                dto.getIdentificacao() != null ? dto.getIdentificacao().replaceAll("\\D", "") : null
         );
     }
 

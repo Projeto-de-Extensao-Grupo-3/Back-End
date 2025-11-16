@@ -27,7 +27,7 @@ public class CadastrarParceiroUseCase {
         var parceiroParaRegistrar = new Parceiro(
                 command.categoria(),
                 command.nome(),
-                command.telefone(),
+                command.telefone().getValue(),
                 command.email(),
                 command.endereco(),
                 command.identificacao()

@@ -7,6 +7,6 @@ import java.util.List;
 public interface ParceiroRepository extends JpaRepository<ParceiroEntity, Integer> {
     Boolean existsByEmailOrIdentificacaoOrEnderecoAllIgnoreCase(String email, String identificacao, String endereco);
     ParceiroEntity findByNome(String nome);
-    List<ParceiroEntity> findByCategoriaOrderByIdParceiroDesc(String categoria);
-    List<ParceiroEntity> findByCategoriaAndNomeContainsIgnoreCase(String categoria, String nome);
+    List<ParceiroEntity> findByCategoriaAndIdentificacaoIsNotNullOrderByIdParceiroDesc(String categoria);
+    List<ParceiroEntity> findByCategoriaAndNomeContainsIgnoreCaseAndIdentificacaoIsNotNull(String categoria, String nome);
 }

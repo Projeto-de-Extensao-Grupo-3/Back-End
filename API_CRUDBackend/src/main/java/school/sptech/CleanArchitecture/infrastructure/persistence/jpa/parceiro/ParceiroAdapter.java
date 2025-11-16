@@ -2,9 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro;
 
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.ParceiroGateway;
-import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
-import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioEntityMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +58,7 @@ public class ParceiroAdapter implements ParceiroGateway {
 
     @Override
     public List<Parceiro> findByCategoriaOrderByIdParceiroDesc(String categoria) {
-        return parceiroRepository.findByCategoriaOrderByIdParceiroDesc(categoria)
+        return parceiroRepository.findByCategoriaAndIdentificacaoIsNotNullOrderByIdParceiroDesc(categoria)
                 .stream()
                 .map(ParceiroEntityMapper::ofEntity)
                 .toList();
@@ -68,7 +66,7 @@ public class ParceiroAdapter implements ParceiroGateway {
 
     @Override
     public List<Parceiro> findByCategoriaAndNomeContainsIgnoreCase(String categoria, String nome) {
-        return parceiroRepository.findByCategoriaAndNomeContainsIgnoreCase(categoria, nome)
+        return parceiroRepository.findByCategoriaAndNomeContainsIgnoreCaseAndIdentificacaoIsNotNull(categoria, nome)
                 .stream()
                 .map(ParceiroEntityMapper::ofEntity)
                 .toList();

@@ -12,15 +12,12 @@ public final class EmailVo {
     private final String value;
 
     public EmailVo(String value) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Email não pode ser nulo ou vazio");
-        }
 
-        if (!EMAIL_PATTERN.matcher(value).matches()) {
+        if (value != null && !EMAIL_PATTERN.matcher(value).matches()) {
             throw new IllegalArgumentException("Email inválido");
         }
 
-        this.value = value.toLowerCase(); // normaliza
+        this.value = value != null ? value.toLowerCase() : value; // normaliza
     }
 
     public String getValue() {

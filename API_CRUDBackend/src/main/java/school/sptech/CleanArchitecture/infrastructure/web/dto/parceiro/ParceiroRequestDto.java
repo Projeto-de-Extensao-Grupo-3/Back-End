@@ -27,14 +27,11 @@ public class ParceiroRequestDto {
     private String telefone;
 
     @Schema(description = "Email do parceiro", example = "maria@email.com")
-    @Email
-    @NotBlank
     private String email;
 
     @Schema(description = "Endereço do parceiro", example = "Rua das Flores, 123")
     private String endereco;
 
     @Schema(description = "Identificação do parceiro (CPF/CNPJ)", example = "123.456.789-00")
-    @NotBlank
     private String identificacao;
 }

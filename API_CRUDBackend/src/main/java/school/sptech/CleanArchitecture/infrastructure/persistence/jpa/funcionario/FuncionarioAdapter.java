@@ -38,7 +38,7 @@ public class FuncionarioAdapter implements FuncionarioGateway {
 
     @Override
     public List<Funcionario> findAllByOrderByIdFuncionarioDesc() {
-        return repository.findAllByOrderByIdFuncionarioDesc().stream()
+        return repository.findByCpfIsNotNullOrderByIdFuncionarioDesc().stream()
                 .map(FuncionarioEntityMapper::ofEntity)
                 .collect(Collectors.toList());
     }
@@ -60,7 +60,7 @@ public class FuncionarioAdapter implements FuncionarioGateway {
 
     @Override
     public List<Funcionario> findByNomeContainsIgnoreCase(String nome) {
-        return repository.findByNomeContainsIgnoreCase(nome).stream()
+        return repository.findByNomeContainsIgnoreCaseAndCpfIsNotNull(nome).stream()
                 .map(FuncionarioEntityMapper::ofEntity)
                 .collect(Collectors.toList());
     }
