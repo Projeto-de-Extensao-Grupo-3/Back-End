@@ -16,9 +16,9 @@ public class CadastrarLoteUseCase {
     }
 
     public Lote executar(CriarLoteCommand command){
-        if (gateway.existsByDescricao(command.descricao())) {
-            throw new LoteConflitoException("Lote já cadastrado");
-        }
+//        if (gateway.existsByDescricao(command.descricao())) {
+//            throw new LoteConflitoException("Lote já cadastrado");
+//        }
 
         var loteParaRegistrar = new Lote();
 
