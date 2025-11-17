@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.CleanArchitecture.config.redis.SaidaPaginacaoService;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.AtualizarLoteItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.CriarLoteItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.*;
@@ -33,6 +34,8 @@ public class LoteItemEstoqueController {
     private final RemoverLoteItemEstoqueUseCase removerLoteItemEstoqueUseCase;
     private final BuscarLotesPaginadoUseCase buscarLotesPaginadoUseCase;
     private final BuscarLotesPaginadoSaidaUseCase buscarLotesPaginadoSaidaUseCase;
+
+    private final SaidaPaginacaoService redisPaginacao;
 
     @Operation(
             summary = "* Cadastro de um novo Lote de Item.",
@@ -129,18 +132,18 @@ public class LoteItemEstoqueController {
     }
 
     @GetMapping("/paginado")
-    public PaginacaoResponseDTO<EntradaPaginacaoDTO> buscarPaginado(
+    public ResponseEntity<PaginacaoResponseDTO<EntradaPaginacaoDTO>> buscarPaginado(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit
     ) {
-        return buscarLotesPaginadoUseCase.executar(page, limit);
+        return ResponseEntity.ok(redisPaginacao.listarEntradaPaginado(page, limit));
     }
 
     @GetMapping("/paginadoSaida")
-    public PaginacaoResponseDTO<SaidaPaginacaoDTO> buscarPaginadoSaida(
+    public ResponseEntity<PaginacaoResponseDTO<SaidaPaginacaoDTO>> buscarPaginadoSaida(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit
     ) {
-        return buscarLotesPaginadoSaidaUseCase.executar(page, limit);
+        return ResponseEntity.ok(redisPaginacao.listarPaginado(page, limit));
     }
 }

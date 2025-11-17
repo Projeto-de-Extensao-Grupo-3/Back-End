@@ -1,4 +1,13 @@
 services:
+  redis:
+    image: redis:7.2
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--bind", "0.0.0.0", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+
   rabbitmq:
     container_name: back-end
     image: 'rabbitmq:3.13-management'
@@ -8,3 +17,14 @@ services:
     ports:
       - '5672:5672'
       - '15672:15672'
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redis_insight
+    ports:
+      - "8001:5540"
+    depends_on:
+      - redis
+
+volumes:
+  redis_data:
