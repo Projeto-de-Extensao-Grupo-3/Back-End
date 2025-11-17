@@ -31,8 +31,8 @@ public class FuncionarioBeanConfig {
     }
 
     @Bean
-    public FuncionarioAtualizarSenhaUseCase funcionarioAtualizarSenhaUseCase(FuncionarioAdapter adapter,  BuscarFuncionarioPorIdUseCase buscarFuncionarioPorIdUseCase){
-        return new FuncionarioAtualizarSenhaUseCase(adapter, buscarFuncionarioPorIdUseCase);
+    public FuncionarioAtualizarSenhaUseCase funcionarioAtualizarSenhaUseCase(FuncionarioAdapter adapter,  BuscarFuncionarioPorIdUseCase buscarFuncionarioPorIdUseCase, PasswordEncoder passwordEncoder){
+        return new FuncionarioAtualizarSenhaUseCase(adapter, buscarFuncionarioPorIdUseCase, passwordEncoder);
     }
 
     @Bean
