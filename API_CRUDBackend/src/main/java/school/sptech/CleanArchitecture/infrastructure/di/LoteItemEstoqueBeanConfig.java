@@ -31,8 +31,8 @@ public class LoteItemEstoqueBeanConfig {
 
     @Bean
     public CadastrarLoteItemEstoqueUseCase cadastrarLoteItemEstoqueUseCase
-    (LoteItemEstoqueGateway gateway, ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase) {
-        return new CadastrarLoteItemEstoqueUseCase(gateway, itemEstoqueAtualizarUseCase, itemEstoqueBuscarUseCase, loteItemEstoqueUseCase);
+    (LoteItemEstoqueGateway gateway, ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase) {
+        return new CadastrarLoteItemEstoqueUseCase(gateway, itemEstoqueAtualizarUseCase, itemEstoqueBuscarUseCase);
     }
 
     @Bean

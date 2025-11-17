@@ -36,6 +36,7 @@ public class FuncionarioController {
     private final FuncionarioListAllUseCase funcionarioListAllUseCase;
     private final FuncionarioRemoverPorIdUseCase funcionarioRemoverPorIdUseCase;
     private final BuscarFuncionarioPorIdUseCase buscarFuncionarioPorIdUseCase;
+    private final FuncionarioAtualizarSenhaUseCase atualizarSenhaUseCase;
 
     @Operation(
             summary = "Cadastro de funcionário.",
@@ -143,6 +144,16 @@ public class FuncionarioController {
                 funcionarioAtualizarPorIdUseCase.execute(funcionarioParaAtualizar)
         );
         return ResponseEntity.status(200).body(funcionarioAtualizado);
+    }
+
+    @SecurityRequirement(name = "Bearer")
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> atualizarSenha (
+            @PathVariable Integer id,
+            @RequestBody String novaSenha
+    ) {
+        atualizarSenhaUseCase.execute(id, novaSenha);
+        return ResponseEntity.status(200).build();
     }
 
     @Operation(summary = "Deleção de um registro de Funcionário.", description = "Não possui retorno de corpo quando o registro é deletado.")

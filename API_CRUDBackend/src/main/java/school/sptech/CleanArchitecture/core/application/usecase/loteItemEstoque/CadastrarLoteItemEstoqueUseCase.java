@@ -2,11 +2,8 @@ package school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque
 
 import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.CriarLoteItemEstoqueCommand;
-import school.sptech.CleanArchitecture.core.application.usecase.funcionario.BuscarFuncionarioPorIdUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarDadosUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarQuantidadeUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueBuscarPorIdUseCase;
-import school.sptech.CleanArchitecture.core.application.usecase.parceiro.BuscarParceiroPorIdUseCase;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
@@ -26,18 +23,15 @@ public class CadastrarLoteItemEstoqueUseCase implements SubjectLoteItem, Subject
 
     private final ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase;
 
-    private final BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase;
-
     //private final ItemEstoqueAtualizarDadosUseCase atualizarDadosUseCase;
 
     private final List<Observer> observadores = new ArrayList<>();
     private final List<ObserverLoteItem> observadoresLoteItem = new ArrayList<>();
 
-    public CadastrarLoteItemEstoqueUseCase(LoteItemEstoqueGateway gateway, ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase) {
+    public CadastrarLoteItemEstoqueUseCase(LoteItemEstoqueGateway gateway, ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase) {
         this.gateway = gateway;
         this.itemEstoqueAtualizarUseCase = itemEstoqueAtualizarUseCase;
         this.itemEstoqueBuscarUseCase = itemEstoqueBuscarUseCase;
-        this.loteItemEstoqueUseCase = loteItemEstoqueUseCase;
     }
 
     public LoteItemEstoque executar(CriarLoteItemEstoqueCommand command){

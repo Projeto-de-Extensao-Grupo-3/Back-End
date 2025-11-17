@@ -20,6 +20,7 @@ import school.sptech.CleanArchitecture.core.application.exceptions.corteTecido.C
 import school.sptech.CleanArchitecture.core.application.exceptions.corteTecido.CorteTecidoNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.application.exceptions.funcionario.FuncionarioConflitoException;
 import school.sptech.CleanArchitecture.core.application.exceptions.funcionario.FuncionarioNaoEncontradoException;
+import school.sptech.CleanArchitecture.core.application.exceptions.funcionario.SenhaRegraDeNegocioException;
 import school.sptech.CleanArchitecture.core.application.exceptions.imagem.ImagemConflitoException;
 import school.sptech.CleanArchitecture.core.application.exceptions.imagem.ImagemNaoEncontradaexception;
 import school.sptech.CleanArchitecture.core.application.exceptions.itensEstoque.ItemEstoqueConflitoException;
@@ -317,6 +318,18 @@ public class ControllerHandler {
         ErrorDto error = new ErrorDto(
                 HttpStatus.BAD_REQUEST.value(),
                 "BAD REQUEST",
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+
+        return ResponseEntity.status(422).body(error);
+    }
+
+    @ExceptionHandler(SenhaRegraDeNegocioException.class)
+    public ResponseEntity<ErrorDto> handleSenhaRegraDeNegocioException(SenhaRegraDeNegocioException ex, WebRequest request){
+        ErrorDto error = new ErrorDto(
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                "UNPROCESSABLE ENTITY",
                 ex.getMessage(),
                 request.getDescription(false)
         );
