@@ -49,8 +49,8 @@ public class CadastrarLoteItemEstoqueUseCase implements SubjectLoteItem, Subject
         // ItemEstoque itemEstoque = atualizarDadosUseCase.execute(loteItemEstoque, 0.0);
 
         // Atualização da quantidade de ItemEstoque
-        LoteItemEstoque loteItemEstoque = loteItemEstoqueUseCase.executar(command.itemEstoque());
-        ItemEstoque itemEstoque = itemEstoqueBuscarUseCase.execute(loteItemEstoque.getItemEstoque().getIdItemEstoque());
+        LoteItemEstoque loteItemEstoque = LoteItemEstoqueMapper.ofCadastrarCommand(command);
+        ItemEstoque itemEstoque = itemEstoqueBuscarUseCase.execute(command.itemEstoque());
         Double qtdEntradaNova = command.qtdItem();
         itemEstoque.setQtdArmazenado(itemEstoque.getQtdArmazenado() + qtdEntradaNova);
         itemEstoqueAtualizarUseCase.atualizarQuantidade(itemEstoque);
