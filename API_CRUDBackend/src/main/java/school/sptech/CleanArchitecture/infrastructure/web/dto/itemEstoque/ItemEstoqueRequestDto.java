@@ -21,7 +21,6 @@ public class ItemEstoqueRequestDto {
     @NotBlank
     private String descricao;
     @Schema(description = "Complemento do item / Estampa", example = "listrado, vermelho, azul")
-    @NotBlank
     private String complemento;
     @Schema(description = "Peso do item", example = "")
     private Double peso;

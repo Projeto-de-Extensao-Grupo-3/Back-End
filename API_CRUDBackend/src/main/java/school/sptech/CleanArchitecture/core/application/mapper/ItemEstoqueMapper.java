@@ -50,24 +50,33 @@ public class ItemEstoqueMapper {
     public static ItemEstoque ofAtualizarCommand(ItemEstoqueAtualizarPorIdCommand command) {
         ItemEstoque itemEstoque = new ItemEstoque();
 
-        Categoria categoria = new Categoria();
-        categoria.setIdCategoria(command.categoria().idCategoria());
+        Categoria categoria = null;
+        if (command.categoria() != null) {
+            categoria = new Categoria();
+            categoria.setIdCategoria(command.categoria().idCategoria());
+        }
 
-        Set<Categoria> caracteristicas = command.caracteristicas()
+        Set<Categoria> caracteristicas = command.caracteristicas() != null ? command.caracteristicas()
                 .stream().map(
                         categoriaCommand -> {
                             Categoria caracteristica = new Categoria();
                             caracteristica.setIdCategoria(categoriaCommand.idCategoria());
                             return caracteristica;
                         }
-                ).collect(Collectors.toSet());
+                ).collect(Collectors.toSet()) : null;
 
-        Prateleira prateleira = new Prateleira();
-        prateleira.setIdPrateleira(command.prateleira().idPrateleira());
+        Prateleira prateleira = null;
+        if (command.prateleira() != null) {
+            prateleira = new Prateleira();
+            prateleira.setIdPrateleira(command.prateleira().idPrateleira());
+        }
 
-        Imagem imagem = new Imagem();
-        imagem.setIdImagem(command.imagem().idImagem());
-        imagem.setUrl(command.imagem().url());
+        Imagem imagem = null;
+        if (command.imagem() != null) {
+            imagem = new Imagem();
+            imagem.setIdImagem(command.imagem().idImagem());
+            imagem.setUrl(command.imagem().url());
+        }
 
         itemEstoque.setIdItemEstoque(command.idItemEstoque());
         itemEstoque.setDescricao(command.descricao());

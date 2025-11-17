@@ -23,10 +23,10 @@ public class ItemEstoqueEntityMapper {
 
         var entity = new ItemEstoqueEntity();
         Categoria categoriaDomain = domain.getCategoria();
-        CategoriaEntity categoria = new CategoriaEntity(categoriaDomain.getIdCategoria(), categoriaDomain.getNome());
+        CategoriaEntity categoria = categoriaDomain != null ? new CategoriaEntity(categoriaDomain.getIdCategoria(), categoriaDomain.getNome()) : null;
 
-        Categoria categoriaPai;
-        if(domain.getCategoria().getCategoriaPai() != null){
+        Categoria categoriaPai = null;
+        if(domain.getCategoria() != null && domain.getCategoria().getCategoriaPai() != null){
             categoriaPai = domain.getCategoria().getCategoriaPai();
             categoria.setCategoriaPai(new CategoriaEntity(categoriaPai.getIdCategoria(), categoriaPai.getNome()));
         }
@@ -50,7 +50,7 @@ public class ItemEstoqueEntityMapper {
         }
 
 
-        PrateleiraEntity prateleiraEntity = new PrateleiraEntity();
+        PrateleiraEntity prateleiraEntity = null;
         if (domain.getPrateleira() != null){
             prateleiraEntity = new PrateleiraEntity(domain.getPrateleira().getIdPrateleira(), domain.getPrateleira().getCodigo());
         }
@@ -70,7 +70,7 @@ public class ItemEstoqueEntityMapper {
                     .collect(Collectors.toSet());
         }
 
-        ImagemEntity imagemEntity = new ImagemEntity();
+        ImagemEntity imagemEntity = null;
         if (domain.getImagem() != null){
             imagemEntity = new ImagemEntity(domain.getImagem().getIdImagem());
         }
@@ -99,10 +99,10 @@ public class ItemEstoqueEntityMapper {
 
         var domain = new ItemEstoque();
         CategoriaEntity categoriaEntity = entity.getCategoria();
-        Categoria categoria = new Categoria(categoriaEntity.getIdCategoria(), categoriaEntity.getNome());
+        Categoria categoria = categoriaEntity != null ? new Categoria(categoriaEntity.getIdCategoria(), categoriaEntity.getNome()) : null;
 
         CategoriaEntity categoriaPai =  null;
-        if (entity.getCategoria().getCategoriaPai() != null) {
+        if (entity.getCategoria() != null && entity.getCategoria().getCategoriaPai() != null) {
             categoriaPai = entity.getCategoria().getCategoriaPai();
             categoria.setCategoriaPai(new Categoria(categoriaPai.getIdCategoria(), categoriaPai.getNome()));
         }
@@ -124,7 +124,7 @@ public class ItemEstoqueEntityMapper {
                             ).collect(Collectors.toSet());
         }
 
-        Prateleira prateleira = new Prateleira();
+        Prateleira prateleira = null;
         if (entity.getPrateleira() != null){
             prateleira = new Prateleira(entity.getPrateleira().getIdPrateleira(), entity.getPrateleira().getCodigo());
         }
@@ -144,8 +144,9 @@ public class ItemEstoqueEntityMapper {
                     .collect(Collectors.toSet());
         }
 
-        Imagem imagem = new Imagem();
+        Imagem imagem = null;
         if (entity.getImagem() != null){
+            imagem = new Imagem();
             imagem.setIdImagem(entity.getImagem().getIdImagem());
             imagem.setUrl(entity.getImagem().getUrl());
         }
@@ -298,16 +299,16 @@ public class ItemEstoqueEntityMapper {
 
     public static ItemEstoqueAtualizarPorIdCommand toAtualizarPorIdCommand(Integer id, ItemEstoqueRequestDto dto) {
 
-        ItemEstoqueCategoriaCommand categoria = new ItemEstoqueCategoriaCommand(dto.getCategoria().getIdCategoria());
+        ItemEstoqueCategoriaCommand categoria = dto.getCategoria() != null ? new ItemEstoqueCategoriaCommand(dto.getCategoria().getIdCategoria()) : null;
 
-        Set<ItemEstoqueCategoriaCommand> caracteristicasDto = dto.getCaracteristicas()
+        Set<ItemEstoqueCategoriaCommand> caracteristicasDto = dto.getCaracteristicas() != null ? dto.getCaracteristicas()
                 .stream()
                 .map(caracteristica -> new ItemEstoqueCategoriaCommand(caracteristica.getIdCategoria()))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet()) : null;
 
-        ItemEstoquePrateleiraCommand prateleiraCommand = new ItemEstoquePrateleiraCommand(dto.getPlateleira().getIdPrateleira());
+        ItemEstoquePrateleiraCommand prateleiraCommand = dto.getPlateleira() != null ? new ItemEstoquePrateleiraCommand(dto.getPlateleira().getIdPrateleira()) : null;
 
-        ItemEstoqueImagemCommand imagemCommand = new ItemEstoqueImagemCommand(dto.getImagem().getIdImagem(), dto.getImagem().getUrl());
+        ItemEstoqueImagemCommand imagemCommand = dto.getImagem() != null ? new ItemEstoqueImagemCommand(dto.getImagem().getIdImagem(), dto.getImagem().getUrl()) : null;
 
         return new ItemEstoqueAtualizarPorIdCommand(
                 id,
@@ -375,7 +376,7 @@ public class ItemEstoqueEntityMapper {
         ItemEstoqueCategoriaPaiResponseDto categoriaPaiDto = null;
         ItemEstoqueCategoriaResponseDto categoriaDto = null;
 
-        System.out.println("Metodo de toResponseDto :" + item.getCategoria().getNome());
+        //System.out.println("Metodo de toResponseDto :" + item.getCategoria().getNome());
         if (item.getCategoria() != null) {
             if (item.getCategoria().getCategoriaPai() != null) {
                 categoriaPaiDto = new ItemEstoqueCategoriaPaiResponseDto(item.getCategoria().getCategoriaPai().getNome());
