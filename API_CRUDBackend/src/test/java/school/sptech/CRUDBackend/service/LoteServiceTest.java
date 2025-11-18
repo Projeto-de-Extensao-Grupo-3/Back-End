@@ -9,12 +9,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import school.sptech.CRUDBackend.entity.Funcionario;
 import school.sptech.CRUDBackend.entity.Lote;
-import school.sptech.CRUDBackend.entity.Parceiro;
+import school.sptech.CRUDBackend.entity.Parceiroaa;
 import school.sptech.CRUDBackend.entity.Permissao;
 import school.sptech.CRUDBackend.exception.Lote.LoteConflitoException;
 import school.sptech.CRUDBackend.exception.Lote.LoteNaoEncontradoException;
-import school.sptech.CRUDBackend.exception.parceiro.ParceiroConflitoException;
-import school.sptech.CRUDBackend.exception.parceiro.ParceiroNaoEncontradoException;
 import school.sptech.CRUDBackend.repository.LoteRepository;
 
 import java.time.LocalDateTime;
@@ -36,7 +34,7 @@ class LoteServiceTest {
 
     private Lote loteTeste;
 
-    private Parceiro parceiroTeste;
+    private Parceiroaa parceiroTeste;
 
     private Funcionario funcionarioTeste;
 
@@ -48,7 +46,7 @@ class LoteServiceTest {
 
     @BeforeEach
     void setUp(){
-        parceiroTeste = new Parceiro(1, "Fabricante", "Fornecedor de Algodão", "000", "fabricante@gmail.com",
+        parceiroTeste = new Parceiroaa(1, "Fabricante", "Fornecedor de Algodão", "000", "fabricante@gmail.com",
                 "R. Haddock Lobo, 595", "teste1");
         permissaoTeste1 = new Permissao(1, "Cadastrar Funcionario");
         listaPermissaoTeste.add(permissaoTeste1);
@@ -157,7 +155,7 @@ class LoteServiceTest {
     @DisplayName("Deve atualizar Lote com novos dados e ID informado")
     void deveAtualizarLoteComNovosDados(){
         //Given
-        Parceiro parceiroParaAtualizar = new Parceiro(2, "Fabricante", "Fornecedor de Algodões Peruanos", "000", "fabricante2@gmail.com",
+        Parceiroaa parceiroParaAtualizar = new Parceiroaa(2, "Fabricante", "Fornecedor de Algodões Peruanos", "000", "fabricante2@gmail.com",
                 "R. Haddock Lobo, 595", "teste1");
         Lote loteParaAtualizar = new Lote(1, "Lote de Algodão Peruano", LocalDateTime.parse("2025-05-10T11:36:00"), parceiroParaAtualizar, funcionarioTeste);
 
@@ -179,7 +177,7 @@ class LoteServiceTest {
     @DisplayName("Deve lancar excessao ao tentar atualizar ID de parceiro invalido")
     void deveLancarExcessaoParaIdNaoEncontrado(){
         //Given
-        Parceiro parceiroParaAtualizar = new Parceiro(2, "Fabricante", "Fornecedor de Algodões Peruanos", "000", "fabricante2@gmail.com",
+        Parceiroaa parceiroParaAtualizar = new Parceiroaa(2, "Fabricante", "Fornecedor de Algodões Peruanos", "000", "fabricante2@gmail.com",
                 "R. Haddock Lobo, 595", "teste1");
         Lote loteParaAtualizar = new Lote(1, "Lote de Algodão Peruano", LocalDateTime.parse("2025-05-10T11:36:00"), parceiroParaAtualizar, funcionarioTeste);
 

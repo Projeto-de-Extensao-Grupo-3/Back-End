@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import school.sptech.CRUDBackend.entity.Funcionario;
 import school.sptech.CRUDBackend.entity.LoteItemEstoque;
 import school.sptech.CRUDBackend.entity.SaidaEstoque;
-import school.sptech.CRUDBackend.entity.Parceiro;
+import school.sptech.CRUDBackend.entity.Parceiroaa;
 
 import java.util.List;
 
@@ -14,11 +14,12 @@ public class SaidaEstoqueMapper {
     public static SaidaEstoque toEntity(SaidaEstoqueRequestDto requestDto){
         Funcionario funcionario = new Funcionario();
         funcionario.setIdFuncionario(requestDto.getResponsavel().getIdFuncionario());
+
         LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
         loteItemEstoque.setIdLoteItemEstoque(requestDto.getLoteItemEstoque().getIdLoteItemEstoque());
-        Parceiro costureira = null;
+        Parceiroaa costureira = null;
         if (requestDto.getCostureira() != null) {
-            costureira = new Parceiro();
+            costureira = new Parceiroaa();
             costureira.setIdParceiro(requestDto.getCostureira().getIdCostureira());
         }
         return new SaidaEstoque(

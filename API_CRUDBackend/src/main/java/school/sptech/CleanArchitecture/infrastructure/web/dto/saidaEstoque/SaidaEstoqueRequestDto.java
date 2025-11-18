@@ -1,0 +1,38 @@
+package school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+@Schema(description = "DTO para requisição de uma nova SaídaEstoque.")
+@Getter
+@Setter
+public class SaidaEstoqueRequestDto {
+
+    @Schema(description = "Data da saída", example = "2025-04-12")
+    @PastOrPresent
+    @NotNull
+    private LocalDate data;
+    @Schema(description = "Hora da saída", example = "14:30:00")
+    @NotNull(message = "O campo hora é obrigatório")
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime hora;
+    @Schema(description = "Quantidade do Item que saiu", example = "5")
+    @Min(1)
+    private Double qtdSaida;
+    @Schema(description = "Se foi para costureira ou venda", example = "Venda direta do Brás.")
+    private String motivoSaida;
+    private SaidaEstoqueFuncionarioRequestDto responsavel;
+    private SaidaEstoqueLoteItemEstoqueRequestDto loteItemEstoque;
+    @Nullable
+    @Schema(description = "Se foi para costureira", example = "null")
+    private SaidaEstoqueCostureiraRequestDto costureira;
+}

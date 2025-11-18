@@ -59,12 +59,15 @@ public class AlertaController {
     ) {
         ItemEstoque itemEstoque = new ItemEstoque();
         itemEstoque.setIdItemEstoque(itemEstoqueDto.getIdItemEstoque());
+
         List<AlertaResponseDto> alertas = AlertaMapper.toResponseDtos(
                 service.listarAlertasDoItem(itemEstoque)
         );
+
         if (alertas.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
+
         return ResponseEntity.status(200).body(alertas);
     }
 }

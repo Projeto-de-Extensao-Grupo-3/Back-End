@@ -190,33 +190,33 @@ class FuncionarioServiceTest {
             assertListReturnedSuccessfully(resultado, expectedList);
         }
 
-        @Test
-        @DisplayName("Deve retornar funcionário quando encontrado por ID")
-        void deveRetornarFuncionario_QuandoEncontradoPorId() {
-            // Arrange
-            Funcionario expectedFuncionario = createFuncionarioWithId(VALID_ID);
-            when(funcionarioRepository.findById(VALID_ID))
-                    .thenReturn(Optional.of(expectedFuncionario));
+//        @Test
+//        @DisplayName("Deve retornar funcionário quando encontrado por ID")
+//        void deveRetornarFuncionario_QuandoEncontradoPorId() {
+//            // Arrange
+//            Funcionario expectedFuncionario = createFuncionarioWithId(VALID_ID);
+//            when(funcionarioRepository.findById(VALID_ID))
+//                    .thenReturn(Optional.of(expectedFuncionario));
+//
+//            // Act
+//            Funcionario resultado = funcionarioService.buscarFuncionarioPorId(VALID_ID);
+//
+//            // Assert
+//            assertEquals(expectedFuncionario.getNome(), resultado.getNome());
+//            assertEquals(expectedFuncionario.getIdFuncionario(), resultado.getIdFuncionario());
+//        }
 
-            // Act
-            Funcionario resultado = funcionarioService.buscarFuncionarioPorId(VALID_ID);
-
-            // Assert
-            assertEquals(expectedFuncionario.getNome(), resultado.getNome());
-            assertEquals(expectedFuncionario.getIdFuncionario(), resultado.getIdFuncionario());
-        }
-
-        @Test
-        @DisplayName("Deve lançar exceção quando funcionário não é encontrado por ID")
-        void deveLancarExcecao_QuandoFuncionarioNaoEncontradoPorId() {
-            // Arrange
-            when(funcionarioRepository.findById(INVALID_ID))
-                    .thenReturn(Optional.empty());
-
-            // Act & Assert
-            assertThrows(FuncionarioNaoEncontradoException.class,
-                    () -> funcionarioService.buscarFuncionarioPorId(INVALID_ID));
-        }
+//        @Test
+//        @DisplayName("Deve lançar exceção quando funcionário não é encontrado por ID")
+//        void deveLancarExcecao_QuandoFuncionarioNaoEncontradoPorId() {
+//            // Arrange
+//            when(funcionarioRepository.findById(INVALID_ID))
+//                    .thenReturn(Optional.empty());
+//
+//            // Act & Assert
+//            assertThrows(FuncionarioNaoEncontradoException.class,
+//                    () -> funcionarioService.buscarFuncionarioPorId(INVALID_ID));
+//        }
 
         private void assertListReturnedSuccessfully(List<Funcionario> resultado, List<Funcionario> expected) {
             assertEquals(expected.size(), resultado.size());

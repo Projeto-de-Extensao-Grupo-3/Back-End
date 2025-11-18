@@ -1,0 +1,41 @@
+package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.parceiro;
+
+import school.sptech.CleanArchitecture.core.domain.entity.Parceiro;
+import school.sptech.CleanArchitecture.core.domain.valueObject.EmailVo;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class ParceiroEntityMapper {
+
+    public static Parceiro ofEntity(ParceiroEntity entity) {
+        Parceiro domain = new Parceiro();
+        domain.setId(entity.getIdParceiro());
+        domain.setCategoria(entity.getCategoria());
+        domain.setNome(entity.getNome());
+        domain.setTelefone(entity.getTelefone());
+        domain.setEndereco(entity.getEndereco());
+        domain.setEmail(new EmailVo(entity.getEmail()));
+        domain.setIdentificacao(entity.getIdentificacao());
+        return domain;
+    }
+
+    public static ParceiroEntity ofDomain(Parceiro domain) {
+        ParceiroEntity entity = new ParceiroEntity();
+        entity.setIdParceiro(domain.getId());
+        entity.setCategoria(domain.getCategoria());
+        entity.setNome(domain.getNome());
+        entity.setTelefone(domain.getTelefone());
+        entity.setEmail(domain.getEmail().getValue());
+        entity.setEndereco(domain.getEndereco());
+        entity.setIdentificacao(domain.getIdentificacao());
+        return entity;
+    }
+
+    public static List<ParceiroEntity> ofDomains(List<Parceiro> domains) {
+        return domains
+                .stream()
+                .map(ParceiroEntityMapper::ofDomain)
+                .collect(Collectors.toList());
+    }
+}

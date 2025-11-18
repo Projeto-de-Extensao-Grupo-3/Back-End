@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import school.sptech.CRUDBackend.dto.parceiro.ParceiroMapper;
 import school.sptech.CRUDBackend.dto.parceiro.ParceiroRequestDto;
 import school.sptech.CRUDBackend.dto.parceiro.ParceiroResponseDto;
-import school.sptech.CRUDBackend.entity.Parceiro;
+import school.sptech.CRUDBackend.entity.Parceiroaa;
 import school.sptech.CRUDBackend.service.ParceiroService;
 
 import java.util.List;
 
 @Tag(name = "Serviço Terceiro Controller", description = "Operações CRUD relacionadas aos fornecedores ou costureiras que atuam como serviços terceiro.")
 @RestController
-@RequestMapping("/servico-terceiros")
+@RequestMapping("/parceiros")
 @RequiredArgsConstructor
 public class ParceiroController {
     private final ParceiroService parceiroService;
@@ -41,7 +41,7 @@ public class ParceiroController {
     public ResponseEntity<ParceiroResponseDto> cadastrar(
             @RequestBody @Valid ParceiroRequestDto servicoTerceiroCad
     ) {
-        Parceiro servicoParaCadastrar = ParceiroMapper.toEntity(servicoTerceiroCad);
+        Parceiroaa servicoParaCadastrar = ParceiroMapper.toEntity(servicoTerceiroCad);
         ParceiroResponseDto novoParceiro = ParceiroMapper.toResponseDto(
                 parceiroService.cadastrarParceiro(servicoParaCadastrar)
         );
@@ -72,7 +72,7 @@ public class ParceiroController {
             @ApiResponse(responseCode = "404", description = "Nenhum registro com o ID passado no PathVariable foi encontrado."),
     })
     @SecurityRequirement(name = "Bearer")
-    @GetMapping("/{categoria}/busca")
+    @GetMapping("/{categoria}/nome")
     public ResponseEntity<List<ParceiroResponseDto>> servicoTerceiroPorNome(
             @PathVariable String categoria, @RequestParam String nome
     ) {
@@ -100,7 +100,7 @@ public class ParceiroController {
             @PathVariable Integer id,
             @RequestBody @Valid ParceiroRequestDto servicoTerceiroAtualizar
     ) {
-        Parceiro servicoParaAtualizar = ParceiroMapper.toEntity(servicoTerceiroAtualizar);
+        Parceiroaa servicoParaAtualizar = ParceiroMapper.toEntity(servicoTerceiroAtualizar);
         ParceiroResponseDto servicoAtualizado = ParceiroMapper.toResponseDto(
                 parceiroService.atualizarParceiroPorId(id, servicoParaAtualizar)
         );

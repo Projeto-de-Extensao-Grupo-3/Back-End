@@ -1,0 +1,93 @@
+package school.sptech.CleanArchitecture.infrastructure.web.dto.corteTecido;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.RequiredArgsConstructor;
+import school.sptech.CleanArchitecture.core.application.command.corteTecido.AtualizarCorteTecidoCommand;
+import school.sptech.CleanArchitecture.core.application.command.corteTecido.CriarCorteTecidoCommand;
+import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
+import school.sptech.CleanArchitecture.core.domain.entity.Lote;
+import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.corteTecido.CorteTecidoEntity;
+
+import java.util.List;
+
+@Schema(description = "Classe de mapeamento de DTOs CorteTecido.")
+@RequiredArgsConstructor
+public class CorteTecidoMapper {
+
+    public static CriarCorteTecidoCommand toCriarCommand(CorteTecidoRequestDto dto) {
+        Funcionario funcionario = new Funcionario();
+        funcionario.setIdFuncionario(dto.getFuncionario().getIdFuncionario());
+
+        LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
+        loteItemEstoque.setIdLoteItemEstoque(dto.getLoteItemEstoque().getIdLoteItemEstoque());
+
+        return new CriarCorteTecidoCommand(
+                dto.getInicio(),
+                dto.getTermino(),
+                funcionario,
+                loteItemEstoque
+        );
+    }
+
+    public static AtualizarCorteTecidoCommand toAtualizarCommand(Integer id, CorteTecidoRequestDto dto) {
+        Funcionario funcionario = new Funcionario();
+        funcionario.setIdFuncionario(dto.getFuncionario().getIdFuncionario());
+
+        LoteItemEstoque loteItemEstoque = new LoteItemEstoque();
+        loteItemEstoque.setIdLoteItemEstoque(dto.getLoteItemEstoque().getIdLoteItemEstoque());
+
+        return new AtualizarCorteTecidoCommand(
+                id,
+                dto.getInicio(),
+                dto.getTermino(),
+                funcionario,
+                loteItemEstoque
+        );
+    }
+
+    public static CorteTecidoCadastroDto toCadastroDto(CorteTecidoEntity corteTecido) {
+        return new CorteTecidoCadastroDto(
+                corteTecido.getInicio(),
+                corteTecido.getTermino()
+        );
+    }
+
+    public static CorteTecidoResponseDto toResponseDto(CorteTecidoEntity corteTecido) {
+        CorteTecidoFuncionarioResponseDto funcionario = new CorteTecidoFuncionarioResponseDto ();
+        funcionario.setNome(corteTecido.getFuncionario().getNome());
+        funcionario.setTelefone(corteTecido.getFuncionario().getTelefone());
+        funcionario.setEmail(corteTecido.getFuncionario().getEmail());
+
+        return new CorteTecidoResponseDto(
+                corteTecido.getIdCorteTecido(),
+                corteTecido.getInicio(),
+                corteTecido.getTermino(),
+                funcionario
+        );
+    }
+
+    public static CorteTecidoResponseDto toAtualizarResponseDto(CorteTecidoEntity corteTecido) {
+        return new CorteTecidoResponseDto(
+                corteTecido.getIdCorteTecido(),
+                corteTecido.getInicio(),
+                corteTecido.getTermino()
+        );
+    }
+
+    public static CorteTecidoCadastrarResponseDto toCadastroResponseDto(CorteTecidoEntity corteTecido) {
+        return new CorteTecidoCadastrarResponseDto(
+                corteTecido.getIdCorteTecido(),
+                corteTecido.getInicio(),
+                corteTecido.getTermino(),
+                corteTecido.getFuncionario().getIdFuncionario()
+        );
+    }
+
+    public static List<CorteTecidoResponseDto> toResponseDtos(List<CorteTecidoEntity> cortesTecido) {
+        return cortesTecido
+                .stream()
+                .map(CorteTecidoMapper::toResponseDto)
+                .toList();
+    }
+}
