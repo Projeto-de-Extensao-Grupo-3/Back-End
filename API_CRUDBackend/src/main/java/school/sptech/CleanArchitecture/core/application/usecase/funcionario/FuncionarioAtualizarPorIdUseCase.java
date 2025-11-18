@@ -10,13 +10,18 @@ public class FuncionarioAtualizarPorIdUseCase {
 
     private final FuncionarioGateway gateway;
 
-    public FuncionarioAtualizarPorIdUseCase(FuncionarioGateway gateway) {
+    private final BuscarFuncionarioPorIdUseCase buscarFuncionarioPorIdUseCase;
+
+    public FuncionarioAtualizarPorIdUseCase(FuncionarioGateway gateway, BuscarFuncionarioPorIdUseCase buscarFuncionarioPorIdUseCase) {
         this.gateway = gateway;
+        this.buscarFuncionarioPorIdUseCase = buscarFuncionarioPorIdUseCase;
     }
 
     public Funcionario execute(FuncionarioAtualizarPorIdCommand command){
         if (gateway.existsById(command.idFuncionario())) {
-           Funcionario funcionarioParaAtualizar = FuncionarioMapper.ofAtualizarCommand(command);
+            Funcionario funcionarioParaAtualizar = FuncionarioMapper.ofAtualizarCommand(command);
+            Funcionario funcionarioCompleto = buscarFuncionarioPorIdUseCase.execute(funcionarioParaAtualizar.getIdFuncionario());
+            funcionarioParaAtualizar.setSenha(funcionarioCompleto.getSenha());
             return gateway.save(funcionarioParaAtualizar);
         }
         throw new FuncionarioNaoEncontradoException("O funcionário para atualizar não existe.");

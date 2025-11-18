@@ -20,6 +20,15 @@ public class Funcionario {
 
     public Funcionario() { }
 
+    public Funcionario(Integer idFuncionario, String nome, CpfVo cpf, TelefoneVo telefone, EmailVo email, Set<Permissao> permissoes) {
+        this.idFuncionario = idFuncionario;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.email = email;
+        this.permissoes = permissoes;
+    }
+
     public Funcionario(Integer idFuncionario, String nome, CpfVo cpf, TelefoneVo telefone, EmailVo email, String senha, Set<Permissao> permissoes) {
         this.idFuncionario = idFuncionario;
         this.nome = nome;

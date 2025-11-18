@@ -10,7 +10,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.CleanArchitecture.core.application.command.funcionario.AlterarSenhaCommand;
 import school.sptech.CleanArchitecture.core.application.command.funcionario.FuncionarioAtualizarPorIdCommand;
+import school.sptech.CleanArchitecture.core.application.command.funcionario.FuncionarioAtualizarRequestDto;
 import school.sptech.CleanArchitecture.core.application.command.funcionario.LoginFuncionarioCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.*;
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
@@ -135,10 +137,8 @@ public class FuncionarioController {
     @PutMapping("/{id}")
     public ResponseEntity<FuncionarioResponseDto> atualizarPorId (
             @PathVariable Integer id,
-            @RequestBody @Valid FuncionarioRequestDto funcionarioAtualizar
+            @RequestBody @Valid FuncionarioAtualizarRequestDto funcionarioAtualizar
     ) {
-        Funcionario funcionarioCompleto = buscarFuncionarioPorIdUseCase.execute(id);
-        funcionarioAtualizar.setSenha(funcionarioCompleto.getSenha());
         FuncionarioAtualizarPorIdCommand funcionarioParaAtualizar = FuncionarioMapper.toAtualizarCommand(id, funcionarioAtualizar);
         FuncionarioResponseDto funcionarioAtualizado = FuncionarioMapper.toResponseDto(
                 funcionarioAtualizarPorIdUseCase.execute(funcionarioParaAtualizar)
@@ -147,12 +147,12 @@ public class FuncionarioController {
     }
 
     @SecurityRequirement(name = "Bearer")
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/senha")
     public ResponseEntity<Void> atualizarSenha (
             @PathVariable Integer id,
-            @RequestBody String novaSenha
+            @RequestBody AlterarSenhaCommand command
     ) {
-        atualizarSenhaUseCase.execute(id, novaSenha);
+        atualizarSenhaUseCase.execute(id, command);
         return ResponseEntity.status(200).build();
     }
 

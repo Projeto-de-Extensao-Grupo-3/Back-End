@@ -4,6 +4,7 @@ package school.sptech.CleanArchitecture.infrastructure.web.dto.funcionario;
 import jakarta.validation.Valid;
 import school.sptech.CleanArchitecture.core.application.command.funcionario.CriarFuncionarioCommand;
 import school.sptech.CleanArchitecture.core.application.command.funcionario.FuncionarioAtualizarPorIdCommand;
+import school.sptech.CleanArchitecture.core.application.command.funcionario.FuncionarioAtualizarRequestDto;
 import school.sptech.CleanArchitecture.core.domain.entity.Funcionario;
 import school.sptech.CleanArchitecture.core.domain.entity.Permissao;
 import school.sptech.CleanArchitecture.core.domain.valueObject.CpfVo;
@@ -59,7 +60,6 @@ public class FuncionarioMapper {
                 new CpfVo(command.cpf().getValue()),
                 new TelefoneVo(command.telefone().getValue()),
                 new EmailVo(command.email().getValue()),
-                command.senha(),
                 permissoes
         );
     }
@@ -70,7 +70,7 @@ public class FuncionarioMapper {
                 .toList();
     }
 
-    public static FuncionarioAtualizarPorIdCommand toAtualizarCommand(Integer id, FuncionarioRequestDto dto) {
+    public static FuncionarioAtualizarPorIdCommand toAtualizarCommand(Integer id, FuncionarioAtualizarRequestDto dto) {
         Set<Permissao> permissoes = dto.getPermissoes() != null ? dto.getPermissoes().stream()
                 .map(p -> new Permissao(p.getIdPermissao(), p.getDescricao()))
                 .collect(Collectors.toSet()) : null;
@@ -81,7 +81,6 @@ public class FuncionarioMapper {
                 new CpfVo(dto.getCpf()),
                 new TelefoneVo(dto.getTelefone()),
                 new EmailVo(dto.getEmail()),
-                dto.getSenha(),
                 permissoes
         );
     }

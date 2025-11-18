@@ -13,7 +13,6 @@ public record FuncionarioAtualizarPorIdCommand(
          CpfVo cpf,
          TelefoneVo telefone,
          EmailVo email,
-         String senha,
          Set<Permissao>permissoes
 ) {
 }

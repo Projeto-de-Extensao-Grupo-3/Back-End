@@ -43,6 +43,7 @@ public class CategoriaRemoverPorId {
                     );
                 }
                 gateway.deleteById(id);
+                return;
             }
             throw new CategoriaBadRequestException("O objeto precisa ter a categoria pai como Tecido (ID 1) ou Roupa (ID 2).");
         } else {
