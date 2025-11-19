@@ -136,7 +136,7 @@ public class LoteItemEstoqueController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit
     ) {
-        return ResponseEntity.ok(redisPaginacao.listarEntradaPaginado(page, limit));
+        return ResponseEntity.ok(buscarLotesPaginadoUseCase.executar(page, limit));
     }
 
     @GetMapping("/paginadoSaida")
@@ -144,6 +144,6 @@ public class LoteItemEstoqueController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit
     ) {
-        return ResponseEntity.ok(redisPaginacao.listarPaginado(page, limit));
+        return ResponseEntity.ok(buscarLotesPaginadoSaidaUseCase.executar(page, limit));
     }
 }
