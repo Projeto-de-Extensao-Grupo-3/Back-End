@@ -19,7 +19,7 @@ public class SaidaPaginacaoService {
     private final RedisTemplate<String, Object> redisTemplate;
 
     public PaginacaoResponseDTO<EntradaPaginacaoDTO> listarEntradaPaginado(int page, int limit) {
-        String cacheKey = "saida:page=" + page + ":limit=" + limit;
+        String cacheKey = "entrada:page=" + page + ":limit=" + limit;
 
         // 1. Verifica se existe no Redis
         PaginacaoResponseDTO<EntradaPaginacaoDTO> cached =
@@ -43,6 +43,8 @@ public class SaidaPaginacaoService {
                         (String) obj[4],
                         (Timestamp) obj[5]
                 ))
+
+
                 .toList();
 
         // 3. Busca total de registros para paginação
