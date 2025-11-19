@@ -9,36 +9,42 @@ import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.Pa
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.SaidaPaginacaoDTO;
 
 import java.sql.Timestamp;
+import java.time.Duration;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class SaidaPaginacaoService {
 
-    private final LoteItemEstoqueRepository repository;
     private final RedisTemplate<String, Object> redisTemplate;
 
-    public void salvarEntradaPaginacao(int page, int limit,
-                                PaginacaoResponseDTO<EntradaPaginacaoDTO> response) {
-
+    public void salvarEntradaPaginacao(int page, int limit, PaginacaoResponseDTO<EntradaPaginacaoDTO> response) {
         String cacheKey = "entrada:page=" + page + ":limit=" + limit;
 
+        PaginacaoResponseDTO<EntradaPaginacaoDTO> cached =
+                (PaginacaoResponseDTO<EntradaPaginacaoDTO>)redisTemplate.opsForValue().get(cacheKey);
+
+        if (cached != null) {
+            System.out.println("RETORNANDO DO CACHE REDIS");
+        }
+
         redisTemplate
                 .opsForValue()
-                .set(cacheKey, response, 30);
-
-        System.out.println("SALVANDO NO CACHE REDIS");
+                .set(cacheKey, response, Duration.ofSeconds(30));
     }
 
-    public void salvarSaidaPaginacao(int page, int limit,
-                                       PaginacaoResponseDTO<SaidaPaginacaoDTO> response) {
-
+    public void salvarSaidaPaginacao(int page, int limit, PaginacaoResponseDTO<SaidaPaginacaoDTO> response) {
         String cacheKey = "saida:page=" + page + ":limit=" + limit;
+
+        PaginacaoResponseDTO<SaidaPaginacaoDTO> cached =
+                (PaginacaoResponseDTO<SaidaPaginacaoDTO>)redisTemplate.opsForValue().get(cacheKey);
+
+        if (cached != null) {
+            System.out.println("RETORNANDO DO CACHE REDIS");
+        }
 
         redisTemplate
                 .opsForValue()
-                .set(cacheKey, response, 30);
-
-        System.out.println("SALVANDO NO CACHE REDIS");
+                .set(cacheKey, response, Duration.ofSeconds(30));
     }
 }
