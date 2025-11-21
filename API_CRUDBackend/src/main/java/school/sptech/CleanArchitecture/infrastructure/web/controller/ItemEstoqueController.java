@@ -9,14 +9,18 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.CleanArchitecture.core.application.command.confeccaoRoupa.ConfeccaoRoupaCadastrarCommand;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueAtualizarPorIdCommand;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueCadastrarCommand;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueCadastrarTecidoRoupaCommand;
+import school.sptech.CleanArchitecture.core.application.usecase.confeccaoRoupa.ConfeccaoRoupaCadastrarUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueCalcularCustoProducaoUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccaoRoupa.ConfeccaoRoupaEntity;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccaoRoupa.ConfeccaoRoupaEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.confeccaoRoupa.ConfeccaoRoupaResponseDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.*;
 
 import java.util.HashSet;
@@ -47,6 +51,8 @@ public class ItemEstoqueController {
 
     private final ItemEstoqueCalcularCustoProducaoUseCase itemEstoqueCalcularCustoProducaoUseCase;
 
+    private final ConfeccaoRoupaCadastrarUseCase confeccaoRoupaCadastrarUseCase;
+
     @Operation(
             summary = "Cadastramento de um novo Item.",
             description = "Retorna um objeto do tipo ItemEstoqueResponseDto quando cadastrado com sucesso."
@@ -72,24 +78,26 @@ public class ItemEstoqueController {
 
     @SecurityRequirement(name = "Bearer")
     @PostMapping("/tecidos/{id}")
-    public ResponseEntity<ItemEstoqueResponseDto> cadastrarTecidosDaRoupa(
+    public ResponseEntity<Void> cadastrarTecidosDaRoupa(
             @PathVariable Integer id,
             @RequestBody Set<ItemEstoqueConfeccaoRoupaDto> confeccaoRoupaDto
     ) {
         Set<ConfeccaoRoupaEntity> confeccaoRoupa = new HashSet<>();
         for (ItemEstoqueConfeccaoRoupaDto confeccaoDto : confeccaoRoupaDto) {
             ConfeccaoRoupaEntity confeccao = new ConfeccaoRoupaEntity();
-            confeccao.setIdConfeccaoRoupa(confeccaoDto.getIdConfeccaoRoupa());
             ItemEstoqueEntity tecido = new ItemEstoqueEntity();
             tecido.setIdItemEstoque(confeccaoDto.getTecido().getIdTecido());
+            ItemEstoqueEntity roupa = new ItemEstoqueEntity();
+            roupa.setIdItemEstoque(id);
             confeccao.setTecido(tecido);
+            confeccao.setRoupa(roupa);
+            confeccao.setQtdTecido(confeccaoDto.getQtdTecido());
             confeccaoRoupa.add(confeccao);
         }
-        ItemEstoqueCadastrarTecidoRoupaCommand command = ItemEstoqueEntityMapper.toCadastrarTecidoRoupaCommand(id, confeccaoRoupa);
-        ItemEstoqueResponseDto roupaComTecidos = ItemEstoqueEntityMapper.toResponseDto(
-                itemEstoqueCadastrarTecidoRoupaUseCase.execute(command));
 
-        return ResponseEntity.status(201).body(roupaComTecidos);
+        Set<ConfeccaoRoupaCadastrarCommand> command = ConfeccaoRoupaEntityMapper.toCadastrarCommands(confeccaoRoupa);
+        confeccaoRoupaCadastrarUseCase.execute(id, command);
+        return ResponseEntity.status(201).build();
     }
 
     @Operation(summary = "* Listagem de todos os Itens no Estoque.", description = "Retorna uma lista de ItemEstoqueResponseDto com todos os Itens no sistema.")

@@ -4,15 +4,15 @@ package school.sptech.CleanArchitecture.core.adapters;
 import school.sptech.CleanArchitecture.core.domain.entity.ConfeccaoRoupa;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ConfeccaoRoupaGateway {
 
-    ConfeccaoRoupa save(ConfeccaoRoupa confeccaoRoupa);
+    Set<ConfeccaoRoupa> saveAll(Set<ConfeccaoRoupa> confeccaoRoupa);
 
     boolean existsById(Integer id);
 
-    void deleteById(Integer id);
+    void deleteAllByRoupa_IdItemEstoqueEquals(Integer id);
 
     boolean existsByRoupaAndTecido(ItemEstoque roupa, ItemEstoque tecido);
 }

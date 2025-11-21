@@ -16,7 +16,7 @@ public class ItemEstoqueCadastrarTecidoRoupaUseCase {
     public ItemEstoque execute(ItemEstoqueCadastrarTecidoRoupaCommand command){
         if (gateway.existsById(command.idRoupa())) {
             ItemEstoque roupa = gateway.findById(command.idRoupa()).get();
-            roupa.setConfeccaoRoupa(command.tecidos());
+            roupa.setConfeccaoRoupa(command.confeccaoRoupas());
             return gateway.save(roupa);
         }
         throw new ItemEstoqueNaoEncontradoException("A roupa não existe no estoque");

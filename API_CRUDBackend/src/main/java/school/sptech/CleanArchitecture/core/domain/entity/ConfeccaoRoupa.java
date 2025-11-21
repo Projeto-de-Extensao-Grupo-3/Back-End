@@ -13,8 +13,7 @@ public class ConfeccaoRoupa {
     public ConfeccaoRoupa() {
     }
 
-    public ConfeccaoRoupa(Integer idConfeccaoRoupa, ItemEstoque roupa, ItemEstoque tecido, Double qtdTecido) {
-        this.idConfeccaoRoupa = idConfeccaoRoupa;
+    public ConfeccaoRoupa(ItemEstoque roupa, ItemEstoque tecido, Double qtdTecido) {
         this.roupa = roupa;
         this.tecido = tecido;
         this.qtdTecido = qtdTecido;

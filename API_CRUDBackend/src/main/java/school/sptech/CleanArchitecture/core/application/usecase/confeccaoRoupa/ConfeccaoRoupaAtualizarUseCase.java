@@ -25,7 +25,7 @@ public class ConfeccaoRoupaAtualizarUseCase {
         if (gateway.existsById(command.id())) {
             ConfeccaoRoupa confeccaoParaAtualizar = ConfeccaoRoupaMapper.ofAtualizarCommand(command);
 
-            return gateway.save(confeccaoParaAtualizar);
+            return null;
         }
         throw new ConfeccaoRoupaNaoEncontradoException("Esse registro de confecção de roupa não existe");
     }

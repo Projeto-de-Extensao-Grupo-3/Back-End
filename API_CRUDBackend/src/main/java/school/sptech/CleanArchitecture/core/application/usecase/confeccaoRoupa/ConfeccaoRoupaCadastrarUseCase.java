@@ -7,6 +7,9 @@ import school.sptech.CleanArchitecture.core.application.mapper.ConfeccaoRoupaMap
 import school.sptech.CleanArchitecture.core.domain.entity.ConfeccaoRoupa;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class ConfeccaoRoupaCadastrarUseCase {
 
     private final ConfeccaoRoupaGateway gateway;
@@ -15,18 +18,18 @@ public class ConfeccaoRoupaCadastrarUseCase {
         this.gateway = gateway;
     }
 
-    public ConfeccaoRoupa execute(ConfeccaoRoupaCadastrarCommand command){
-        ItemEstoque tecido = new ItemEstoque();
-        tecido.setIdItemEstoque(command.tecido().idTecido());
+    public Set<ConfeccaoRoupa> execute(Integer id, Set<ConfeccaoRoupaCadastrarCommand> command){
+        gateway.deleteAllByRoupa_IdItemEstoqueEquals(id);
+        Set<ConfeccaoRoupa> confeccaoRoupas = command.stream().map(confeccao -> {
+                    ItemEstoque tecido = new ItemEstoque();
+                    tecido.setIdItemEstoque(confeccao.tecido().idTecido());
+                    ItemEstoque roupa = new ItemEstoque();
+                    roupa.setIdItemEstoque(confeccao.roupa().idRoupa());
 
-        ItemEstoque roupa = new ItemEstoque();
-        roupa.setIdItemEstoque(command.roupa().idRoupa());
+                    return new ConfeccaoRoupa(roupa, tecido, confeccao.qtdTecido());
+                }
+        ).collect(Collectors.toSet());
 
-        if (gateway.existsByRoupaAndTecido(roupa, tecido)){
-            throw new ConfeccaoRoupaConflitoException("Confecção de Roupa com essa roupa e tecido já cadastrados.");
-        }
-        ConfeccaoRoupa confeccaoPAraCadastrar = ConfeccaoRoupaMapper.ofCadastrarCommand(command);
-
-        return gateway.save(confeccaoPAraCadastrar);
+        return gateway.saveAll(confeccaoRoupas);
     }
 }

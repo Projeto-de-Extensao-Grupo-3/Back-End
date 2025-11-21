@@ -11,5 +11,4 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ItemEstoqueTecidoDto {
     private Integer idTecido;
-    private String descricao;
 }

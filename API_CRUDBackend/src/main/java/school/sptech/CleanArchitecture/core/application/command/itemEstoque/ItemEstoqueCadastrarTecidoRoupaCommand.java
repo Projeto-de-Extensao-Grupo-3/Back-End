@@ -6,6 +6,6 @@ import java.util.Set;
 
 public record ItemEstoqueCadastrarTecidoRoupaCommand(
         Integer idRoupa,
-        Set<ConfeccaoRoupa> tecidos
+        Set<ConfeccaoRoupa> confeccaoRoupas
 ) {
 }
