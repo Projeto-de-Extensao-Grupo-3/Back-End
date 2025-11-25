@@ -56,6 +56,10 @@ public class ItemEstoqueController {
 
     private final ProdutosGiroBaixoUseCase produtosGiroBaixoUseCase;
 
+    private final DefeitosPorRoupaUseCase defeitosPorRoupaUseCase;
+
+    private final EvolucaoVendasUseCase evolucaoVendasUseCase;
+
     @Operation(
             summary = "Cadastramento de um novo Item.",
             description = "Retorna um objeto do tipo ItemEstoqueResponseDto quando cadastrado com sucesso."
@@ -213,6 +217,28 @@ public class ItemEstoqueController {
     public ResponseEntity<List<ProdutoBaixoGiroDto>> calcularCustoProducao() {
 
         List<ProdutoBaixoGiroDto> response = produtosGiroBaixoUseCase.execute();
+        if (response.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @GetMapping("/defeitos-por-roupa")
+    public ResponseEntity<List<DefeitosPorRoupaDto>> verificarDefeitoRoupas() {
+
+        List<DefeitosPorRoupaDto> response = defeitosPorRoupaUseCase.execute();
+        if (response.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @GetMapping("/evolucao-vendas")
+    public ResponseEntity<List<EvolucaoVendasDto>> verificarEvolucaoVendas() {
+
+        List<EvolucaoVendasDto> response = evolucaoVendasUseCase.execute();
         if (response.isEmpty()) {
             return ResponseEntity.status(204).build();
         }

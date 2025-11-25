@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.DefeitosPorRoupaDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.EvolucaoVendasDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ProdutoBaixoGiroDto;
 
 import java.util.List;
@@ -54,4 +56,38 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
             nativeQuery = true)
     List<ProdutoBaixoGiroDto> buscarProdutosGiroBaixo();
 
+    @Query(value = "SELECT\n" +
+            "    ie.descricao AS roupa,\n" +
+            "    COUNT(CASE WHEN se.motivo_saida LIKE '%defeito%' THEN 1 END) AS qtd_defeitos,\n" +
+            "    COUNT(se.id_saida_estoque) AS qtd_total_saidas,\n" +
+            "    ROUND(\n" +
+            "        (COUNT(CASE WHEN se.motivo_saida LIKE '%defeito%' THEN 1 END) /\n" +
+            "         COUNT(se.id_saida_estoque)) * 100, 2\n" +
+            "    ) AS taxa_defeito_percentual\n" +
+            "FROM saida_estoque AS se\n" +
+            "JOIN lote_item_estoque AS lie ON se.fk_lote_item_estoque = lie.id_lote_item_estoque\n" +
+            "JOIN item_estoque AS ie ON ie.id_item_estoque = lie.fk_item_estoque\n" +
+            "WHERE se.data >= '2025-03-01'\n" +
+            "GROUP BY ie.descricao\n" +
+            "HAVING qtd_defeitos > 0\n" +
+            "ORDER BY taxa_defeito_percentual DESC",
+            nativeQuery = true)
+    List<DefeitosPorRoupaDto> buscarDefeitosPorProduto();
+
+    @Query(value = "SELECT\n" +
+            "    mes_atual,\n" +
+            "    total_vendas_atual,\n" +
+            "    ROUND(((total_vendas_atual - total_vendas_anterior) / total_vendas_anterior) * 100, 2) AS crescimento_percentual\n" +
+            "FROM (\n" +
+            "    SELECT\n" +
+            "        DATE_FORMAT(se.data, '%Y-%m') AS mes_atual,\n" +
+            "        SUM(se.qtd_saida) AS total_vendas_atual,\n" +
+            "        LAG(SUM(se.qtd_saida)) OVER (ORDER BY DATE_FORMAT(se.data, '%Y-%m')) AS total_vendas_anterior\n" +
+            "    FROM saida_estoque AS se\n" +
+            "    WHERE se.motivo_saida LIKE '%venda%'\n" +
+            "    GROUP BY DATE_FORMAT(se.data, '%Y-%m')\n" +
+            ") AS subconsulta\n" +
+            "ORDER BY mes_atual ASC",
+            nativeQuery = true)
+    List<EvolucaoVendasDto> buscarEvolucaoVendas();
 }

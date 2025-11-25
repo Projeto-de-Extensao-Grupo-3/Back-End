@@ -3,6 +3,8 @@ package school.sptech.CleanArchitecture.core.adapters;
 import org.springframework.data.repository.query.Param;
 import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.DefeitosPorRoupaDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.EvolucaoVendasDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ProdutoBaixoGiroDto;
 
 import java.util.List;
@@ -15,6 +17,10 @@ public interface ItemEstoqueGateway {
     List<ItemEstoque> findAll();
 
     List<ProdutoBaixoGiroDto> produtoGiroBaixo();
+
+    List<DefeitosPorRoupaDto> defeitosPorRoupa();
+
+    List<EvolucaoVendasDto> evolucaoVendas();
 
     boolean existsById(Integer id);
 
