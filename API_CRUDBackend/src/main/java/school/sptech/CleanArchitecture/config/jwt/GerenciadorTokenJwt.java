@@ -36,8 +36,8 @@ public class GerenciadorTokenJwt {
     public String generateToken(final Authentication authentication) {
 
         // Para verificacoes de permissões;
-        final String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
+//        final String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+//                .collect(Collectors.joining(","));
 
         FuncionarioDetalhesDto funcionarioAutenticado = (FuncionarioDetalhesDto) authentication.getPrincipal();
 

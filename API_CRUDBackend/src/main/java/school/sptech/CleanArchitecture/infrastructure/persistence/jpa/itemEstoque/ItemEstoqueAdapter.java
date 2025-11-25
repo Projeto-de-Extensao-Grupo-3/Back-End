@@ -1,6 +1,5 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
@@ -8,8 +7,6 @@ import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntityMapper;
-import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaRepository;
-import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleira.PrateleiraEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +17,6 @@ import java.util.stream.Collectors;
 public class ItemEstoqueAdapter implements ItemEstoqueGateway {
 
     private final ItemEstoqueRepository repository;
-    private final CategoriaRepository categoriaRepository;
 
     @Override
     public ItemEstoque save(ItemEstoque itemEstoque) {

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import school.sptech.CleanArchitecture.core.application.command.confeccaoRoupa.ConfeccaoRoupaCadastrarCommand;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueAtualizarPorIdCommand;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueCadastrarCommand;
-import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueCadastrarTecidoRoupaCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.confeccaoRoupa.ConfeccaoRoupaCadastrarUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueCalcularCustoProducaoUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.*;
@@ -20,7 +19,6 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccaoR
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccaoRoupa.ConfeccaoRoupaEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.confeccaoRoupa.ConfeccaoRoupaResponseDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.*;
 
 import java.util.HashSet;
@@ -38,8 +36,6 @@ public class ItemEstoqueController {
     private final ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarPorIdUseCase;
 
     private final ItemEstoqueCadastrarItemUseCase itemEstoqueCadastrarItemUseCase;
-
-    private final ItemEstoqueCadastrarTecidoRoupaUseCase itemEstoqueCadastrarTecidoRoupaUseCase;
 
     private final ItemEstoqueListAllUseCase itemEstoqueListAllUseCase;
 

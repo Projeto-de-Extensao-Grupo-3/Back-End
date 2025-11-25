@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.infrastructure.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,7 +30,13 @@ import school.sptech.CleanArchitecture.core.application.exceptions.parceiro.Parc
 import school.sptech.CleanArchitecture.core.application.exceptions.parceiro.ParceiroNaoEncontradoException;
 
 @RestControllerAdvice
-public class ControllerHandler {
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolation(DataIntegrityViolationException exception) {
+        String errorMessage = "Impossível deletar: entidade referenciada por outras";
+        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
+    }
 
     @ExceptionHandler(FuncionarioConflitoException.class)
     public ResponseEntity<ErrorDto> handleFuncionarioConflito(FuncionarioConflitoException ex,  WebRequest request) {
