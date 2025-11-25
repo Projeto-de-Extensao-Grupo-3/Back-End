@@ -66,4 +66,9 @@ public class SaidaEstoqueBeanConfig {
     public SaidaEstoqueRemoverPorIdUseCase saidaEstoqueRemoverPorIdUseCase(SaidaEstoqueAdapter adapter){
         return new SaidaEstoqueRemoverPorIdUseCase(adapter);
     }
+
+    @Bean
+    public TaxaDefeitoCosturaUseCase taxaDefeitoCosturaUseCase(SaidaEstoqueAdapter adapter) {
+        return new TaxaDefeitoCosturaUseCase(adapter);
+    }
 }

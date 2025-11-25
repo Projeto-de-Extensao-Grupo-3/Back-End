@@ -1,6 +1,7 @@
 package school.sptech.CleanArchitecture.core.adapters;
 
 import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque.TaxaDefeitoCosturaDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,4 +22,6 @@ public interface SaidaEstoqueGateway {
     List<SaidaEstoque> findByMotivoSaida(String motivo);
 
     List<SaidaEstoque> findByData(LocalDate data);
+
+    List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura();
 }
