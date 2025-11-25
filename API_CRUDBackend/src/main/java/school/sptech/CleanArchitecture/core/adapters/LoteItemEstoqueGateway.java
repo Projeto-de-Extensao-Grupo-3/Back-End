@@ -1,9 +1,7 @@
 package school.sptech.CleanArchitecture.core.adapters;
 
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.EntradaPaginacaoDTO;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.PaginacaoResponseDTO;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.SaidaPaginacaoDTO;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.*;
 
 import java.util.List;
 
@@ -24,4 +22,7 @@ public interface LoteItemEstoqueGateway {
 
     PaginacaoResponseDTO<SaidaPaginacaoDTO> buscarPaginadoSaida(int offset, int limit);
 
+    List<MargemLucroProdutoDto> buscarMargemLucroProdutos();
+
+    List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra();
 }

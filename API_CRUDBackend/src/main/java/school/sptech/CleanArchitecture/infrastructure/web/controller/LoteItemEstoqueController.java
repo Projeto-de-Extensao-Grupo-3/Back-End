@@ -14,6 +14,7 @@ import school.sptech.CleanArchitecture.config.redis.SaidaPaginacaoService;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.AtualizarLoteItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.CriarLoteItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.*;
+import school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque.PecasMaiorMaoObraDtoUseCase;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntityMapper;
@@ -34,6 +35,8 @@ public class LoteItemEstoqueController {
     private final RemoverLoteItemEstoqueUseCase removerLoteItemEstoqueUseCase;
     private final BuscarLotesPaginadoUseCase buscarLotesPaginadoUseCase;
     private final BuscarLotesPaginadoSaidaUseCase buscarLotesPaginadoSaidaUseCase;
+    private final MargemLucroProdutoUseCase margemLucroProdutoUseCase;
+    private final PecasMaiorMaoObraDtoUseCase pecasMaiorMaoObraDtoUseCase;
 
     private final SaidaPaginacaoService redisPaginacao;
 
@@ -145,5 +148,26 @@ public class LoteItemEstoqueController {
             @RequestParam(defaultValue = "10") int limit
     ) {
         return ResponseEntity.ok(buscarLotesPaginadoSaidaUseCase.executar(page, limit));
+    }
+
+    @GetMapping("/margem-lucro-produtos")
+    public ResponseEntity<List<MargemLucroProdutoDto>> buscarMargemLucroProdutos() {
+        List<MargemLucroProdutoDto> response = margemLucroProdutoUseCase.execute();
+
+        if(response.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/peca-maior-mao-obra")
+    public ResponseEntity<List<PecasMaiorMaoObraDto>> buscarPecasMaiorMaoObra() {
+        List<PecasMaiorMaoObraDto> response = pecasMaiorMaoObraDtoUseCase.execute();
+        if (response.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok().body(response);
     }
 }

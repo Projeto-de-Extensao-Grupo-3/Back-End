@@ -24,6 +24,7 @@ import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executor;
 
 @Tag(name = "* Item de Estoque Controller", description = "Operações CRUD relacionadas aos itens de estoque (tecido ou roupa).")
 @RestController
@@ -48,6 +49,12 @@ public class ItemEstoqueController {
     private final ItemEstoqueCalcularCustoProducaoUseCase itemEstoqueCalcularCustoProducaoUseCase;
 
     private final ConfeccaoRoupaCadastrarUseCase confeccaoRoupaCadastrarUseCase;
+
+    private final ProdutosGiroBaixoUseCase produtosGiroBaixoUseCase;
+
+    private final DefeitosPorRoupaUseCase defeitosPorRoupaUseCase;
+
+    private final EvolucaoVendasUseCase evolucaoVendasUseCase;
 
     @Operation(
             summary = "Cadastramento de um novo Item.",
@@ -200,6 +207,39 @@ public class ItemEstoqueController {
     public ResponseEntity<Double> calcularCustoProducao(@PathVariable Integer id) {
         Double custo = itemEstoqueCalcularCustoProducaoUseCase.execute(id);
         return ResponseEntity.status(200).body(custo);
+    }
+
+    @GetMapping("/produtos-giro-baixo")
+    public ResponseEntity<List<ProdutoBaixoGiroDto>> calcularCustoProducao() {
+
+        List<ProdutoBaixoGiroDto> response = produtosGiroBaixoUseCase.execute();
+        if (response.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @GetMapping("/defeitos-por-roupa")
+    public ResponseEntity<List<DefeitosPorRoupaDto>> verificarDefeitoRoupas() {
+
+        List<DefeitosPorRoupaDto> response = defeitosPorRoupaUseCase.execute();
+        if (response.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @GetMapping("/evolucao-vendas")
+    public ResponseEntity<List<EvolucaoVendasDto>> verificarEvolucaoVendas() {
+
+        List<EvolucaoVendasDto> response = evolucaoVendasUseCase.execute();
+        if (response.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(response);
     }
 }
 
