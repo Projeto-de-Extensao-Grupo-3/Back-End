@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.core.adapters;
 import org.springframework.data.repository.query.Param;
 import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ProdutoBaixoGiroDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,8 @@ public interface ItemEstoqueGateway {
     ItemEstoque save(ItemEstoque itemEstoque);
 
     List<ItemEstoque> findAll();
+
+    List<ProdutoBaixoGiroDto> produtoGiroBaixo();
 
     boolean existsById(Integer id);
 

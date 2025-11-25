@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ProdutoBaixoGiroDto;
 
 import java.util.List;
 
@@ -47,5 +48,10 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
     @Transactional
     @Query(value = "DELETE FROM caracteristica_item_estoque WHERE fk_categoria = :idCategoria", nativeQuery = true)
     void removerCaracteristica(@Param("idCategoria") Integer idCategoria);
+
+    @Query(value =
+            "SELECT     ie.descricao AS produto,     COALESCE(SUM(se.qtd_saida), 0) AS total_vendido,     COUNT(se.id_saida_estoque) AS qtd_vendas,     ie.qtd_armazenado AS estoque_atual,     CASE         WHEN MAX(se.data) IS NULL THEN 'Nunca vendeu'         ELSE CONCAT(DATEDIFF(CURDATE(), MAX(se.data)), ' dias')     END AS dias_sem_vender,     CASE         WHEN MAX(se.data) IS NULL THEN 'CRÍTICO - Nunca vendeu'         WHEN DATEDIFF(CURDATE(), MAX(se.data)) > 60 THEN 'CRÍTICO - Liquidar'         WHEN DATEDIFF(CURDATE(), MAX(se.data)) > 30 THEN 'ATENÇÃO - Promoção'         ELSE 'OK'     END AS status_recomendacao FROM item_estoque AS ie LEFT JOIN lote_item_estoque AS lie ON ie.id_item_estoque = lie.fk_item_estoque LEFT JOIN saida_estoque AS se ON lie.id_lote_item_estoque = se.fk_lote_item_estoque     AND se.motivo_saida LIKE '%venda%'     AND se.data >= '2025-03-01' WHERE ie.id_item_estoque BETWEEN 1 AND 22 GROUP BY ie.id_item_estoque, ie.descricao, ie.qtd_armazenado ORDER BY total_vendido ASC,          CASE WHEN MAX(se.data) IS NULL THEN 9999 ELSE DATEDIFF(CURDATE(), MAX(se.data)) END DESC LIMIT 5;",
+            nativeQuery = true)
+    List<ProdutoBaixoGiroDto> buscarProdutosGiroBaixo();
 
 }

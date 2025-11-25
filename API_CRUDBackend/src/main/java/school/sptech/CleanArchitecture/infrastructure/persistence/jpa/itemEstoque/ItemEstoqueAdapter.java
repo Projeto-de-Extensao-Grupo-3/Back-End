@@ -10,6 +10,7 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaRepository;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleira.PrateleiraEntity;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ProdutoBaixoGiroDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -93,5 +94,10 @@ public class ItemEstoqueAdapter implements ItemEstoqueGateway {
     @Override
     public void removerCaracteristica(Integer idCategoria) {
         repository.removerCaracteristica(idCategoria);
+    }
+
+    @Override
+    public List<ProdutoBaixoGiroDto> produtoGiroBaixo() {
+        return repository.buscarProdutosGiroBaixo();
     }
 }

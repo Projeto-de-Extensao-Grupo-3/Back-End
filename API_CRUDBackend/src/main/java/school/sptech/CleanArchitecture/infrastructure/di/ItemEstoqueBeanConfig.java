@@ -75,4 +75,8 @@ public class ItemEstoqueBeanConfig {
         return new ItemEstoqueRemoverCaracteristicaUseCase(adapter, categoriaBuscarPorIdUseCase, itemEstoqueBuscarPorIdUseCase);
     }
 
+    @Bean
+    public ProdutosGiroBaixoUseCase produtosGiroBaixoUseCase(ItemEstoqueAdapter adapter){
+        return new ProdutosGiroBaixoUseCase(adapter);
+    }
 }
