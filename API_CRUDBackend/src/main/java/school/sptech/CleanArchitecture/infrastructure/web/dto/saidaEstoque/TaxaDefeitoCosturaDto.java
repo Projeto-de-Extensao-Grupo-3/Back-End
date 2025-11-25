@@ -2,13 +2,13 @@ package school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque;
 
 public class TaxaDefeitoCosturaDto {
     private String nomeCostureira;
-    private Integer qtdDefeito;
-    private Integer totalPeças;
+    private Long qtdDefeito;
+    private Long totalPeças;
 
     public TaxaDefeitoCosturaDto() {
     }
 
-    public TaxaDefeitoCosturaDto(String nomeCostureira, Integer qtdDefeito, Integer totalPeças) {
+    public TaxaDefeitoCosturaDto(String nomeCostureira, Long qtdDefeito, Long totalPeças) {
         this.nomeCostureira = nomeCostureira;
         this.qtdDefeito = qtdDefeito;
         this.totalPeças = totalPeças;
@@ -22,19 +22,19 @@ public class TaxaDefeitoCosturaDto {
         this.nomeCostureira = nomeCostureira;
     }
 
-    public Integer getQtdDefeito() {
+    public Long getQtdDefeito() {
         return qtdDefeito;
     }
 
-    public void setQtdDefeito(Integer qtdDefeito) {
+    public void setQtdDefeito(Long qtdDefeito) {
         this.qtdDefeito = qtdDefeito;
     }
 
-    public Integer getTotalPeças() {
+    public Long getTotalPeças() {
         return totalPeças;
     }
 
-    public void setTotalPeças(Integer totalPeças) {
+    public void setTotalPeças(Long totalPeças) {
         this.totalPeças = totalPeças;
     }
 }
