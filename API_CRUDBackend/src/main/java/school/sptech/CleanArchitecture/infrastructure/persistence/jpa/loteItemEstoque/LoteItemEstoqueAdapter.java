@@ -6,6 +6,7 @@ import school.sptech.CleanArchitecture.core.application.exceptions.LoteItemEstoq
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.EntradaPaginacaoDTO;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.MargemLucroProdutoDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.PaginacaoResponseDTO;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.SaidaPaginacaoDTO;
 
@@ -103,4 +104,10 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
         int paginaAtual = offset / limit;
         return new PaginacaoResponseDTO<>(conteudo, total, paginaAtual, limit);
     }
+
+    @Override
+    public List<MargemLucroProdutoDto> buscarMargemLucroProdutos() {
+        return repository.buscarMargemLucroProdutos();
+    }
+
 }

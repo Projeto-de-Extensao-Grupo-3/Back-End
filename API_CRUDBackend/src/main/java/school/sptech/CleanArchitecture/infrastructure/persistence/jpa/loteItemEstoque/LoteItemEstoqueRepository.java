@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemE
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.MargemLucroProdutoDto;
 
 import java.util.List;
 
@@ -57,4 +58,19 @@ public interface LoteItemEstoqueRepository extends JpaRepository<LoteItemEstoque
     """, nativeQuery = true)
     List<Object[]> buscarSaidaPaginada(@Param("offset") int offset, @Param("limit") int limit);
 
+    @Query(value = """
+            SELECT lie_roupa.fk_item_estoque AS id_roupa,\s
+            	ie.descricao,
+            	ROUND(((ie.preco - ROUND(AVG(lie_roupa.preco / lie_roupa.qtd_item) + cnf.custo_tecidos, 2)) / ie.preco) * 100, 2) as 'margem_lucro_%'
+            	FROM lote_item_estoque as lie_roupa
+            		JOIN item_estoque as ie
+            			ON lie_roupa.fk_item_estoque = ie.id_item_estoque
+            		JOIN categoria as c
+            			ON ie.fk_categoria = c.id_categoria
+            		JOIN (SELECT cnf.fk_roupa, SUM(cnf.qtd_tecido * ie.preco) as custo_tecidos FROM confeccao_roupa as cnf JOIN item_estoque as ie ON cnf.fk_tecido = ie.id_item_estoque GROUP BY cnf.fk_roupa) as cnf
+            			ON ie.id_item_estoque = cnf.fk_roupa\s
+            		WHERE c.fk_categoria_pai = 2
+            	GROUP BY lie_roupa.fk_item_estoque, ie.descricao;
+        """, nativeQuery = true)
+    List<MargemLucroProdutoDto> buscarMargemLucroProdutos();
 }

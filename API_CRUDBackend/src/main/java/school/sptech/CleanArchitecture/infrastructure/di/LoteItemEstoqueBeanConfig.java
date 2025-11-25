@@ -44,4 +44,9 @@ public class LoteItemEstoqueBeanConfig {
     public RemoverLoteItemEstoqueUseCase removerLoteItemEstoqueUseCase (LoteItemEstoqueAdapter adapter) {
         return new RemoverLoteItemEstoqueUseCase(adapter);
     }
+
+    @Bean
+    public MargemLucroProdutoUseCase margemLucroProdutoUseCase(LoteItemEstoqueAdapter adapter) {
+        return new MargemLucroProdutoUseCase(adapter);
+    }
 }

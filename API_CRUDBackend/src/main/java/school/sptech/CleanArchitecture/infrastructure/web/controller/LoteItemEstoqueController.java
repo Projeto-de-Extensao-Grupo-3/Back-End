@@ -34,6 +34,7 @@ public class LoteItemEstoqueController {
     private final RemoverLoteItemEstoqueUseCase removerLoteItemEstoqueUseCase;
     private final BuscarLotesPaginadoUseCase buscarLotesPaginadoUseCase;
     private final BuscarLotesPaginadoSaidaUseCase buscarLotesPaginadoSaidaUseCase;
+    private final MargemLucroProdutoUseCase margemLucroProdutoUseCase;
 
     private final SaidaPaginacaoService redisPaginacao;
 
@@ -145,5 +146,16 @@ public class LoteItemEstoqueController {
             @RequestParam(defaultValue = "10") int limit
     ) {
         return ResponseEntity.ok(buscarLotesPaginadoSaidaUseCase.executar(page, limit));
+    }
+
+    @GetMapping("/margem-lucro-produtos")
+    public ResponseEntity<List<MargemLucroProdutoDto>> buscarMargemLucroProdutos() {
+        List<MargemLucroProdutoDto> response = margemLucroProdutoUseCase.execute();
+
+        if(response.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok().body(response);
     }
 }

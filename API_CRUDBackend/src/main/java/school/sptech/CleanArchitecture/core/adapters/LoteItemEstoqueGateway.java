@@ -2,6 +2,7 @@ package school.sptech.CleanArchitecture.core.adapters;
 
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.EntradaPaginacaoDTO;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.MargemLucroProdutoDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.PaginacaoResponseDTO;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.SaidaPaginacaoDTO;
 
@@ -23,5 +24,7 @@ public interface LoteItemEstoqueGateway {
     PaginacaoResponseDTO<EntradaPaginacaoDTO> buscarPaginado(int offset, int limit);
 
     PaginacaoResponseDTO<SaidaPaginacaoDTO> buscarPaginadoSaida(int offset, int limit);
+
+    List<MargemLucroProdutoDto> buscarMargemLucroProdutos();
 
 }
