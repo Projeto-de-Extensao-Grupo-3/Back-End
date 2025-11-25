@@ -8,6 +8,7 @@ import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.Item
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarQuantidadeUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueBuscarPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.*;
+import school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque.PecasMaiorMaoObraDtoUseCase;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueAdapter;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueAdapter;
 
@@ -48,5 +49,10 @@ public class LoteItemEstoqueBeanConfig {
     @Bean
     public MargemLucroProdutoUseCase margemLucroProdutoUseCase(LoteItemEstoqueAdapter adapter) {
         return new MargemLucroProdutoUseCase(adapter);
+    }
+
+    @Bean
+    public PecasMaiorMaoObraDtoUseCase pecasMaiorMaoObraDtoUseCase(LoteItemEstoqueAdapter adapter) {
+        return new PecasMaiorMaoObraDtoUseCase(adapter);
     }
 }
