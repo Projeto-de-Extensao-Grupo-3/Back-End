@@ -30,7 +30,6 @@ public class GerenciadorTokenJwt {
     }
 
     public String generateToken(final Authentication authentication) {
-
         // Para verificacoes de permissões;
         final String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -38,6 +37,15 @@ public class GerenciadorTokenJwt {
         return Jwts.builder().setSubject(authentication.getName())
                 .signWith(parseSecret()).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtTokenValidity * 1_000)).compact();
+    }
+
+    public String generateTokenForPasswordReset(String email) {
+        return Jwts.builder()
+                .setSubject(email)
+                .signWith(parseSecret())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 15 * 60 * 1000)) // 15 minutos
+                .compact();
     }
 
     public <T> T getClaimForToken(String token, Function<Claims, T> claimsResolver) {
@@ -50,16 +58,31 @@ public class GerenciadorTokenJwt {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
+    public String extractEmail(String token) {
+        return getAllClaimsFromToken(token).getSubject();
+    }
+
+
     private boolean isTokenExpired(String token) {
         Date expirationDate = getExpirationDateFromToken(token);
         return expirationDate.before(new Date(System.currentTimeMillis()));
+    }
+
+    public boolean isTokenValid(String token) {
+        try {
+            getAllClaimsFromToken(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(parseSecret())
                 .build()
-                .parseClaimsJws(token).getBody();
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private SecretKey parseSecret() {
