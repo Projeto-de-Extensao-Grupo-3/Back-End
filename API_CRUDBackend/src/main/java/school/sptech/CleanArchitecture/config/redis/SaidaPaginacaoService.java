@@ -18,6 +18,18 @@ public class SaidaPaginacaoService {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
+    public PaginacaoResponseDTO<EntradaPaginacaoDTO> getCacheadoEntrada(int page, int limit) {
+        String cacheKey = "entrada:page=" + page + ":limit=" + limit;
+
+        return (PaginacaoResponseDTO<EntradaPaginacaoDTO>) redisTemplate.opsForValue().get(cacheKey);
+    }
+
+    public PaginacaoResponseDTO<SaidaPaginacaoDTO> getCacheadoSaida(int page, int limit) {
+        String cacheKey = "saida:page=" + page + ":limit=" + limit;
+
+        return (PaginacaoResponseDTO<SaidaPaginacaoDTO>) redisTemplate.opsForValue().get(cacheKey);
+    }
+
     public void salvarEntradaPaginacao(int page, int limit, PaginacaoResponseDTO<EntradaPaginacaoDTO> response) {
         String cacheKey = "entrada:page=" + page + ":limit=" + limit;
 

@@ -2,7 +2,6 @@ package school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import school.sptech.CleanArchitecture.config.redis.RedisConfig;
 import school.sptech.CleanArchitecture.config.redis.SaidaPaginacaoService;
 import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.EntradaPaginacaoDTO;
@@ -17,6 +16,12 @@ public class BuscarLotesPaginadoUseCase {
 
     public PaginacaoResponseDTO<EntradaPaginacaoDTO> executar(int page, int limit) {
         int offset = page * limit;
+
+        PaginacaoResponseDTO<EntradaPaginacaoDTO> responseCached = redisService.getCacheadoEntrada(page, limit);
+
+        if (responseCached != null) {
+            return responseCached;
+        }
 
         PaginacaoResponseDTO<EntradaPaginacaoDTO> response = gateway.buscarPaginado(offset, limit);
 
