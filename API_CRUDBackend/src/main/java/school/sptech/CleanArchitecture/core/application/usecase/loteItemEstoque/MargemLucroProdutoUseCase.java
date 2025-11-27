@@ -14,7 +14,7 @@ public class MargemLucroProdutoUseCase {
         this.gateway = gateway;
     }
 
-    public List<MargemLucroProdutoDto> execute(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria) {
+    public List<MargemLucroProdutoDto> execute(String dataInicio, String dataFim, String caracteristica, String categoria) {
         return gateway.buscarMargemLucroProdutos(dataInicio, dataFim, caracteristica, categoria);
     }
 }

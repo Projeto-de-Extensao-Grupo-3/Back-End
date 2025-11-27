@@ -14,7 +14,7 @@ public class EvolucaoVendasUseCase {
         this.gateway = gateway;
     }
 
-    public List<EvolucaoVendasDto> execute(YearMonth dataInicio, YearMonth dataFim, String caracteristica, String categoria) {
+    public List<EvolucaoVendasDto> execute(String dataInicio, String dataFim, String caracteristica, String categoria) {
         return gateway.evolucaoVendas(dataInicio, dataFim, caracteristica, categoria);
     }
 }

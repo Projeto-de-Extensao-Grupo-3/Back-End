@@ -23,7 +23,7 @@ public interface LoteItemEstoqueGateway {
 
     PaginacaoResponseDTO<SaidaPaginacaoDTO> buscarPaginadoSaida(int offset, int limit);
 
-    List<MargemLucroProdutoDto> buscarMargemLucroProdutos(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria);
+    List<MargemLucroProdutoDto> buscarMargemLucroProdutos(String dataInicio, String dataFim, String caracteristica, String categoria);
 
-    List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria);
+    List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra(String dataInicio, String dataFim, String caracteristica, String categoria);
 }

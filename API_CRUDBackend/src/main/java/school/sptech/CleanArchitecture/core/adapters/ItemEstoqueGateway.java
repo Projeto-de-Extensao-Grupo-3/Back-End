@@ -20,9 +20,9 @@ public interface ItemEstoqueGateway {
 
     List<ProdutoBaixoGiroDto> produtoGiroBaixo(String caracteristica, String categoria);
 
-    List<DefeitosPorRoupaDto> defeitosPorRoupa(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria);
+    List<DefeitosPorRoupaDto> defeitosPorRoupa(String dataInicio, String dataFim, String caracteristica, String categoria);
 
-    List<EvolucaoVendasDto> evolucaoVendas(YearMonth dataInicio, YearMonth dataFim, String caracteristica, String categoria);
+    List<EvolucaoVendasDto> evolucaoVendas(String dataInicio, String dataFim, String caracteristica, String categoria);
 
     boolean existsById(Integer id);
 

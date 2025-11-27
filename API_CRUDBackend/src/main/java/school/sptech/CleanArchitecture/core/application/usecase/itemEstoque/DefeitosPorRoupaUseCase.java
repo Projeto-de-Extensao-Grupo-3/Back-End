@@ -14,7 +14,7 @@ public class DefeitosPorRoupaUseCase {
         this.gateway = gateway;
     }
 
-    public List<DefeitosPorRoupaDto> execute(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria) {
+    public List<DefeitosPorRoupaDto> execute(String dataInicio, String dataFim, String caracteristica, String categoria) {
         return gateway.defeitosPorRoupa(dataInicio, dataFim, caracteristica, categoria);
     }
 }

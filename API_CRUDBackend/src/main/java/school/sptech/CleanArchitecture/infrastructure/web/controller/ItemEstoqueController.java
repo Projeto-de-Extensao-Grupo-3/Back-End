@@ -227,8 +227,8 @@ public class ItemEstoqueController {
 
     @GetMapping("/defeitos-por-roupa")
     public ResponseEntity<List<DefeitosPorRoupaDto>> verificarDefeitoRoupas(
-            @RequestParam LocalDateTime dataInicio,
-            @RequestParam LocalDateTime dataFim,
+            @RequestParam String dataInicio,
+            @RequestParam String dataFim,
             @RequestParam String caracteristica,
             @RequestParam String categoria
     ) {
@@ -243,8 +243,8 @@ public class ItemEstoqueController {
 
     @GetMapping("/evolucao-vendas")
     public ResponseEntity<List<EvolucaoVendasDto>> verificarEvolucaoVendas(
-           @RequestParam YearMonth dataInicio,
-            @RequestParam YearMonth dataFim,
+           @RequestParam String dataInicio,
+            @RequestParam String dataFim,
            @RequestParam String caracteristica,
            @RequestParam String categoria
     ) {

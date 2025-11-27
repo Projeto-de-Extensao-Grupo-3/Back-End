@@ -14,7 +14,7 @@ public class PecasMaiorMaoObraDtoUseCase {
         this.gateway = gateway;
     }
 
-    public List<PecasMaiorMaoObraDto> execute(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria) {
+    public List<PecasMaiorMaoObraDto> execute(String dataInicio, String dataFim, String caracteristica, String categoria) {
         return gateway.buscarPecasMaiorMaoObra(dataInicio, dataFim, caracteristica, categoria);
     }
 }

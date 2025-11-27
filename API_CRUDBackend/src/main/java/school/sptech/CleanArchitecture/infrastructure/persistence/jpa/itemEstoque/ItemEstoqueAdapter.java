@@ -102,12 +102,12 @@ public class ItemEstoqueAdapter implements ItemEstoqueGateway {
     }
 
     @Override
-    public List<DefeitosPorRoupaDto> defeitosPorRoupa(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria) {
+    public List<DefeitosPorRoupaDto> defeitosPorRoupa(String dataInicio, String dataFim, String caracteristica, String categoria) {
         return repository.buscarDefeitosPorProduto(dataInicio, dataFim, caracteristica, categoria);
     }
 
     @Override
-    public List<EvolucaoVendasDto> evolucaoVendas(YearMonth dataInicio, YearMonth dataFim, String caracteristica, String categoria) {
+    public List<EvolucaoVendasDto> evolucaoVendas(String dataInicio, String dataFim, String caracteristica, String categoria) {
         return repository.buscarEvolucaoVendas(dataInicio, dataFim, caracteristica, categoria);
     }
 }

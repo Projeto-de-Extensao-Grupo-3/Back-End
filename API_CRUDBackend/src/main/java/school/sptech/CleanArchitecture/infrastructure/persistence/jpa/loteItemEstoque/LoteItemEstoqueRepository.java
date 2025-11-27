@@ -82,7 +82,7 @@ public interface LoteItemEstoqueRepository extends JpaRepository<LoteItemEstoque
                 		AND l.dt_entrada BETWEEN :dataInicio AND :dataFim
                 	GROUP BY lie_roupa.fk_item_estoque, ie.descricao;
         """, nativeQuery = true)
-    List<MargemLucroProdutoDto> buscarMargemLucroProdutos(@Param("dataInicio")LocalDateTime dataInicio,@Param("dataFim") LocalDateTime dataFim,@Param("caracteristica") String caracteristica,@Param("categoria") String categoria);
+    List<MargemLucroProdutoDto> buscarMargemLucroProdutos(@Param("dataInicio")String dataInicio,@Param("dataFim") String dataFim,@Param("caracteristica") String caracteristica,@Param("categoria") String categoria);
 
     @Query(value = """
             SELECT lie_roupa.fk_item_estoque,\s
@@ -109,5 +109,5 @@ public interface LoteItemEstoqueRepository extends JpaRepository<LoteItemEstoque
             		AND c.nome LIKE %:categoria%
             		AND l.dt_entrada BETWEEN :dataInicio AND :dataFim
             	GROUP BY lie_roupa.fk_item_estoque, ie.descricao, ie.preco;""", nativeQuery = true)
-    List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra(@Param("dataInicio")LocalDateTime dataInicio,@Param("dataFim") LocalDateTime dataFim,@Param("caracteristica") String caracteristica,@Param("categoria") String categoria);
+    List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra(@Param("dataInicio")String dataInicio,@Param("dataFim") String dataFim,@Param("caracteristica") String caracteristica,@Param("categoria") String categoria);
 }

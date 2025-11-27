@@ -104,12 +104,12 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
     }
 
     @Override
-    public List<MargemLucroProdutoDto> buscarMargemLucroProdutos(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria) {
+    public List<MargemLucroProdutoDto> buscarMargemLucroProdutos(String dataInicio, String dataFim, String caracteristica, String categoria) {
         return repository.buscarMargemLucroProdutos(dataInicio, dataFim, caracteristica, categoria);
     }
 
     @Override
-    public List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria) {
+    public List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra(String dataInicio, String dataFim, String caracteristica, String categoria) {
         return repository.buscarPecasMaiorMaoObra(dataInicio, dataFim, caracteristica, categoria);
     }
 }

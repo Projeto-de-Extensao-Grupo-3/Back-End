@@ -153,8 +153,8 @@ public class LoteItemEstoqueController {
 
     @GetMapping("/margem-lucro-produtos")
     public ResponseEntity<List<MargemLucroProdutoDto>> buscarMargemLucroProdutos(
-            @RequestParam LocalDateTime dataInicio,
-            @RequestParam LocalDateTime dataFim,
+            @RequestParam String dataInicio,
+            @RequestParam String dataFim,
             @RequestParam String caracteristica,
             @RequestParam String categoria
 
@@ -170,8 +170,8 @@ public class LoteItemEstoqueController {
 
     @GetMapping("/peca-maior-mao-obra")
     public ResponseEntity<List<PecasMaiorMaoObraDto>> buscarPecasMaiorMaoObra(
-            @RequestParam LocalDateTime dataInicio,
-            @RequestParam LocalDateTime dataFim,
+            @RequestParam String dataInicio,
+            @RequestParam String dataFim,
             @RequestParam String caracteristica,
             @RequestParam String categoria
     ) {
