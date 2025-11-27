@@ -31,7 +31,7 @@ public class ResetarSenhaUseCase {
             throw new FuncionarioNaoEncontradoException("Usuário não encontrado");
 
         Funcionario funcionario = user.get();
-        funcionario.setSenha(passwordEncoder.encode(funcionario.getSenha()));
+        funcionario.setSenha(passwordEncoder.encode(novaSenha));
         gateway.save(funcionario);
     }
 }

@@ -17,7 +17,7 @@ public class BrevoEmailService implements EmailService {
     public void send(String to, String subject, String body) {
         String json = """
                 {
-                    "sender": { "name": "SeuSistema", "email": "seu-email@dominio.com" },
+                    "sender": { "name": "SeuSistema", "email": "fernandoalmeida.mda@gmail   .com" },
                     "to": [{ "email": "%s" }],
                     "subject": "%s",
                     "textContent": "%s"
