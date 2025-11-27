@@ -14,6 +14,20 @@ public interface SaidaEstoqueRepository extends JpaRepository<SaidaEstoqueEntity
     List<SaidaEstoqueEntity> findByData(LocalDate data);
 
     @Query(value = """
-            SELECT     p.nome AS costureira,     COUNT(CASE WHEN se.motivo_saida LIKE '%defeito%' THEN 1 END) AS qtd_defeitos,     COUNT(se.id_saida_estoque) AS qtd_total_entregas FROM saida_estoque AS se LEFT JOIN parceiro AS p ON se.fk_costureira = p.id_parceiro WHERE se.fk_costureira IS NOT NULL   AND se.data >= '2025-03-01' GROUP BY p.nome  having qtd_defeitos > 0;""", nativeQuery = true)
+            SELECT
+               p.nome AS costureira,
+               COUNT(CASE WHEN se.motivo_saida LIKE '%defeito%' THEN 1 END) AS qtd_defeitos,
+               COUNT(se.id_saida_estoque) AS qtd_total_entregas,
+               ROUND(
+                   (COUNT(CASE WHEN se.motivo_saida LIKE '%defeito%' THEN 1 END) /
+                    COUNT(se.id_saida_estoque)) * 100, 2
+               ) AS taxa_defeito_percentual
+            FROM saida_estoque AS se
+            LEFT JOIN parceiro AS p ON se.fk_costureira = p.id_parceiro
+            WHERE se.data BETWEEN :dataInicio AND :dataFim
+            AND se.fk_costureira IS NOT NULL
+            GROUP BY p.nome
+            ORDER BY taxa_defeito_percentual DESC;
+            """, nativeQuery = true)
     List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura();
 }

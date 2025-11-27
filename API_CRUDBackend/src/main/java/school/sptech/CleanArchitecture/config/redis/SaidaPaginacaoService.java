@@ -21,24 +21,31 @@ public class SaidaPaginacaoService {
     public PaginacaoResponseDTO<EntradaPaginacaoDTO> getCacheadoEntrada(int page, int limit) {
         String cacheKey = "entrada:page=" + page + ":limit=" + limit;
 
-        return (PaginacaoResponseDTO<EntradaPaginacaoDTO>) redisTemplate.opsForValue().get(cacheKey);
+        PaginacaoResponseDTO<EntradaPaginacaoDTO> responseCache =
+                (PaginacaoResponseDTO<EntradaPaginacaoDTO>)redisTemplate.opsForValue().get(cacheKey);
+
+        if (responseCache != null) {
+            System.out.println("RETORNANDO DO CACHE REDIS");
+        }
+
+        return responseCache;
     }
 
     public PaginacaoResponseDTO<SaidaPaginacaoDTO> getCacheadoSaida(int page, int limit) {
         String cacheKey = "saida:page=" + page + ":limit=" + limit;
+
+        PaginacaoResponseDTO<SaidaPaginacaoDTO> responseCache =
+                (PaginacaoResponseDTO<SaidaPaginacaoDTO>)redisTemplate.opsForValue().get(cacheKey);
+
+        if (responseCache != null) {
+            System.out.println("RETORNANDO DO CACHE REDIS");
+        }
 
         return (PaginacaoResponseDTO<SaidaPaginacaoDTO>) redisTemplate.opsForValue().get(cacheKey);
     }
 
     public void salvarEntradaPaginacao(int page, int limit, PaginacaoResponseDTO<EntradaPaginacaoDTO> response) {
         String cacheKey = "entrada:page=" + page + ":limit=" + limit;
-
-        PaginacaoResponseDTO<EntradaPaginacaoDTO> cached =
-                (PaginacaoResponseDTO<EntradaPaginacaoDTO>)redisTemplate.opsForValue().get(cacheKey);
-
-        if (cached != null) {
-            System.out.println("RETORNANDO DO CACHE REDIS");
-        }
 
         redisTemplate
                 .opsForValue()
@@ -47,13 +54,6 @@ public class SaidaPaginacaoService {
 
     public void salvarSaidaPaginacao(int page, int limit, PaginacaoResponseDTO<SaidaPaginacaoDTO> response) {
         String cacheKey = "saida:page=" + page + ":limit=" + limit;
-
-        PaginacaoResponseDTO<SaidaPaginacaoDTO> cached =
-                (PaginacaoResponseDTO<SaidaPaginacaoDTO>)redisTemplate.opsForValue().get(cacheKey);
-
-        if (cached != null) {
-            System.out.println("RETORNANDO DO CACHE REDIS");
-        }
 
         redisTemplate
                 .opsForValue()

@@ -61,27 +61,35 @@ public interface LoteItemEstoqueRepository extends JpaRepository<LoteItemEstoque
 
     @Query(value = """
             SELECT lie_roupa.fk_item_estoque AS id_roupa,\s
-            	ie.descricao,
-            	ROUND(((ie.preco - ROUND(AVG(lie_roupa.preco / lie_roupa.qtd_item) + cnf.custo_tecidos, 2)) / ie.preco) * 100, 2) as 'margem_lucro_%'
-            	FROM lote_item_estoque as lie_roupa
-            		JOIN item_estoque as ie
-            			ON lie_roupa.fk_item_estoque = ie.id_item_estoque
-            		JOIN categoria as c
-            			ON ie.fk_categoria = c.id_categoria
-            		JOIN (SELECT cnf.fk_roupa, SUM(cnf.qtd_tecido * ie.preco) as custo_tecidos FROM confeccao_roupa as cnf JOIN item_estoque as ie ON cnf.fk_tecido = ie.id_item_estoque GROUP BY cnf.fk_roupa) as cnf
-            			ON ie.id_item_estoque = cnf.fk_roupa\s
-            		WHERE c.fk_categoria_pai = 2
-            	GROUP BY lie_roupa.fk_item_estoque, ie.descricao;
+                	ie.descricao,
+                	ROUND(((ie.preco - ROUND(AVG(lie_roupa.preco / lie_roupa.qtd_item) + cnf.custo_tecidos, 2)) / ie.preco) * 100, 2) as 'margem_lucro_%'
+                	FROM lote_item_estoque as lie_roupa
+                		JOIN item_estoque as ie
+                			ON lie_roupa.fk_item_estoque = ie.id_item_estoque
+                		JOIN (SELECT cnf.fk_roupa, SUM(cnf.qtd_tecido * ie.preco) as custo_tecidos FROM confeccao_roupa as cnf JOIN item_estoque as ie ON cnf.fk_tecido = ie.id_item_estoque GROUP BY cnf.fk_roupa) as cnf
+                			ON ie.id_item_estoque = cnf.fk_roupa
+                		JOIN categoria as c
+                			ON ie.fk_categoria = c.id_categoria
+                		JOIN lote as l
+                			ON lie_roupa.fk_lote = l.id_lote\s
+                		LEFT JOIN caracteristica_item_estoque as carac_ie 	
+                			ON ie.id_item_estoque = carac_ie.fk_item_estoque
+                		LEFT JOIN categoria as carac						
+                			ON carac_ie.fk_categoria  = carac.id_categoria
+                	WHERE IFNULL(carac.nome, '') LIKE %:caracteristica%
+                		AND c.nome LIKE %:categoria%
+                		AND l.dt_entrada BETWEEN :dataInicio AND :dataFim
+                	GROUP BY lie_roupa.fk_item_estoque, ie.descricao;
         """, nativeQuery = true)
     List<MargemLucroProdutoDto> buscarMargemLucroProdutos();
 
     @Query(value = """
             SELECT lie_roupa.fk_item_estoque,\s
-            	AVG(lie_roupa.preco / lie_roupa.qtd_item) as custo_costureira,
-            	cnf.custo_tecidos,
-            	ROUND(AVG(lie_roupa.preco / lie_roupa.qtd_item) + cnf.custo_tecidos, 2) as custo_total,
+            	truncate(AVG(lie_roupa.preco / lie_roupa.qtd_item), 2) as custo_costureira,
+            	truncate(cnf.custo_tecidos, 2) as custo_tecidos,
+            	truncate(AVG(lie_roupa.preco / lie_roupa.qtd_item) + cnf.custo_tecidos, 2) as custo_total,
             	ie.preco,
-            	ROUND(((ie.preco - ROUND(AVG(lie_roupa.preco / lie_roupa.qtd_item) + cnf.custo_tecidos, 2)) / ie.preco) * 100, 2) as 'margem_lucro_%',
+            	truncate(((ie.preco - ROUND(AVG(lie_roupa.preco / lie_roupa.qtd_item) + cnf.custo_tecidos, 2)) / ie.preco) * 100, 2) as 'margem_lucro_%',
             	ie.descricao\s
             	FROM lote_item_estoque as lie_roupa
             		JOIN item_estoque as ie
@@ -90,7 +98,15 @@ public interface LoteItemEstoqueRepository extends JpaRepository<LoteItemEstoque
             			ON ie.fk_categoria = c.id_categoria
             		JOIN (SELECT cnf.fk_roupa, SUM(cnf.qtd_tecido * ie.preco) as custo_tecidos FROM confeccao_roupa as cnf JOIN item_estoque as ie ON cnf.fk_tecido = ie.id_item_estoque GROUP BY cnf.fk_roupa) as cnf
             			ON ie.id_item_estoque = cnf.fk_roupa\s
-            		WHERE c.fk_categoria_pai = 2
+            				JOIN lote as l
+            			ON lie_roupa.fk_lote = l.id_lote\s
+            		LEFT JOIN caracteristica_item_estoque as carac_ie 	
+            			ON ie.id_item_estoque = carac_ie.fk_item_estoque
+            		LEFT JOIN categoria as carac						
+            			ON carac_ie.fk_categoria  = carac.id_categoria
+            	WHERE IFNULL(carac.nome, '') LIKE %:caracteristica%
+            		AND c.nome LIKE %:categoria%
+            		AND l.dt_entrada BETWEEN :dataInicio AND :dataFim
             	GROUP BY lie_roupa.fk_item_estoque, ie.descricao, ie.preco;""", nativeQuery = true)
     List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra();
 }
