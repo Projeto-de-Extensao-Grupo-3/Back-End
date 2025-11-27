@@ -4,6 +4,7 @@ import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque.TaxaDefeitoCosturaDto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +24,5 @@ public interface SaidaEstoqueGateway {
 
     List<SaidaEstoque> findByData(LocalDate data);
 
-    List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura();
+    List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura(LocalDateTime dataInicio, LocalDateTime dataFim);
 }

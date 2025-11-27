@@ -13,7 +13,7 @@ public class ProdutosGiroBaixoUseCase {
         this.gateway = gateway;
     }
 
-    public List<ProdutoBaixoGiroDto> execute(){
-        return gateway.produtoGiroBaixo();
+    public List<ProdutoBaixoGiroDto> execute(String caracteristica, String categoria){
+        return gateway.produtoGiroBaixo(caracteristica, categoria);
     }
 }

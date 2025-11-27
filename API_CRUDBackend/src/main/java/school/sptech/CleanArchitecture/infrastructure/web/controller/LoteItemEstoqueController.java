@@ -20,6 +20,7 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEs
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Tag(name = "* Entrada de Item Estoque Controller", description = "Operações CRUD relacionadas aos itens que chegaram em um lote.")
@@ -151,8 +152,14 @@ public class LoteItemEstoqueController {
     }
 
     @GetMapping("/margem-lucro-produtos")
-    public ResponseEntity<List<MargemLucroProdutoDto>> buscarMargemLucroProdutos() {
-        List<MargemLucroProdutoDto> response = margemLucroProdutoUseCase.execute();
+    public ResponseEntity<List<MargemLucroProdutoDto>> buscarMargemLucroProdutos(
+            @RequestParam LocalDateTime dataInicio,
+            @RequestParam LocalDateTime dataFim,
+            @RequestParam String caracteristica,
+            @RequestParam String categoria
+
+    ) {
+        List<MargemLucroProdutoDto> response = margemLucroProdutoUseCase.execute(dataInicio, dataFim, caracteristica, categoria);
 
         if(response.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -162,8 +169,13 @@ public class LoteItemEstoqueController {
     }
 
     @GetMapping("/peca-maior-mao-obra")
-    public ResponseEntity<List<PecasMaiorMaoObraDto>> buscarPecasMaiorMaoObra() {
-        List<PecasMaiorMaoObraDto> response = pecasMaiorMaoObraDtoUseCase.execute();
+    public ResponseEntity<List<PecasMaiorMaoObraDto>> buscarPecasMaiorMaoObra(
+            @RequestParam LocalDateTime dataInicio,
+            @RequestParam LocalDateTime dataFim,
+            @RequestParam String caracteristica,
+            @RequestParam String categoria
+    ) {
+        List<PecasMaiorMaoObraDto> response = pecasMaiorMaoObraDtoUseCase.execute(dataInicio, dataFim, caracteristica, categoria);
         if (response.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

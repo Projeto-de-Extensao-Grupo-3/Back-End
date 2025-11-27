@@ -2,9 +2,11 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.saidaEsto
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque.TaxaDefeitoCosturaDto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SaidaEstoqueRepository extends JpaRepository<SaidaEstoqueEntity, Integer> {
@@ -29,5 +31,7 @@ public interface SaidaEstoqueRepository extends JpaRepository<SaidaEstoqueEntity
             GROUP BY p.nome
             ORDER BY taxa_defeito_percentual DESC;
             """, nativeQuery = true)
-    List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura();
+    List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura(@Param("dataInicio") LocalDateTime dataInicio, @Param("dataFim") LocalDateTime dataFim);
+
+    List<SaidaEstoqueEntity> data(LocalDate data);
 }

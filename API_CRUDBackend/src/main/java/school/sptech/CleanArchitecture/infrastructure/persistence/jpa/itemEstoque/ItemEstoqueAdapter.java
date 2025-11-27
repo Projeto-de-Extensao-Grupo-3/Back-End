@@ -11,6 +11,8 @@ import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.Defeit
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.EvolucaoVendasDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ProdutoBaixoGiroDto;
 
+import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -95,17 +97,17 @@ public class ItemEstoqueAdapter implements ItemEstoqueGateway {
     }
 
     @Override
-    public List<ProdutoBaixoGiroDto> produtoGiroBaixo() {
-        return repository.buscarProdutosGiroBaixo();
+    public List<ProdutoBaixoGiroDto> produtoGiroBaixo(String caracteristica, String categoria) {
+        return repository.buscarProdutosGiroBaixo(caracteristica, categoria);
     }
 
     @Override
-    public List<DefeitosPorRoupaDto> defeitosPorRoupa() {
-        return repository.buscarDefeitosPorProduto();
+    public List<DefeitosPorRoupaDto> defeitosPorRoupa(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria) {
+        return repository.buscarDefeitosPorProduto(dataInicio, dataFim, caracteristica, categoria);
     }
 
     @Override
-    public List<EvolucaoVendasDto> evolucaoVendas() {
-        return repository.buscarEvolucaoVendas();
+    public List<EvolucaoVendasDto> evolucaoVendas(YearMonth dataInicio, YearMonth dataFim, String caracteristica, String categoria) {
+        return repository.buscarEvolucaoVendas(dataInicio, dataFim, caracteristica, categoria);
     }
 }

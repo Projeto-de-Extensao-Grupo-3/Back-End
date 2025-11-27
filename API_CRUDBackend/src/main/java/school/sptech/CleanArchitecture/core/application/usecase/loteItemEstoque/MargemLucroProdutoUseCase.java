@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque
 import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.MargemLucroProdutoDto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MargemLucroProdutoUseCase {
@@ -13,7 +14,7 @@ public class MargemLucroProdutoUseCase {
         this.gateway = gateway;
     }
 
-    public List<MargemLucroProdutoDto> execute() {
-        return gateway.buscarMargemLucroProdutos();
+    public List<MargemLucroProdutoDto> execute(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria) {
+        return gateway.buscarMargemLucroProdutos(dataInicio, dataFim, caracteristica, categoria);
     }
 }

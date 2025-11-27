@@ -8,6 +8,7 @@ import school.sptech.CleanArchitecture.core.domain.observer.Observer;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -103,12 +104,12 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
     }
 
     @Override
-    public List<MargemLucroProdutoDto> buscarMargemLucroProdutos() {
-        return repository.buscarMargemLucroProdutos();
+    public List<MargemLucroProdutoDto> buscarMargemLucroProdutos(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria) {
+        return repository.buscarMargemLucroProdutos(dataInicio, dataFim, caracteristica, categoria);
     }
 
     @Override
-    public List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra() {
-        return repository.buscarPecasMaiorMaoObra();
+    public List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria) {
+        return repository.buscarPecasMaiorMaoObra(dataInicio, dataFim, caracteristica, categoria);
     }
 }

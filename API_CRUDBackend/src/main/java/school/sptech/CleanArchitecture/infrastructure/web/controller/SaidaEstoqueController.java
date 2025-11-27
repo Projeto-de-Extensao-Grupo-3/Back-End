@@ -21,6 +21,7 @@ import school.sptech.CleanArchitecture.infrastructure.web.rabbitmq.RabbitProduce
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Tag(name = "Saída de Estoque Controller", description = "Operações CRUD relacionadas ás Saídas de Item do Estoque.")
@@ -154,8 +155,11 @@ public class SaidaEstoqueController {
     }
 
     @GetMapping("/taxa-defeito-costura")
-    public ResponseEntity<List<TaxaDefeitoCosturaDto>> buscarTaxaDefeitoCostura() {
-        List<TaxaDefeitoCosturaDto> taxas = taxaDefeitoCosturaUseCase.executar();
+    public ResponseEntity<List<TaxaDefeitoCosturaDto>> buscarTaxaDefeitoCostura(
+            @RequestParam LocalDateTime dataInicio,
+            @RequestParam LocalDateTime dataFim
+    ) {
+        List<TaxaDefeitoCosturaDto> taxas = taxaDefeitoCosturaUseCase.executar(dataInicio, dataFim);
         if (taxas.isEmpty()) {
             return ResponseEntity.status(204).build();
         }

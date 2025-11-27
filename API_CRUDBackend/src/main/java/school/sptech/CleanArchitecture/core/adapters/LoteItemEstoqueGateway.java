@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.core.adapters;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface LoteItemEstoqueGateway {
@@ -22,7 +23,7 @@ public interface LoteItemEstoqueGateway {
 
     PaginacaoResponseDTO<SaidaPaginacaoDTO> buscarPaginadoSaida(int offset, int limit);
 
-    List<MargemLucroProdutoDto> buscarMargemLucroProdutos();
+    List<MargemLucroProdutoDto> buscarMargemLucroProdutos(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria);
 
-    List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra();
+    List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria);
 }

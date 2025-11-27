@@ -6,6 +6,7 @@ import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque.TaxaDefeitoCosturaDto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -66,8 +67,8 @@ public class SaidaEstoqueAdapter implements SaidaEstoqueGateway {
     }
 
     @Override
-    public List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura() {
+    public List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura(LocalDateTime dataInicio, LocalDateTime dataFim) {
 
-        return repository.calcularTaxaDefeitoCostura();
+        return repository.calcularTaxaDefeitoCostura(dataInicio, dataFim);
     }
 }

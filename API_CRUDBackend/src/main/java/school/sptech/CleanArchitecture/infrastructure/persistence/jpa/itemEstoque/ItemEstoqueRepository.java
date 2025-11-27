@@ -10,6 +10,8 @@ import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.Defeit
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.EvolucaoVendasDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ProdutoBaixoGiroDto;
 
+import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 
 public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, Integer> {
@@ -81,7 +83,7 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
     ORDER BY total_vendido ASC, dias_sem_vender DESC
     LIMIT 5;""",
             nativeQuery = true)
-    List<ProdutoBaixoGiroDto> buscarProdutosGiroBaixo();
+    List<ProdutoBaixoGiroDto> buscarProdutosGiroBaixo(@Param("caracteristica") String caracteristica,@Param("categoria") String categoria);
 
     @Query(value = """
                 SELECT
@@ -106,7 +108,7 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
             HAVING qtd_defeitos > 0
             ORDER BY taxa_defeito_percentual DESC;""",
             nativeQuery = true)
-    List<DefeitosPorRoupaDto> buscarDefeitosPorProduto();
+    List<DefeitosPorRoupaDto> buscarDefeitosPorProduto(@Param("dataInicio") LocalDateTime dataInicio, @Param("dataFim") LocalDateTime dataFim, @Param("caracteristica") String caracteristica, @Param("categoria") String categoria);
 
     @Query(value = """
             SELECT DATE_FORMAT(vendas.data, '%Y-%m') as periodo,
@@ -152,5 +154,5 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
             		AND DATE_FORMAT(vendas.data, '%Y-%m') BETWEEN :dataInicio AND :dataFim
             	GROUP BY periodo;""",
             nativeQuery = true)
-    List<EvolucaoVendasDto> buscarEvolucaoVendas();
+    List<EvolucaoVendasDto> buscarEvolucaoVendas(@Param("dataInicio") YearMonth dataInicio, @Param("dataFim") YearMonth dataFim, @Param("caracteristica") String caracteristica, @Param("categoria") String categoria);
 }

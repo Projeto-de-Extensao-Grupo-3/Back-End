@@ -21,6 +21,8 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoqu
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.*;
 
+import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -210,9 +212,12 @@ public class ItemEstoqueController {
     }
 
     @GetMapping("/produtos-giro-baixo")
-    public ResponseEntity<List<ProdutoBaixoGiroDto>> calcularCustoProducao() {
+    public ResponseEntity<List<ProdutoBaixoGiroDto>> calcularCustoProducao(
+            @RequestParam String caracteristica,
+            @RequestParam String categoria
+    ) {
 
-        List<ProdutoBaixoGiroDto> response = produtosGiroBaixoUseCase.execute();
+        List<ProdutoBaixoGiroDto> response = produtosGiroBaixoUseCase.execute(caracteristica, categoria);
         if (response.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
@@ -221,9 +226,14 @@ public class ItemEstoqueController {
     }
 
     @GetMapping("/defeitos-por-roupa")
-    public ResponseEntity<List<DefeitosPorRoupaDto>> verificarDefeitoRoupas() {
+    public ResponseEntity<List<DefeitosPorRoupaDto>> verificarDefeitoRoupas(
+            @RequestParam LocalDateTime dataInicio,
+            @RequestParam LocalDateTime dataFim,
+            @RequestParam String caracteristica,
+            @RequestParam String categoria
+    ) {
 
-        List<DefeitosPorRoupaDto> response = defeitosPorRoupaUseCase.execute();
+        List<DefeitosPorRoupaDto> response = defeitosPorRoupaUseCase.execute(dataInicio, dataFim, caracteristica, categoria);
         if (response.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
@@ -232,9 +242,14 @@ public class ItemEstoqueController {
     }
 
     @GetMapping("/evolucao-vendas")
-    public ResponseEntity<List<EvolucaoVendasDto>> verificarEvolucaoVendas() {
+    public ResponseEntity<List<EvolucaoVendasDto>> verificarEvolucaoVendas(
+           @RequestParam YearMonth dataInicio,
+            @RequestParam YearMonth dataFim,
+           @RequestParam String caracteristica,
+           @RequestParam String categoria
+    ) {
 
-        List<EvolucaoVendasDto> response = evolucaoVendasUseCase.execute();
+        List<EvolucaoVendasDto> response = evolucaoVendasUseCase.execute(dataInicio, dataFim, caracteristica, categoria);
         if (response.isEmpty()) {
             return ResponseEntity.status(204).build();
         }

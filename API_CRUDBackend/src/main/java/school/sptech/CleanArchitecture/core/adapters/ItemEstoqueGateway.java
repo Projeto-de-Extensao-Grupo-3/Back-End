@@ -7,6 +7,8 @@ import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.Defeit
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.EvolucaoVendasDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ProdutoBaixoGiroDto;
 
+import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +18,11 @@ public interface ItemEstoqueGateway {
 
     List<ItemEstoque> findAll();
 
-    List<ProdutoBaixoGiroDto> produtoGiroBaixo();
+    List<ProdutoBaixoGiroDto> produtoGiroBaixo(String caracteristica, String categoria);
 
-    List<DefeitosPorRoupaDto> defeitosPorRoupa();
+    List<DefeitosPorRoupaDto> defeitosPorRoupa(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria);
 
-    List<EvolucaoVendasDto> evolucaoVendas();
+    List<EvolucaoVendasDto> evolucaoVendas(YearMonth dataInicio, YearMonth dataFim, String caracteristica, String categoria);
 
     boolean existsById(Integer id);
 

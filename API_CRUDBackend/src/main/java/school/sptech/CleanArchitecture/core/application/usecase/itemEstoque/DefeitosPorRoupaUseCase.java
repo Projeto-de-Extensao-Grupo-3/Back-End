@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.core.application.usecase.itemEstoque;
 import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.DefeitosPorRoupaDto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class DefeitosPorRoupaUseCase {
@@ -13,7 +14,7 @@ public class DefeitosPorRoupaUseCase {
         this.gateway = gateway;
     }
 
-    public List<DefeitosPorRoupaDto> execute() {
-        return gateway.defeitosPorRoupa();
+    public List<DefeitosPorRoupaDto> execute(LocalDateTime dataInicio, LocalDateTime dataFim, String caracteristica, String categoria) {
+        return gateway.defeitosPorRoupa(dataInicio, dataFim, caracteristica, categoria);
     }
 }
