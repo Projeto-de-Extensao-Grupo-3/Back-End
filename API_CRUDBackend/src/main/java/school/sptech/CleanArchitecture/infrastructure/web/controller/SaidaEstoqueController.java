@@ -156,8 +156,8 @@ public class SaidaEstoqueController {
 
     @GetMapping("/taxa-defeito-costura")
     public ResponseEntity<List<TaxaDefeitoCosturaDto>> buscarTaxaDefeitoCostura(
-            @RequestParam LocalDateTime dataInicio,
-            @RequestParam LocalDateTime dataFim
+            @RequestParam String dataInicio,
+            @RequestParam String dataFim
     ) {
         List<TaxaDefeitoCosturaDto> taxas = taxaDefeitoCosturaUseCase.executar(dataInicio, dataFim);
         if (taxas.isEmpty()) {

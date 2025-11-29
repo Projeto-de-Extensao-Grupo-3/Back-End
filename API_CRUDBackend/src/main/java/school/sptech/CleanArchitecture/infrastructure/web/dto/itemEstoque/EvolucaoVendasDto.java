@@ -1,37 +1,47 @@
 package school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque;
 
 public class EvolucaoVendasDto {
-    private String mes_atual;
-    private Integer totalVendasAtual;
-    private Double crescimentoPercentual;
+    private String periodo;
+    private Double faturamento_bruto;
+    private Double lucro;
+    private Double custos;
 
-    public EvolucaoVendasDto(String mes_atual, Double totalVendasAtual, Double crescimentoPercentual) {
-        this.mes_atual = mes_atual;
-        this.totalVendasAtual = totalVendasAtual.intValue();
-        this.crescimentoPercentual = crescimentoPercentual;
+    public EvolucaoVendasDto(String periodo, Double crescimentoPercentual, Double lucro, Double custos) {
+        this.periodo = periodo;
+        this.faturamento_bruto = crescimentoPercentual;
+        this.lucro = lucro;
+        this.custos = custos;
     }
 
-    public String getMes_atual() {
-        return mes_atual;
+    public String getPeriodo() {
+        return periodo;
     }
 
-    public void setMes_atual(String mes_atual) {
-        this.mes_atual = mes_atual;
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
     }
 
-    public Integer getTotalVendasAtual() {
-        return totalVendasAtual;
+    public Double getFaturamento_bruto() {
+        return faturamento_bruto;
     }
 
-    public void setTotalVendasAtual(Integer totalVendasAtual) {
-        this.totalVendasAtual = totalVendasAtual;
+    public void setFaturamento_bruto(Double faturamento_bruto) {
+        this.faturamento_bruto = faturamento_bruto;
     }
 
-    public Double getCrescimentoPercentual() {
-        return crescimentoPercentual;
+    public Double getLucro() {
+        return lucro;
     }
 
-    public void setCrescimentoPercentual(Double crescimentoPercentual) {
-        this.crescimentoPercentual = crescimentoPercentual;
+    public void setLucro(Double lucro) {
+        this.lucro = lucro;
+    }
+
+    public Double getCustos() {
+        return custos;
+    }
+
+    public void setCustos(Double custos) {
+        this.custos = custos;
     }
 }

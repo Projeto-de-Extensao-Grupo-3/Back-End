@@ -6,13 +6,13 @@ public class ProdutoBaixoGiroDto {
     private Double totalVendido;
     private Long quantidadeVendas;
     private Double estoqueAtual;
-    private String diasSemVender;
+    private Long diasSemVender;
     private String statusRecomendacao;
 
     public ProdutoBaixoGiroDto() {
     }
 
-    public ProdutoBaixoGiroDto(String produto, Double totalVendido, Long quantidadeVendas, Double estoqueAtual, String diasSemVender, String statusRecomendacao) {
+    public ProdutoBaixoGiroDto(String produto, Double totalVendido, Long quantidadeVendas, Double estoqueAtual, Long diasSemVender, String statusRecomendacao) {
         this.produto = produto;
         this.totalVendido = totalVendido;
         this.quantidadeVendas = quantidadeVendas;
@@ -53,11 +53,11 @@ public class ProdutoBaixoGiroDto {
         this.estoqueAtual = estoqueAtual;
     }
 
-    public String getDiasSemVender() {
+    public Long getDiasSemVender() {
         return diasSemVender;
     }
 
-    public void setDiasSemVender(String diasSemVender) {
+    public void setDiasSemVender(Long diasSemVender) {
         this.diasSemVender = diasSemVender;
     }
 

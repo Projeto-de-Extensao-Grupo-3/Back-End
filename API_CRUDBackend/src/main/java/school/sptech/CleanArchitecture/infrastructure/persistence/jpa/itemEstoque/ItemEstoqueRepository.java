@@ -112,9 +112,9 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
 
     @Query(value = """
             SELECT DATE_FORMAT(vendas.data, '%Y-%m') as periodo,
-            	SUM(ie.preco * qtd_saida) as faturamento_bruto,
-            	SUM(margem_lucro.margem * ie.preco * qtd_saida) as lucro,
-            	SUM(ie.preco * qtd_saida - margem_lucro.margem * ie.preco * qtd_saida) as custos
+            	truncate(SUM(ie.preco * qtd_saida), 2) as faturamento_bruto,
+            	truncate(SUM(margem_lucro.margem * ie.preco * qtd_saida), 2) as lucro,
+            	truncate (SUM(ie.preco * qtd_saida - margem_lucro.margem * ie.preco * qtd_saida), 2) as custos
             	FROM saida_estoque as vendas\s
             		JOIN lote_item_estoque as lie\s
             			ON vendas.fk_lote_item_estoque = lie.id_lote_item_estoque
