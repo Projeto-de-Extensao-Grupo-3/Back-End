@@ -29,6 +29,11 @@ public class GerenciadorTokenJwt {
         return getClaimForToken(token, Claims::getSubject);
     }
 
+    public String getEmailFromToken(String token) {
+        Claims c = getAllClaimsFromToken(token);
+        return c.get("email").toString();
+    }
+
     public Date getExpirationDateFromToken(String token) {
         return getClaimForToken(token, Claims::getExpiration);
     }
@@ -44,7 +49,8 @@ public class GerenciadorTokenJwt {
         List<PermissaoListDTO> permissoesDoFuncionario = funcionarioAutenticado.getPermissoes();
 
         return Jwts.builder()
-                .setSubject(funcionarioAutenticado.getIdFuncionario().toString())
+                .setSubject(funcionarioAutenticado.getNome())
+                .claim("email", funcionarioAutenticado.getEmail())
                 .claim("permissoes", permissoesDoFuncionario)
                 .signWith(parseSecret()).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtTokenValidity * 1_000)).compact();
@@ -56,8 +62,8 @@ public class GerenciadorTokenJwt {
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
-        String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        Claims username = getAllClaimsFromToken(token);
+        return (username.get("email").equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
