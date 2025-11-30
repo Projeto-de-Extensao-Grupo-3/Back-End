@@ -56,7 +56,14 @@ jobs:
           # optional: add hosts to known_hosts (or use StrictHostKeyChecking=no)
           ssh-keyscan -H "$BASTION_HOST" >> ~/.ssh/known_hosts || true
           ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts || true
-          # Reiniciar containers
-          ssh -o StrictHostKeyChecking=no -J "${REMOTE_USER}@${BASTION_HOST}" -i ~/.ssh/id_rsa "${REMOTE_USER}@${REMOTE_HOST}" \ 
-          'docker compose down || true && nohup docker compose up -d --pull always &'
+          # Reiniciar containers (usa here-doc para evitar problemas de escape)
+          ssh -o StrictHostKeyChecking=no -J "${REMOTE_USER}@${BASTION_HOST}" -i ~/.ssh/id_rsa "${REMOTE_USER}@${REMOTE_HOST}" <<'REMOTE_EOF'
+          if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
+            docker compose down || true
+            nohup docker compose up -d --pull always >/dev/null 2>&1 &
+          else
+            docker-compose down || true
+            nohup docker-compose up -d --pull always >/dev/null 2>&1 &
+          fi
+          REMOTE_EOF
     
