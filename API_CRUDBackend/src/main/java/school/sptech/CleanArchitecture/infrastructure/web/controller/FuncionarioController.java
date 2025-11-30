@@ -172,13 +172,15 @@ public class FuncionarioController {
     }
 
     @PostMapping("/esqueci-minha-senha")
-    public void forgotPassword(@RequestBody Map<String, String> body) {
+    public ResponseEntity<Void> forgotPassword(@RequestBody Map<String, String> body) {
         recuperarSenhaUseCase.execute(body.get("email"));
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/resetar-senha")
-    public void resetPassword(@RequestBody Map<String, String> body) {
+    public ResponseEntity<Void> resetPassword(@RequestBody Map<String, String> body) {
         resetarSenhaUseCase.execute(body.get("token"), body.get("novaSenha"));
+        return ResponseEntity.ok().build();
     }
 
 }
