@@ -1,0 +1,58 @@
+name: CI/CD para EC2 privada (Back-end)
+
+on:
+  push:
+    branches:
+      - clean_arch # O branch que acionará o deploy
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout do código
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+      # 5. Configuração do ambiente Java/Maven
+      - name: BE - Configurar JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' # ou a distribuição que preferir
+          java-version: '21'
+          cache: 'maven' # Configura cache do Maven para acelerar builds futuros
+          
+      # 7. Geração do .jar
+      - name: BE - Gerar Artefato .JAR
+        run: mvn package -DskipTests=true
+        working-directory: ./API_CRUDBackend
+
+      # 4. Login no Docker Hub (usa secrets configurados)
+      - name: Docker Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 5. Build e push da imagem Docker para o Docker Hub
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_REPOSITORY }}:latest
+      
+      # 6. Deploy na EC2 via SSH: pull a nova imagem e reinicia o container
+      - name: Deploy to EC2 (pull image and restart)
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.BASTION_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          timeout: 120s
+          script: |
+            # Reiniciar containers
+            ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@${{ secrets.REMOTE_HOST }} 'docker compose down || true && nohup docker compose up -d --pull always &'
+    
