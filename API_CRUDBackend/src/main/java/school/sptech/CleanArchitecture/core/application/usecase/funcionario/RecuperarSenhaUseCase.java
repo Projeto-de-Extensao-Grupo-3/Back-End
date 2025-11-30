@@ -29,5 +29,6 @@ public class RecuperarSenhaUseCase {
                 "Venuste - Recuperação de Senha",
                 "Clique para resetar sua senha: " + link
         );
+        System.out.println("EMAIL PARA RECUPERAÇÃO DE SENHA ENVIADO COM SUCESSO!!");
     }
 }
