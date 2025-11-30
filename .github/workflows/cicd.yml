@@ -27,7 +27,7 @@ jobs:
         run: mvn package -DskipTests=true
         working-directory: ./API_CRUDBackend
 
-      # 4. Login no Docker Hub (usa secrets configurados)
+      # 4. Login no Docker Hub
       - name: Docker Login
         uses: docker/login-action@v2
         with:
