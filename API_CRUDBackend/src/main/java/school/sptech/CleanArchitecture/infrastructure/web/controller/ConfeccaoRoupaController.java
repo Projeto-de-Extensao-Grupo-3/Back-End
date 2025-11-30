@@ -27,29 +27,29 @@ public class ConfeccaoRoupaController {
    private final ConfeccaoRoupaDeletarUseCase confeccaoRoupaDeletarUseCase;
    private final ConfeccaoRoupaAtualizarUseCase confeccaoRoupaAtualizarUseCase;
 
-    @Operation(
-            summary = "Cadastro de uma nova Confecção de Roupa por Tecido.",
-            description = "Retorna um objeto do tipo ConfeccaoRoupaResponseDto quando cadastrado com sucesso."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Confecção cadastrada com sucesso."),
-            @ApiResponse(responseCode = "409", description = "Roupa informada já foi confeccionada por Tecido informado.")
-    })
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-            description = "Objeto do tipo ConfeccaoRoupaRequestDto para cadastro.",
-            required = true
-    )
-    @SecurityRequirement(name = "Bearer")
-    @PostMapping
-    public ResponseEntity<ConfeccaoRoupaResponseDto> cadastrar(
-            @RequestBody ConfeccaoRoupaRequestDto confeccaoRoupaCadastro
-    ) {
-        ConfeccaoRoupaCadastrarCommand command = ConfeccaoRoupaEntityMapper.toCadastrarCommand(confeccaoRoupaCadastro);
-        ConfeccaoRoupaResponseDto confeccaoRoupaCadastrada = ConfeccaoRoupaEntityMapper.toResponseDto(
-                confeccaoRoupaCadastrarUseCase.execute(command)
-        );
-        return ResponseEntity.status(201).body(confeccaoRoupaCadastrada);
-    }
+//    @Operation(
+//            summary = "Cadastro de uma nova Confecção de Roupa por Tecido.",
+//            description = "Retorna um objeto do tipo ConfeccaoRoupaResponseDto quando cadastrado com sucesso."
+//    )
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "201", description = "Confecção cadastrada com sucesso."),
+//            @ApiResponse(responseCode = "409", description = "Roupa informada já foi confeccionada por Tecido informado.")
+//    })
+//    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+//            description = "Objeto do tipo ConfeccaoRoupaRequestDto para cadastro.",
+//            required = true
+//    )
+//    @SecurityRequirement(name = "Bearer")
+//    @PostMapping
+//    public ResponseEntity<ConfeccaoRoupaResponseDto> cadastrar(
+//            @RequestBody ConfeccaoRoupaRequestDto confeccaoRoupaCadastro
+//    ) {
+//        ConfeccaoRoupaCadastrarCommand command = ConfeccaoRoupaEntityMapper.toCadastrarCommand(confeccaoRoupaCadastro);
+//        ConfeccaoRoupaResponseDto confeccaoRoupaCadastrada = ConfeccaoRoupaEntityMapper.toResponseDto(
+//                confeccaoRoupaCadastrarUseCase.execute(command)
+//        );
+//        return ResponseEntity.status(201).body(confeccaoRoupaCadastrada);
+//    }
 
     @Operation(summary = "Deleção de um registro de Confecção.", description = "Não possui retorno de corpo quando o registro é deletado.")
     @ApiResponses(value = {

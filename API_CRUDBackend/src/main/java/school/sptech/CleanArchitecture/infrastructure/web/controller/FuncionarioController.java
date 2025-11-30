@@ -24,6 +24,7 @@ import school.sptech.CleanArchitecture.infrastructure.web.dto.loginDto.Funcionar
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loginDto.FuncionarioLoginMapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "Funcionários", description = "Cadastro e listagem de funcionários")
 @RestController
@@ -39,6 +40,8 @@ public class FuncionarioController {
     private final FuncionarioRemoverPorIdUseCase funcionarioRemoverPorIdUseCase;
     private final BuscarFuncionarioPorIdUseCase buscarFuncionarioPorIdUseCase;
     private final FuncionarioAtualizarSenhaUseCase atualizarSenhaUseCase;
+    private final RecuperarSenhaUseCase recuperarSenhaUseCase;
+    private final ResetarSenhaUseCase resetarSenhaUseCase;
 
     @Operation(
             summary = "Cadastro de funcionário.",
@@ -168,13 +171,16 @@ public class FuncionarioController {
         return ResponseEntity.status(204).build();
     }
 
-//    // Endpoint de teste para login sem token. Apagar após testes
-//    @GetMapping("/login-teste")
-//    public ResponseEntity<FuncionarioResponseDto> loginTeste(@RequestBody FuncionarioLoginDto funcionarioLogin) {
-//        FuncionarioResponseDto funcionario = FuncionarioMapper.toResponseDto(
-//                funcionarioService.loginTeste(funcionarioLogin.getEmail(), funcionarioLogin.getSenha())
-//        );
-//        return ResponseEntity.status(200).body(funcionario);
-//    }
+    @PostMapping("/esqueci-minha-senha")
+    public ResponseEntity<Void> forgotPassword(@RequestBody Map<String, String> body) {
+        recuperarSenhaUseCase.execute(body.get("email"));
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/resetar-senha")
+    public ResponseEntity<Void> resetPassword(@RequestBody Map<String, String> body) {
+        resetarSenhaUseCase.execute(body.get("token"), body.get("novaSenha"));
+        return ResponseEntity.ok().build();
+    }
 
 }

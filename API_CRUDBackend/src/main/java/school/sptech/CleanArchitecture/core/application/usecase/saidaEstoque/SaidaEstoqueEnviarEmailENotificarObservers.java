@@ -21,7 +21,7 @@ public class SaidaEstoqueEnviarEmailENotificarObservers implements Subject {
 
     private final FuncionarioListarPorPermissaoUserCase listarPorPermissaoUserCase;
 
-    private static final int PERMISSAO_PARA_RECEBER_NOTIFICACAO = 7;
+    private static final int PERMISSAO_PARA_RECEBER_NOTIFICACAO = 5;
 
     private final List<Observer> observadores = new ArrayList<>();
 

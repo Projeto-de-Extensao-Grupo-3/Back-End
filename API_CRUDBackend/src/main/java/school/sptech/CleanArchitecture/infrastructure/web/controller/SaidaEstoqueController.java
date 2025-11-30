@@ -16,10 +16,12 @@ import school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.saidaEstoque.SaidaEstoqueEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque.SaidaEstoqueRequestDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque.SaidaEstoqueResponseDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque.TaxaDefeitoCosturaDto;
 import school.sptech.CleanArchitecture.infrastructure.web.rabbitmq.RabbitProducer;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Tag(name = "Saída de Estoque Controller", description = "Operações CRUD relacionadas ás Saídas de Item do Estoque.")
@@ -41,6 +43,8 @@ public class SaidaEstoqueController {
     private final SaidaEstoqueListAllUseCAse saidaEstoqueListAllUseCAse;
 
     private final SaidaEstoqueRemoverPorIdUseCase saidaEstoqueRemoverPorIdUseCase;
+
+    private final TaxaDefeitoCosturaUseCase taxaDefeitoCosturaUseCase;
 
     @Operation(
             summary = "Cadastramento de uma nova saída.",
@@ -148,5 +152,17 @@ public class SaidaEstoqueController {
     public ResponseEntity<Void> deletarSaida(@PathVariable Integer id) {
         saidaEstoqueRemoverPorIdUseCase.execute(id);
         return ResponseEntity.status(204).build();
+    }
+
+    @GetMapping("/taxa-defeito-costura")
+    public ResponseEntity<List<TaxaDefeitoCosturaDto>> buscarTaxaDefeitoCostura(
+            @RequestParam LocalDateTime dataInicio,
+            @RequestParam LocalDateTime dataFim
+    ) {
+        List<TaxaDefeitoCosturaDto> taxas = taxaDefeitoCosturaUseCase.executar(dataInicio, dataFim);
+        if (taxas.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+        return ResponseEntity.status(200).body(taxas);
     }
 }

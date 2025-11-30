@@ -56,12 +56,11 @@ public class ItemEstoqueEntityMapper {
         }
 
         Set<ConfeccaoRoupa> confeccaoRoupa = domain.getConfeccaoRoupa();
-        Set<ConfeccaoRoupaEntity> confeccaoRoupaEntities = null;
+        Set<ConfeccaoRoupaEntity> confeccaoRoupaEntities = new HashSet<>();
         if(confeccaoRoupa != null){
             confeccaoRoupaEntities = confeccaoRoupa.stream()
                     .map(cr -> {
                         ConfeccaoRoupaEntity confeccaoEntity = new ConfeccaoRoupaEntity();
-                        confeccaoEntity.setIdConfeccaoRoupa(cr.getIdConfeccaoRoupa());// só seta o id
                         confeccaoEntity.setRoupa(new ItemEstoqueEntity(cr.getRoupa().getIdItemEstoque(), cr.getRoupa().getDescricao()));
                         confeccaoEntity.setTecido(new ItemEstoqueEntity(cr.getTecido().getIdItemEstoque(), cr.getTecido().getDescricao()));
                         confeccaoEntity.setQtdTecido(cr.getQtdTecido());
@@ -220,7 +219,6 @@ public class ItemEstoqueEntityMapper {
                 .stream()
                 .map(confeccaoRoupa ->
                         new ItemEstoqueConfeccaoRoupaDto(
-                                confeccaoRoupa.getIdConfeccaoRoupa(),
                                 new ItemEstoqueTecidoDto(
                                         confeccaoRoupa.getTecido().getIdItemEstoque(),
                                         confeccaoRoupa.getTecido().getDescricao()
@@ -362,7 +360,7 @@ public class ItemEstoqueEntityMapper {
                 .map(confeccao -> {
                     ItemEstoque roupa = new ItemEstoque(confeccao.getRoupa().getIdItemEstoque());
                     ItemEstoque tecido = new ItemEstoque(confeccao.getTecido().getIdItemEstoque());
-                    return new ConfeccaoRoupa(confeccao.getIdConfeccaoRoupa(), roupa, tecido, confeccao.getQtdTecido());
+                    return new ConfeccaoRoupa(roupa, tecido, confeccao.getQtdTecido());
                 })
                 .collect(Collectors.toSet());
 
@@ -397,7 +395,6 @@ public class ItemEstoqueEntityMapper {
             confeccaoRoupaDto = item.getConfeccaoRoupa().stream()
                     .filter(Objects::nonNull)
                     .map(cr -> new ItemEstoqueConfeccaoRoupaDto(
-                            cr.getIdConfeccaoRoupa(),
                             cr.getTecido() != null ? new ItemEstoqueTecidoDto(cr.getTecido().getIdItemEstoque(), cr.getTecido().getDescricao()) : null,
                             cr.getQtdTecido()
                     ))

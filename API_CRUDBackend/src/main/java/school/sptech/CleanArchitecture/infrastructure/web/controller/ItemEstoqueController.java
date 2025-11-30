@@ -9,19 +9,24 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.CleanArchitecture.core.application.command.confeccaoRoupa.ConfeccaoRoupaCadastrarCommand;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueAtualizarPorIdCommand;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueCadastrarCommand;
-import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueCadastrarTecidoRoupaCommand;
+import school.sptech.CleanArchitecture.core.application.usecase.confeccaoRoupa.ConfeccaoRoupaCadastrarUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueCalcularCustoProducaoUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccaoRoupa.ConfeccaoRoupaEntity;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.confeccaoRoupa.ConfeccaoRoupaEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.*;
 
+import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executor;
 
 @Tag(name = "* Item de Estoque Controller", description = "Operações CRUD relacionadas aos itens de estoque (tecido ou roupa).")
 @RestController
@@ -35,8 +40,6 @@ public class ItemEstoqueController {
 
     private final ItemEstoqueCadastrarItemUseCase itemEstoqueCadastrarItemUseCase;
 
-    private final ItemEstoqueCadastrarTecidoRoupaUseCase itemEstoqueCadastrarTecidoRoupaUseCase;
-
     private final ItemEstoqueListAllUseCase itemEstoqueListAllUseCase;
 
     private final ItemEstoqueRemoverPorIdUseCase itemEstoqueRemoverPorIdUseCase;
@@ -46,6 +49,14 @@ public class ItemEstoqueController {
     private final ItemEstoqueBuscarPorTipoUseCase itemEstoqueBuscarPorTipoUseCase;
 
     private final ItemEstoqueCalcularCustoProducaoUseCase itemEstoqueCalcularCustoProducaoUseCase;
+
+    private final ConfeccaoRoupaCadastrarUseCase confeccaoRoupaCadastrarUseCase;
+
+    private final ProdutosGiroBaixoUseCase produtosGiroBaixoUseCase;
+
+    private final DefeitosPorRoupaUseCase defeitosPorRoupaUseCase;
+
+    private final EvolucaoVendasUseCase evolucaoVendasUseCase;
 
     @Operation(
             summary = "Cadastramento de um novo Item.",
@@ -72,24 +83,26 @@ public class ItemEstoqueController {
 
     @SecurityRequirement(name = "Bearer")
     @PostMapping("/tecidos/{id}")
-    public ResponseEntity<ItemEstoqueResponseDto> cadastrarTecidosDaRoupa(
+    public ResponseEntity<Void> cadastrarTecidosDaRoupa(
             @PathVariable Integer id,
             @RequestBody Set<ItemEstoqueConfeccaoRoupaDto> confeccaoRoupaDto
     ) {
         Set<ConfeccaoRoupaEntity> confeccaoRoupa = new HashSet<>();
         for (ItemEstoqueConfeccaoRoupaDto confeccaoDto : confeccaoRoupaDto) {
             ConfeccaoRoupaEntity confeccao = new ConfeccaoRoupaEntity();
-            confeccao.setIdConfeccaoRoupa(confeccaoDto.getIdConfeccaoRoupa());
             ItemEstoqueEntity tecido = new ItemEstoqueEntity();
             tecido.setIdItemEstoque(confeccaoDto.getTecido().getIdTecido());
+            ItemEstoqueEntity roupa = new ItemEstoqueEntity();
+            roupa.setIdItemEstoque(id);
             confeccao.setTecido(tecido);
+            confeccao.setRoupa(roupa);
+            confeccao.setQtdTecido(confeccaoDto.getQtdTecido());
             confeccaoRoupa.add(confeccao);
         }
-        ItemEstoqueCadastrarTecidoRoupaCommand command = ItemEstoqueEntityMapper.toCadastrarTecidoRoupaCommand(id, confeccaoRoupa);
-        ItemEstoqueResponseDto roupaComTecidos = ItemEstoqueEntityMapper.toResponseDto(
-                itemEstoqueCadastrarTecidoRoupaUseCase.execute(command));
 
-        return ResponseEntity.status(201).body(roupaComTecidos);
+        Set<ConfeccaoRoupaCadastrarCommand> command = ConfeccaoRoupaEntityMapper.toCadastrarCommands(confeccaoRoupa);
+        confeccaoRoupaCadastrarUseCase.execute(id, command);
+        return ResponseEntity.status(201).build();
     }
 
     @Operation(summary = "* Listagem de todos os Itens no Estoque.", description = "Retorna uma lista de ItemEstoqueResponseDto com todos os Itens no sistema.")
@@ -196,6 +209,52 @@ public class ItemEstoqueController {
     public ResponseEntity<Double> calcularCustoProducao(@PathVariable Integer id) {
         Double custo = itemEstoqueCalcularCustoProducaoUseCase.execute(id);
         return ResponseEntity.status(200).body(custo);
+    }
+
+    @GetMapping("/produtos-giro-baixo")
+    public ResponseEntity<List<ProdutoBaixoGiroDto>> calcularCustoProducao(
+            @RequestParam String caracteristica,
+            @RequestParam String categoria
+    ) {
+
+        List<ProdutoBaixoGiroDto> response = produtosGiroBaixoUseCase.execute(caracteristica, categoria);
+        if (response.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @GetMapping("/defeitos-por-roupa")
+    public ResponseEntity<List<DefeitosPorRoupaDto>> verificarDefeitoRoupas(
+            @RequestParam String dataInicio,
+            @RequestParam String dataFim,
+            @RequestParam String caracteristica,
+            @RequestParam String categoria
+    ) {
+
+        List<DefeitosPorRoupaDto> response = defeitosPorRoupaUseCase.execute(dataInicio, dataFim, caracteristica, categoria);
+        if (response.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @GetMapping("/evolucao-vendas")
+    public ResponseEntity<List<EvolucaoVendasDto>> verificarEvolucaoVendas(
+           @RequestParam String dataInicio,
+            @RequestParam String dataFim,
+           @RequestParam String caracteristica,
+           @RequestParam String categoria
+    ) {
+
+        List<EvolucaoVendasDto> response = evolucaoVendasUseCase.execute(dataInicio, dataFim, caracteristica, categoria);
+        if (response.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(response);
     }
 }
 

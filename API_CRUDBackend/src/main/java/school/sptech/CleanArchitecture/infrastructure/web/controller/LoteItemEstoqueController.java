@@ -14,11 +14,13 @@ import school.sptech.CleanArchitecture.config.redis.SaidaPaginacaoService;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.AtualizarLoteItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.CriarLoteItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque.*;
+import school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque.PecasMaiorMaoObraDtoUseCase;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque.LoteItemEstoqueEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Tag(name = "* Entrada de Item Estoque Controller", description = "Operações CRUD relacionadas aos itens que chegaram em um lote.")
@@ -34,6 +36,8 @@ public class LoteItemEstoqueController {
     private final RemoverLoteItemEstoqueUseCase removerLoteItemEstoqueUseCase;
     private final BuscarLotesPaginadoUseCase buscarLotesPaginadoUseCase;
     private final BuscarLotesPaginadoSaidaUseCase buscarLotesPaginadoSaidaUseCase;
+    private final MargemLucroProdutoUseCase margemLucroProdutoUseCase;
+    private final PecasMaiorMaoObraDtoUseCase pecasMaiorMaoObraDtoUseCase;
 
     private final SaidaPaginacaoService redisPaginacao;
 
@@ -136,7 +140,7 @@ public class LoteItemEstoqueController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit
     ) {
-        return ResponseEntity.ok(redisPaginacao.listarEntradaPaginado(page, limit));
+        return ResponseEntity.ok(buscarLotesPaginadoUseCase.executar(page, limit));
     }
 
     @GetMapping("/paginadoSaida")
@@ -144,6 +148,38 @@ public class LoteItemEstoqueController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit
     ) {
-        return ResponseEntity.ok(redisPaginacao.listarPaginado(page, limit));
+        return ResponseEntity.ok(buscarLotesPaginadoSaidaUseCase.executar(page, limit));
+    }
+
+    @GetMapping("/margem-lucro-produtos")
+    public ResponseEntity<List<MargemLucroProdutoDto>> buscarMargemLucroProdutos(
+            @RequestParam String dataInicio,
+            @RequestParam String dataFim,
+            @RequestParam String caracteristica,
+            @RequestParam String categoria
+
+    ) {
+        List<MargemLucroProdutoDto> response = margemLucroProdutoUseCase.execute(dataInicio, dataFim, caracteristica, categoria);
+
+        if(response.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/peca-maior-mao-obra")
+    public ResponseEntity<List<PecasMaiorMaoObraDto>> buscarPecasMaiorMaoObra(
+            @RequestParam String dataInicio,
+            @RequestParam String dataFim,
+            @RequestParam String caracteristica,
+            @RequestParam String categoria
+    ) {
+        List<PecasMaiorMaoObraDto> response = pecasMaiorMaoObraDtoUseCase.execute(dataInicio, dataFim, caracteristica, categoria);
+        if (response.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok().body(response);
     }
 }

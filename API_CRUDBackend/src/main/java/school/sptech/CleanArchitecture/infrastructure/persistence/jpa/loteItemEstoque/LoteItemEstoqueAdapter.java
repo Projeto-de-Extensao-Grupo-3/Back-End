@@ -5,11 +5,10 @@ import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.exceptions.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.EntradaPaginacaoDTO;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.PaginacaoResponseDTO;
-import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.SaidaPaginacaoDTO;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -102,5 +101,15 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
         Long total = repository.contarTotalSaida();
         int paginaAtual = offset / limit;
         return new PaginacaoResponseDTO<>(conteudo, total, paginaAtual, limit);
+    }
+
+    @Override
+    public List<MargemLucroProdutoDto> buscarMargemLucroProdutos(String dataInicio, String dataFim, String caracteristica, String categoria) {
+        return repository.buscarMargemLucroProdutos(dataInicio, dataFim, caracteristica, categoria);
+    }
+
+    @Override
+    public List<PecasMaiorMaoObraDto> buscarPecasMaiorMaoObra(String dataInicio, String dataFim, String caracteristica, String categoria) {
+        return repository.buscarPecasMaiorMaoObra(dataInicio, dataFim, caracteristica, categoria);
     }
 }

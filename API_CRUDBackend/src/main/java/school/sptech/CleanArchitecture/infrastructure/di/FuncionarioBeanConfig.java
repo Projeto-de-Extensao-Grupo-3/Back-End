@@ -5,7 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import school.sptech.CRUDBackend.config.GerenciadorTokenJwt;
 import school.sptech.CleanArchitecture.config.jwt.TokenGatewayAdapter;
+import school.sptech.CleanArchitecture.core.adapters.EmailService;
+import school.sptech.CleanArchitecture.core.adapters.FuncionarioGateway;
 import school.sptech.CleanArchitecture.core.adapters.TokenGateway;
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionario.FuncionarioAdapter;
@@ -58,5 +61,20 @@ public class FuncionarioBeanConfig {
     @Bean
     public FuncionarioListarPorPermissaoUserCase funcionarioListarPorPermissaoUserCase(FuncionarioAdapter adapter){
         return new FuncionarioListarPorPermissaoUserCase(adapter);
+    }
+
+    @Bean
+    public GerenciadorTokenJwt gerenciadorTokenJwt(){
+        return new GerenciadorTokenJwt();
+    }
+
+    @Bean
+    public RecuperarSenhaUseCase recuperarSenhaUseCase(FuncionarioGateway gateway, GerenciadorTokenJwt gerenciadorTokenJwt, EmailService emailService){
+        return new RecuperarSenhaUseCase(gateway, gerenciadorTokenJwt, emailService);
+    }
+
+    @Bean
+    public ResetarSenhaUseCase resetarSenhaUseCase(FuncionarioGateway gateway, GerenciadorTokenJwt gerenciadorTokenJwt, PasswordEncoder passwordEncoder){
+        return new ResetarSenhaUseCase(gateway, gerenciadorTokenJwt, passwordEncoder);
     }
 }

@@ -1,6 +1,5 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
@@ -8,9 +7,12 @@ import school.sptech.CleanArchitecture.core.domain.entity.Categoria;
 import school.sptech.CleanArchitecture.core.domain.entity.ItemEstoque;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntityMapper;
-import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaRepository;
-import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.prateleira.PrateleiraEntity;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.DefeitosPorRoupaDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.EvolucaoVendasDto;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque.ProdutoBaixoGiroDto;
 
+import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,7 +22,6 @@ import java.util.stream.Collectors;
 public class ItemEstoqueAdapter implements ItemEstoqueGateway {
 
     private final ItemEstoqueRepository repository;
-    private final CategoriaRepository categoriaRepository;
 
     @Override
     public ItemEstoque save(ItemEstoque itemEstoque) {
@@ -93,5 +94,20 @@ public class ItemEstoqueAdapter implements ItemEstoqueGateway {
     @Override
     public void removerCaracteristica(Integer idCategoria) {
         repository.removerCaracteristica(idCategoria);
+    }
+
+    @Override
+    public List<ProdutoBaixoGiroDto> produtoGiroBaixo(String caracteristica, String categoria) {
+        return repository.buscarProdutosGiroBaixo(caracteristica, categoria);
+    }
+
+    @Override
+    public List<DefeitosPorRoupaDto> defeitosPorRoupa(String dataInicio, String dataFim, String caracteristica, String categoria) {
+        return repository.buscarDefeitosPorProduto(dataInicio, dataFim, caracteristica, categoria);
+    }
+
+    @Override
+    public List<EvolucaoVendasDto> evolucaoVendas(String dataInicio, String dataFim, String caracteristica, String categoria) {
+        return repository.buscarEvolucaoVendas(dataInicio, dataFim, caracteristica, categoria);
     }
 }

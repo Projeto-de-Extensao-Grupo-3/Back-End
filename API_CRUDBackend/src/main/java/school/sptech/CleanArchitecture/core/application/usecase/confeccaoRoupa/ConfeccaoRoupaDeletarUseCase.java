@@ -12,10 +12,6 @@ public class ConfeccaoRoupaDeletarUseCase {
     }
 
     public void execute(Integer id){
-        if (gateway.existsById(id)) {
-            gateway.deleteById(id);
-        }else {
-            throw new ConfeccaoRoupaConflitoException("Confecção de roupa com id "+ id+ "não encontrado.");
-        }
+        gateway.deleteAllByRoupa_IdItemEstoqueEquals(id);
     }
 }

@@ -3,8 +3,10 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.saidaEsto
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.SaidaEstoqueGateway;
 import school.sptech.CleanArchitecture.core.domain.entity.SaidaEstoque;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.saidaEstoque.TaxaDefeitoCosturaDto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,5 +64,11 @@ public class SaidaEstoqueAdapter implements SaidaEstoqueGateway {
         return repository.findByData(data).stream()
                 .map(SaidaEstoqueEntityMapper::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura(LocalDateTime dataInicio, LocalDateTime dataFim) {
+
+        return repository.calcularTaxaDefeitoCostura(dataInicio, dataFim);
     }
 }

@@ -12,7 +12,10 @@ import school.sptech.CleanArchitecture.infrastructure.web.dto.confeccaoRoupa.Con
 import school.sptech.CleanArchitecture.infrastructure.web.dto.confeccaoRoupa.ConfeccaoRoupaRoupaRequestDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.confeccaoRoupa.ConfeccaoRoupaTecidoRequestDto;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ConfeccaoRoupaEntityMapper {
 
@@ -36,6 +39,10 @@ public class ConfeccaoRoupaEntityMapper {
         return entity;
     }
 
+    public static Set<ConfeccaoRoupaEntity> ofDomains (Set<ConfeccaoRoupa> domain) {
+        return domain.stream().map(ConfeccaoRoupaEntityMapper::ofDomain).collect(Collectors.toSet());
+    }
+
     public static ConfeccaoRoupa ofEntity(ConfeccaoRoupaEntity entity) {
         if (Objects.isNull(entity)) {
             return null;
@@ -56,6 +63,10 @@ public class ConfeccaoRoupaEntityMapper {
         return domain;
     }
 
+    public static Set<ConfeccaoRoupa> ofEntities(List<ConfeccaoRoupaEntity> entities) {
+        return entities.stream().map(ConfeccaoRoupaEntityMapper::ofEntity).collect(Collectors.toSet());
+    }
+
     public static ConfeccaoRoupa toEntity(ConfeccaoRoupaRequestDto requestDto) {
 
         ConfeccaoRoupaRoupaRequestDto roupaRequestDto = requestDto.getRoupa();
@@ -67,7 +78,6 @@ public class ConfeccaoRoupaEntityMapper {
         tecido.setIdItemEstoque(tecidoRequestDto.getIdTecido());
 
         return new ConfeccaoRoupa(
-                null,
                 roupa,
                 tecido,
                 requestDto.getQtdTecido()
@@ -80,16 +90,20 @@ public class ConfeccaoRoupaEntityMapper {
         );
     }
 
-    public static ConfeccaoRoupaCadastrarCommand toCadastrarCommand(ConfeccaoRoupaRequestDto dto) {
-        ConfeccaoRoupaRoupaCommand roupa = new ConfeccaoRoupaRoupaCommand(dto.getRoupa().getIdRoupa());
+    public static ConfeccaoRoupaCadastrarCommand toCadastrarCommand(ConfeccaoRoupaEntity dto) {
+        ConfeccaoRoupaRoupaCommand roupa = new ConfeccaoRoupaRoupaCommand(dto.getRoupa().getIdItemEstoque());
 
-        ConfeccaoRoupaTecidoCommand tecido = new ConfeccaoRoupaTecidoCommand(dto.getTecido().getIdTecido());
+        ConfeccaoRoupaTecidoCommand tecido = new ConfeccaoRoupaTecidoCommand(dto.getTecido().getIdItemEstoque());
 
         return new ConfeccaoRoupaCadastrarCommand(
                 roupa,
                 tecido,
                 dto.getQtdTecido()
         );
+    }
+
+    public static Set<ConfeccaoRoupaCadastrarCommand> toCadastrarCommands(Set<ConfeccaoRoupaEntity> dtos) {
+        return dtos.stream().map(ConfeccaoRoupaEntityMapper::toCadastrarCommand).collect(Collectors.toSet());
     }
 
     public static ConfeccaoRoupaAtualizarCommand toAtualizarCommand(Integer id, ConfeccaoRoupaRequestDto dto){

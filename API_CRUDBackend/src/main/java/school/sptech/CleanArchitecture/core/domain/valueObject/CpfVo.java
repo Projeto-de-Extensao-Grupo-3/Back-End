@@ -16,7 +16,7 @@ public final class CpfVo {
                 throw new IllegalArgumentException("CPF deve conter 11 dígitos numéricos");
             }
 
-            if (isValidCpf(digitsOnly)) {
+            if (!(digitsOnly.chars().distinct().count() == 1)) {
                 throw new IllegalArgumentException("CPF inválido");
             }
         }
@@ -28,23 +28,23 @@ public final class CpfVo {
     }
 
     // Validação de CPF (regra oficial)
-    private boolean isValidCpf(String cpf) {
-        if (cpf.chars().distinct().count() == 1) return false; // evita CPFs com dígitos repetidos (ex: 11111111111)
+//    private boolean isValidCpf(String cpf) {
+//        if (cpf.chars().distinct().count() == 1) return false; // evita CPFs com dígitos repetidos (ex: 11111111111)
+//
+//        int digito1 = calcularDigito(cpf.substring(0, 9), 10);
+//        int digito2 = calcularDigito(cpf.substring(0, 9) + digito1, 11);
+//
+//        return cpf.equals(cpf.substring(0, 9) + digito1 + digito2);
+//    }
 
-        int digito1 = calcularDigito(cpf.substring(0, 9), 10);
-        int digito2 = calcularDigito(cpf.substring(0, 9) + digito1, 11);
-
-        return cpf.equals(cpf.substring(0, 9) + digito1 + digito2);
-    }
-
-    private int calcularDigito(String base, int peso) {
-        int soma = 0;
-        for (char c : base.toCharArray()) {
-            soma += (c - '0') * peso--;
-        }
-        int resto = soma % 11;
-        return (resto < 2) ? 0 : 11 - resto;
-    }
+//    private int calcularDigito(String base, int peso) {
+//        int soma = 0;
+//        for (char c : base.toCharArray()) {
+//            soma += (c - '0') * peso--;
+//        }
+//        int resto = soma % 11;
+//        return (resto < 2) ? 0 : 11 - resto;
+//    }
 
     @Override
     public boolean equals(Object o) {
