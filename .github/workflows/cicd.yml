@@ -57,6 +57,6 @@ jobs:
           ssh-keyscan -H "$BASTION_HOST" >> ~/.ssh/known_hosts || true
           ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts || true
           # Reiniciar containers
-          sh -o StrictHostKeyChecking=no -J "${REMOTE_USER}@${BASTION_HOST}" -i ~/.ssh/id_rsa "${REMOTE_USER}@${REMOTE_HOST}" \ 
+          ssh -o StrictHostKeyChecking=no -J "${REMOTE_USER}@${BASTION_HOST}" -i ~/.ssh/id_rsa "${REMOTE_USER}@${REMOTE_HOST}" \ 
           'docker compose down || true && nohup docker compose up -d --pull always &'
     
