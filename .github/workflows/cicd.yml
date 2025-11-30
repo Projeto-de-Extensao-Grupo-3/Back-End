@@ -45,14 +45,18 @@ jobs:
       
       # 6. Deploy na EC2 via SSH: pull a nova imagem e reinicia o container
       - name: Deploy to EC2 (pull image and restart)
-        uses: appleboy/ssh-action@v0.1.9
-        with:
-          host: ${{ secrets.BASTION_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          timeout: 120s
-          script: |
-            # Reiniciar containers
-            ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@${{ secrets.REMOTE_HOST }} 'docker compose down || true && nohup docker compose up -d --pull always &'
+        env:
+          BASTION_HOST: ${{ secrets.BASTION_HOST }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          # optional: add hosts to known_hosts (or use StrictHostKeyChecking=no)
+          ssh-keyscan -H "$BASTION_HOST" >> ~/.ssh/known_hosts || true
+          ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts || true
+          # Reiniciar containers
+          sh -o StrictHostKeyChecking=no -J "${REMOTE_USER}@${BASTION_HOST}" -i ~/.ssh/id_rsa "${REMOTE_USER}@${REMOTE_HOST}" \ 
+          'docker compose down || true && nohup docker compose up -d --pull always &'
     
