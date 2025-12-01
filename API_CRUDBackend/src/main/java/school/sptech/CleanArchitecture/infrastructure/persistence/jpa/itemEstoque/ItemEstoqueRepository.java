@@ -78,7 +78,7 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
     ON carac_ie.fk_categoria  = carac.id_categoria
     WHERE IFNULL(carac.nome, '') LIKE %:caracteristica%
     AND c.nome LIKE %:categoria%
-    AND carac.fk_categoria_pai = 2
+    AND c.fk_categoria_pai = 2
     GROUP BY ie.id_item_estoque, ie.descricao, ie.qtd_armazenado
     ORDER BY total_vendido ASC, dias_sem_vender DESC
     LIMIT 5;""",
