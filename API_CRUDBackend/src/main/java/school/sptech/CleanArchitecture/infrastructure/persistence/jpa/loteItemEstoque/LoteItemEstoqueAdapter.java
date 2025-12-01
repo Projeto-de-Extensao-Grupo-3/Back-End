@@ -72,8 +72,9 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
                         (String) obj[1],
                         obj[2] != null ? ((Number) obj[2]).doubleValue() : null,
                         (Integer) obj[3],
-                        (String) obj[4]
-                        ,(Timestamp) obj[5]
+                        (String) obj[4],
+                        (Timestamp) obj[5],
+                        (String) obj[6]
                 ))
                 .collect(Collectors.toList());
 
@@ -94,7 +95,8 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
                         ((Number) obj[2]).doubleValue(),
                         (Integer) obj[3],
                         (String) obj[4],
-                        (Timestamp) obj[5]
+                        (Timestamp) obj[5],
+                        obj[6] != null ? (String) obj[6] : null
                 ))
                 .collect(Collectors.toList());
 

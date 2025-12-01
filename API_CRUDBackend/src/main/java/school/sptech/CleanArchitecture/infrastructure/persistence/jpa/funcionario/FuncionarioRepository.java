@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface FuncionarioRepository extends JpaRepository<FuncionarioEntity, Integer> {
     Optional<FuncionarioEntity> findByEmail(String email);
+    Optional<FuncionarioEntity> findByNome(String email);
     List<FuncionarioEntity> findByNomeContainsIgnoreCaseAndCpfIsNotNull(String nome);
     List<FuncionarioEntity> findByCpfIsNotNullOrderByIdFuncionarioDesc();
     Boolean existsByCpfOrEmail(String cpf, String email);

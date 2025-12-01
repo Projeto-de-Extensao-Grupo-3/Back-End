@@ -18,4 +18,5 @@ public class EntradaPaginacaoDTO {
     private Integer idLote;
     private String nomeParceiro;
     private Timestamp dataEntrada;
+    private String motivo;
 }

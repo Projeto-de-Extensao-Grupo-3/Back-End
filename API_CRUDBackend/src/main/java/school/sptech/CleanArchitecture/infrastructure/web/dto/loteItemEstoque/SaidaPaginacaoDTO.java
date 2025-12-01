@@ -18,5 +18,6 @@ public class SaidaPaginacaoDTO {
     private Integer idLote;
     private String nomeParceiro;
     private Timestamp saidaEstoque;
+    private String motivo;
 }
 
