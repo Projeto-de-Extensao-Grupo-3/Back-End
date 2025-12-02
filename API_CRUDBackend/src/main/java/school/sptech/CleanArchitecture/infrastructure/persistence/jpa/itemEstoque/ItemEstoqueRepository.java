@@ -152,7 +152,8 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
             		AND c.nome LIKE %:categoria%
             		AND vendas.fk_costureira IS NULL
             		AND DATE_FORMAT(vendas.data, '%Y-%m') BETWEEN :dataInicio AND :dataFim
-            	GROUP BY periodo;""",
+            	GROUP BY periodo
+            	ORDER BY periodo;""",
             nativeQuery = true)
     List<EvolucaoVendasDto> buscarEvolucaoVendas(@Param("dataInicio") String dataInicio, @Param("dataFim") String dataFim, @Param("caracteristica") String caracteristica, @Param("categoria") String categoria);
 }
