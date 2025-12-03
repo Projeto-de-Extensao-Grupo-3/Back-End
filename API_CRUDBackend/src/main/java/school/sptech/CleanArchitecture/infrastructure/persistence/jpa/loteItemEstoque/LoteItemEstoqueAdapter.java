@@ -6,6 +6,7 @@ import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.exceptions.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
 import school.sptech.CleanArchitecture.core.domain.entity.LoteItemEstoque;
 import school.sptech.CleanArchitecture.core.domain.observer.Observer;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.loteItemEstoque.*;
 
 import java.sql.Timestamp;
@@ -16,8 +17,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
+    private static String bucket;
+
     @Value("${aws.s3.nome-bucket}")
-    private String bucket;
+    public void setBucket(String value) {
+        LoteItemEstoqueAdapter.bucket = value;
+    }
 
     private final LoteItemEstoqueRepository repository;
 
@@ -77,7 +82,8 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
                         (Integer) obj[3],
                         (String) obj[4],
                         (Timestamp) obj[5],
-                        (String) obj[6]
+                        (String) obj[6],
+                        bucket
                 ))
                 .collect(Collectors.toList());
 
