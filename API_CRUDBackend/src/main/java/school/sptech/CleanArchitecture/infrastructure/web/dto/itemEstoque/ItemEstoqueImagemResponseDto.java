@@ -7,9 +7,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ItemEstoqueImagemResponseDto {
     private Integer id;
     private String url;
+
+    public ItemEstoqueImagemResponseDto(Integer id, String url, String bucket) {
+        this.id = id;
+        this.url = "https://" + bucket + ".s3.us-east-1.amazonaws.com/" + url;
+    }
 }
