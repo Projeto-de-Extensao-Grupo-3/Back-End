@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.loteItemEstoque;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.exceptions.LoteItemEstoque.LoteItemEstoqueNaoEncontradoException;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
+    @Value("${aws.s3.nome-bucket}")
+    private String bucket;
 
     private final LoteItemEstoqueRepository repository;
 
@@ -96,7 +99,8 @@ public class LoteItemEstoqueAdapter implements LoteItemEstoqueGateway {
                         (Integer) obj[3],
                         (String) obj[4],
                         (Timestamp) obj[5],
-                        obj[6] != null ? (String) obj[6] : null
+                        obj[6] != null ? (String) obj[6] : null,
+                        bucket
                 ))
                 .collect(Collectors.toList());
 
