@@ -2,6 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.di;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import school.sptech.CleanArchitecture.config.redis.SaidaPaginacaoService;
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.BuscarFuncionarioPorIdUseCase;
 import school.sptech.CleanArchitecture.core.application.usecase.funcionario.FuncionarioListarPorPermissaoUserCase;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarPorIdUseCase;
@@ -52,9 +53,9 @@ public class SaidaEstoqueBeanConfig {
 
     @Bean
     public SaidaEstoqueCadastrarUseCase saidaEstoqueCadastrarUseCase(SaidaEstoqueAdapter adapter, ItemEstoqueAtualizarPorIdUseCase atualizarPorIdUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase,
-                                                                     BuscarParceiroPorIdUseCase parceiroPorIdUseCase, SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers){
+                                                                     BuscarParceiroPorIdUseCase parceiroPorIdUseCase, SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers, SaidaPaginacaoService redisService){
 
-        return new SaidaEstoqueCadastrarUseCase(adapter, atualizarPorIdUseCase, itemEstoqueBuscarUseCase, funcionarioPorIdUseCase, loteItemEstoqueUseCase, parceiroPorIdUseCase, enviarEmailENotificarObservers);
+        return new SaidaEstoqueCadastrarUseCase(adapter, atualizarPorIdUseCase, itemEstoqueBuscarUseCase, funcionarioPorIdUseCase, loteItemEstoqueUseCase, parceiroPorIdUseCase, enviarEmailENotificarObservers, redisService);
     }
 
     @Bean

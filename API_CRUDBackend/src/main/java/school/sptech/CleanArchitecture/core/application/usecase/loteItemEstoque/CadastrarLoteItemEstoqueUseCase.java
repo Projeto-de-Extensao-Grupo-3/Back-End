@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.core.application.usecase.loteItemEstoque;
 
+import school.sptech.CleanArchitecture.config.redis.SaidaPaginacaoService;
 import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.loteItemEstoque.CriarLoteItemEstoqueCommand;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarQuantidadeUseCase;
@@ -19,6 +20,8 @@ public class CadastrarLoteItemEstoqueUseCase implements SubjectLoteItem, Subject
 
     private final LoteItemEstoqueGateway gateway;
 
+    private final SaidaPaginacaoService redisService;
+
     private final ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase;
 
     private final ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase;
@@ -28,8 +31,9 @@ public class CadastrarLoteItemEstoqueUseCase implements SubjectLoteItem, Subject
     private final List<Observer> observadores = new ArrayList<>();
     private final List<ObserverLoteItem> observadoresLoteItem = new ArrayList<>();
 
-    public CadastrarLoteItemEstoqueUseCase(LoteItemEstoqueGateway gateway, ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase) {
+    public CadastrarLoteItemEstoqueUseCase(LoteItemEstoqueGateway gateway, SaidaPaginacaoService redisService, ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase) {
         this.gateway = gateway;
+        this.redisService = redisService;
         this.itemEstoqueAtualizarUseCase = itemEstoqueAtualizarUseCase;
         this.itemEstoqueBuscarUseCase = itemEstoqueBuscarUseCase;
     }
@@ -52,6 +56,8 @@ public class CadastrarLoteItemEstoqueUseCase implements SubjectLoteItem, Subject
 
         notificarObservers(itemEstoque);
         notificarObserversLoteItem(itemEstoque);
+
+        redisService.limparTodoCache();
         return gateway.save(loteItemEstoque);
     }
 
@@ -88,4 +94,5 @@ public class CadastrarLoteItemEstoqueUseCase implements SubjectLoteItem, Subject
             observador.atualizarPreco(itemEstoque);
         }
     }
+
 }

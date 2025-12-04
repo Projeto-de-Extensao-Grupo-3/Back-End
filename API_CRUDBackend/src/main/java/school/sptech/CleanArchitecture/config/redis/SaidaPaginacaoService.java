@@ -59,4 +59,9 @@ public class SaidaPaginacaoService {
                 .opsForValue()
                 .set(cacheKey, response, Duration.ofSeconds(30));
     }
+
+    public void limparTodoCache() {
+        redisTemplate.getConnectionFactory().getConnection().flushAll();
+        System.out.println("CACHE REDIS LIMPO!");
+    }
 }
