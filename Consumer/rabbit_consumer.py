@@ -163,7 +163,7 @@ def enviar_relatorio_diario():
 # =========================================================
 # === AGENDAMENTO DO ENVIO DIÁRIO
 # =========================================================
-def agendar_relatorio_diario(hora_envio=21, minuto_envio=0):
+def agendar_relatorio_diario(hora_envio, minuto_envio):
     """Agenda o envio do relatório diário para a hora especificada."""
     def ciclo():
         while True:
@@ -217,7 +217,7 @@ def iniciar_consumidor():
     try:
         threading.Thread(target=lambda: iniciar_consumidor_fila(RABBITMQ_QUEUE, callback), daemon=True).start()
         threading.Thread(target=lambda: iniciar_consumidor_fila(RABBITMQ_QUEUE_RELATORIO, callback_relatorio), daemon=True).start()
-        agendar_relatorio_diario(17, 30)
+        agendar_relatorio_diario(18, 55)
         while True:
             time.sleep(1)
     except Exception as e:

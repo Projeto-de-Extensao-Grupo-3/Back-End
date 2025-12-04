@@ -1,5 +1,7 @@
 package school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque;
 
+import java.math.BigDecimal;
+
 public class ProdutoBaixoGiroDto {
 
     private String produto;
@@ -20,6 +22,15 @@ public class ProdutoBaixoGiroDto {
         this.diasSemVender = diasSemVender;
         this.statusRecomendacao = statusRecomendacao;
     }
+
+//    public ProdutoBaixoGiroDto(String produto, BigDecimal totalVendido, Long quantidadeVendas, BigDecimal estoqueAtual, Long diasSemVender, String statusRecomendacao) {
+//        this.produto = produto;
+//        this.totalVendido = totalVendido.doubleValue();
+//        this.quantidadeVendas = quantidadeVendas;
+//        this.estoqueAtual = estoqueAtual.doubleValue();
+//        this.diasSemVender = diasSemVender;
+//        this.statusRecomendacao = statusRecomendacao;
+//    }
 
     public String getProduto() {
         return produto;
