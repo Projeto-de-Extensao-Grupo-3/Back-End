@@ -490,7 +490,8 @@ public class ItemEstoqueEntityMapper {
                 itemEstoque.getDescricao(),
                 tipoCategoria,
                 itemEstoque.getPreco(),
-                itemEstoque.getImagem().getUrl()
+                itemEstoque.getImagem().getUrl(),
+                bucket
         );
     }
 
