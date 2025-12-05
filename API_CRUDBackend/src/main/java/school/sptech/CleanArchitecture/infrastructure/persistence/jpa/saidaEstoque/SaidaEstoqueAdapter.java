@@ -67,7 +67,7 @@ public class SaidaEstoqueAdapter implements SaidaEstoqueGateway {
     }
 
     @Override
-    public List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura(LocalDateTime dataInicio, LocalDateTime dataFim) {
+    public List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura(String dataInicio, String dataFim) {
 
         return repository.calcularTaxaDefeitoCostura(dataInicio, dataFim);
     }

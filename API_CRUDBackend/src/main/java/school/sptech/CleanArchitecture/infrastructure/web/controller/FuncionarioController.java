@@ -42,6 +42,7 @@ public class FuncionarioController {
     private final FuncionarioAtualizarSenhaUseCase atualizarSenhaUseCase;
     private final RecuperarSenhaUseCase recuperarSenhaUseCase;
     private final ResetarSenhaUseCase resetarSenhaUseCase;
+    private final FuncionarioBuscarPorEmailUseCase buscarPorEmailUseCase;
 
     @Operation(
             summary = "Cadastro de funcionário.",
@@ -105,6 +106,15 @@ public class FuncionarioController {
     public ResponseEntity<FuncionarioResponseDto> buscarPorId(@PathVariable Integer id) {
         FuncionarioResponseDto funcionario = FuncionarioMapper.toResponseDto(
                 buscarFuncionarioPorIdUseCase.execute(id)
+        );
+        return ResponseEntity.status(200).body(funcionario);
+    }
+
+    @SecurityRequirement(name = "Bearer")
+    @GetMapping("/busca-por-email")
+    public ResponseEntity<FuncionarioResponseDto> buscarPorEmail(@RequestParam String email) {
+        FuncionarioResponseDto funcionario = FuncionarioMapper.toResponseDto(
+                buscarPorEmailUseCase.execute(email)
         );
         return ResponseEntity.status(200).body(funcionario);
     }

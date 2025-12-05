@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.core.application.usecase.saidaEstoque;
 
+import school.sptech.CleanArchitecture.config.redis.SaidaPaginacaoService;
 import school.sptech.CleanArchitecture.core.adapters.SaidaEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.ItemEstoqueAtualizarPorIdCommand;
 import school.sptech.CleanArchitecture.core.application.command.saidaEstoque.SaidaEstoqueCadastrarCommand;
@@ -30,7 +31,9 @@ public class SaidaEstoqueCadastrarUseCase {
 
     private final SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers;
 
-    public SaidaEstoqueCadastrarUseCase(SaidaEstoqueGateway saidaGateway, ItemEstoqueAtualizarPorIdUseCase atualizarPorIdUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase, SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers) {
+    private final SaidaPaginacaoService redisService;
+
+    public SaidaEstoqueCadastrarUseCase(SaidaEstoqueGateway saidaGateway, ItemEstoqueAtualizarPorIdUseCase atualizarPorIdUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase, BuscarFuncionarioPorIdUseCase funcionarioPorIdUseCase, BuscarPorIdLoteItemEstoqueUseCase loteItemEstoqueUseCase, BuscarParceiroPorIdUseCase parceiroPorIdUseCase, SaidaEstoqueEnviarEmailENotificarObservers enviarEmailENotificarObservers, SaidaPaginacaoService redisService) {
         this.saidaGateway = saidaGateway;
         this.atualizarPorIdUseCase = atualizarPorIdUseCase;
         this.itemEstoqueBuscarUseCase = itemEstoqueBuscarUseCase;
@@ -38,6 +41,7 @@ public class SaidaEstoqueCadastrarUseCase {
         this.loteItemEstoqueUseCase = loteItemEstoqueUseCase;
         this.parceiroPorIdUseCase = parceiroPorIdUseCase;
         this.enviarEmailENotificarObservers = enviarEmailENotificarObservers;
+        this.redisService = redisService;
     }
 
     public SaidaEstoque execute(SaidaEstoqueCadastrarCommand command){
@@ -61,7 +65,7 @@ public class SaidaEstoqueCadastrarUseCase {
         saidaDeEstoque.setLoteItemEstoque(loteItemEstoque);
 
         enviarEmailENotificarObservers.execute(saidaDeEstoque);
-
+        redisService.limparTodoCache();
         return saidaGateway.save(saidaDeEstoque);
     }
 

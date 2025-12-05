@@ -24,5 +24,5 @@ public interface SaidaEstoqueGateway {
 
     List<SaidaEstoque> findByData(LocalDate data);
 
-    List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura(LocalDateTime dataInicio, LocalDateTime dataFim);
+    List<TaxaDefeitoCosturaDto> calcularTaxaDefeitoCostura(String dataInicio, String dataFim);
 }

@@ -13,7 +13,7 @@ INSERT INTO permissao (descricao) VALUES
     ('Registrar movimentação do estoque'),
 	('Visualizar dados de itens do estoque'),
 	('Cadastrar itens do estoque'),
-	('Receber alertas de falta de estoque');
+	('Receber alertas de estoque');
 
 INSERT INTO controle_acesso VALUES
 	(1, 1),

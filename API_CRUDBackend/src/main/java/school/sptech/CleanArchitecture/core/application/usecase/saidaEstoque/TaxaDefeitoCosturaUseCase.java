@@ -13,7 +13,7 @@ public class TaxaDefeitoCosturaUseCase {
         this.gateway = gateway;
     }
 
-    public List<TaxaDefeitoCosturaDto> executar(LocalDateTime dataInicio, LocalDateTime dataFim) {
+    public List<TaxaDefeitoCosturaDto> executar(String dataInicio, String dataFim) {
         return gateway.calcularTaxaDefeitoCostura(dataInicio, dataFim);
     }
 }
