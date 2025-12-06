@@ -37,4 +37,9 @@ public class LoteBeanConfig {
     public LotesEmEstoqueUseCase lotesEmEstoqueUseCase(LoteAdapter adapter){
         return new LotesEmEstoqueUseCase(adapter);
     }
+
+    @Bean
+    public LoteDetalhadoUseCase loteDetalhadoUseCase(LoteAdapter adapter) {
+        return new LoteDetalhadoUseCase(adapter);
+    }
 }

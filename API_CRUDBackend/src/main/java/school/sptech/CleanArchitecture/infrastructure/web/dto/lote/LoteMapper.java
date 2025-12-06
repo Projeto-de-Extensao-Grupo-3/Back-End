@@ -4,8 +4,11 @@ import school.sptech.CleanArchitecture.core.application.command.lote.AtualizarLo
 import school.sptech.CleanArchitecture.core.application.command.lote.CriarLoteCommand;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote.LoteEntity;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoteMapper {
 
@@ -57,6 +60,56 @@ public class LoteMapper {
         response.setIdLote(entity.getIdLote());
         response.setDescricao(entity.getDescricao());
         response.setDataEntrada(entity.getDataEntrada().format(DATE_FORMATTER));
+        return response;
+    }
+
+    public static LoteDetalhadoResponseDto ToLoteDetalhadoResponseDto() {
+        LoteDetalhadoResponseDto response = new LoteDetalhadoResponseDto();
+
+
+        return response;
+    }
+
+    public static LoteDetalhadoItemDto toLoteDetalhadoItemDto(LoteDetalhadoDto loteDetalhadoDto) {
+        LoteDetalhadoItemDto response = new LoteDetalhadoItemDto();
+        response.setNomeItem(loteDetalhadoDto.getDescricao());
+        response.setUrl(loteDetalhadoDto.getUrl());
+        response.setQtdEntrada(loteDetalhadoDto.getQtdEntrada());
+        response.setQtdSaida(loteDetalhadoDto.getQtdSaida());
+
+        return response;
+    }
+
+    public static List<LoteDetalhadoResponseDto> ToLoteDetalhadoResponseDtoList(List<LoteDetalhadoDto> loteDetalhadoDtos) {
+
+        List<LoteDetalhadoResponseDto> response = new ArrayList<>();
+        int i = 0;
+        while (i < loteDetalhadoDtos.size()) {
+            // ID do lote, para comparar com outros
+            int idLote = loteDetalhadoDtos.get(i).getIdLote();
+
+            // Criando um objeto de lote, que contem varios itens
+            LoteDetalhadoResponseDto lote = new LoteDetalhadoResponseDto(idLote, loteDetalhadoDtos.get(i).getDtEntrada(), loteDetalhadoDtos.get(i).getMotivo());
+
+            // Adicionando esse primeiro item para a lista de itens
+            List<LoteDetalhadoItemDto> itensDoLote = new ArrayList<>();
+            itensDoLote.add(toLoteDetalhadoItemDto(loteDetalhadoDtos.get(i)));
+
+            while (i < loteDetalhadoDtos.size() - 1 && idLote == loteDetalhadoDtos.get(i + 1).getIdLote()) {
+                // Adicionando item com mesmo lote para lista de itens
+                itensDoLote.add(toLoteDetalhadoItemDto(loteDetalhadoDtos.get(i + 1)));
+                i++;
+            }
+
+            // Adicionando lista de itens ao lote
+            lote.setItens(itensDoLote);
+
+            // Adicionando lote a lista de lotes
+            response.add(lote);
+
+            i++;
+        }
+
         return response;
     }
 
