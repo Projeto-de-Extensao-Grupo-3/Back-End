@@ -1,7 +1,10 @@
 package school.sptech.CleanArchitecture.infrastructure.web.dto.lote;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import school.sptech.CleanArchitecture.core.application.command.lote.AtualizarLotePorIdCommand;
 import school.sptech.CleanArchitecture.core.application.command.lote.CriarLoteCommand;
+import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque.ItemEstoqueEntityMapper;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote.LoteEntity;
 
 import java.sql.Timestamp;
@@ -10,7 +13,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class LoteMapper {
+    private static String bucket;
+
+    @Value("${aws.s3.nome-bucket}")
+    public void setBucket(String value) {
+        LoteMapper.bucket = value;
+    }
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
@@ -73,7 +83,7 @@ public class LoteMapper {
     public static LoteDetalhadoItemDto toLoteDetalhadoItemDto(LoteDetalhadoDto loteDetalhadoDto) {
         LoteDetalhadoItemDto response = new LoteDetalhadoItemDto();
         response.setNomeItem(loteDetalhadoDto.getDescricao());
-        response.setUrl(loteDetalhadoDto.getUrl());
+        response.setUrl("https://" + bucket + ".s3.us-east-1.amazonaws.com/" + loteDetalhadoDto.getUrl());
         response.setQtdEntrada(loteDetalhadoDto.getQtdEntrada());
         response.setQtdSaida(loteDetalhadoDto.getQtdSaida());
 
