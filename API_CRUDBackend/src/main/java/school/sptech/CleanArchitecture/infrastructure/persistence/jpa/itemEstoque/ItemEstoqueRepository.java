@@ -15,6 +15,7 @@ import java.time.YearMonth;
 import java.util.List;
 
 public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, Integer> {
+    List<ItemEstoqueEntity> findAllByCategoriaIsNotNull();
     Boolean existsByDescricao(String descricao);
     List<ItemEstoqueEntity> findByDescricaoContainsIgnoreCaseAndCategoria_CategoriaPai_Nome(String descricao, String tipo);
 
@@ -78,7 +79,7 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
     ON carac_ie.fk_categoria  = carac.id_categoria
     WHERE IFNULL(carac.nome, '') LIKE %:caracteristica%
     AND c.nome LIKE %:categoria%
-    AND carac.fk_categoria_pai = 2
+    AND c.fk_categoria_pai = 2
     GROUP BY ie.id_item_estoque, ie.descricao, ie.qtd_armazenado
     ORDER BY total_vendido ASC, dias_sem_vender DESC
     LIMIT 5;""",
@@ -112,9 +113,9 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
 
     @Query(value = """
             SELECT DATE_FORMAT(vendas.data, '%Y-%m') as periodo,
-            	SUM(ie.preco * qtd_saida) as faturamento_bruto,
-            	SUM(margem_lucro.margem * ie.preco * qtd_saida) as lucro,
-            	SUM(ie.preco * qtd_saida - margem_lucro.margem * ie.preco * qtd_saida) as custos
+            	truncate(SUM(ie.preco * qtd_saida), 2) as faturamento_bruto,
+            	truncate(SUM(margem_lucro.margem * ie.preco * qtd_saida), 2) as lucro,
+            	truncate (SUM(ie.preco * qtd_saida - margem_lucro.margem * ie.preco * qtd_saida), 2) as custos
             	FROM saida_estoque as vendas\s
             		JOIN lote_item_estoque as lie\s
             			ON vendas.fk_lote_item_estoque = lie.id_lote_item_estoque
@@ -152,7 +153,8 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, 
             		AND c.nome LIKE %:categoria%
             		AND vendas.fk_costureira IS NULL
             		AND DATE_FORMAT(vendas.data, '%Y-%m') BETWEEN :dataInicio AND :dataFim
-            	GROUP BY periodo;""",
+            	GROUP BY periodo
+            	ORDER BY periodo;""",
             nativeQuery = true)
     List<EvolucaoVendasDto> buscarEvolucaoVendas(@Param("dataInicio") String dataInicio, @Param("dataFim") String dataFim, @Param("caracteristica") String caracteristica, @Param("categoria") String categoria);
 }

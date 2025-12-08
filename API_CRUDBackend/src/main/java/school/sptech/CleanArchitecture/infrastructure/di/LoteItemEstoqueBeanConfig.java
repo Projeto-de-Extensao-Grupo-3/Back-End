@@ -2,6 +2,7 @@ package school.sptech.CleanArchitecture.infrastructure.di;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import school.sptech.CleanArchitecture.config.redis.SaidaPaginacaoService;
 import school.sptech.CleanArchitecture.core.adapters.ItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.adapters.LoteItemEstoqueGateway;
 import school.sptech.CleanArchitecture.core.application.usecase.itemEstoque.ItemEstoqueAtualizarDadosUseCase;
@@ -32,8 +33,8 @@ public class LoteItemEstoqueBeanConfig {
 
     @Bean
     public CadastrarLoteItemEstoqueUseCase cadastrarLoteItemEstoqueUseCase
-    (LoteItemEstoqueGateway gateway, ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase) {
-        return new CadastrarLoteItemEstoqueUseCase(gateway, itemEstoqueAtualizarUseCase, itemEstoqueBuscarUseCase);
+            (LoteItemEstoqueGateway gateway, ItemEstoqueAtualizarQuantidadeUseCase itemEstoqueAtualizarUseCase, ItemEstoqueBuscarPorIdUseCase itemEstoqueBuscarUseCase, SaidaPaginacaoService redisService) {
+        return new CadastrarLoteItemEstoqueUseCase(gateway, redisService, itemEstoqueAtualizarUseCase, itemEstoqueBuscarUseCase);
     }
 
     @Bean

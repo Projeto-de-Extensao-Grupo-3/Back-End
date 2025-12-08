@@ -1,5 +1,7 @@
 package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.itemEstoque;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import school.sptech.CleanArchitecture.core.application.command.itemEstoque.*;
 import school.sptech.CleanArchitecture.core.domain.entity.*;
 import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.categoria.CategoriaEntity;
@@ -14,7 +16,14 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Component
 public class ItemEstoqueEntityMapper {
+    private static String bucket;
+
+    @Value("${aws.s3.nome-bucket}")
+    public void setBucket(String value) {
+        ItemEstoqueEntityMapper.bucket = value;
+    }
 
     public static ItemEstoqueEntity ofDomain (ItemEstoque domain){
         if (Objects.isNull(domain)) {
@@ -233,7 +242,7 @@ public class ItemEstoqueEntityMapper {
                 : null;
 
         ItemEstoqueImagemResponseDto imagemDto = item.getImagem() != null
-                ? new ItemEstoqueImagemResponseDto(item.getImagem().getIdImagem(), item.getImagem().getUrl())
+                ? new ItemEstoqueImagemResponseDto(item.getImagem().getIdImagem(), item.getImagem().getUrl(), bucket)
                 : null;
 
         return new ItemEstoqueResponseDto(
@@ -407,7 +416,7 @@ public class ItemEstoqueEntityMapper {
 
         ItemEstoqueImagemResponseDto imagemDto = null;
         if (item.getImagem() != null) {
-            imagemDto = new ItemEstoqueImagemResponseDto(item.getImagem().getIdImagem(), item.getImagem().getUrl());
+            imagemDto = new ItemEstoqueImagemResponseDto(item.getImagem().getIdImagem(), item.getImagem().getUrl(), bucket);
         }
 
         return new ItemEstoqueResponseDto(
@@ -481,7 +490,8 @@ public class ItemEstoqueEntityMapper {
                 itemEstoque.getDescricao(),
                 tipoCategoria,
                 itemEstoque.getPreco(),
-                itemEstoque.getImagem().getUrl()
+                itemEstoque.getImagem().getUrl(),
+                bucket
         );
     }
 

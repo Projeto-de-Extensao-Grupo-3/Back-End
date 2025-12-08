@@ -3,6 +3,7 @@ package school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote;
 import org.springframework.stereotype.Service;
 import school.sptech.CleanArchitecture.core.adapters.LoteGateway;
 import school.sptech.CleanArchitecture.core.domain.entity.Lote;
+import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.LoteDetalhadoDto;
 import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.LoteEmEstoqueDto;
 
 import java.util.List;
@@ -56,6 +57,12 @@ public class LoteAdapter implements LoteGateway {
     @Override
     public List<LoteEmEstoqueDto> findLotesEmEstoque() {
         return repository.findLotesEmEstoque();
+    }
+
+    @Override
+    public List<LoteDetalhadoDto> findLoteDetalhado() {
+        return repository.findLoteDetalhado();
+
     }
 
 }

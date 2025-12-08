@@ -2,7 +2,9 @@ package school.sptech.CleanArchitecture.core.application.usecase.prateleira;
 
 import school.sptech.CleanArchitecture.core.adapters.PrateleiraGateway;
 import school.sptech.CleanArchitecture.core.application.command.prateleira.PrateleiraAtualizarCommand;
+import school.sptech.CleanArchitecture.core.application.exceptions.Prateleira.PrateleiraConflitoException;
 import school.sptech.CleanArchitecture.core.application.exceptions.Prateleira.PrateleiraNaoEncontradaException;
+import school.sptech.CleanArchitecture.core.application.exceptions.funcionario.FuncionarioConflitoException;
 import school.sptech.CleanArchitecture.core.application.mapper.PrateleiraMapper;
 import school.sptech.CleanArchitecture.core.domain.entity.Prateleira;
 
@@ -15,7 +17,10 @@ public class PrateleiraAtualizarPorIdUseCase {
     }
 
     public Prateleira executar(PrateleiraAtualizarCommand command) {
-        if(gateway.existsById(command.id())){
+        if (gateway.existsByCodigo(command.codigo())) {
+            throw new PrateleiraConflitoException("Prateleira já existe no sistema");
+        }
+        if (gateway.existsById(command.id())){
             var prateleiraParaAtualizar = PrateleiraMapper.ofAtualizarPrateleiraCommand(command);
             return gateway.save(prateleiraParaAtualizar);
         }

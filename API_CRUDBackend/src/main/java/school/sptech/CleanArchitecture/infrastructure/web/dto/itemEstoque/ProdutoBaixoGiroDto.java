@@ -1,18 +1,20 @@
 package school.sptech.CleanArchitecture.infrastructure.web.dto.itemEstoque;
 
+import java.math.BigDecimal;
+
 public class ProdutoBaixoGiroDto {
 
     private String produto;
     private Double totalVendido;
     private Long quantidadeVendas;
     private Double estoqueAtual;
-    private String diasSemVender;
+    private Long diasSemVender;
     private String statusRecomendacao;
 
     public ProdutoBaixoGiroDto() {
     }
 
-    public ProdutoBaixoGiroDto(String produto, Double totalVendido, Long quantidadeVendas, Double estoqueAtual, String diasSemVender, String statusRecomendacao) {
+    public ProdutoBaixoGiroDto(String produto, Double totalVendido, Long quantidadeVendas, Double estoqueAtual, Long diasSemVender, String statusRecomendacao) {
         this.produto = produto;
         this.totalVendido = totalVendido;
         this.quantidadeVendas = quantidadeVendas;
@@ -20,6 +22,15 @@ public class ProdutoBaixoGiroDto {
         this.diasSemVender = diasSemVender;
         this.statusRecomendacao = statusRecomendacao;
     }
+
+//    public ProdutoBaixoGiroDto(String produto, BigDecimal totalVendido, Long quantidadeVendas, BigDecimal estoqueAtual, Long diasSemVender, String statusRecomendacao) {
+//        this.produto = produto;
+//        this.totalVendido = totalVendido.doubleValue();
+//        this.quantidadeVendas = quantidadeVendas;
+//        this.estoqueAtual = estoqueAtual.doubleValue();
+//        this.diasSemVender = diasSemVender;
+//        this.statusRecomendacao = statusRecomendacao;
+//    }
 
     public String getProduto() {
         return produto;
@@ -53,11 +64,11 @@ public class ProdutoBaixoGiroDto {
         this.estoqueAtual = estoqueAtual;
     }
 
-    public String getDiasSemVender() {
+    public Long getDiasSemVender() {
         return diasSemVender;
     }
 
-    public void setDiasSemVender(String diasSemVender) {
+    public void setDiasSemVender(Long diasSemVender) {
         this.diasSemVender = diasSemVender;
     }
 

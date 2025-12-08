@@ -1,5 +1,6 @@
 package school.sptech.CleanArchitecture.config.redis;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -12,8 +13,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory("localhost", 6379);
+    public RedisConnectionFactory redisConnectionFactory(
+            @Value("${spring.data.redis.host:localhost}") String redisHost,
+            @Value("${spring.data.redis.port:6379}") int redisPort) {
+        return new LettuceConnectionFactory(redisHost, redisPort);
     }
 
     @Bean

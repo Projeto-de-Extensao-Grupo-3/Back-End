@@ -22,7 +22,6 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.lote.LoteE
 import school.sptech.CleanArchitecture.infrastructure.web.dto.lote.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Tag(name = "Lote Controller", description = "Operações CRUD relacionadas aos lotes de entrada dos Itens.")
@@ -39,6 +38,7 @@ public class LoteController {
     private final BuscarParceiroPorIdUseCase buscarParceiroPorIdUseCase;
     private final BuscarFuncionarioPorIdUseCase buscarFuncionarioPorIdUseCase;
     private final LotesEmEstoqueUseCase lotesEmEstoqueUseCase;
+    private final LoteDetalhadoUseCase loteDetalhadoUseCase;
 
     @Operation(
             summary = "Cadastro de um novo Lote.",
@@ -149,10 +149,24 @@ public class LoteController {
         return ResponseEntity.status(200).build();
     }
 
+    @Operation(summary = "Listagem de itens de lote_item_estoque que possuem quantiade de entrada maior que de saida")
+    @SecurityRequirement(name = "Bearer")
     @GetMapping("/lotesEmEstoque")
     public ResponseEntity<List<LoteEmEstoqueResponse>> listarLotesEmEstoque(){
         List<LoteEmEstoqueDto> lotesEmEstoque = lotesEmEstoqueUseCase.execute();
         List<LoteEmEstoqueResponse> response = lotesEmEstoque.stream().map(LoteEntityMapper::toLoteEmEstoqueResponse).collect(Collectors.toList());
         return lotesEmEstoque.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(response);
+    }
+
+    @Operation(summary = "Listagem de itens de lote_item_estoque, com quantidade de entrada e de saida de cada um")
+    @SecurityRequirement(name = "Bearer")
+    @GetMapping("/lotesDetalhados")
+    public ResponseEntity<List<LoteDetalhadoResponseDto>> listarLotesDetalhes(){
+        List<LoteDetalhadoDto> retorno = loteDetalhadoUseCase.execute();
+        if (retorno.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+        List<LoteDetalhadoResponseDto>  response = LoteMapper.ToLoteDetalhadoResponseDtoList(retorno);
+        return ResponseEntity.status(200).body(response);
     }
 }

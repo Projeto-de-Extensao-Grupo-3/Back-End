@@ -17,6 +17,11 @@ import school.sptech.CleanArchitecture.infrastructure.persistence.jpa.funcionari
 public class FuncionarioBeanConfig {
 
     @Bean
+    public FuncionarioBuscarPorEmailUseCase funcionarioBuscarPorEmailUseCase(FuncionarioAdapter adapter){
+        return new FuncionarioBuscarPorEmailUseCase(adapter);
+    }
+
+    @Bean
     public CadastrarFuncionarioUseCase cadastrarFuncionarioUseCase(FuncionarioAdapter adapter, PasswordEncoder passwordEncoder) {
         return new CadastrarFuncionarioUseCase(adapter, passwordEncoder);
     }

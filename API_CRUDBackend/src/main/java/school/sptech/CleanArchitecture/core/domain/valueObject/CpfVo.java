@@ -16,9 +16,9 @@ public final class CpfVo {
                 throw new IllegalArgumentException("CPF deve conter 11 dígitos numéricos");
             }
 
-            if (!(digitsOnly.chars().distinct().count() == 1)) {
-                throw new IllegalArgumentException("CPF inválido");
-            }
+//            if (!(digitsOnly.chars().distinct().count() == 1)) {
+//                throw new IllegalArgumentException("CPF inválido");
+//            }
         }
         this.value = digitsOnly;
     }

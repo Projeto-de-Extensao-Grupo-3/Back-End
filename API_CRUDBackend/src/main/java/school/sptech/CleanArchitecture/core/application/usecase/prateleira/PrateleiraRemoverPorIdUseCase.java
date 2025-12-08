@@ -12,10 +12,11 @@ public class PrateleiraRemoverPorIdUseCase {
         this.gateway = gateway;
     }
 
-    public Prateleira executar(Integer id){
+    public void executar(Integer id){
         if(gateway.existsById(id)){
             gateway.deleteById(id);
+        } else {
+            throw new PrateleiraNaoEncontradaException("Não foi possivel encontrar prateleira com id: " + id);
         }
-        throw new PrateleiraNaoEncontradaException("Prateleira foi possivel encontrar prateleira com id: " + id);
     }
 }
