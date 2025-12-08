@@ -32,7 +32,7 @@ public class ItemEstoqueAdapter implements ItemEstoqueGateway {
 
     @Override
     public List<ItemEstoque> findAll() {
-        return repository.findAll().stream()
+        return repository.findAllByCategoriaIsNotNull().stream()
                 .map(ItemEstoqueEntityMapper::ofEntity)
                 .collect(Collectors.toList());
     }

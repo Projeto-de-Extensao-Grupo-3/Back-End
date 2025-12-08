@@ -15,6 +15,7 @@ import java.time.YearMonth;
 import java.util.List;
 
 public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueEntity, Integer> {
+    List<ItemEstoqueEntity> findAllByCategoriaIsNotNull();
     Boolean existsByDescricao(String descricao);
     List<ItemEstoqueEntity> findByDescricaoContainsIgnoreCaseAndCategoria_CategoriaPai_Nome(String descricao, String tipo);
 
